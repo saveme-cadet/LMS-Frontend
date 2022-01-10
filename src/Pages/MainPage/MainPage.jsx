@@ -1,5 +1,7 @@
+import Body from './Body';
+
 const MainPage = () => {
-  return <div>hello</div>;
+  return <Body />;
 };
 
 export default MainPage;
