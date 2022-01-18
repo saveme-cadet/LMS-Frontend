@@ -1,49 +1,13 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { useState } from 'react';
 
-const Set = () => {
-  return (
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        // value={age}
-        label="Age"
-        // onChange={handleChange}
-      >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
-    </FormControl>
-  );
-};
-const Body = () => {
-  return (
-    <div style={{ height: 300, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        onCellClick={(params, event) => {
-          event.defaultMuiPrevented = true;
-          console.log(params);
-          params.value = '';
-          console.log(event);
-        }}
-      />
-    </div>
-  );
-};
+import Check from './Check';
+import { DataGrid } from '@mui/x-data-grid';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Popover from '@mui/material/Popover';
 
 const columns = [
   {
@@ -68,32 +32,60 @@ const columns = [
 const rows = [
   {
     id: 1,
-    date: Set(),
+    date: '2020.2.1',
     name1: 'asd',
     name2: 'asfd',
     name3: 'asd',
   },
   {
     id: 2,
-    date: randomCreatedDate(),
+    date: '2020.2.1',
     name1: 'asd',
     name2: 'asfd',
     name3: 'asd',
   },
   {
     id: 3,
-    date: randomCreatedDate(),
+    date: '2020.2.1',
     name1: 'asd',
     name2: 'asfd',
     name3: 'asd',
   },
   {
     id: 4,
-    date: randomCreatedDate(),
+    date: '2020.2.1',
     name1: 'asd',
     name2: 'asfd',
     name3: 'asd',
   },
 ];
+
+const Body = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [curFocus, setCurFocus] = useState({ name: '', select: '' });
+
+  const handleClickCell = (params, event) => {
+    event.defaultMuiPrevented = true;
+    console.log(params);
+    params.value = '';
+    // console.log(event);
+    setAnchorEl(event.currentTarget);
+    // console.log(event.currentTarget);
+    setIsOpen(true);
+  };
+  return (
+    <div style={{ height: 300, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
+
+      <Check
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+      />
+    </div>
+  );
+};
 
 export default Body;

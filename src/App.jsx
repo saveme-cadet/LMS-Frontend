@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { MainPage, ErrorPage } from './Pages';
+import { MainPage, MinePage, ProfilePage, ErrorPage } from './Pages';
 import { Header } from './Components';
 
 import Styled from './Styled/Global.styled';
@@ -13,8 +13,8 @@ const App = () => {
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/" element={<MainPage />} />
             <Route path="/check" element={<MainPage />} />
-            <Route path="/profile" element={<MainPage />} />
-            <Route path="/mine" element={<MainPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/mine" element={<MinePage />} />
           </Routes>
         </Router>
       </Styled.Golbal>
