@@ -11,67 +11,97 @@ import Popover from '@mui/material/Popover';
 
 const columns = [
   {
-    field: 'date',
-    headerName: 'Date',
-    type: 'date',
-    width: 180,
-    editable: true,
+    field: 'id',
+    headerName: '#',
+    type: 'number',
+    width: 120,
+    // editable: true,
   },
   {
-    field: 'name1',
-    headerName: '홍길동',
-    type: 'select',
-    width: 180,
-    editable: true,
+    field: 'name',
+    headerName: '이름',
+    type: 'string',
+    width: 120,
+    // editable: true,
   },
-  { field: 'name2', headerName: '홍길동', width: 180, editable: true },
-
-  { field: 'name3', headerName: '홍길동', width: 180, editable: true },
+  {
+    field: 'score',
+    headerName: '출결 상태',
+    type: 'number',
+    width: 120,
+    // editable: true,
+  },
+  {
+    field: 'since',
+    headerName: '고인 정도',
+    type: 'number',
+    width: 120,
+    // editable: true,
+  },
+  {
+    field: 'role',
+    headerName: '역할',
+    type: 'string',
+    width: 120,
+    // editable: true,
+  },
+  {
+    field: 'status',
+    headerName: '진척도',
+    type: 'number',
+    width: 120,
+    // editable: true,
+  },
+  {
+    field: 'checkin',
+    headerName: '체크인',
+    type: 'string',
+    width: 120,
+    // editable: true,
+  },
+  {
+    field: 'checkout',
+    headerName: '체크아웃',
+    type: 'string',
+    width: 120,
+    // editable: true,
+  },
 ];
 
 const rows = [
   {
     id: 1,
-    date: '2020.2.1',
-    name1: 'asd',
-    name2: 'asfd',
-    name3: 'asd',
+    name: 'sham',
+    score: '1.0',
+    since: '5',
+    role: '평민',
+    status: '60%',
+    checkin: '지각',
+    checkout: '출석',
   },
   {
     id: 2,
-    date: '2020.2.1',
-    name1: 'asd',
-    name2: 'asfd',
-    name3: 'asd',
-  },
-  {
-    id: 3,
-    date: '2020.2.1',
-    name1: 'asd',
-    name2: 'asfd',
-    name3: 'asd',
-  },
-  {
-    id: 4,
-    date: '2020.2.1',
-    name1: 'asd',
-    name2: 'asfd',
-    name3: 'asd',
+    name: 'taeskim',
+    score: '0.0',
+    since: '17',
+    role: '머슴',
+    status: '120%',
+    checkin: '출석',
+    checkout: '출석',
   },
 ];
 
 const Body = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [curFocus, setCurFocus] = useState({ name: '', select: '' });
+  const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
   const handleClickCell = (params, event) => {
-    event.defaultMuiPrevented = true;
-    console.log(params);
-    params.value = '';
-    // console.log(event);
+    // event.defaultMuiPrevented = true;
+    // params.value = '';
+    console.log(params.field);
+    if (params.field !== 'checkin' && params.field !== 'checkout') return;
     setAnchorEl(event.currentTarget);
-    // console.log(event.currentTarget);
     setIsOpen(true);
   };
   return (
