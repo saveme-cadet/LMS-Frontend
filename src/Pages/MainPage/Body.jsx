@@ -92,8 +92,6 @@ const Body = () => {
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
   const handleClickCell = (params, event) => {
-    // event.defaultMuiPrevented = true;
-    // params.value = '';
     console.log(params.field);
     const field = params.field;
     if (field !== 'checkin' && field !== 'checkout') return;
