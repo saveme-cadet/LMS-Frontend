@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-const Header = () => {
+const SideBar = () => {
   const [curPage, setCurPage] = useState('check');
   const navi = useNavigate();
 
@@ -22,4 +22,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default SideBar;

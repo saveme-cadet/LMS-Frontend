@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage, MinePage, ProfilePage, ErrorPage } from './Pages';
-import { Header } from './Components';
+import { SideBar } from './Components';
 
 import Styled from './Styled/Global.styled';
 const App = () => {
@@ -8,7 +8,7 @@ const App = () => {
     <>
       <Styled.Golbal>
         <Router>
-          <Header />
+          <SideBar />
           <Routes>
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/" element={<MainPage />} />

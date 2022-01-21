@@ -3,11 +3,6 @@ import { useState } from 'react';
 import Check from './Check';
 import { DataGrid } from '@mui/x-data-grid';
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Popover from '@mui/material/Popover';
 
 const columns = [
   {
@@ -100,10 +95,22 @@ const Body = () => {
     // event.defaultMuiPrevented = true;
     // params.value = '';
     console.log(params.field);
-    if (params.field !== 'checkin' && params.field !== 'checkout') return;
+    const field = params.field;
+    if (field !== 'checkin' && field !== 'checkout') return;
     setAnchorEl(event.currentTarget);
+    setCurFocus({id : params.id - 1, select : field})
     setIsOpen(true);
   };
+
+  const handleChangeCheck = (result) => {
+    const id = curFocus.id;
+    const select = curFocus.select;
+    console.log(rows[id]);
+    if (select === "checkin")
+      rows[id].checkin = result;
+    else
+      rows[id].checkout = result;
+  }
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
@@ -113,6 +120,7 @@ const Body = () => {
         setIsOpen={setIsOpen}
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
+        onChangeCheck={handleChangeCheck}
       />
     </div>
   );
