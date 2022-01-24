@@ -8,8 +8,14 @@ const instance = axios.create({
 });
 
 export const testAPI = async () => {
-  return await instance.get(`/`);
+  return await axios({
+    url: apiUrl,
+    method: 'get',
+    withCredentials: true,
+
+  });
 };
+
 
 export const testAttendence = async () => {
   return await instance.get(`/attendence`);

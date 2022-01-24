@@ -112,7 +112,7 @@ const Body = () => {
 
   useEffect(async() => {
 
-    let result1 = await testAttendence();
+    let result1 = await testAPI();
     console.log(result1);
   }, [])
 

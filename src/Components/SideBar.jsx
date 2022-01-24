@@ -17,6 +17,8 @@ const SideBar = () => {
         <Tab label="출석 체크" value="check" />
         <Tab label="프로필" value="profile" />
         <Tab label="아오지 탄광" value="mine" />
+        <Tab label="오늘 할 일" value="todo" />
+
       </Tabs>
     </>
   );
