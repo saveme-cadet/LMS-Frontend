@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Check from './Check';
 import { DataGrid } from '@mui/x-data-grid';
 
-
+import {testAPI} from '../../api/api'
 const columns = [
   {
     field: 'id',
@@ -109,6 +109,12 @@ const Body = () => {
     else
       rows[id].checkout = result;
   }
+
+  useEffect(async() => {
+    const result = await testAPI();
+    console.log(result);
+  }, [])
+
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
