@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Check from './Check';
 import { DataGrid } from '@mui/x-data-grid';
 
-import {testAPI} from '../../api/api'
+import {testAPI, testAttendence} from '../../api/api'
 const columns = [
   {
     field: 'id',
@@ -111,8 +111,9 @@ const Body = () => {
   }
 
   useEffect(async() => {
-    const result = await testAPI();
-    console.log(result);
+
+    let result1 = await testAttendence();
+    console.log(result1);
   }, [])
 
   return (

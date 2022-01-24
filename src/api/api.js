@@ -10,3 +10,7 @@ const instance = axios.create({
 export const testAPI = async () => {
   return await instance.get(`/`);
 };
+
+export const testAttendence = async () => {
+  return await instance.get(`/attendence`);
+};
