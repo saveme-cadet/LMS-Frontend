@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Check from './Check';
 import { DataGrid } from '@mui/x-data-grid';
 
-import {testAPI, testAttendence } from '../../api/api'
+import { testAPI, testAttendence } from '../../api/api';
 const columns = [
   {
     field: 'id',
@@ -88,7 +88,6 @@ const rows = [
 
 const Body = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
   const handleClickCell = (params, event) => {
@@ -96,36 +95,31 @@ const Body = () => {
     const field = params.field;
     if (field !== 'checkin' && field !== 'checkout') return;
     setAnchorEl(event.currentTarget);
-    setCurFocus({id : params.id - 1, select : field})
-    setIsOpen(true);
+    setCurFocus({ id: params.id - 1, select: field });
   };
 
-  const handleChangeCheck = (result) => {
+  const handleChangeCheck = result => {
     const id = curFocus.id;
     const select = curFocus.select;
     console.log(rows[id]);
-    if (select === "checkin")
-      rows[id].checkin = result;
-    else
-      rows[id].checkout = result;
-  }
+    if (select === 'checkin') rows[id].checkin = result;
+    else rows[id].checkout = result;
+    setAnchorEl(null);
+  };
 
-  useEffect(async() => {
-
+  useEffect(async () => {
     let result = await testAPI();
     console.log(result);
 
     result = await testAttendence();
     console.log(result);
-  }, [])
+  }, []);
 
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
 
       <Check
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
         onChangeCheck={handleChangeCheck}

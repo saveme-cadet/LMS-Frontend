@@ -28,7 +28,7 @@ const StatsPage = () => {
   console.log(date);
   return (
     <>
-      <div>{format(date, 'yyyy/MM/dd')}</div>
+      <h1>{format(date, 'yyyy/MM/dd')}</h1>
       <KeyboardDoubleArrowLeftIcon />
       <KeyboardArrowLeftIcon />
       <KeyboardArrowRightIcon />
