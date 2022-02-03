@@ -15,10 +15,10 @@ const SideBar = () => {
     <>
       <Tabs orientation="vertical" value={curPage} onChange={handleChangePage}>
         <Tab label="출석 체크" value="check" />
+        <Tab label="오늘 할 일" value="todo" />
+        <Tab label="통계" value="stats" />
         <Tab label="프로필" value="profile" />
         <Tab label="아오지 탄광" value="mine" />
-        <Tab label="오늘 할 일" value="todo" />
-
       </Tabs>
     </>
   );

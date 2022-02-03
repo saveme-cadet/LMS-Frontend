@@ -1,39 +1,55 @@
-import * as React from 'react';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+
 import Button from '@mui/material/Button';
 
+const Child = ({ number, array }) => {
+  useEffect(() => {
+    console.log('child change');
+  });
+  return (
+    <div>
+      num : {number}
+      {array.map((e, i) => {
+        return <div key={i}>temp</div>;
+      })}
+    </div>
+  );
+};
+
 const MinePage = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [stateNum, setStateNum] = useState(0);
+  const [array, setArray] = useState(['str']);
+  let normalNum = 0;
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  useEffect(() => {
+    console.log('parent change');
+    console.log('array :', array);
+    return () => {
+      console.log('before change');
+    };
+  }, []);
+  const handleNormal = () => {
+    normalNum++;
+    console.log(normalNum);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const handleState = useMemo(
+    () => () => {
+      console.log(stateNum);
+      console.log(array);
+      setStateNum(prev => prev + 1);
+      setArray(prev => {
+        return ['str', ...prev];
+      });
+    },
+    [stateNum],
+  );
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        Open Popover
-      </Button>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-      </Popover>
+      <Button onClick={handleNormal}>일반 증가</Button>
+      <Button onClick={handleState}>state 증가</Button>
+      <Child number={stateNum} array={array} />
+      nor : {normalNum}
     </div>
   );
 };
