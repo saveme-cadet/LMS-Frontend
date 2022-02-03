@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import DatePicker from 'react-datepicker';
-import { format } from 'date-fns';
+import { add, format } from 'date-fns';
 import Popover from '@mui/material/Popover';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -21,18 +21,39 @@ const StatsPage = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleChangeDate = select => {
+  const handleChooseDate = select => {
     setDate(select);
     setAnchorEl(null);
   };
-  console.log(date);
+
+  const handleChangeDate = type => {
+    console.log(type);
+    setDate(add(date, type));
+  };
+
   return (
     <>
       <h1>{format(date, 'yyyy/MM/dd')}</h1>
-      <KeyboardDoubleArrowLeftIcon />
-      <KeyboardArrowLeftIcon />
-      <KeyboardArrowRightIcon />
-      <KeyboardDoubleArrowRightIcon />
+      <KeyboardDoubleArrowLeftIcon
+        onClick={() => {
+          handleChangeDate({ months: -1 });
+        }}
+      />
+      <KeyboardArrowLeftIcon
+        onClick={() => {
+          handleChangeDate({ days: -1 });
+        }}
+      />
+      <KeyboardArrowRightIcon
+        onClick={() => {
+          handleChangeDate({ days: 1 });
+        }}
+      />
+      <KeyboardDoubleArrowRightIcon
+        onClick={() => {
+          handleChangeDate({ months: 1 });
+        }}
+      />
       <button onClick={handleClick}>달력 열기</button>
 
       <Popover
@@ -46,7 +67,7 @@ const StatsPage = () => {
       >
         <DatePicker
           selected={date}
-          onChange={handleChangeDate}
+          onChange={handleChooseDate}
           inline
           todayButton="오늘"
         />
