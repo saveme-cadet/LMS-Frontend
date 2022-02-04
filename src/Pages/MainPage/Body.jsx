@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CusDatePicker } from '../../Components';
+import { CusDatePicker } from 'Components';
 import Check from './Check';
 
 import { DataGrid } from '@mui/x-data-grid';

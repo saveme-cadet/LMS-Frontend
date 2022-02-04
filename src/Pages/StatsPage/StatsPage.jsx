@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { CusDatePicker } from '../../Components';
+import { CusDatePicker } from 'Components';
 import Styled from './StatsPage.styled';
 import { format } from 'date-fns';
 

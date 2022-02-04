@@ -6,10 +6,10 @@ import {
   ErrorPage,
   TodoPage,
   StatsPage,
-} from './Pages';
-import { SideBar } from './Components';
+} from 'Pages';
+import { SideBar } from 'Components';
 
-import Styled from './Styled/Global.styled';
+import Styled from 'Styled/Global.styled';
 const App = () => {
   return (
     <>
