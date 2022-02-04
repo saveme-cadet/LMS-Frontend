@@ -31,6 +31,10 @@ const CusDatePicker = ({ date, setDate }) => {
     console.log(type);
     setDate(add(date, type));
   };
+  const isWeekday = date => {
+    const day = date.getDay();
+    return day !== 0 && day !== 6;
+  };
 
   return (
     <>
@@ -71,6 +75,7 @@ const CusDatePicker = ({ date, setDate }) => {
           onChange={handleChooseDate}
           inline
           todayButton="오늘"
+          filterDate={isWeekday}
         />
       </Popover>
     </>
