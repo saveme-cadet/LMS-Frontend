@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-
+import { CusDatePicker } from '../../Components';
 import Check from './Check';
-import { DataGrid } from '@mui/x-data-grid';
 
-import { testAPI, testAttendence } from '../../api/api';
+import { DataGrid } from '@mui/x-data-grid';
+import { format } from 'date-fns';
+
 const columns = [
   {
     field: 'id',
@@ -89,6 +90,7 @@ const rows = [
 const Body = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+  const [date, setDate] = useState(new Date());
 
   const handleClickCell = (params, event) => {
     console.log(params.field);
@@ -107,14 +109,6 @@ const Body = () => {
     setAnchorEl(null);
   };
 
-  useEffect(async () => {
-    let result = await testAPI();
-    console.log(result);
-
-    result = await testAttendence();
-    console.log(result);
-  }, []);
-
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
@@ -124,6 +118,8 @@ const Body = () => {
         setAnchorEl={setAnchorEl}
         onChangeCheck={handleChangeCheck}
       />
+      <h1>{format(date, 'yyyy/MM/dd')}</h1>
+      <CusDatePicker date={date} setDate={setDate} />
     </div>
   );
 };
