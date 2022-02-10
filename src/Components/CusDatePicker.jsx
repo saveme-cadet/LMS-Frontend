@@ -28,14 +28,14 @@ const CusDatePicker = ({ date, setDate }) => {
   };
 
   const handleChangeDate = type => {
-    console.log(type);
     let newDate = add(date, type);
-    const dayOf = newDate.getDay();
-    console.log('day : ', dayOf);
+    let dayOf = newDate.getDay();
     if (dayOf === 0 || dayOf === 6) {
-      const result = { type };
-      console.log(result);
-      newDate = add(newDate, type);
+      const abs = Object.values(type)[0];
+      while (dayOf === 0 || dayOf === 6) {
+        newDate = add(newDate, { days: abs });
+        dayOf = newDate.getDay();
+      }
     }
     setDate(newDate);
   };
