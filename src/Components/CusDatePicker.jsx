@@ -29,7 +29,15 @@ const CusDatePicker = ({ date, setDate }) => {
 
   const handleChangeDate = type => {
     console.log(type);
-    setDate(add(date, type));
+    let newDate = add(date, type);
+    const dayOf = newDate.getDay();
+    console.log('day : ', dayOf);
+    if (dayOf === 0 || dayOf === 6) {
+      const result = { type };
+      console.log(result);
+      newDate = add(newDate, type);
+    }
+    setDate(newDate);
   };
   const isWeekday = date => {
     const day = date.getDay();

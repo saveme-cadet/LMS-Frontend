@@ -23,7 +23,6 @@ const App = () => {
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/stats" element={<StatsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-
             <Route path="/mine" element={<MinePage />} />
           </Routes>
         </Router>
