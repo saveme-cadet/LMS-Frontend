@@ -1,8 +1,31 @@
 import { useState } from 'react';
-
 import { CusDatePicker } from 'Components';
-import Styled from './StatsPage.styled';
+
 import { format } from 'date-fns';
+
+import Styled from './StatsPage.styled';
+import Avatar from '@mui/material/Avatar';
+import { Button } from '@mui/material';
+
+const MemberList = () => {
+  const [list, setList] = useState(['1', '2', '3', '4', '5']);
+  return (
+    <div className="list">
+      {list.map((e, i) => {
+        return <Avatar key={i} />;
+      })}
+    </div>
+  );
+};
+
+const AvatarBox = () => {
+  return (
+    <>
+      <Avatar />
+      <h1>test</h1>
+    </>
+  );
+};
 
 const MonthInfo = ({ date }) => {
   return (
@@ -31,8 +54,16 @@ const StatsPage = () => {
   return (
     <>
       <Styled.Stat>
-        <h1>{format(date, 'yyyy/MM/dd')}</h1>
-        <CusDatePicker date={date} setDate={setDate} />
+        <div className="header">
+          <Button variant="text">전체 통계</Button>
+          <Button variant="text">개인 통계</Button>
+
+          <MemberList />
+        </div>
+        <div className="body">
+          <CusDatePicker date={date} setDate={setDate} />
+          <AvatarBox />
+        </div>
 
         <div classNmae="info">
           <MonthInfo date={format(date, 'M')} />

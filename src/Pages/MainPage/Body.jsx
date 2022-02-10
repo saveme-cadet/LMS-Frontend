@@ -3,7 +3,6 @@ import { CusDatePicker } from 'Components';
 import Check from './Check';
 
 import { DataGrid } from '@mui/x-data-grid';
-import { format } from 'date-fns';
 
 const columns = [
   {
@@ -118,7 +117,6 @@ const Body = () => {
         setAnchorEl={setAnchorEl}
         onChangeCheck={handleChangeCheck}
       />
-      <h1>{format(date, 'yyyy/MM/dd')}</h1>
       <CusDatePicker date={date} setDate={setDate} />
     </div>
   );

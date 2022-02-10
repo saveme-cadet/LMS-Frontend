@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import DatePicker from 'react-datepicker';
-import { add } from 'date-fns';
+import { add, format } from 'date-fns';
 
 import Popover from '@mui/material/Popover';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -45,7 +45,9 @@ const CusDatePicker = ({ date, setDate }) => {
   };
 
   return (
-    <>
+    <div>
+      <h1>{format(date, 'yyyy/MM/dd')}</h1>
+
       <KeyboardDoubleArrowLeftIcon
         onClick={() => {
           handleChangeDate({ months: -1 });
@@ -86,7 +88,7 @@ const CusDatePicker = ({ date, setDate }) => {
           filterDate={isWeekday}
         />
       </Popover>
-    </>
+    </div>
   );
 };
 
