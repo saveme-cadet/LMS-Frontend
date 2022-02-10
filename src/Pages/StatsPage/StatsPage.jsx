@@ -12,7 +12,14 @@ const MemberList = () => {
   return (
     <div className="list">
       {list.map((e, i) => {
-        return <Avatar key={i} />;
+        return (
+          <Avatar
+            key={i}
+            onClick={() => {
+              console.log('click!');
+            }}
+          />
+        );
       })}
     </div>
   );
@@ -50,7 +57,8 @@ const DayInfo = ({ date }) => {
 
 const StatsPage = () => {
   const [date, setDate] = useState(new Date());
-
+  const today = new Date();
+  console.log(date.getTime(), today.getTime());
   return (
     <>
       <Styled.Stat>
@@ -66,8 +74,14 @@ const StatsPage = () => {
         </div>
 
         <div classNmae="info">
-          <MonthInfo date={format(date, 'M')} />
-          <DayInfo date={format(date, 'd')} />
+          {date.getTime() <= today.getTime() ? (
+            <>
+              <MonthInfo date={format(date, 'M')} />
+              <DayInfo date={format(date, 'd')} />
+            </>
+          ) : (
+            <>아직 진행하지 않은 날짜입니다!</>
+          )}
         </div>
       </Styled.Stat>
     </>

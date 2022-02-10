@@ -11,6 +11,7 @@ const Stat = styled.div`
       flex-direction: row;
       div {
         margin: 0.5em;
+        cursor: pointer;
       }
     }
   }
