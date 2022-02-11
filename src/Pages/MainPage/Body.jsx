@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { CusDatePicker } from 'Components';
 import Check from './Check';
 
+import UserInfoService from 'Network/UserInfoService';
+
+import { format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
@@ -108,10 +111,14 @@ const Body = () => {
     setAnchorEl(null);
   };
 
+  useEffect(async () => {
+    const result = await UserInfoService.postUserInfo('test');
+    console.log(result);
+  }, [date]);
+
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
-
       <Check
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
