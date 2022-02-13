@@ -4,7 +4,7 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-//시작 시간, 끝 시간을 자동 체크(표시)해주는 기능 추가(현재 시간을 받아오는 기능 -> 노마드코더 )
+//시작 시간, 끝 시간을 자동 체크(표시)해주는 기능 추가(현재 시간을 받아오는 기능 -> 노마드코더 현재시간 표시 앱 참고)
 
 const MinePage = () => {
   return (

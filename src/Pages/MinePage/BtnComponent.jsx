@@ -23,7 +23,7 @@ const BtnComponent = props => {
       )}
       {props.status === 2 ? (
         <div>
-          <button onClick={props.start}>Resume</button>
+          <button onClick={props.resume}>Resume</button>
           <button onClick={props.reset} disabled={props.isPaused}>
             Reset
           </button>
