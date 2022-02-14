@@ -112,8 +112,12 @@ const Body = () => {
   };
 
   useEffect(async () => {
-    const result = await UserInfoService.postUserInfo('test');
-    console.log(result);
+    const dateFormat = format(date, 'yyyy-MM-dd');
+    console.log(dateFormat);
+    const result = await UserInfoService.getUserInfo('1', dateFormat);
+    const another = await UserInfoService.postUserInfo();
+    console.log(result.data);
+    console.log(another.data);
   }, [date]);
 
   return (

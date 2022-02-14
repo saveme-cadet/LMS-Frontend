@@ -6,8 +6,7 @@ const UserInfoUrl = path => {
 
 const UserInfoService = {
   getUserInfo: async (id, date) => {
-    const url = UserInfoUrl(`day?id=${id}&date=${date}`);
-    console.log(url);
+    const url = UserInfoUrl(`day?userId=${id}&date=${date}`);
     let response;
 
     try {
@@ -17,25 +16,20 @@ const UserInfoService = {
     }
     return response;
   },
-  postUserInfo: async data => {
-    const url = UserInfoUrl(`info`);
+  postUserInfo: async () => {
+    const url = UserInfoUrl(`info?userId=1`);
     console.log(url);
-    console.log(data);
+    //  console.log(data);
     let response;
 
     try {
       response = await instance.post(url, {
-        userInfoDto: {
-          userInfoId: 0,
-          nickName: 'sjin',
-          level: 0,
-          nowSubject: 'libft',
-          confidenceSubject: 'libft',
-          userInfoDay: '2022-02-11',
-        },
-        authUser: {
-          id: 1,
-        },
+        userInfoId: null,
+        nickName: null,
+        level: 0,
+        nowSubject: null,
+        confidenceSubject: 'ㄴㅁㅇㅁㅎㅇㄴㅎ',
+        userInfoDay: '2022-02-16', // type = Date, 정해진 포맷으로 보내야함
       });
     } catch (e) {
       alert(e);
