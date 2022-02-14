@@ -3,6 +3,7 @@ import { MainPage, MinePage, ProfilePage, ErrorPage, TodoPage } from './Pages';
 import { SideBar } from './Components';
 
 import Styled from './Styled/Global.styled';
+import './App.css';
 const App = () => {
   return (
     <>
@@ -16,7 +17,6 @@ const App = () => {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/mine" element={<MinePage />} />
             <Route path="/todo" element={<TodoPage />} />
-
           </Routes>
         </Router>
       </Styled.Golbal>

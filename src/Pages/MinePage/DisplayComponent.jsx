@@ -1,27 +1,26 @@
 import * as React from 'react';
+import Styled from './Timer.styled';
 
 const DisplayComponent = props => {
   return (
-    <div>
+    <Styled.DigitDiv>
       <span
         style={{
-          fontSize: 50,
+          fontSize: 100,
         }}
       >
-        {props.time.h >= 10 ? props.time.h : '0' + props.time.h}
+        {props.time.h >= 10 ? props.time.h : '0' + props.time.h}:
       </span>
-      &nbsp;:&nbsp;
       <span
         style={{
-          fontSize: 50,
+          fontSize: 100,
         }}
       >
-        {props.time.m >= 10 ? props.time.m : '0' + props.time.m}
+        {props.time.m >= 10 ? props.time.m : '0' + props.time.m}:
       </span>
-      &nbsp;:&nbsp;
       <span
         style={{
-          fontSize: 50,
+          fontSize: 100,
         }}
       >
         {props.time.s >= 10 ? props.time.s : '0' + props.time.s}
@@ -29,12 +28,12 @@ const DisplayComponent = props => {
       &nbsp;&nbsp;
       <span
         style={{
-          fontSize: 20,
+          fontSize: 50,
         }}
       >
         {props.time.ms >= 10 ? props.time.ms : '0' + props.time.ms}
       </span>
-    </div>
+    </Styled.DigitDiv>
   );
 };
 

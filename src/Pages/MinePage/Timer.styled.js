@@ -8,7 +8,9 @@ const CusDiv = styled.div`
     break-after: column;
   }
 `;
-
+const DigitDiv = styled.div`
+  font-family: 'DSDIGI';
+`;
 const CusBox = styled(Box)`
   background: green;
 `;
@@ -16,5 +18,6 @@ const CusBox = styled(Box)`
 const Styled = {
   CusDiv,
   CusBox,
+  DigitDiv,
 };
 export default Styled;
