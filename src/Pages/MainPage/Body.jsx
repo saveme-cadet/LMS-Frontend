@@ -3,6 +3,9 @@ import { CusDatePicker } from 'Components';
 import Check from './Check';
 
 import AllTableService from 'Network/AllTableService';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 import { format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
@@ -12,6 +15,12 @@ const columns = [
     field: 'id',
     headerName: '#',
     type: 'number',
+    width: 120,
+  },
+  {
+    field: 'team',
+    headerName: '팀',
+    type: 'string',
     width: 120,
   },
   {
@@ -68,6 +77,7 @@ const rows = [
     status: '60%',
     checkin: '지각',
     checkout: '출석',
+    team: 'red',
   },
   {
     id: 2,
@@ -78,13 +88,16 @@ const rows = [
     status: '120%',
     checkin: '출석',
     checkout: '출석',
+    team: 'blue',
   },
 ];
 
 const Body = () => {
+  const [tab, setTab] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
   const [date, setDate] = useState(new Date());
+  const today = new Date();
 
   const handleClickCell = (params, event) => {
     console.log(params.field);
@@ -97,7 +110,6 @@ const Body = () => {
   const handleChangeCheck = result => {
     const id = curFocus.id;
     const select = curFocus.select;
-    console.log(rows[id]);
     if (select === 'checkin') rows[id].checkin = result;
     else rows[id].checkout = result;
     setAnchorEl(null);
@@ -112,27 +124,50 @@ const Body = () => {
       userId: 2,
       userName: 'sham',
       role: '머슴',
-      attendScore: 3.5,
+      attendScore: 5.0,
       team: 'red',
       checkIn: 0,
       checkOut: 0,
-      attendStatus: 0,
+      attendStatus: 1,
       tableDay: '2022-02-15',
     });
     console.log(result.data);
     console.log(another.data);
   }, [date]);
 
+  const handleChangeTab = (event, dstTab) => {
+    console.log(dstTab);
+    setTab(dstTab);
+  };
+
   return (
-    <div style={{ height: 300, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} onCellClick={handleClickCell} />
-      <Check
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-        onChangeCheck={handleChangeCheck}
-      />
+    <Box sx={{ width: '100%', bgcolor: '#fff' }}>
+      <Tabs value={tab} onChange={handleChangeTab}>
+        <Tab label="전체 보기" />
+        <Tab label="레드 팀" />
+        <Tab label="블루 팀" />
+      </Tabs>
+      {date.getTime() <= today.getTime() ? (
+        <>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            onCellClick={handleClickCell}
+            autoPageSize={true}
+            hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
+            hideFooterSelectedRowCount={true} // row count 숨기기
+          />
+          <Check
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            onChangeCheck={handleChangeCheck}
+          />
+        </>
+      ) : (
+        <>아직 진행하지 않은 날짜입니다!</>
+      )}
       <CusDatePicker date={date} setDate={setDate} />
-    </div>
+    </Box>
   );
 };
 
