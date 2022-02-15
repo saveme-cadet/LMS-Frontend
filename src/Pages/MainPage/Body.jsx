@@ -54,13 +54,13 @@ const columns = [
     width: 120,
   },
   {
-    field: 'checkin',
+    field: 'checkIn',
     headerName: '체크인',
     type: 'string',
     width: 120,
   },
   {
-    field: 'checkout',
+    field: 'checkOut',
     headerName: '체크아웃',
     type: 'string',
     width: 120,
@@ -97,10 +97,10 @@ const Body = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
   const [date, setDate] = useState(new Date());
+  const [rowData, setRowData] = useState(null);
   const today = new Date();
 
   const handleClickCell = (params, event) => {
-    console.log(params.field);
     const field = params.field;
     if (field !== 'checkin' && field !== 'checkout') return;
     setAnchorEl(event.currentTarget);
@@ -110,8 +110,8 @@ const Body = () => {
   const handleChangeCheck = result => {
     const id = curFocus.id;
     const select = curFocus.select;
-    if (select === 'checkin') rows[id].checkin = result;
-    else rows[id].checkout = result;
+    if (select === 'checkin') rowData[id].checkin = result;
+    else rowData[id].checkout = result;
     setAnchorEl(null);
   };
 
@@ -119,20 +119,40 @@ const Body = () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
     console.log(dateFormat);
     const result = await AllTableService.getAllTable('1', dateFormat);
-    console.log(result.data);
-    const another = await AllTableService.postAllTable('1', {
-      userId: 2,
-      userName: 'sham',
-      role: '머슴',
-      attendScore: 5.0,
-      team: 'red',
-      checkIn: 0,
-      checkOut: 0,
-      attendStatus: 1,
-      tableDay: '2022-02-15',
+    const arrays = result.data;
+    const newArray = [];
+    arrays.map((array, i) => {
+      const newData = {
+        id: i,
+        name: array.name,
+        score: array.attendScore,
+        since: i,
+
+        role: array.role,
+        status: '100%',
+        checkIn: array.checkIn,
+        checkOut: array.checkOut,
+        team: array.team,
+      };
+      newArray.push(newData);
+
+      console.log(newArray);
     });
-    console.log(result.data);
-    console.log(another.data);
+
+    setRowData(newArray);
+    // const another = await AllTableService.postAllTable('1', {
+    //   userId: 2,
+    //   userName: 'sham',
+    //   role: '머슴',
+    //   attendScore: 5.0,
+    //   team: 'red',
+    //   checkIn: 0,
+    //   checkOut: 0,
+    //   attendStatus: 1,
+    //   tableDay: '2022-02-15',
+    // });
+    // console.log(result.data);
+    // console.log(another.data);
   }, [date]);
 
   const handleChangeTab = (event, dstTab) => {
@@ -150,10 +170,9 @@ const Body = () => {
       {date.getTime() <= today.getTime() ? (
         <>
           <DataGrid
-            rows={rows}
+            rows={rowData}
             columns={columns}
             onCellClick={handleClickCell}
-            autoPageSize={true}
             hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
             hideFooterSelectedRowCount={true} // row count 숨기기
           />
