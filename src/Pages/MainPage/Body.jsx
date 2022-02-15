@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CusDatePicker } from 'Components';
 import Check from './Check';
 
-import UserInfoService from 'Network/UserInfoService';
+import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
@@ -13,56 +13,48 @@ const columns = [
     headerName: '#',
     type: 'number',
     width: 120,
-    // editable: true,
   },
   {
     field: 'name',
     headerName: '이름',
     type: 'string',
     width: 120,
-    // editable: true,
   },
   {
     field: 'score',
     headerName: '출결 상태',
     type: 'number',
     width: 120,
-    // editable: true,
   },
   {
     field: 'since',
     headerName: '고인 정도',
     type: 'number',
     width: 120,
-    // editable: true,
   },
   {
     field: 'role',
     headerName: '역할',
     type: 'string',
     width: 120,
-    // editable: true,
   },
   {
     field: 'status',
     headerName: '진척도',
     type: 'number',
     width: 120,
-    // editable: true,
   },
   {
     field: 'checkin',
     headerName: '체크인',
     type: 'string',
     width: 120,
-    // editable: true,
   },
   {
     field: 'checkout',
     headerName: '체크아웃',
     type: 'string',
     width: 120,
-    // editable: true,
   },
 ];
 
@@ -114,8 +106,19 @@ const Body = () => {
   useEffect(async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
     console.log(dateFormat);
-    const result = await UserInfoService.getUserInfo('1', dateFormat);
-    const another = await UserInfoService.postUserInfo();
+    const result = await AllTableService.getAllTable('1', dateFormat);
+    console.log(result.data);
+    const another = await AllTableService.postAllTable('1', {
+      userId: 2,
+      userName: 'sham',
+      role: '머슴',
+      attendScore: 3.5,
+      team: 'red',
+      checkIn: 0,
+      checkOut: 0,
+      attendStatus: 0,
+      tableDay: '2022-02-15',
+    });
     console.log(result.data);
     console.log(another.data);
   }, [date]);

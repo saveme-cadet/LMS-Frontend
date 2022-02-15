@@ -1,12 +1,12 @@
 import { instance } from './api';
 
-const UserInfoUrl = path => {
-  return `/userinfo/${path}`;
+const AllTableUrl = path => {
+  return `/alltable/${path}`;
 };
 
-const UserInfoService = {
-  getUserInfo: async (authUser, date) => {
-    const url = UserInfoUrl(`day?userId=${authUser}&date=${date}`);
+const AllTableService = {
+  getAllTable: async (authUser, date) => {
+    const url = AllTableUrl(`day?userId=${authUser}&date=${date}`);
     let response;
 
     try {
@@ -16,8 +16,8 @@ const UserInfoService = {
     }
     return response;
   },
-  postUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
+  postAllTable: async (authUser, body) => {
+    const url = AllTableUrl(`saveshowtable?userId=${authUser}`);
     let response;
     try {
       response = await instance.post(url, body);
@@ -26,8 +26,8 @@ const UserInfoService = {
     }
     return response;
   },
-  putUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
+  putAllTable: async (authUser, body) => {
+    const url = AllTableUrl(`modify?userId=${authUser}`);
     let response;
 
     try {
@@ -37,8 +37,8 @@ const UserInfoService = {
     }
     return response;
   },
-  deleteUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
+  deleteAllTable: async (authUser, body) => {
+    const url = AllTableUrl(`delete?userId=${authUser}`);
     let response;
 
     try {
@@ -50,4 +50,4 @@ const UserInfoService = {
   },
 };
 
-export default UserInfoService;
+export default AllTableService;
