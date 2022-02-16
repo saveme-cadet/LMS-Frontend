@@ -1,128 +1,100 @@
 import * as React from 'react';
 import DisplayComponent from './DisplayComponent';
-import BtnComponent from './BtnComponent';
 import Styled from './Timer.styled';
 import { useState } from 'react';
-import { useScrollTrigger } from '@mui/material';
+import { format } from 'date-fns';
 
 const Timer = () => {
-  const [time, setTime] = useState({ ms: 0, s: 0, m: 0, h: 0 });
-  const [startTime, setStartTime] = useState([]);
-  const [finishTime, setFinishTime] = useState([]);
-  const [interv, setInterv] = useState(0);
+  const [startFullFormat, setStartFullFormat] = useState([]);
+  const [startShortFormat, setStartShortFormat] = useState([]);
+  const [finishFullFormat, setFinishFullFormat] = useState([]);
+  const [finishShortFormat, setFinishShortFormat] = useState([]);
+  const [difference, setDifference] = useState(0);
+  const [differenceTemp, setDifferenceTemp] = useState(0);
+  const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
 
-  let updatedMs = time.ms,
-    updatedS = time.s,
-    updatedM = time.m,
-    updatedH = time.h;
-
-  const run = () => {
-    if (updatedM === 60) {
-      updatedH++;
-      updatedM = 0;
-    }
-    if (updatedS === 60) {
-      updatedM++;
-      updatedS = 0;
-    }
-    if (updatedMs === 100) {
-      updatedS++;
-      updatedMs = 0;
-    }
-    updatedMs++;
-    return setTime({ ms: updatedMs, s: updatedS, m: updatedM, h: updatedH });
+  const stopRefresh = event => {
+    alert('멈춤 버튼을 클릭하세요.');
+    event.preventDefault();
   };
 
-  const monthEngToNum = Eng => {
-    if (Eng === 'Jan') return '01';
-    if (Eng === 'Feb') return '02';
-    if (Eng === 'Mar') return '03';
-    if (Eng === 'Apr') return '04';
-    if (Eng === 'May') return '05';
-    if (Eng === 'Jun') return '06';
-    if (Eng === 'Jul') return '07';
-    if (Eng === 'Aug') return '08';
-    if (Eng === 'Sep') return '09';
-    if (Eng === 'Oct') return '10';
-    if (Eng === 'Nov') return '11';
-    if (Eng === 'Dec') return '12';
-  };
+  const savedSeconds = localStorage.getItem('savedSeconds');
+  const savedStatus = localStorage.getItem('savedStatus');
+
+  if (status !== 0) localStorage.setItem('savedStatus', status);
+  // if (difference === 0) localStorage.setItem('savedSeconds', difference);
+  // if (status === 0) localStorage.setItem('savedStatus', status);
+  // if (differenceTemp === 0)
+  //   localStorage.setItem('savedDifferenceTemp', differenceTemp);
 
   const Start = () => {
-    const start = String(Date());
-    const startYear = start.substring(11, 15);
-    const startMonth = monthEngToNum(start.substring(4, 7));
-    const startDay = start.substring(8, 10);
-    const startHour = start.substring(16, 18);
-    const startMinute = start.substring(19, 21);
-    const startSecond = start.substring(22, 24);
-    const startDate = {
-      year: startYear,
-      month: startMonth,
-      day: startDay,
-      hour: startHour,
-      minute: startMinute,
-      second: startSecond,
-    };
-    setStartTime(currentArray => [...currentArray, startDate]);
-    run();
+    const start = new Date();
+    const startFull = format(start, 'yyyy-MM-dd HH:mm:ss');
+    const startShort = format(start, 'HH:mm:ss');
+    setStartFullFormat(currentArray => [...currentArray, startFull]);
+    setStartShortFormat(currentArray => [...currentArray, startShort]);
+    console.log(startShortFormat);
+    setInterv(
+      setInterval(() => {
+        const updatedStart = new Date();
+        setDifference(Math.floor((updatedStart - start) / 10));
+        // window.addEventListener('beforeunload', stopRefresh);
+      }, 10),
+    );
     setStatus(1);
-    setInterv(setInterval(run, 10));
   };
 
   const Pause = () => {
+    const finish = new Date();
+    const finishFull = format(finish, 'yyyy-MM-dd HH:mm:ss');
+    const finishShort = format(finish, 'HH:mm:ss');
+    setFinishFullFormat(currentArray => [...currentArray, finishFull]);
+    setFinishShortFormat(currentArray => [...currentArray, finishShort]);
+    console.log(finishShortFormat);
     clearInterval(interv);
+    setDifferenceTemp(difference);
     setStatus(2);
-    console.log(time);
-  };
-
-  const Reset = () => {
-    const finish = String(Date());
-    const finishYear = finish.substring(11, 15);
-    const finishMonth = monthEngToNum(finish.substring(4, 7));
-    const finishDay = finish.substring(8, 10);
-    const finishHour = finish.substring(16, 18);
-    const finishMinute = finish.substring(19, 21);
-    const finishSecond = finish.substring(22, 24);
-    const finishDate = {
-      year: finishYear,
-      month: finishMonth,
-      day: finishDay,
-      hour: finishHour,
-      minute: finishMinute,
-      second: finishSecond,
-    };
-    setFinishTime(currentArray => [...currentArray, finishDate]);
-    clearInterval(interv);
-    setStatus(0);
-    setTime({ ms: 0, s: 0, m: 0, h: 0 });
+    localStorage.setItem('savedSeconds', difference);
   };
 
   const Resume = () => {
-    run();
+    const resume = new Date();
+    const resumeFull = format(resume, 'yyyy-MM-dd HH:mm:ss');
+    const resumeShort = format(resume, 'HH:mm:ss');
+    setStartFullFormat(currentArray => [...currentArray, resumeFull]);
+    setStartShortFormat(currentArray => [...currentArray, resumeShort]);
+    console.log(startShortFormat);
+    setInterv(
+      setInterval(() => {
+        const updatedStart = new Date();
+        setDifference(
+          Number(savedSeconds) + Math.floor((updatedStart - resume) / 10),
+        );
+        // window.addEventListener('beforeunload', stopRefresh);
+      }, 10),
+    );
     setStatus(1);
-    setInterv(setInterval(run, 10));
   };
+
+  // window.addEventListener('beforeunload', Pause);
 
   return (
     <div>
-      <DisplayComponent time={time} />
-      <BtnComponent
+      <DisplayComponent
+        difference={difference}
+        savedSeconds={savedSeconds}
+        status={savedStatus}
         start={Start}
         pause={Pause}
         resume={Resume}
-        reset={Reset}
-        status={status}
       />
-      <Styled.CusDiv>
+      {/* <Styled.CusDiv>
         <ul>
           <h2>시작 시간</h2>
           {startTime.map((item, index) => (
             <div key={index}>
-              <span>
-                {item.year}/{item.month}/{item.day} {item.hour}:{item.minute}
-              </span>
+              <span>{item}</span>
             </div>
           ))}
         </ul>
@@ -130,13 +102,19 @@ const Timer = () => {
           <h2>종료 시간</h2>
           {finishTime.map((item, index) => (
             <div key={index}>
-              <span>
-                {item.year}/{item.month}/{item.day} {item.hour}:{item.minute}
-              </span>
+              <span>{item}</span>
             </div>
           ))}
         </ul>
-      </Styled.CusDiv>
+        <ul>
+          <h2>시간 차</h2>
+          {/* {difference.map((item, index) => (
+            <div key={index}>
+              <span>{item}</span>
+            </div>
+          ))} */}
+      {/* </ul> */}
+      {/* // </Styled.CusDiv> */}
     </div>
   );
 };
