@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-const AdminPage = () => {
+const CheckPage = () => {
   return (
     <Container maxWidth="90%">
       <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
@@ -9,4 +9,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default CheckPage;

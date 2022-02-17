@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
+  AdminPage,
   MainPage,
+  CheckPage,
   MinePage,
   ProfilePage,
   ErrorPage,
@@ -18,8 +20,10 @@ const App = () => {
           <SideBar />
           <Routes>
             <Route path="/*" element={<ErrorPage />} />
-            <Route path="/" element={<MainPage />} />
-            <Route path="/check" element={<MainPage />} />
+            <Route path="/" element={<CheckPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+
+            <Route path="/check" element={<CheckPage />} />
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/stats" element={<StatsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
