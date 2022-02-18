@@ -3,8 +3,7 @@ import { Clock, Today } from 'Components';
 import SetButton from './SetButton';
 
 import dayjs from 'dayjs';
-
-import Container from '@mui/material/Container';
+import UserInfoService from 'Network/UserInfoService';
 
 import Styled from './CheckPage.styled';
 
@@ -17,7 +16,7 @@ const getStatusMessage = code => {
     case 2:
       return '오늘 공부 끝! 푹 쉬세요!';
     case 3:
-      return '공결처리! 잘 다녀오세요!';
+      return '공결 처리! 잘 다녀오세요!';
     case 4:
       return '병가 처리... 빨리 나으세요ㅠㅠ';
     case 5:
@@ -33,7 +32,13 @@ const CheckPage = () => {
 
   let timer;
 
+  const testAPI = async () => {
+    const result = await UserInfoService.getAllUserInfo(1);
+    console.log(result);
+  };
+
   useEffect(() => {
+    console.log('status', status);
     timer = setInterval(() => {
       setTime(dayjs());
     }, 1000);
@@ -41,9 +46,10 @@ const CheckPage = () => {
       clearInterval(timer);
     };
   }, []);
+  testAPI();
 
   return (
-    <Container maxWidth="90%">
+    <Styled.CheckBackground day={time}>
       <Styled.CheckHeader day={time}>
         <Today time={time} />
       </Styled.CheckHeader>
@@ -52,7 +58,7 @@ const CheckPage = () => {
         {getStatusMessage(status)}
         <SetButton time={time} sethandleChangeStatusStatus={setStatus} />
       </Styled.CheckBody>
-    </Container>
+    </Styled.CheckBackground>
   );
 };
 

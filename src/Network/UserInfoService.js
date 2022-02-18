@@ -5,29 +5,8 @@ const UserInfoUrl = path => {
 };
 
 const UserInfoService = {
-  getUserInfo: async (authUser, date) => {
-    const url = UserInfoUrl(`day?userId=${authUser}&date=${date}`);
-    let response;
-
-    try {
-      response = await instance.get(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  postUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
-    let response;
-    try {
-      response = await instance.post(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  putUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
+  putModifyWeek: async (dst, body) => {
+    const url = UserInfoUrl(`modifyweek?userId=${dst}`);
     let response;
 
     try {
@@ -37,12 +16,80 @@ const UserInfoService = {
     }
     return response;
   },
-  deleteUserInfo: async (authUser, body) => {
-    const url = UserInfoUrl(`info?userId=${authUser}`);
+  putModifyMonth: async (dst, body) => {
+    const url = UserInfoUrl(`modifymonth?userId=${dst}`);
     let response;
 
     try {
-      response = await instance.delete(url, body);
+      response = await instance.put(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  putModifyAll: async (dst, body) => {
+    const url = UserInfoUrl(`modifyall?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.put(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
+  postUserInfo: async (dst, body) => {
+    const url = UserInfoUrl(`info?userId=${dst}`);
+    let response;
+    try {
+      response = await instance.post(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
+  getAllUserInfo: async dst => {
+    const url = UserInfoUrl(`allinfo?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  getMonthUserInfo: async dst => {
+    const url = UserInfoUrl(`monthinfo?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  getWeekUserInfo: async dst => {
+    const url = UserInfoUrl(`weekinfo?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
+  deleteUserInfo: async dst => {
+    const url = UserInfoUrl(`delete?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.delete(url);
     } catch (e) {
       alert(e);
     }
