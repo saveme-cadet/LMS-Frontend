@@ -9,8 +9,10 @@ const Today = ({ time }) => {
   const today = time.day();
   return (
     <div>
-      <h1>{time.format('YYYY-MM-DD')}</h1>
-      <h1>{getDayMessage(today)}</h1>
+      <h1>
+        {time.format('YYYY-MM-DD')}
+        {getDayMessage(today)}
+      </h1>
     </div>
   );
 };

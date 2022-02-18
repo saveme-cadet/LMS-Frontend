@@ -15,7 +15,7 @@ const SetButton = ({ time, handleChangeStatus }) => {
   }, []);
   return (
     <div className="buttons">
-      <div className="main">
+      <div className="major">
         <Fab
           onClick={() => {
             handleChangeStatus(1);
@@ -24,7 +24,7 @@ const SetButton = ({ time, handleChangeStatus }) => {
           {CheckText}
         </Fab>
       </div>
-      <div>
+      <div className="minor">
         <Fab
           onClick={() => {
             handleChangeStatus(2);

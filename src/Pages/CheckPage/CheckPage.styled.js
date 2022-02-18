@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ProfileBackgroundDiv = styled.div`
+const CheckBackground = styled.div`
   // position
   position: absolute;
   top: 0px;
@@ -20,13 +20,41 @@ const ProfileBackgroundDiv = styled.div`
   background-color: #2a2d38;
 `;
 
-const Golbal = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: horizontal;
+const CheckHeader = styled.div`
+  background: ${props => {
+    switch (props.day) {
+      case 0:
+        return `#d62d2d`;
+      case 6:
+        return `#378adc`;
+      default:
+        return `#afa9a9`;
+    }
+  }};
 `;
 
-const GlobalStyled = { ProfileBackgroundDiv, Golbal };
+const CheckBody = styled.div`
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    padding: 0px;
+    .major {
+      button {
+        width: 15em;
+        height: 15em;
+      }
+    }
+    .minor {
+      display: flex;
+      flex-direction: column;
+      button {
+        margin: 1em;
+      }
+    }
+  }
+`;
 
-export default GlobalStyled;
+const Styled = { CheckBackground, CheckHeader, CheckBody };
+
+export default Styled;
