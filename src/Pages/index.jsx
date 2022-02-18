@@ -1,5 +1,5 @@
 import MainPage from './MainPage';
-import ProfilePage from './ProfilePage';
+import MyPage from './MyPage';
 import MinePage from './MinePage';
 import ErrorPage from './ErrorPage';
 import TodoPage from './TodoPage';
@@ -9,7 +9,7 @@ import AdminPage from './AdminPage';
 
 export {
   MainPage,
-  ProfilePage,
+  MyPage,
   MinePage,
   ErrorPage,
   TodoPage,
