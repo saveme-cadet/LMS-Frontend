@@ -15,22 +15,22 @@ const CheckBackground = styled.div`
 
   // color
   background-color: ${props => {
-    switch (props.day) {
+    switch (props.type) {
       case 0:
-        return `#d62d2d`;
+        return `#777777`;
       case 1:
-        return `#111`;
+        return `#666666`;
       case 2:
-        return `#222`;
+        return `#888888`;
 
       case 3:
-        return `#333`;
+        return `#999999`;
 
       case 4:
-        return `#444`;
+        return `#aaaaaa`;
 
       case 5:
-        return `#555`;
+        return `#bbbbbb`;
 
       default:
         return `#afa9a9`;
@@ -69,6 +69,17 @@ const CheckBody = styled.div`
       button {
         margin: 1em;
       }
+    }
+  }
+
+  .check-box {
+    div {
+      border: 1px solid white;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: inset 0 0 8px #deb13a;
+      width: 160px;
+      height: 160px;
     }
   }
 `;

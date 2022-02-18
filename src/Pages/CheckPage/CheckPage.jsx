@@ -1,44 +1,43 @@
 import { useState, useEffect } from 'react';
-import { Clock, Today } from 'Components';
-import SetButton from './SetButton';
 
-import dayjs from 'dayjs';
 import UserInfoService from 'Network/UserInfoService';
+import { getStatusMessage } from 'Utils';
+import dayjs from 'dayjs';
+
+import { Clock, Today } from 'Components';
+import CheckBox from './CheckBox';
+import SetButton from './SetButton';
 
 import Styled from './CheckPage.styled';
 
-const getStatusMessage = code => {
-  switch (code) {
-    case 0:
-      return `체크인 기다리는 중! 오늘도 힘내세요!`;
-    case 1:
-      return `열심히 공부 중! 파이팅하세요!`;
-    case 2:
-      return '오늘 공부 끝! 푹 쉬세요!';
-    case 3:
-      return '공결 처리! 잘 다녀오세요!';
-    case 4:
-      return '병가 처리... 빨리 나으세요ㅠㅠ';
-    case 5:
-      return '휴가 처리! 열심히 일한 당신, 떠나라!';
-    default:
-      return 'null 처리. 이걸 보셨다면 제보해주세요...ㅠ';
-  }
+const curWhich = time => {
+  const CheckTime = dayjs().set('hour', 15).set('minute', 0);
+  console.log('curwhich');
+  if (time < CheckTime) return 0;
+  else return 1;
 };
-
 const CheckPage = () => {
   const [time, setTime] = useState(dayjs());
-  const [status, setStatus] = useState(0);
-
+  const [checkArray, setCheckArray] = useState([0, 0]);
+  const [which, setWhich] = useState(0);
+  const nowWhich = curWhich(time);
   let timer;
 
-  const testAPI = async () => {
-    const result = await UserInfoService.getAllUserInfo(1);
-    console.log(result);
+  const handleChangeCheck = change => {
+    console.log('checkArray:', checkArray);
+    console.log('change : ', change);
+    checkArray[which] = change;
+    setCheckArray(checkArray);
   };
 
-  useEffect(() => {
-    console.log('status', status);
+  useEffect(async () => {
+    const result = await UserInfoService.getAllUser(1);
+    console.log(result.data);
+    // 맨 처음 해당 유저의 그날의 체크인, 체크아웃에 대한 값을 연동해서 받아와야 한다.
+    // 해당 유저가 참가하고 있다면 해당 유저의 정보(출결 점수, 오늘의 목표, 휴가)를 받아와야 한다.
+    // 해당 유저가 참가하고 있지 않다면 참가하고 있지 않다는 예외처리를 해야 한다.
+
+    setWhich(nowWhich);
     timer = setInterval(() => {
       setTime(dayjs());
     }, 1000);
@@ -46,17 +45,17 @@ const CheckPage = () => {
       clearInterval(timer);
     };
   }, []);
-  testAPI();
 
   return (
-    <Styled.CheckBackground day={time}>
+    <Styled.CheckBackground type={curWhich(time)}>
       <Styled.CheckHeader day={time}>
         <Today time={time} />
       </Styled.CheckHeader>
       <Styled.CheckBody>
         <Clock time={time} />
-        {getStatusMessage(status)}
-        <SetButton time={time} sethandleChangeStatusStatus={setStatus} />
+        {getStatusMessage(curWhich(time))}
+        <CheckBox checkArray={checkArray} setWhich={setWhich} />
+        <SetButton time={time} onChangeCheck={handleChangeCheck} />
       </Styled.CheckBody>
     </Styled.CheckBackground>
   );

@@ -21,7 +21,7 @@ const App = () => {
           <Routes>
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/" element={<CheckPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin" element={<MainPage />} />
 
             <Route path="/check" element={<CheckPage />} />
             <Route path="/todo" element={<TodoPage />} />

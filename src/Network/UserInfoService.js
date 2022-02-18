@@ -61,6 +61,17 @@ const UserInfoService = {
     }
     return response;
   },
+  getAllUser: async dst => {
+    const url = UserInfoUrl(`all?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
   getMonthUserInfo: async dst => {
     const url = UserInfoUrl(`monthinfo?userId=${dst}`);
     let response;
