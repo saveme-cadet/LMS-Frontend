@@ -67,31 +67,6 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: 'sham',
-    score: '1.0',
-    since: '5',
-    role: '평민',
-    status: '60%',
-    checkin: '지각',
-    checkout: '출석',
-    team: 'red',
-  },
-  {
-    id: 2,
-    name: 'taeskim',
-    score: '0.0',
-    since: '17',
-    role: '머슴',
-    status: '120%',
-    checkin: '출석',
-    checkout: '출석',
-    team: 'blue',
-  },
-];
-
 const Body = () => {
   const [tab, setTab] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -102,7 +77,7 @@ const Body = () => {
 
   const handleClickCell = (params, event) => {
     const field = params.field;
-    if (field !== 'checkin' && field !== 'checkout') return;
+    if (field !== 'checkIn' && field !== 'checkOut') return;
     setAnchorEl(event.currentTarget);
     setCurFocus({ id: params.id - 1, select: field });
   };

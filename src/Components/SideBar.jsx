@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 const SideBar = () => {
-  const [curPage, setCurPage] = useState('check');
+  const [curPage, setCurPage] = useState('');
   const navi = useNavigate();
 
   const handleChangePage = (event, value) => {
@@ -14,7 +14,7 @@ const SideBar = () => {
   return (
     <>
       <Tabs orientation="vertical" value={curPage} onChange={handleChangePage}>
-        <Tab label="출결표" value=" " />
+        <Tab label="출결표" value="" />
         <Tab label="마이 페이지" value="my" />
 
         <Tab label="오늘 할 일" value="todo" />
