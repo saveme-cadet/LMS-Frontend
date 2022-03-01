@@ -38,6 +38,17 @@ const UserInfoService = {
     }
     return response;
   },
+  putModifyAttend: async dst => {
+    const url = UserInfoUrl(`modifyattendstatus?userId=${dst}`);
+    let response;
+
+    try {
+      response = await instance.put(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 
   postUserInfo: async (dst, body) => {
     const url = UserInfoUrl(`info?userId=${dst}`);

@@ -3,74 +3,13 @@ import { useState, useEffect } from 'react';
 import { UserInfoService, testAPIService } from 'Network';
 import { adminCloumns } from 'Utils';
 
+import SelectedUser from './SelectedUser';
+import NewUserForm from './NewUserForm';
 import { DataGrid } from '@mui/x-data-grid';
-
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import Styled from './AdminPage.styled';
-
-const SelectedUser = ({ userInfo, onClickDeleteUser }) => {
-  return (
-    <>
-      <h1>현재 선택 : {userInfo.userName}</h1>
-      <Button variant="contained">참가 상태 변경</Button>
-      <Button variant="contained">팀 변경(레드)</Button>
-      <Button variant="contained">팀 변경(블루)</Button>
-
-      <Button variant="contained">역할 변경</Button>
-      <Button variant="contained">휴가 + 0.5</Button>
-      <Button variant="contained">휴가 - 0.5</Button>
-      <Button onClick={onClickDeleteUser}>유저 삭제</Button>
-    </>
-  );
-};
-
-const NewUserForm = ({ callbackSubmit }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-
-  const handleChangeName = e => {
-    setName(e.target.value);
-  };
-  const handleChangeEmail = e => {
-    setEmail(e.target.value);
-  };
-  const onSubmitUser = () => {
-    if (name === '' || email === '') {
-      alert('이름과 이메일을 입력하세요!');
-      return;
-    }
-    callbackSubmit({
-      name: name,
-      email: email, // 중복되면 안됨.
-      password: 'forTest',
-      birthday: '2022-02-18',
-    });
-    setName('');
-    setEmail('');
-  };
-  return (
-    <>
-      <form onSubmit={onSubmitUser}>
-        <h1>신규 유저 생성</h1>
-        <input
-          type="text"
-          placeholder="이름"
-          value={name}
-          onChange={e => handleChangeName(e)}
-        />
-        <input
-          type="text"
-          placeholder="이메일"
-          value={email}
-          onChange={e => handleChangeEmail(e)}
-        />
-        <Button onClick={onSubmitUser}>입력</Button>
-      </form>
-    </>
-  );
-};
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -78,25 +17,27 @@ const AdminPage = () => {
   const [rowData, setRowData] = useState(null);
 
   const handleCellClick = e => {
-    console.log(e);
     setSelect(e.id);
+  };
+  const handleChangeAttend = async () => {
+    const result = await UserInfoService.putModifyAttend(select);
+
+    getUser();
   };
 
   const handleCreateUser = async data => {
-    const test = await testAPIService.postUser(data);
-    console.log(test);
+    const result = await testAPIService.postUser(data);
     getUser();
   };
 
   const handleClickDeleteUser = async () => {
     const result = await UserInfoService.deleteUserInfo(select);
-    console.log(result);
     setSelect(null);
     getUser();
   };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(1);
+    const result = await UserInfoService.getAllUser(5);
     setUsers(result.data);
     const newArray = [];
 
@@ -153,24 +94,19 @@ const AdminPage = () => {
           {select !== null && (
             <SelectedUser
               userInfo={rowData[select]}
+              onClickChangeAttend={handleChangeAttend}
               onClickDeleteUser={handleClickDeleteUser}
             />
           )}
         </div>
-
-        <h1>뭘 선택했냐에 따라 or 사람 선택에 따라</h1>
-        <h3>참여 상태 변경</h3>
-        <h3>팀 변경</h3>
-        <h3>역할 변경?</h3>
-        <h3>휴가 변경 </h3>
-        <h1>인원 추가, 인원 삭제 (input 태그로 입력받기로?)</h1>
-        <h1>팀섞기</h1>
-        <h3>
-          실수로 누를 수도 있으니 확정하시겠습니까 버튼으로 API 전송 or 문자
-          따라 치기
-        </h3>
       </Styled.AdminChange>
       <NewUserForm callbackSubmit={handleCreateUser} />
+      <Button>팀 섞기</Button>
+      <h1>팀섞기</h1>
+      <h3>
+        실수로 누를 수도 있으니 확정하시겠습니까 버튼으로 API 전송 or 문자 따라
+        치기 상태가 참가인 유저에 한해서 섞기, 모달창 띄울까?
+      </h3>
     </Styled.AdminBackground>
   );
 };

@@ -1,16 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 const SideBar = () => {
   const [curPage, setCurPage] = useState('');
   const navi = useNavigate();
+  const loca = useLocation();
 
   const handleChangePage = (event, value) => {
     setCurPage(value);
     navi(`/${value}`);
   };
+
+  useEffect(() => {
+    setCurPage(loca.pathname.split('/')[1]);
+  }, []);
+
   return (
     <>
       <Tabs orientation="vertical" value={curPage} onChange={handleChangePage}>
