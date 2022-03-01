@@ -15,7 +15,7 @@ const getCheckMessage = code => {
     case 6:
       return '휴가';
     default:
-      return 'null';
+      return '';
   }
 };
 

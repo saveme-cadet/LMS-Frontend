@@ -5,6 +5,28 @@ const AllTableUrl = path => {
 };
 
 const AllTableService = {
+  putAllTableCheckIn: async body => {
+    const url = AllTableUrl('modifycheckin?date=2022-03-01');
+    let response;
+    try {
+      response = await instance.put(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
+  putAllTableCheckOut: async body => {
+    const url = AllTableUrl('modifyCheckOut?date=2022-03-01');
+    let response;
+    try {
+      response = await instance.put(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
   getAllTable: async (authUser, date) => {
     const url = AllTableUrl(`day?userId=${authUser}&date=${date}`);
     let response;

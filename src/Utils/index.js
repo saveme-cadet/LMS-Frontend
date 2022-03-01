@@ -1,5 +1,5 @@
 import getStatusMessage from './getStatusMessage';
 import getCheckMessage from './getCheckMessage';
 import adminCloumns from './adminCloumns';
-
-export { getStatusMessage, getCheckMessage, adminCloumns };
+import checkCloumns from './checkCloumns';
+export { getStatusMessage, getCheckMessage, adminCloumns, checkCloumns };
