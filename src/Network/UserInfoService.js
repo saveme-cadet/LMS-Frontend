@@ -98,7 +98,6 @@ const UserInfoService = {
   deleteUserInfo: async dst => {
     const url = UserInfoUrl(`delete?userId=${dst}`);
     let response;
-
     try {
       response = await instance.delete(url);
     } catch (e) {

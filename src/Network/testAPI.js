@@ -5,8 +5,8 @@ const testAPI = path => {
 };
 
 const testAPIService = {
-  postUser: async (dst, body) => {
-    const url = testAPI(`makeall`);
+  postUser: async body => {
+    const url = testAPI(`usermake/sign-up`);
     let response;
 
     try {
