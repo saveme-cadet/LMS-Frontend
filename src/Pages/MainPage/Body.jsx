@@ -56,7 +56,7 @@ const Body = () => {
   const getUsers = async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
     console.log(dateFormat);
-    const result = await AllTableService.getAllTable('1', dateFormat);
+    const result = await AllTableService.getAllTable(dateFormat);
     const arrays = result.data;
     console.log('array', arrays);
     const newArray = [];

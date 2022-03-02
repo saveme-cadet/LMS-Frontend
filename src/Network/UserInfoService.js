@@ -5,8 +5,42 @@ const UserInfoUrl = path => {
 };
 
 const UserInfoService = {
-  putModifyWeek: async (dst, body) => {
-    const url = UserInfoUrl(`modifyweek?userId=${dst}`);
+  // putModifyWeek: async (id, body) => {
+  //   const url = UserInfoUrl(`modifyweek?userId=${id}`);
+  //   let response;
+
+  //   try {
+  //     response = await instance.put(url, body);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
+  // putModifyMonth: async (id, body) => {
+  //   const url = UserInfoUrl(`modifymonth?userId=${id}`);
+  //   let response;
+
+  //   try {
+  //     response = await instance.put(url, body);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
+  // putModifyAll: async (id, body) => {
+  //   const url = UserInfoUrl(`modifyall?userId=${id}`);
+  //   let response;
+
+  //   try {
+  //     response = await instance.put(url, body);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
+  putModifyAttend: async (id, status) => {
+    const url = UserInfoUrl(`modifyattendstatus`);
+    const body = {user_id : id + 1, attendStatus : status};
     let response;
 
     try {
@@ -16,8 +50,9 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyMonth: async (dst, body) => {
-    const url = UserInfoUrl(`modifymonth?userId=${dst}`);
+  putModifyTeam: async (id, team) => {
+    const url = UserInfoUrl(`modifyteam`);
+    const body = {user_id : id + 1, team : team};
     let response;
 
     try {
@@ -27,8 +62,9 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyAll: async (dst, body) => {
-    const url = UserInfoUrl(`modifyall?userId=${dst}`);
+  putModifyRole: async (id, role) => {
+    const url = UserInfoUrl(`modifyrole`);
+    const body = {user_id : id + 1, role : role};
     let response;
 
     try {
@@ -38,20 +74,9 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyAttend: async dst => {
-    const url = UserInfoUrl(`modifyattendstatus?userId=${dst}`);
-    let response;
 
-    try {
-      response = await instance.put(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-
-  postUserInfo: async (dst, body) => {
-    const url = UserInfoUrl(`info?userId=${dst}`);
+  postUserInfo: async (id, body) => {
+    const url = UserInfoUrl(`info?userId=${id}`);
     let response;
     try {
       response = await instance.post(url, body);
@@ -61,8 +86,8 @@ const UserInfoService = {
     return response;
   },
 
-  getAllUserInfo: async dst => {
-    const url = UserInfoUrl(`allinfo?userId=${dst}`);
+  getAllUserInfo: async id => {
+    const url = UserInfoUrl(`allinfo?userId=${id}`);
     let response;
 
     try {
@@ -72,8 +97,8 @@ const UserInfoService = {
     }
     return response;
   },
-  getAllUser: async dst => {
-    const url = UserInfoUrl(`all?userId=${dst}`);
+  getAllUser: async id => {
+    const url = UserInfoUrl(`all?userId=${id}`);
     let response;
 
     try {
@@ -83,8 +108,8 @@ const UserInfoService = {
     }
     return response;
   },
-  getMonthUserInfo: async dst => {
-    const url = UserInfoUrl(`monthinfo?userId=${dst}`);
+  getMonthUserInfo: async id => {
+    const url = UserInfoUrl(`monthinfo?userId=${id}`);
     let response;
 
     try {
@@ -94,8 +119,8 @@ const UserInfoService = {
     }
     return response;
   },
-  getWeekUserInfo: async dst => {
-    const url = UserInfoUrl(`weekinfo?userId=${dst}`);
+  getWeekUserInfo: async id => {
+    const url = UserInfoUrl(`weekinfo?userId=${id}`);
     let response;
 
     try {
@@ -106,8 +131,8 @@ const UserInfoService = {
     return response;
   },
 
-  deleteUserInfo: async dst => {
-    const url = UserInfoUrl(`delete?userId=${dst}`);
+  deleteUserInfo: async id => {
+    const url = UserInfoUrl(`delete?userId=${id}`);
     let response;
     try {
       response = await instance.delete(url);

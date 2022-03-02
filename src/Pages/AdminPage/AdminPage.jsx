@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { UserInfoService, testAPIService } from 'Network';
+import { UserInfoService, AllTableService, testAPIService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
@@ -19,11 +19,18 @@ const AdminPage = () => {
   const handleCellClick = e => {
     setSelect(e.id);
   };
-  const handleChangeAttend = async () => {
-    const result = await UserInfoService.putModifyAttend(select);
-
+  const handleChangeAttend = async (status) => {
+    const result = await UserInfoService.putModifyAttend(select,status);
     getUser();
   };
+  const handleChangeTeam = async (status) => {
+    const result = await UserInfoService.putModifyTeam(select, status);
+    getUser();
+  }
+  const handleChangeRole = async (role) => {
+    const result = await UserInfoService.putModifyRole(select, role);
+    getUser();
+  }
 
   const handleCreateUser = async data => {
     const result = await testAPIService.postUser(data);
@@ -73,6 +80,15 @@ const AdminPage = () => {
     getUser();
   }, []);
 
+  const temp = async () => {
+    let i = 0;
+    while (i < 6)
+    {
+      const result = await AllTableService.postAllTable(i);
+      i++;
+    }
+  }
+
   return (
     <Styled.AdminBackground>
       <Styled.AdminTable>
@@ -95,7 +111,10 @@ const AdminPage = () => {
             <SelectedUser
               userInfo={rowData[select]}
               onClickChangeAttend={handleChangeAttend}
+              onClickChangeTeam={handleChangeTeam}
+              onClickChangeRole={handleChangeRole}
               onClickDeleteUser={handleClickDeleteUser}
+              
             />
           )}
         </div>
@@ -107,6 +126,7 @@ const AdminPage = () => {
         실수로 누를 수도 있으니 확정하시겠습니까 버튼으로 API 전송 or 문자 따라
         치기 상태가 참가인 유저에 한해서 섞기, 모달창 띄울까?
       </h3>
+      <button onClick={temp}>일회용</button>
     </Styled.AdminBackground>
   );
 };
