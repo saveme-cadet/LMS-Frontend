@@ -13,11 +13,18 @@ const adminCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      console.log('para:', params);
-      return <Chip variant="outlined" size="small" label={params.value} />;
+      return <Chip label={params.value} className={params.value} />;
     },
   },
-
+  {
+    field: 'role',
+    headerName: '역할',
+    type: 'string',
+    width: 120,
+    renderCell: params => {
+      return <Chip label={params.value} className={params.value} />;
+    },
+  },
   {
     field: 'userName',
     headerName: '이름',
@@ -30,12 +37,7 @@ const adminCloumns = [
     type: 'number',
     width: 120,
   },
-  {
-    field: 'role',
-    headerName: '역할',
-    type: 'string',
-    width: 120,
-  },
+
   {
     field: 'vacation',
     headerName: '휴가',

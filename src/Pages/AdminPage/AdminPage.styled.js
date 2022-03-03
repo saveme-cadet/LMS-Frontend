@@ -19,18 +19,30 @@ const AdminTable = styled.div`
     width: 100%;
     height: 30em;
     .red {
-      background-color: red;
+      background-color: #dc143c;
     }
     .blue {
-      background-color: blue;
+      background-color: #0079f0;
     }
     .out {
       background-color: #808080;
+    }
+    .머슴 {
+      background-color: #ffd700;
     }
   }
 `;
 
 const AdminChange = styled.div`
+  button {
+    color: #292929;
+  }
+  .off {
+    background-color: #848484;
+  }
+  .on {
+    background-color: #cfcfcf;
+  }
   .red {
     background-color: #dc143c;
   }
@@ -38,7 +50,10 @@ const AdminChange = styled.div`
     background-color: #0079f0;
   }
   .머슴 {
-    background-color: #ffd700;
+    background-color: yellow;
+  }
+  .일반 {
+    background-color: #cccccc;
   }
 `;
 

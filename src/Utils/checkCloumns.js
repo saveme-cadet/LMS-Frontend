@@ -1,10 +1,25 @@
+import Chip from '@mui/material/Chip';
+
 const checkCloumns = [
   {
     field: 'team',
     headerName: '팀',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      return <Chip label={params.value} className={params.value} />;
+    },
   },
+  {
+    field: 'role',
+    headerName: '역할',
+    type: 'string',
+    width: 120,
+    renderCell: params => {
+      return <Chip label={params.value} className={params.value} />;
+    },
+  },
+
   {
     field: 'name',
     headerName: '이름',
@@ -21,12 +36,6 @@ const checkCloumns = [
     field: 'since',
     headerName: '고인 정도',
     type: 'number',
-    width: 120,
-  },
-  {
-    field: 'role',
-    headerName: '역할',
-    type: 'string',
     width: 120,
   },
 
