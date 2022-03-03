@@ -1,3 +1,5 @@
+import Chip from '@mui/material/Chip';
+
 const adminCloumns = [
   {
     field: 'attendeStatus',
@@ -10,6 +12,10 @@ const adminCloumns = [
     headerName: '팀',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      console.log('para:', params);
+      return <Chip variant="outlined" size="small" label={params.value} />;
+    },
   },
 
   {
