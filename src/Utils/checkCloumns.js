@@ -35,12 +35,7 @@ const checkCloumns = [
     type: 'string',
     width: 120,
   },
-  {
-    field: 'status',
-    headerName: '진척도',
-    type: 'number',
-    width: 120,
-  },
+
   {
     field: 'checkIn',
     headerName: '체크인',

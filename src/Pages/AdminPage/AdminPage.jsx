@@ -19,18 +19,24 @@ const AdminPage = () => {
   const handleCellClick = e => {
     setSelect(e.id);
   };
-  const handleChangeAttend = async (status) => {
-    const result = await UserInfoService.putModifyAttend(select,status);
+  const handleChangeAttend = async status => {
+    const result = await UserInfoService.putModifyAttend(select, status);
     getUser();
   };
-  const handleChangeTeam = async (status) => {
+  const handleChangeTeam = async status => {
     const result = await UserInfoService.putModifyTeam(select, status);
     getUser();
-  }
-  const handleChangeRole = async (role) => {
+  };
+  const handleChangeRole = async role => {
     const result = await UserInfoService.putModifyRole(select, role);
     getUser();
-  }
+  };
+  const handleChangeVacation = async value => {
+    let result;
+    if (value > 0) result = await UserInfoService.putModifyVacationPlus(select);
+    else result = await UserInfoService.putModifyVacationMinus(select);
+    getUser();
+  };
 
   const handleCreateUser = async data => {
     const result = await testAPIService.postUser(data);
@@ -80,14 +86,13 @@ const AdminPage = () => {
     getUser();
   }, []);
 
-  const temp = async () => {
-    let i = 0;
-    while (i < 6)
-    {
-      const result = await AllTableService.postAllTable(i);
-      i++;
-    }
-  }
+  // const temp = async () => {
+  //   let i = 0;
+  //   while (i < 6) {
+  //     const result = await AllTableService.postAllTable(i);
+  //     i++;
+  //   }
+  // };
 
   return (
     <Styled.AdminBackground>
@@ -113,8 +118,8 @@ const AdminPage = () => {
               onClickChangeAttend={handleChangeAttend}
               onClickChangeTeam={handleChangeTeam}
               onClickChangeRole={handleChangeRole}
+              onClickChangeVacation={handleChangeVacation}
               onClickDeleteUser={handleClickDeleteUser}
-              
             />
           )}
         </div>
@@ -126,7 +131,7 @@ const AdminPage = () => {
         실수로 누를 수도 있으니 확정하시겠습니까 버튼으로 API 전송 or 문자 따라
         치기 상태가 참가인 유저에 한해서 섞기, 모달창 띄울까?
       </h3>
-      <button onClick={temp}>일회용</button>
+      {/* <button onClick={temp}>일회용</button> */}
     </Styled.AdminBackground>
   );
 };

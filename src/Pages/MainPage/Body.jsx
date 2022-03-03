@@ -68,7 +68,6 @@ const Body = () => {
         score: array.attendScore,
         since: i,
         role: array.role,
-        status: '100%',
         checkIn: getCheckMessage(array.checkIn),
         checkOut: getCheckMessage(array.checkOut),
       };

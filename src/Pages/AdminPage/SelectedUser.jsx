@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 
-const SelectedUser = ({ userInfo, onClickChangeAttend, onClickChangeTeam, onClickChangeRole, onClickDeleteUser }) => {
+const SelectedUser = ({ userInfo, onClickChangeAttend, onClickChangeTeam, onClickChangeRole, onClickChangeVacation, onClickDeleteUser }) => {
   return (
     <>
       <h1>현재 선택 : {userInfo.userName}</h1>
@@ -16,8 +16,8 @@ const SelectedUser = ({ userInfo, onClickChangeAttend, onClickChangeTeam, onClic
       <Button variant="contained" onClick={() => onClickChangeRole("머슴")}>역할 변경(머슴)</Button>
       <Button variant="contained"  onClick={() => onClickChangeRole("일반")}>역할 변경(유저)</Button>
 
-      <Button variant="contained">휴가 + 0.5</Button>
-      <Button variant="contained">휴가 - 0.5</Button>
+      <Button variant="contained" onClick={() => onClickChangeVacation(1)}>휴가 + 0.5</Button>
+      <Button variant="contained"  onClick={() => onClickChangeVacation(-1)}>휴가 - 0.5</Button>
       <Button onClick={onClickDeleteUser}>유저 삭제</Button>
     </>
   );
