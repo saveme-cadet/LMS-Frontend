@@ -21,12 +21,12 @@ const AdminPage = () => {
   const [tab, setTab] = useState(0);
   const [selectRowData, setSelectRowData] = useState(null);
 
-  const updateSelectRowData = (curArray, curTab) => {
+  const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
     let filter = '';
     if (curTab === 1) filter = '불참';
     else if (curTab === 2) filter = '참가';
-    curArray.map(array => {
+    curArrays.map(array => {
       if (array.attendeStatus !== filter) filterArray.push(array);
     });
     setSelectRowData(filterArray);
@@ -42,10 +42,7 @@ const AdminPage = () => {
   };
 
   const handleChangeAttend = async status => {
-    let result;
-    result = await UserInfoService.putModifyAttend(select, status);
-    if (status === 0)
-      result = await UserInfoService.putModifyTeam(select, null);
+    const result = await UserInfoService.putModifyAttend(select, status);
     getUser();
     setSelect(null);
   };
