@@ -1,16 +1,5 @@
 const adminCloumns = [
   {
-    field: 'id',
-    headerName: '#',
-    width: 120,
-  },
-  {
-    field: 'userName',
-    headerName: '이름',
-    type: 'string',
-    width: 120,
-  },
-  {
     field: 'attendeStatus',
     headerName: '참여 상태',
     type: 'string',
@@ -19,6 +8,13 @@ const adminCloumns = [
   {
     field: 'team',
     headerName: '팀',
+    type: 'string',
+    width: 120,
+  },
+
+  {
+    field: 'userName',
+    headerName: '이름',
     type: 'string',
     width: 120,
   },

@@ -103,6 +103,10 @@ const AdminPage = () => {
               rows={rowData}
               columns={adminCloumns}
               onCellClick={handleCellClick}
+              getRowClassName={params => {
+                console.log(params.row.team);
+                return params.row.team === 'red' ? 'red' : 'blue';
+              }}
               hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
               hideFooterSelectedRowCount={true} // row count 숨기기
             />
@@ -110,6 +114,8 @@ const AdminPage = () => {
         </Box>
       </Styled.AdminTable>
       <Styled.AdminChange>
+        <h1>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h1>
+
         <div className="select">
           <h1>멤버 정보 수정</h1>
           {select !== null && (

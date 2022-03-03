@@ -18,6 +18,12 @@ const AdminTable = styled.div`
   .table {
     width: 100%;
     height: 30em;
+    .red {
+      background-color: red;
+    }
+    .blue {
+      background-color: blue;
+    }
   }
 `;
 

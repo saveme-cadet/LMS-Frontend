@@ -1,11 +1,5 @@
 const checkCloumns = [
   {
-    field: 'id',
-    headerName: '아이디',
-    type: 'number',
-    width: 120,
-  },
-  {
     field: 'team',
     headerName: '팀',
     type: 'string',
