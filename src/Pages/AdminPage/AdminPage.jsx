@@ -5,6 +5,8 @@ import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
 import NewUserForm from './NewUserForm';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -16,31 +18,59 @@ const AdminPage = () => {
   const [select, setSelect] = useState(null);
   const [rowData, setRowData] = useState(null);
 
+  const [tab, setTab] = useState(0);
+  const [selectRowData, setSelectRowData] = useState(null);
+
+  const updateSelectRowData = (curArray, curTab) => {
+    const filterArray = [];
+    let filter = '';
+    if (curTab === 1) filter = '불참';
+    else if (curTab === 2) filter = '참가';
+    curArray.map(array => {
+      if (array.attendeStatus !== filter) filterArray.push(array);
+    });
+    setSelectRowData(filterArray);
+  };
+
+  const handleChangeTab = (event, dstTab) => {
+    setTab(dstTab);
+    updateSelectRowData(rowData, dstTab);
+  };
+
   const handleCellClick = e => {
     setSelect(e.id);
   };
+
   const handleChangeAttend = async status => {
-    const result = await UserInfoService.putModifyAttend(select, status);
+    let result;
+    result = await UserInfoService.putModifyAttend(select, status);
+    if (status === 0)
+      result = await UserInfoService.putModifyTeam(select, null);
     getUser();
+    setSelect(null);
   };
-  const handleChangeTeam = async status => {
-    const result = await UserInfoService.putModifyTeam(select, status);
+  const handleChangeTeam = async team => {
+    const result = await UserInfoService.putModifyTeam(select, team);
     getUser();
+    setSelect(null);
   };
   const handleChangeRole = async role => {
     const result = await UserInfoService.putModifyRole(select, role);
     getUser();
+    setSelect(null);
   };
   const handleChangeVacation = async value => {
     let result;
     if (value > 0) result = await UserInfoService.putModifyVacationPlus(select);
     else result = await UserInfoService.putModifyVacationMinus(select);
     getUser();
+    setSelect(null);
   };
 
   const handleCreateUser = async data => {
     const result = await testAPIService.postUser(data);
     getUser();
+    setSelect(null);
   };
 
   const handleClickDeleteUser = async () => {
@@ -79,7 +109,7 @@ const AdminPage = () => {
     // newArray.push(newData);
     // 임시
     setRowData(newArray);
-    console.log(newArray);
+    updateSelectRowData(newArray, tab);
   };
 
   useEffect(() => {
@@ -98,14 +128,18 @@ const AdminPage = () => {
     <Styled.AdminBackground>
       <Styled.AdminTable>
         <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
-          {rowData && (
+          <Tabs value={tab} onChange={handleChangeTab}>
+            <Tab label="전체 보기" />
+            <Tab label="참가한 사용자" />
+            <Tab label="불참한 사용자" />
+          </Tabs>
+          {selectRowData && (
             <DataGrid
-              rows={rowData}
+              rows={selectRowData}
               columns={adminCloumns}
               onCellClick={handleCellClick}
               getRowClassName={params => {
-                console.log(params.row.team);
-                return params.row.team === 'red' ? 'red' : 'blue';
+                return params.row.attendeStatus === '불참' && 'out';
               }}
               hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
               hideFooterSelectedRowCount={true} // row count 숨기기

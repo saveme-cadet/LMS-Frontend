@@ -24,10 +24,23 @@ const AdminTable = styled.div`
     .blue {
       background-color: blue;
     }
+    .out {
+      background-color: #808080;
+    }
   }
 `;
 
-const AdminChange = styled.div``;
+const AdminChange = styled.div`
+  .red {
+    background-color: #dc143c;
+  }
+  .blue {
+    background-color: #0079f0;
+  }
+  .머슴 {
+    background-color: #ffd700;
+  }
+`;
 
 const AdminBody = styled.div``;
 
