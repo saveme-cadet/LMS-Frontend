@@ -56,7 +56,7 @@ const Body = () => {
     if (select === 'checkIn') {
       rowData[id].checkIn = getCheckMessage(value);
       const result = await AllTableService.putAllTableCheckIn({
-        id: id,
+        userid: id + 1,
         checkIn: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
@@ -64,7 +64,7 @@ const Body = () => {
     } else {
       rowData[id].checkOut = getCheckMessage(value);
       const result = await AllTableService.putAllTableCheckOut({
-        id: id,
+        userid: id + 1,
         checkOut: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
