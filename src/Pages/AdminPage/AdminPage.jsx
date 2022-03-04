@@ -88,6 +88,7 @@ const AdminPage = () => {
         attendeStatus: array.attendeStatus ? '참가' : '불참',
         team: array.team,
         attendScore: array.attendScore,
+        participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
       };

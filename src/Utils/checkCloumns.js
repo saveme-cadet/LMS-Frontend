@@ -27,17 +27,17 @@ const checkCloumns = [
     width: 120,
   },
   {
-    field: 'score',
-    headerName: '출결 상태',
+    field: 'attendScore',
+    headerName: '결석 점수',
     type: 'number',
     width: 120,
   },
-  {
-    field: 'since',
-    headerName: '고인 정도',
-    type: 'number',
-    width: 120,
-  },
+  // {
+  //   field: 'since',
+  //   headerName: '고인 정도',
+  //   type: 'number',
+  //   width: 120,
+  // },
 
   {
     field: 'checkIn',

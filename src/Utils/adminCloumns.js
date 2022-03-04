@@ -31,9 +31,16 @@ const adminCloumns = [
     type: 'string',
     width: 120,
   },
+
+  {
+    field: 'participateScore',
+    headerName: '출석 횟수',
+    type: 'number',
+    width: 120,
+  },
   {
     field: 'attendScore',
-    headerName: '출결 점수',
+    headerName: '결석 점수',
     type: 'number',
     width: 120,
   },

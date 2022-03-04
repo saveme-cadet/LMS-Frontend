@@ -76,7 +76,7 @@ const UserInfoService = {
   },
   putModifyVacationPlus: async id => {
     const url = UserInfoUrl(`modifyvacationplus`);
-    const body = { user_id: id + 1 };
+    const body = { userid: id + 1, check: true };
     let response;
     try {
       response = await instance.put(url, body);
@@ -87,7 +87,7 @@ const UserInfoService = {
   },
   putModifyVacationMinus: async id => {
     const url = UserInfoUrl(`modifyvacationminus`);
-    const body = { user_id: id + 1 };
+    const body = { userid: id + 1, check: true };
     let response;
     try {
       response = await instance.put(url, body);
