@@ -11,7 +11,7 @@ const SelectedUser = ({
 }) => {
   console.log(userInfo);
   return (
-    <>
+    <div className="box">
       <h1>
         현재 선택 : {userInfo.userName}
         <Chip
@@ -60,7 +60,7 @@ const SelectedUser = ({
           </>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -12,12 +12,22 @@ const AdminBackground = styled.div`
   // size
   width: 100%;
   height: 100%;
+
+  // box
+  .box {
+    background-color: #d8d8d8;
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 1em;
+  }
 `;
 
 const AdminTable = styled.div`
   .table {
     width: 100%;
     height: 30em;
+    margin: 1em;
+    margin-bottom: 3em;
     .red {
       background-color: #dc143c;
     }
@@ -57,8 +67,25 @@ const AdminChange = styled.div`
   }
 `;
 
-const AdminBody = styled.div``;
+const AdminAddUser = styled.div``;
 
-const Styled = { AdminBackground, AdminTable, AdminChange, AdminBody };
+const AdminShakeUser = styled.div`
+  .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(216, 216, 216, 0.9);
+  }
+`;
+
+const Styled = {
+  AdminBackground,
+  AdminTable,
+  AdminChange,
+  AdminAddUser,
+  AdminShakeUser,
+};
 
 export default Styled;

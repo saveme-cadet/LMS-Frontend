@@ -5,10 +5,10 @@ import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
 import NewUserForm from './NewUserForm';
+import ShakeTeam from './ShakeTeam';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import Styled from './AdminPage.styled';
@@ -146,10 +146,10 @@ const AdminPage = () => {
         </Box>
       </Styled.AdminTable>
       <Styled.AdminChange>
-        <h1>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h1>
-
-        <div className="select">
+        <div className="select box">
           <h1>멤버 정보 수정</h1>
+          <h2>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h2>
+
           {select !== null && (
             <SelectedUser
               userInfo={rowData[select]}
@@ -162,13 +162,19 @@ const AdminPage = () => {
           )}
         </div>
       </Styled.AdminChange>
-      <NewUserForm callbackSubmit={handleCreateUser} />
-      <Button>팀 섞기</Button>
-      <h1>팀섞기</h1>
-      <h3>
-        실수로 누를 수도 있으니 확정하시겠습니까 버튼으로 API 전송 or 문자 따라
-        치기 상태가 참가인 유저에 한해서 섞기, 모달창 띄울까?
-      </h3>
+
+      <Styled.AdminAddUser>
+        <NewUserForm callbackSubmit={handleCreateUser} />
+      </Styled.AdminAddUser>
+
+      <Styled.AdminShakeUser>
+        {rowData && (
+          <ShakeTeam
+            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+          />
+        )}
+      </Styled.AdminShakeUser>
+
       {/* <button onClick={temp}>일회용</button> */}
     </Styled.AdminBackground>
   );

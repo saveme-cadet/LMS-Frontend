@@ -27,7 +27,7 @@ const NewUserForm = ({ callbackSubmit }) => {
     setEmail('');
   };
   return (
-    <>
+    <div className="box">
       <form onSubmit={onSubmitUser}>
         <h1>신규 유저 생성</h1>
         <input
@@ -44,7 +44,7 @@ const NewUserForm = ({ callbackSubmit }) => {
         />
         <Button onClick={onSubmitUser}>입력</Button>
       </form>
-    </>
+    </div>
   );
 };
 
