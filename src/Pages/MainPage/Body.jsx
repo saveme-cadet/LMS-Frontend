@@ -54,7 +54,7 @@ const Body = () => {
     console.log('value : ', value);
     console.log('select : ', select);
     if (select === 'checkIn') {
-      rowData[id].checkIn = getCheckMessage(value);
+      rowData[id].checkIn = value;
       const result = await AllTableService.putAllTableCheckIn({
         id: id + 1,
         checkIn: value,
@@ -62,7 +62,7 @@ const Body = () => {
       });
       console.log(result);
     } else {
-      rowData[id].checkOut = getCheckMessage(value);
+      rowData[id].checkOut = value;
       const result = await AllTableService.putAllTableCheckOut({
         id: id + 1,
         checkOut: value,
@@ -88,8 +88,8 @@ const Body = () => {
         attendScore: array.attendScore,
         // since: i,
         role: array.role,
-        checkIn: getCheckMessage(array.checkIn),
-        checkOut: getCheckMessage(array.checkOut),
+        checkIn: array.checkIn,
+        checkOut: array.checkOut,
       };
       newArray.push(newData);
     });
@@ -120,10 +120,7 @@ const Body = () => {
                 onCellClick={handleClickCell}
                 hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
                 hideFooterSelectedRowCount={true} // row count 숨기기
-                // getRowClassName={params => {
-                //   if (params.row.team === 'red') return 'red';
-                //   else if (params.row.team === 'blue') return 'blue';
-                // }}
+                getRowClassName="cell"
               />
               <Check
                 anchorEl={anchorEl}

@@ -24,23 +24,32 @@ const MainTable = styled.div`
     .blue {
       background-color: #0079f0;
     }
-    .out {
-      background-color: #808080;
+    .머슴 {
+      background-color: yellow;
+    }
+    .일반 {
+      background-color: #cccccc;
+    }
+
+    .check {
+      color: green;
+    }
+    .late {
+      color: yellow;
+    }
+    .not {
+      color: red;
+    }
+    .vacancy {
+      color: blue;
+    }
+    .illness {
+      color: purple;
     }
   }
 `;
 
-const MainChange = styled.div`
-  .red {
-    background-color: #dc143c;
-  }
-  .blue {
-    background-color: #0079f0;
-  }
-  .머슴 {
-    background-color: #ffd700;
-  }
-`;
+const MainChange = styled.div``;
 
 const MainBody = styled.div``;
 

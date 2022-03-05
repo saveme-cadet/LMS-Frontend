@@ -1,5 +1,7 @@
 import Chip from '@mui/material/Chip';
 
+import { GetCheckIcons } from 'Components';
+
 const checkCloumns = [
   {
     field: 'team',
@@ -44,12 +46,18 @@ const checkCloumns = [
     headerName: '체크인',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      return <GetCheckIcons type={params.value} />;
+    },
   },
   {
     field: 'checkOut',
     headerName: '체크아웃',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      return <GetCheckIcons type={params.value} />;
+    },
   },
 ];
 
