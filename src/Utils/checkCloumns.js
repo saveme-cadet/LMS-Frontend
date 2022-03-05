@@ -34,13 +34,18 @@ const checkCloumns = [
     type: 'number',
     width: 120,
   },
-  // {
-  //   field: 'since',
-  //   headerName: '고인 정도',
-  //   type: 'number',
-  //   width: 120,
-  // },
-
+  {
+    field: 'participateScore',
+    headerName: '출석 횟수',
+    type: 'number',
+    width: 120,
+  },
+  {
+    field: 'vacation',
+    headerName: '휴가',
+    type: 'number',
+    width: 120,
+  },
   {
     field: 'checkIn',
     headerName: '체크인',

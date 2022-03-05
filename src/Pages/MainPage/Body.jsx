@@ -53,6 +53,12 @@ const Body = () => {
     const select = curFocus.select;
     console.log('value : ', value);
     console.log('select : ', select);
+    if (value === 6 && rowData[id].vacation === 0) {
+      alert('사용할 수 있는 휴가가 없습니다!');
+      setAnchorEl(null);
+
+      return;
+    }
     if (select === 'checkIn') {
       const result = await AllTableService.putAllTableCheckIn({
         id: id + 1,
@@ -83,7 +89,8 @@ const Body = () => {
         team: array.team,
         name: array.userName,
         attendScore: array.attendScore,
-        // since: i,
+        participateScore: array.participateScore,
+        vacation: array.vacation,
         role: array.role,
         checkIn: array.checkIn,
         checkOut: array.checkOut,
