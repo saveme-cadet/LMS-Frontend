@@ -5,7 +5,6 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import HotelIcon from '@mui/icons-material/Hotel';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 const GetCheckIcons = ({ type }) => {
-  console.log('type : ', type);
   switch (type) {
     case 1:
       return <CheckIcon className="check" />;

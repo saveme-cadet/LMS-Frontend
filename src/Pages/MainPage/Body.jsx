@@ -54,23 +54,20 @@ const Body = () => {
     console.log('value : ', value);
     console.log('select : ', select);
     if (select === 'checkIn') {
-      rowData[id].checkIn = value;
       const result = await AllTableService.putAllTableCheckIn({
         id: id + 1,
         checkIn: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
-      console.log(result);
     } else {
-      rowData[id].checkOut = value;
       const result = await AllTableService.putAllTableCheckOut({
         id: id + 1,
         checkOut: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
-      console.log(result);
     }
     setAnchorEl(null);
+    getUsers();
     // 굳이 rowData를 수정하지 않고 API get 시켜도 가능.
   };
 
