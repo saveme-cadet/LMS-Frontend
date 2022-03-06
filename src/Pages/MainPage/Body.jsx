@@ -49,7 +49,7 @@ const Body = () => {
   };
 
   const handleChangeCheck = async value => {
-    const id = curFocus.id;
+    const id = selectRowData[curFocus.id].id;
     const select = curFocus.select;
     console.log('value : ', value);
     console.log('select : ', select);
@@ -61,13 +61,13 @@ const Body = () => {
     }
     if (select === 'checkIn') {
       const result = await AllTableService.putAllTableCheckIn({
-        id: id + 1,
+        userId: id + 1,
         checkIn: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
     } else {
       const result = await AllTableService.putAllTableCheckOut({
-        id: id + 1,
+        userId: id + 1,
         checkOut: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });

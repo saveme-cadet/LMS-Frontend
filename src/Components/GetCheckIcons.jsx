@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import HotelIcon from '@mui/icons-material/Hotel';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+
 const GetCheckIcons = ({ type }) => {
   switch (type) {
     case 1:
@@ -19,7 +20,7 @@ const GetCheckIcons = ({ type }) => {
     case 6:
       return <AirplanemodeActiveIcon />;
     default:
-      return <CheckIcon className="0" />;
+      return <></>;
   }
 };
 

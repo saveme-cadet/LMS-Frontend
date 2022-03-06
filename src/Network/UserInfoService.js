@@ -40,7 +40,7 @@ const UserInfoService = {
   // },
   putModifyAttend: async (id, status) => {
     const url = UserInfoUrl(`modifyattendstatus`);
-    const body = { user_id: id + 1, attendStatus: status };
+    const body = { userId: id + 1, attendStatus: status };
     let response;
 
     try {
@@ -52,7 +52,7 @@ const UserInfoService = {
   },
   putModifyTeam: async (id, team) => {
     const url = UserInfoUrl(`modifyteam`);
-    const body = { user_id: id + 1, team: team };
+    const body = { userId: id + 1, team: team };
     let response;
 
     try {
@@ -64,7 +64,7 @@ const UserInfoService = {
   },
   putModifyRole: async (id, role) => {
     const url = UserInfoUrl(`modifyrole`);
-    const body = { user_id: id + 1, role: role };
+    const body = { userid: id + 1, role: role };
     let response;
 
     try {
@@ -76,7 +76,7 @@ const UserInfoService = {
   },
   putModifyVacationPlus: async id => {
     const url = UserInfoUrl(`modifyvacationplus`);
-    const body = { userid: id + 1, check: true };
+    const body = { userId: id + 1 };
     let response;
     try {
       response = await instance.put(url, body);
@@ -87,7 +87,7 @@ const UserInfoService = {
   },
   putModifyVacationMinus: async id => {
     const url = UserInfoUrl(`modifyvacationminus`);
-    const body = { userid: id + 1, check: true };
+    const body = { userId: id + 1 };
     let response;
     try {
       response = await instance.put(url, body);
