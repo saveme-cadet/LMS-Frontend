@@ -92,9 +92,10 @@ const Body = () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat);
     if (!result) {
-      const today = new Date();
-      console.log('존재하지 않는 데이터입니다, 오늘 날짜로 돌아갑니다.');
-      setDate(today);
+      if (confirm('에러가 발생했습니다. 오늘 날짜로 돌아가시겠습니까?')) {
+        const today = new Date();
+        setDate(today);
+      }
       return;
     }
     const arrays = result.data;
