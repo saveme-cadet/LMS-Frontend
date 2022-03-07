@@ -64,7 +64,7 @@ const UserInfoService = {
   },
   putModifyRole: async (id, role) => {
     const url = UserInfoUrl(`modifyrole`);
-    const body = { userid: id + 1, role: role };
+    const body = { userId: id + 1, role: role };
     let response;
 
     try {

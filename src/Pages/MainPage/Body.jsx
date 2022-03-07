@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { CusDatePicker } from 'Components';
 import Check from './Check';
+import WrongDay from './WrongDay';
 
 import AllTableService from 'Network/AllTableService';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import { checkCloumns, getCheckMessage } from 'Utils';
+import { checkCloumns, vaildDay } from 'Utils';
 import { format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -78,6 +79,7 @@ const Body = () => {
   };
 
   const getUsers = async () => {
+    if (vaildDay) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat);
     const arrays = result.data;
@@ -116,7 +118,9 @@ const Body = () => {
             <Tab label="레드 팀" />
             <Tab label="블루 팀" />
           </Tabs>
-          {date.getTime() <= today.getTime() ? (
+          {vaildDay(date, today) ? (
+            <WrongDay wrongType={vaildDay(date, today)} />
+          ) : (
             <>
               <DataGrid
                 rows={selectRowData}
@@ -132,8 +136,6 @@ const Body = () => {
                 onChangeCheck={handleChangeCheck}
               />
             </>
-          ) : (
-            <>아직 진행하지 않은 날짜입니다!</>
           )}
         </Box>
       </Styled.MainTable>
