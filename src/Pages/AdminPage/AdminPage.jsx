@@ -71,9 +71,10 @@ const AdminPage = () => {
   };
 
   const handleClickDeleteUser = async () => {
-    const result = await UserInfoService.deleteUserInfo(select);
-    setSelect(null);
+    // const result = await UserInfoService.deleteUserInfo(select);
+    alert('미구현');
     getUser();
+    setSelect(null);
   };
 
   const getUser = async () => {
@@ -83,7 +84,7 @@ const AdminPage = () => {
 
     result.data.map((array, i) => {
       const newData = {
-        id: i,
+        id: i, // writer_id로 보내고 API에서도 +1이 아니라 그냥 보내는 걸로
         userName: array.userName,
         attendeStatus: array.attendeStatus ? '참가' : '불참',
         team: array.team,
@@ -94,18 +95,7 @@ const AdminPage = () => {
       };
       newArray.push(newData);
     });
-    // 임시
-    // const newData = {
-    //   id: 0,
-    //   userName: 'gaga',
-    //   attendeStatus: '참가',
-    //   team: 'red',
-    //   attendScore: 1.4,
-    //   role: '머슴',
-    //   vacation: 5,
-    // };
-    // newArray.push(newData);
-    // 임시
+    console.log(newArray);
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };

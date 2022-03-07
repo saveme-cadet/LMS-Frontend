@@ -49,28 +49,6 @@ const AllTableService = {
     }
     return response;
   },
-  // putAllTable: async (authUser, body) => {
-  //   const url = AllTableUrl(`modify?userId=${authUser}`);
-  //   let response;
-
-  //   try {
-  //     response = await instance.put(url, body);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
-  // deleteAllTable: async (authUser, body) => {
-  //   const url = AllTableUrl(`delete?userId=${authUser}`);
-  //   let response;
-
-  //   try {
-  //     response = await instance.delete(url, body);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
 };
 
 export default AllTableService;

@@ -49,13 +49,14 @@ const Body = () => {
   };
 
   const handleChangeCheck = async value => {
-    const id = selectRowData[curFocus.id].id;
+    const id = curFocus.id;
     const select = curFocus.select;
     const today = new Date();
     let result;
 
-    console.log('value : ', value);
-    console.log('select : ', select);
+    console.log('focus : ', curFocus.id);
+    console.log('id : ', id);
+
     if (value === 6 && rowData[id].vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
       setAnchorEl(null);
@@ -71,13 +72,13 @@ const Body = () => {
     }
     if (select === 'checkIn') {
       result = await AllTableService.putAllTableCheckIn({
-        userId: id + 1,
+        userId: id,
         checkIn: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
     } else {
       result = await AllTableService.putAllTableCheckOut({
-        userId: id + 1,
+        userId: id,
         checkOut: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
@@ -100,9 +101,9 @@ const Body = () => {
     console.log('array : ', arrays);
 
     const newArray = [];
-    arrays.map((array, i) => {
+    arrays.map(array => {
       const newData = {
-        id: i,
+        id: array.writer_id,
         team: array.team,
         name: array.userName,
         attendScore: array.attendScore,
