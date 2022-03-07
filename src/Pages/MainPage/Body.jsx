@@ -93,7 +93,7 @@ const Body = () => {
     const result = await AllTableService.getAllTable(dateFormat);
     if (!result) {
       const today = new Date();
-      alert('존재하지 않는 데이터입니다, 오늘 날짜로 돌아갑니다.');
+      console.log('존재하지 않는 데이터입니다, 오늘 날짜로 돌아갑니다.');
       setDate(today);
       return;
     }
