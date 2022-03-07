@@ -23,7 +23,6 @@ const Body = () => {
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
   const [date, setDate] = useState(new Date());
-  const today = new Date();
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -75,11 +74,10 @@ const Body = () => {
     }
     setAnchorEl(null);
     getUsers();
-    // 굳이 rowData를 수정하지 않고 API get 시켜도 가능.
   };
 
   const getUsers = async () => {
-    if (vaildDay) return;
+    if (vaildDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat);
     const arrays = result.data;
@@ -118,8 +116,8 @@ const Body = () => {
             <Tab label="레드 팀" />
             <Tab label="블루 팀" />
           </Tabs>
-          {vaildDay(date, today) ? (
-            <WrongDay wrongType={vaildDay(date, today)} />
+          {vaildDay(date) ? (
+            <WrongDay wrongType={vaildDay(date)} />
           ) : (
             <>
               <DataGrid
