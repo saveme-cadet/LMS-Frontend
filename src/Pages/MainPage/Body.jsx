@@ -51,22 +51,32 @@ const Body = () => {
   const handleChangeCheck = async value => {
     const id = selectRowData[curFocus.id].id;
     const select = curFocus.select;
+    const today = new Date();
+    let result;
+
     console.log('value : ', value);
     console.log('select : ', select);
     if (value === 6 && rowData[id].vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
       setAnchorEl(null);
-
+      return;
+    }
+    if (
+      today.getFullYear() !== date.getFullYear() ||
+      today.getMonth() !== date.getMonth()
+    ) {
+      alert('지난 달 기록은 수정할 수 없습니다!');
+      setAnchorEl(null);
       return;
     }
     if (select === 'checkIn') {
-      const result = await AllTableService.putAllTableCheckIn({
+      result = await AllTableService.putAllTableCheckIn({
         userId: id + 1,
         checkIn: value,
         tableDay: format(date, 'yyyy-MM-dd'),
       });
     } else {
-      const result = await AllTableService.putAllTableCheckOut({
+      result = await AllTableService.putAllTableCheckOut({
         userId: id + 1,
         checkOut: value,
         tableDay: format(date, 'yyyy-MM-dd'),
@@ -80,8 +90,15 @@ const Body = () => {
     if (vaildDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat);
+    if (!result) {
+      const today = new Date();
+      alert('존재하지 않는 데이터입니다, 오늘 날짜로 돌아갑니다.');
+      setDate(today);
+      return;
+    }
     const arrays = result.data;
     console.log('array : ', arrays);
+
     const newArray = [];
     arrays.map((array, i) => {
       const newData = {
