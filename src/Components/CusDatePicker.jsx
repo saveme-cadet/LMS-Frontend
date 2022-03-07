@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { getDayName } from 'Utils';
 import DatePicker from 'react-datepicker';
 import { add, format } from 'date-fns';
 
@@ -10,6 +11,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import 'react-datepicker/dist/react-datepicker.css';
+// import { getDay } from 'date-fns/esm';
 
 const CusDatePicker = ({ date, setDate }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,6 +41,7 @@ const CusDatePicker = ({ date, setDate }) => {
     }
     setDate(newDate);
   };
+
   const isWeekday = date => {
     const day = date.getDay();
     return day !== 0 && day !== 6;
@@ -46,7 +49,9 @@ const CusDatePicker = ({ date, setDate }) => {
 
   return (
     <div>
-      <h1>{format(date, 'yyyy/MM/dd')}</h1>
+      <h1>
+        {format(date, 'yyyy/MM/dd')} {getDayName(date.getDay())}
+      </h1>
 
       <KeyboardDoubleArrowLeftIcon
         onClick={() => {

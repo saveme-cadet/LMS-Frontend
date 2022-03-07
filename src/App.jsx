@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
+  AdminPage,
   MainPage,
   MinePage,
-  ProfilePage,
+  MyPage,
   ErrorPage,
   TodoPage,
-  StatsPage,
 } from 'Pages';
 import { SideBar } from 'Components';
 
@@ -19,11 +19,13 @@ const App = () => {
           <Routes>
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/" element={<MainPage />} />
-            <Route path="/check" element={<MainPage />} />
+
+            <Route path="/my" element={<MyPage />} />
             <Route path="/todo" element={<TodoPage />} />
-            <Route path="/stats" element={<StatsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/mine" element={<MinePage />} />
+            <Route path="/admin" element={<AdminPage />} />
+
+            {/* <Route path="/stats" element={<StatsPage />} /> */}
           </Routes>
         </Router>
       </Styled.Golbal>
