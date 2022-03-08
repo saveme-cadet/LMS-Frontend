@@ -123,15 +123,15 @@ const ProgressBar = ({
 const DisplayComponent = props => {
   let SECONDS_STATUS;
   if (props.status === '1') {
-    SECONDS_STATUS = props.difference;
+    SECONDS_STATUS = Number(props.savedSeconds) + Number(props.dif);
   } else {
-    SECONDS_STATUS = props.savedSeconds;
+    SECONDS_STATUS = Number(props.savedSeconds);
   }
   const milliSecond = SECONDS_STATUS % 100;
-  const second = Math.floor(SECONDS_STATUS / 100) % 60;
-  const minute = Math.floor(SECONDS_STATUS / 100 / 60) % 60;
-  const hour = Math.floor(SECONDS_STATUS / 100 / 60 / 60);
-  const propsSecond = Math.floor(SECONDS_STATUS / 100);
+  const second = Math.floor(SECONDS_STATUS) % 60;
+  const minute = Math.floor(SECONDS_STATUS / 60) % 60;
+  const hour = Math.floor(SECONDS_STATUS / 60 / 60);
+  const propsSecond = Math.floor(SECONDS_STATUS);
 
   const DigitalText = () => {
     return (
@@ -157,13 +157,13 @@ const DisplayComponent = props => {
             {minute >= 10 ? minute : '0' + minute}:
             {second >= 10 ? second : '0' + second}
           </span>
-          <span
+          {/* <span
             style={{
               fontSize: 40,
             }}
           >
             {milliSecond >= 10 ? milliSecond : '0' + milliSecond}
-          </span>
+          </span> */}
         </Box>
       </Box>
     );
