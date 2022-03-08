@@ -53,11 +53,11 @@ const Body = () => {
     const select = curFocus.select;
     const today = new Date();
     let result;
+    console.log('id : ', id, value);
+    console.log('row', selectRowData);
+    const selectUser = selectRowData.find(array => array.id === id);
 
-    console.log('focus : ', curFocus.id);
-    console.log('id : ', id);
-
-    if (value === 6 && rowData[id].vacation === 0) {
+    if (value === 6 && selectUser.vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
       setAnchorEl(null);
       return;

@@ -21,7 +21,6 @@ const checkCloumns = [
       return <Chip label={params.value} className={params.value} />;
     },
   },
-
   {
     field: 'name',
     headerName: '이름',
@@ -29,14 +28,14 @@ const checkCloumns = [
     width: 120,
   },
   {
-    field: 'attendScore',
-    headerName: '결석 점수',
+    field: 'participateScore',
+    headerName: '출석 횟수',
     type: 'number',
     width: 120,
   },
   {
-    field: 'participateScore',
-    headerName: '출석 횟수',
+    field: 'attendScore',
+    headerName: '결석 점수',
     type: 'number',
     width: 120,
   },
