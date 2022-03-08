@@ -6,7 +6,7 @@ const AllTableUrl = path => {
 
 const AllTableService = {
   putAllTableCheckIn: async body => {
-    const url = AllTableUrl('modifycheckin?date=2022-03-04');
+    const url = AllTableUrl('checkin?date=2022-03-04');
     let response;
     try {
       response = await instance.put(url, body);
@@ -17,7 +17,7 @@ const AllTableService = {
   },
 
   putAllTableCheckOut: async body => {
-    const url = AllTableUrl('modifycheckout?date=2022-03-04');
+    const url = AllTableUrl('checkout?date=2022-03-04');
     let response;
     try {
       response = await instance.put(url, body);
