@@ -21,7 +21,6 @@ const SideBar = () => {
     <>
       <Tabs orientation="vertical" value={curPage} onChange={handleChangePage}>
         <Tab label="출결표" value="" />
-
         <Tab label="오늘 할 일" value="todo" />
         <Tab label="아오지 탄광" value="mine" />
         <Tab label="머슴" value="admin" />

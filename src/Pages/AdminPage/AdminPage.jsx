@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { UserInfoService, AllTableService, testAPIService } from 'Network';
+import { UserInfoService, testAPIService, TodoService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
@@ -43,25 +43,24 @@ const AdminPage = () => {
   };
 
   const handleChangeAttend = async status => {
-    const result = await UserInfoService.putModifyAttend(selectUserId, status);
+    const result = await UserInfoService.putAttend(selectUserId, status);
     getUser();
     setSelectUserId(null);
   };
   const handleChangeTeam = async team => {
-    const result = await UserInfoService.putModifyTeam(selectUserId, team);
+    const result = await UserInfoService.putTeam(selectUserId, team);
     getUser();
     setSelectUserId(null);
   };
   const handleChangeRole = async role => {
-    const result = await UserInfoService.putModifyRole(selectUserId, role);
+    const result = await UserInfoService.putRole(selectUserId, role);
     getUser();
     setSelectUserId(null);
   };
   const handleChangeVacation = async value => {
     let result;
-    if (value > 0)
-      result = await UserInfoService.putModifyVacationPlus(selectUserId);
-    else result = await UserInfoService.putModifyVacationMinus(selectUserId);
+    if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
+    else result = await UserInfoService.putVacationMinus(selectUserId);
     getUser();
     setSelectUserId(null);
   };

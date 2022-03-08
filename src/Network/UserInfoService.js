@@ -38,7 +38,7 @@ const UserInfoService = {
   //   }
   //   return response;
   // },
-  putModifyAttend: async (id, status) => {
+  putAttend: async (id, status) => {
     const url = UserInfoUrl(`attendstatus`);
     const body = { userId: id, attendStatus: status };
     let response;
@@ -50,7 +50,7 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyTeam: async (id, team) => {
+  putTeam: async (id, team) => {
     const url = UserInfoUrl(`team`);
     const body = { userId: id, team: team };
     let response;
@@ -62,7 +62,7 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyRole: async (id, role) => {
+  putRole: async (id, role) => {
     const url = UserInfoUrl(`role`);
     const body = { userId: id, role: role };
     let response;
@@ -74,7 +74,7 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyVacationPlus: async id => {
+  putVacationPlus: async id => {
     const url = UserInfoUrl(`vacationplus`);
     const body = { userId: id };
     let response;
@@ -85,7 +85,7 @@ const UserInfoService = {
     }
     return response;
   },
-  putModifyVacationMinus: async id => {
+  putVacationMinus: async id => {
     const url = UserInfoUrl(`vacationminus`);
     const body = { userId: id };
     let response;
