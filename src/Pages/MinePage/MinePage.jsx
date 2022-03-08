@@ -1,5 +1,9 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-
+import * as React from 'react';
+import Timer from './Timer';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const Child = ({ number, array }) => {
@@ -17,6 +21,14 @@ const Child = ({ number, array }) => {
 };
 
 const MinePage = () => {
+<<<<<<< HEAD
+  return (
+    <Container maxWidth="90%">
+      <Box sx={{ height: '100vh' }}>
+        <Timer />
+      </Box>
+    </Container>
+=======
   const [stateNum, setStateNum] = useState(0);
   const [array, setArray] = useState(['str']);
   let normalNum = 0;
@@ -51,6 +63,8 @@ const MinePage = () => {
       <Child number={stateNum} array={array} />
       nor : {normalNum}
     </div>
+>>>>>>> origin/dev
   );
 };
+
 export default MinePage;
