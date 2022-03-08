@@ -20,6 +20,11 @@ const Check = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
     >
       <List>
         <ListItem disablePadding>
+          <ListItemButton onClick={() => onChangeCheck(0)}>
+            <ListItemText primary="null" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton onClick={() => onChangeCheck(1)}>
             <ListItemText primary="출석" />
           </ListItemButton>
