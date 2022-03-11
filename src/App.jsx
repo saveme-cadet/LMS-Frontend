@@ -1,14 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { MainPage, ErrorPage } from "./Pages";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  AdminPage,
+  MainPage,
+  MinePage,
+  MyPage,
+  ErrorPage,
+  TodoPage,
+} from 'Pages';
+import { SideBar } from 'Components';
 
+import Styled from 'Styled/Global.styled';
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/*" element={<ErrorPage />} />
-        <Route path="/" element={<MainPage />} />
-      </Routes>
-    </Router>
+    <>
+      <Styled.Golbal>
+        <Router>
+          <SideBar />
+          <Routes>
+            <Route path="/*" element={<ErrorPage />} />
+            <Route path="/" element={<MainPage />} />
+
+            <Route path="/todo" element={<TodoPage />} />
+            <Route path="/mine" element={<MinePage />} />
+            <Route path="/admin" element={<AdminPage />} />
+
+            {/* <Route path="/stats" element={<StatsPage />} /> */}
+          </Routes>
+        </Router>
+      </Styled.Golbal>
+    </>
   );
 };
 
