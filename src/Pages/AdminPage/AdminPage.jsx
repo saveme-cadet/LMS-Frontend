@@ -52,6 +52,11 @@ const AdminPage = () => {
     getUser();
     setSelectUserId(null);
   };
+
+  const handleChangeShuffleTeam = async (userId, team) => {
+    const result = await UserInfoService.putTeam(userId, team);
+    getUser();
+  };
   const handleChangeRole = async role => {
     const result = await UserInfoService.putRole(selectUserId, role);
     getUser();
@@ -167,11 +172,10 @@ const AdminPage = () => {
         {rowData && (
           <ShakeTeam
             attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+            onClickChangeShuffleTeam={handleChangeShuffleTeam}
           />
         )}
       </Styled.AdminShakeUser>
-
-      {/* <button onClick={temp}>일회용</button> */}
     </Styled.AdminBackground>
   );
 };
