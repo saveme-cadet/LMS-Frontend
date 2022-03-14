@@ -48,7 +48,16 @@ const SelectedUser = ({
           <Button variant="contained" onClick={() => onClickChangeVacation(-1)}>
             휴가 - 0.5
           </Button>
-          <Button onClick={onClickDeleteUser}>유저 삭제</Button>{' '}
+          <Button
+            onClick={() =>
+              onClickDeleteUser({
+                userName: userInfo.userName,
+                userId: userInfo.id,
+              })
+            }
+          >
+            유저 삭제
+          </Button>{' '}
         </>
       ) : (
         <>

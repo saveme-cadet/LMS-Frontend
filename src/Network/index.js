@@ -1,6 +1,6 @@
 import UserInfoService from './UserInfoService';
 import AllTableService from './AllTableService';
 import TodoService from './TodoService';
-import testAPIService from './testAPI';
+import CRUDUserService from './CRUDUserService';
 
-export { UserInfoService, AllTableService, TodoService, testAPIService };
+export { UserInfoService, AllTableService, TodoService, CRUDUserService };
