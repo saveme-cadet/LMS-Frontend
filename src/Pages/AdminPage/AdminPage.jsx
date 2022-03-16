@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { UserInfoService, TodoService, CRUDUserService } from 'Network';
+import { UserInfoService, CRUDUserService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';

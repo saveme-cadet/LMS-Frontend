@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Divider } from '@mui/material';
+import {TodoService} from 'Network';
 
 const ProgressBar = props => {
   return (
@@ -71,7 +72,14 @@ function TodoPage() {
   const [finished, setFinished] = useState([]);
   const [id, setId] = useState(0);
   const [process, setProcess] = useState(0);
-  const onSubmit = event => {
+  const onSubmit = async(event) => {
+    const result = await TodoService.deleteTodo({
+      "writerId": 1,
+      "todoId": 2,
+      "todoDay": "2022-03-16"
+    });
+    console.log(result);
+
     event.preventDefault();
     if (newToDo.content === '') {
       return;
