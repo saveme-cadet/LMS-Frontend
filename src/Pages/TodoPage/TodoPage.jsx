@@ -1,24 +1,37 @@
 import { useState, useEffect } from 'react';
 import Styled from './TodoPage.styled';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { blue, red } from '@mui/material/colors';
 import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress, {
+  linearProgressClasses,
+} from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import { Divider } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ProgressBar = props => {
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    },
+  }));
+  let proportion = 0;
+  if (props.total === 0 && props.checked === 0) {
+    proportion = 0;
+  } else proportion = (props.checked / props.total) * 100;
+
   return (
     <Box
       sx={{
@@ -26,14 +39,6 @@ const ProgressBar = props => {
         display: 'inline-flex',
       }}
     >
-      <CircularProgress
-        variant="determinate"
-        {...props}
-        style={{
-          width: 100,
-          height: 100,
-        }}
-      />
       <Box
         sx={{
           top: 0,
@@ -44,6 +49,7 @@ const ProgressBar = props => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          width: 500,
         }}
       >
         <Typography
@@ -52,240 +58,271 @@ const ProgressBar = props => {
           color="text.secondary"
           style={{
             fontSize: 30,
+            width: 100,
           }}
         >
-          {`${Math.round(props.value)}%`}
+          {props.checked} / {props.total}
         </Typography>
+        <BorderLinearProgress
+          style={{ width: 300 }}
+          variant="determinate"
+          value={proportion.toFixed(0)}
+        />
       </Box>
     </Box>
   );
 };
 
 function TodoPage() {
-  const [newToDo, setNewToDo] = useState({
+  const [toDo, setToDo] = useState({
     number: 0,
     content: '',
     checked: false,
   });
-  const [ongoing, setOngoing] = useState([]);
-  const [finished, setFinished] = useState([]);
-  const [id, setId] = useState(0);
-  const [process, setProcess] = useState(0);
+  const [toDos, setToDos] = useState([]);
+  const [number, setNumber] = useState(0);
+  const [checked, setChecked] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const onSubmit = event => {
-    event.preventDefault();
-    if (newToDo.content === '') {
+    event.preventDefault(); //refresh 방지
+    if (toDo.content === '') {
+      //empty input 방지
       return;
     }
-    setOngoing(currentArray => [...currentArray, newToDo]);
-    setId(current => current + 1);
-    setNewToDo({
-      id: 0,
+    setToDos(currentArray => [toDo, ...currentArray]);
+    setNumber(current => current + 1);
+    setToDo({
+      number: 0,
       content: '',
       checked: false,
     });
   };
   const onChange = event => {
-    setNewToDo({
-      id: id,
+    setToDo({
+      number: number,
       content: event.target.value,
       checked: false,
     });
   };
-  const changeToFinished = event => {
+  const alterCheck = event => {
+    // console.log(event.target.parentElement.nextSibling);
     if (
-      ongoing.find(
-        ongoing =>
-          parseInt(event.target.nextSibling.nextSibling.id) === ongoing.id,
+      toDos.find(
+        toDo =>
+          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
       ).checked === false
     ) {
-      ongoing.find(
-        ongoing =>
-          parseInt(event.target.nextSibling.nextSibling.id) === ongoing.id,
+      toDos.find(
+        toDo =>
+          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
       ).checked = true;
-      setFinished(currentArray => [
-        ...currentArray,
-        ongoing.find(
-          ongoing =>
-            parseInt(event.target.nextSibling.nextSibling.id) === ongoing.id,
-        ),
-      ]);
-      setOngoing(
-        ongoing.filter(
-          ongoing =>
-            parseInt(event.target.nextSibling.nextSibling.id) !== ongoing.id,
-        ),
-      );
-    }
-  };
-  const changeToOngoing = event => {
-    if (
-      finished.find(
-        finished =>
-          parseInt(event.target.nextSibling.nextSibling.id) === finished.id,
+    } else if (
+      toDos.find(
+        toDo =>
+          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
       ).checked === true
     ) {
-      finished.find(
-        finished =>
-          parseInt(event.target.nextSibling.nextSibling.id) === finished.id,
+      toDos.find(
+        toDo =>
+          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
       ).checked = false;
-      setOngoing(currentArray => [
-        ...currentArray,
-        finished.find(
-          finished =>
-            parseInt(event.target.nextSibling.nextSibling.id) === finished.id,
+    }
+    setToDos([...toDos]); //re-rendering
+  };
+
+  const deleteToDo = event => {
+    if (event.target.tagName === 'BUTTON') {
+      // console.log('button');
+      setToDos(
+        toDos.filter(
+          toDo => parseInt(event.target.previousSibling.id) !== toDo.number,
         ),
-      ]);
-      setFinished(
-        finished.filter(
-          finished =>
-            parseInt(event.target.nextSibling.nextSibling.id) !== finished.id,
+      );
+    } else if (event.target.tagName === 'svg') {
+      // console.log('svg');
+      setToDos(
+        toDos.filter(
+          toDo =>
+            parseInt(event.target.parentElement.previousSibling.id) !==
+            toDo.number,
+        ),
+      );
+    } else if (event.target.tagName === 'path') {
+      // console.log('path');
+      setToDos(
+        toDos.filter(
+          toDo =>
+            parseInt(
+              event.target.parentElement.parentElement.previousSibling.id,
+            ) !== toDo.number,
         ),
       );
     }
   };
-  const deleteOngoing = event => {
-    setOngoing(
-      ongoing.filter(
-        ongoing => parseInt(event.target.nextSibling.id) !== ongoing.id,
-      ),
-    );
-  };
-  const deleteFinished = event => {
-    setFinished(
-      finished.filter(
-        finished => parseInt(event.target.nextSibling.id) !== finished.id,
-      ),
-    );
-  };
+
+  // useEffect(() => {
+  //   console.log(toDos);
+  // }, [toDos]);
+
   useEffect(() => {
-    const total = ongoing.length + finished.length;
+    const total = toDos.length;
     if (total === 0) {
-      setProcess(0);
+      setTotal(0);
+      setChecked(0);
       return;
     }
-    console.log('ongoing', ongoing);
-    console.log('finished', finished);
-    setProcess(((finished.length / total) * 100).toFixed(0));
-  }, [ongoing, finished]);
+    let checked = 0;
+    for (let i = 0; i < toDos.length; i++) {
+      if (toDos[i].checked === true) checked++;
+    }
+    console.log(toDos);
+    setTotal(total);
+    setChecked(checked);
+  }, [toDos]);
 
   return (
-    <Container maxWidth="90%">
-      <Box sx={{ height: '100vh' }}>
-        <h1>To-Do List</h1>
-        <br />
-        <div>
+    <Styled.CusDiv
+      maxWidth="90%"
+      sx={{
+        flexDirection: 'column',
+      }}
+    >
+      <Box
+        sx={{
+          flexDirection: 'column',
+          // display: 'flex',
+          // alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 30,
+          border: 1,
+          borderColor: '#C0C0C0',
+          boxShadow: 1,
+          borderRadius: 5,
+          // minWidth: '40%',
+          maxWidth: '100%',
+          minHeight: 780,
+        }}
+      >
+        <div style={{ minHeight: 700 }}>
           <form onSubmit={onSubmit}>
-            <TextField
-              style={{
-                width: 500,
-              }}
-              onChange={onChange}
-              value={newToDo.content}
-              type="text"
-              placeholder="오늘 할 일을 입력하세요."
-            />
-            <Button
-              style={{
-                height: 55,
-              }}
-              variant="contained"
-              onClick={onSubmit}
-            >
-              추가
-            </Button>
+            <div>
+              <TextField
+                style={{
+                  width: 500,
+                  // fontSize: 12,
+                }}
+                onChange={onChange}
+                value={toDo.content}
+                type="text"
+                placeholder="오늘 할 일을 입력하세요."
+              />
+              &nbsp;
+              <Button
+                style={{
+                  width: 100,
+                  height: 55,
+                  fontSize: 15,
+                }}
+                variant="contained"
+                onClick={onSubmit}
+              >
+                추가
+              </Button>
+            </div>
           </form>
-          {/* <h1>진척도 : {process} %</h1> */}
-          <ProgressBar value={process} />
-          <Styled.CusDiv>
-            <br />
-            <Box
-              sx={{
-                width: '100%',
-                maxWidth: 360,
-                bgcolor: 'background.paper',
-              }}
-            >
-              <ul>
-                <h2>진행 중</h2>
-                {ongoing.map((item, index) => (
-                  <div key={index}>
-                    <Button variant="contained" onClick={changeToFinished}>
-                      체크
-                    </Button>
-                    <Button variant="outlined" onClick={deleteOngoing}>
-                      삭제
-                    </Button>
-                    {item.checked === false ? (
-                      <ListItem disablePadding id={item.id}>
-                        <ListItemButton>
-                          <ListItemText primary={item.content} />
-                        </ListItemButton>
-                      </ListItem>
-                    ) : (
-                      <ListItem
-                        disablePadding
-                        id={item.id}
-                        style={{
-                          textDecorationLine: 'line-through',
-                          color: 'gray',
-                        }}
-                      >
-                        <ListItemButton>
-                          <ListItemText primary={item.content} />
-                        </ListItemButton>
-                      </ListItem>
-                    )}
-                  </div>
-                ))}
-              </ul>
-            </Box>
-            <br />
-            <Box
-              sx={{
-                width: '100%',
-                maxWidth: 360,
-                bgcolor: 'background.paper',
-              }}
-            >
-              <ul>
-                <h2>완료</h2>
-                {finished.map((item, index) => (
-                  <div key={index}>
-                    <Button variant="contained" onClick={changeToOngoing}>
-                      체크
-                    </Button>
-                    <Button variant="outlined" onClick={deleteFinished}>
-                      삭제
-                    </Button>
-                    {item.checked === false ? (
-                      <ListItem disablePadding id={item.id}>
-                        <ListItemButton>
-                          <ListItemText primary={item.content} />
-                        </ListItemButton>
-                      </ListItem>
-                    ) : (
-                      <ListItem
-                        disablePadding
-                        id={item.id}
-                        style={{
-                          textDecorationLine: 'line-through',
-                          color: 'gray',
-                        }}
-                      >
-                        <ListItemButton>
-                          <ListItemText primary={item.content} />
-                        </ListItemButton>
-                      </ListItem>
-                    )}
-                  </div>
-                ))}
-              </ul>
-            </Box>
-          </Styled.CusDiv>
+          <ul>
+            {toDos.map((item, index) => (
+              <div key={index}>
+                <div key={index}>
+                  <Checkbox onClick={alterCheck} checked={item.checked} />
+                  {item.checked === false ? (
+                    <span style={{ fontSize: 20 }} id={item.number}>
+                      {item.content}
+                    </span>
+                  ) : (
+                    <span
+                      id={item.number}
+                      style={{
+                        textDecorationLine: 'line-through',
+                        color: 'gray',
+                        fontSize: 20,
+                      }}
+                    >
+                      {item.content}
+                    </span>
+                  )}
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    onClick={deleteToDo}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </div>
+              </div>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <ProgressBar style={{ width: 100 }} total={total} checked={checked} />
         </div>
       </Box>
-    </Container>
+      <Box
+        sx={{
+          flexDirection: 'column',
+          // display: 'flex',
+          // alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 30,
+          border: 1,
+          borderColor: '#C0C0C0',
+          boxShadow: 1,
+          borderRadius: 5,
+          // minWidth: '40%',
+          maxWidth: '100%',
+          minHeight: 780,
+        }}
+      >
+        <span>👀 다른 카뎃 구경하기</span>
+        {/* <Styled.CusDiv> */}
+
+        <Box
+          sx={{
+            flexDirection: 'column',
+            // display: 'flex',
+            // alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 30,
+            border: 1,
+            borderColor: '#C0C0C0',
+            boxShadow: 1,
+            borderRadius: 5,
+            // minWidth: '40%',
+            maxWidth: '48%',
+            minHeight: 340,
+          }}
+        ></Box>
+        <br />
+        <Box
+          sx={{
+            flexDirection: 'column',
+            // display: 'flex',
+            // alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 30,
+            border: 1,
+            borderColor: '#C0C0C0',
+            boxShadow: 1,
+            borderRadius: 5,
+            // minWidth: '40%',
+            maxWidth: '48%',
+            minHeight: 340,
+          }}
+        ></Box>
+        {/* </Styled.CusDiv> */}
+      </Box>
+    </Styled.CusDiv>
   );
 }
-
 export default TodoPage;
