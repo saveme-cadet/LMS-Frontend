@@ -14,6 +14,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { TodoService } from 'Network';
+import { format } from 'date-fns';
+
 const ProgressBar = props => {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -80,23 +83,35 @@ function TodoPage() {
     checked: false,
   });
   const [toDos, setToDos] = useState([]);
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(null);
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
+  const today = new Date();
 
-  const onSubmit = event => {
+  const onSubmit = async (event) => {
     event.preventDefault(); //refresh 방지
     if (toDo.content === '') {
       //empty input 방지
-      return;
+      return ;
     }
-    setToDos(currentArray => [toDo, ...currentArray]);
+const nextId = toDos[toDos.length - 1].todoId;
+console.log("next : ", nextId);
+
+    const result = await TodoService.postTodo({
+      "writerId": 1,
+      "todoId": nextId + 1,
+      "title": toDo.content,
+      "titleCheck": false,
+      "todoDay": format(today, 'yyyy-MM-dd'),
+    });
+    console.log(result);
     setNumber(current => current + 1);
     setToDo({
       number: 0,
       content: '',
       checked: false,
     });
+  
   };
   const onChange = event => {
     setToDo({
@@ -105,30 +120,10 @@ function TodoPage() {
       checked: false,
     });
   };
-  const alterCheck = event => {
-    // console.log(event.target.parentElement.nextSibling);
-    if (
-      toDos.find(
-        toDo =>
-          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
-      ).checked === false
-    ) {
-      toDos.find(
-        toDo =>
-          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
-      ).checked = true;
-    } else if (
-      toDos.find(
-        toDo =>
-          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
-      ).checked === true
-    ) {
-      toDos.find(
-        toDo =>
-          parseInt(event.target.parentElement.nextSibling.id) === toDo.number,
-      ).checked = false;
-    }
-    setToDos([...toDos]); //re-rendering
+  const alterCheck = async(index) => {
+    toDos[index].titleCheck = !toDos[index].titleCheck;
+    const result = await TodoService.putTodo(toDos[index]);
+    getTodos();
   };
 
   const deleteToDo = event => {
@@ -165,8 +160,22 @@ function TodoPage() {
   //   console.log(toDos);
   // }, [toDos]);
 
+const getTodos = async () => {
+  const result = await TodoService.getTodo(1, format(today, 'yyyy-MM-dd'));
+  setToDos(result.data);
+  setNumber(toDos.length);
+
+  console.log(toDos.length);
+
+}
+
+useEffect(() => {
+  getTodos();
+}, []);
+
   useEffect(() => {
     const total = toDos.length;
+
     if (total === 0) {
       setTotal(0);
       setChecked(0);
@@ -174,7 +183,7 @@ function TodoPage() {
     }
     let checked = 0;
     for (let i = 0; i < toDos.length; i++) {
-      if (toDos[i].checked === true) checked++;
+      if (toDos[i].titleCheck === true) checked++;
     }
     console.log(toDos);
     setTotal(total);
@@ -235,21 +244,21 @@ function TodoPage() {
             {toDos.map((item, index) => (
               <div key={index}>
                 <div key={index}>
-                  <Checkbox onClick={alterCheck} checked={item.checked} />
-                  {item.checked === false ? (
-                    <span style={{ fontSize: 20 }} id={item.number}>
-                      {item.content}
+                  <Checkbox onClick={() => alterCheck(index)} checked={item.titleCheck} />
+                  {item.titleCheck === false ? (
+                    <span style={{ fontSize: 20 }} id={item.todoId}>
+                      {item.title}
                     </span>
                   ) : (
                     <span
-                      id={item.number}
+                      id={item.todoId}
                       style={{
                         textDecorationLine: 'line-through',
                         color: 'gray',
                         fontSize: 20,
                       }}
                     >
-                      {item.content}
+                      {item.title}
                     </span>
                   )}
                   <IconButton
