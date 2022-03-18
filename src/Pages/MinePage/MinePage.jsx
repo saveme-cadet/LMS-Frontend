@@ -7,20 +7,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useEffect } from 'react';
 
-const Child = ({ number, array }) => {
-  useEffect(() => {
-    console.log('child change');
-  });
-  return (
-    <div>
-      num : {number}
-      {array.map((e, i) => {
-        return <div key={i}>temp</div>;
-      })}
-    </div>
-  );
-};
-
 const MinePage = () => {
   return (
     <Container maxWidth="90%">

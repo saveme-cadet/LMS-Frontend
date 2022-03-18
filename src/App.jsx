@@ -20,7 +20,6 @@ const App = () => {
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/" element={<MainPage />} />
 
-            <Route path="/my" element={<MyPage />} />
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/mine" element={<MinePage />} />
             <Route path="/admin" element={<AdminPage />} />

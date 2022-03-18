@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { UserInfoService, AllTableService, testAPIService } from 'Network';
+import { UserInfoService, CRUDUserService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
@@ -15,7 +15,7 @@ import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
-  const [select, setSelect] = useState(null);
+  const [selectUserId, setSelectUserId] = useState(null);
   const [rowData, setRowData] = useState(null);
 
   const [tab, setTab] = useState(0);
@@ -38,43 +38,53 @@ const AdminPage = () => {
   };
 
   const handleCellClick = e => {
-    setSelect(e.id);
+    setSelectUserId(e.id);
+    console.log('id : ', e.id);
   };
 
   const handleChangeAttend = async status => {
-    const result = await UserInfoService.putModifyAttend(select, status);
+    const result = await UserInfoService.putAttend(selectUserId, status);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
   };
   const handleChangeTeam = async team => {
-    const result = await UserInfoService.putModifyTeam(select, team);
+    const result = await UserInfoService.putTeam(selectUserId, team);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
+  };
+
+  const handleChangeShuffleTeam = async (userId, team) => {
+    const result = await UserInfoService.putTeam(userId, team);
+    getUser();
   };
   const handleChangeRole = async role => {
-    const result = await UserInfoService.putModifyRole(select, role);
+    const result = await UserInfoService.putRole(selectUserId, role);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
   };
   const handleChangeVacation = async value => {
     let result;
-    if (value > 0) result = await UserInfoService.putModifyVacationPlus(select);
-    else result = await UserInfoService.putModifyVacationMinus(select);
+    if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
+    else result = await UserInfoService.putVacationMinus(selectUserId);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
   };
 
   const handleCreateUser = async data => {
-    const result = await testAPIService.postUser(data);
+    const result = await CRUDUserService.postUser(data);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
   };
 
-  const handleClickDeleteUser = async () => {
-    // const result = await UserInfoService.deleteUserInfo(select);
-    alert('미구현');
+  const handleGetUser = async () => {
+    const result = await CRUDUserService.getUser();
+    console.log(result.data);
+  };
+
+  const handleDeleteUser = async data => {
+    const result = await CRUDUserService.deleteUser(data);
     getUser();
-    setSelect(null);
+    setSelectUserId(null);
   };
 
   const getUser = async () => {
@@ -82,9 +92,9 @@ const AdminPage = () => {
     setUsers(result.data);
     const newArray = [];
 
-    result.data.map((array, i) => {
+    result.data.map(array => {
       const newData = {
-        id: i, // writer_id로 보내고 API에서도 +1이 아니라 그냥 보내는 걸로
+        id: array.userId,
         userName: array.userName,
         attendeStatus: array.attendeStatus ? '참가' : '불참',
         team: array.team,
@@ -140,14 +150,14 @@ const AdminPage = () => {
           <h1>멤버 정보 수정</h1>
           <h2>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h2>
 
-          {select !== null && (
+          {selectUserId !== null && (
             <SelectedUser
-              userInfo={rowData[select]}
+              userInfo={rowData.find(array => array.id === selectUserId)}
               onClickChangeAttend={handleChangeAttend}
               onClickChangeTeam={handleChangeTeam}
               onClickChangeRole={handleChangeRole}
               onClickChangeVacation={handleChangeVacation}
-              onClickDeleteUser={handleClickDeleteUser}
+              onClickDeleteUser={handleDeleteUser}
             />
           )}
         </div>
@@ -155,17 +165,17 @@ const AdminPage = () => {
 
       <Styled.AdminAddUser>
         <NewUserForm callbackSubmit={handleCreateUser} />
+        <button onClick={handleGetUser}>유저 얻기</button>
       </Styled.AdminAddUser>
 
       <Styled.AdminShakeUser>
         {rowData && (
           <ShakeTeam
             attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+            onClickChangeShuffleTeam={handleChangeShuffleTeam}
           />
         )}
       </Styled.AdminShakeUser>
-
-      {/* <button onClick={temp}>일회용</button> */}
     </Styled.AdminBackground>
   );
 };

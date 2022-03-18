@@ -91,6 +91,7 @@ const CusDatePicker = ({ date, setDate }) => {
           inline
           todayButton="오늘"
           filterDate={isWeekday}
+          maxDate={new Date()}
         />
       </Popover>
     </div>
