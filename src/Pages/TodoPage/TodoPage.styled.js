@@ -3,9 +3,6 @@ import Box from '@mui/material/Box';
 
 const CusDiv = styled.div`
   column-count: 2;
-  ul {
-    break-after: column;
-  }
 `;
 
 const CusBox = styled(Box)`

@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useEffect } from 'react';
 
 const MinePage = () => {
   return (
