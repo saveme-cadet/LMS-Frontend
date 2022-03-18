@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { UserInfoService, testAPIService, TodoService } from 'Network';
+import { UserInfoService, CRUDUserService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
@@ -52,6 +52,11 @@ const AdminPage = () => {
     getUser();
     setSelectUserId(null);
   };
+
+  const handleChangeShuffleTeam = async (userId, team) => {
+    const result = await UserInfoService.putTeam(userId, team);
+    getUser();
+  };
   const handleChangeRole = async role => {
     const result = await UserInfoService.putRole(selectUserId, role);
     getUser();
@@ -66,14 +71,18 @@ const AdminPage = () => {
   };
 
   const handleCreateUser = async data => {
-    const result = await testAPIService.postUser(data);
+    const result = await CRUDUserService.postUser(data);
     getUser();
     setSelectUserId(null);
   };
 
-  const handleClickDeleteUser = async () => {
-    // const result = await UserInfoService.deleteUserInfo(selectUserId);
-    alert('미구현');
+  const handleGetUser = async () => {
+    const result = await CRUDUserService.getUser();
+    console.log(result.data);
+  };
+
+  const handleDeleteUser = async data => {
+    const result = await CRUDUserService.deleteUser(data);
     getUser();
     setSelectUserId(null);
   };
@@ -148,7 +157,7 @@ const AdminPage = () => {
               onClickChangeTeam={handleChangeTeam}
               onClickChangeRole={handleChangeRole}
               onClickChangeVacation={handleChangeVacation}
-              onClickDeleteUser={handleClickDeleteUser}
+              onClickDeleteUser={handleDeleteUser}
             />
           )}
         </div>
@@ -156,17 +165,17 @@ const AdminPage = () => {
 
       <Styled.AdminAddUser>
         <NewUserForm callbackSubmit={handleCreateUser} />
+        <button onClick={handleGetUser}>유저 얻기</button>
       </Styled.AdminAddUser>
 
       <Styled.AdminShakeUser>
         {rowData && (
           <ShakeTeam
             attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+            onClickChangeShuffleTeam={handleChangeShuffleTeam}
           />
         )}
       </Styled.AdminShakeUser>
-
-      {/* <button onClick={temp}>일회용</button> */}
     </Styled.AdminBackground>
   );
 };
