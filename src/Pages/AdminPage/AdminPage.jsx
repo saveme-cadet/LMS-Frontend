@@ -43,13 +43,17 @@ const AdminPage = () => {
     console.log('id : ', e.id);
   };
 
-  const handleChangeAttend = async status => {
-    const result = await UserInfoService.putAttend(selectUserId, status);
+  const handleChangeAttend = async event => {
+    const value = event.target.value === '참가' ? 1 : 0;
+    const result = await UserInfoService.putAttend(selectUserId, value);
     getUser();
     setSelectUserId(null);
   };
-  const handleChangeTeam = async team => {
-    const result = await UserInfoService.putTeam(selectUserId, team);
+  const handleChangeTeam = async event => {
+    const result = await UserInfoService.putTeam(
+      selectUserId,
+      event.target.value,
+    );
     getUser();
     setSelectUserId(null);
   };
@@ -58,8 +62,11 @@ const AdminPage = () => {
     const result = await UserInfoService.putTeam(userId, team);
     getUser();
   };
-  const handleChangeRole = async role => {
-    const result = await UserInfoService.putRole(selectUserId, role);
+  const handleChangeRole = async event => {
+    const result = await UserInfoService.putRole(
+      selectUserId,
+      event.target.value,
+    );
     getUser();
     setSelectUserId(null);
   };
