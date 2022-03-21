@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const MainBackground = styled.div`
   // position
   position: absolute;
-  top: 0px;
+  top: 5em;
   left: 7em;
 
   // layout

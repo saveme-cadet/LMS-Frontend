@@ -25,6 +25,14 @@ const Golbal = styled.div`
   height: 100%;
   display: flex;
   flex-direction: horizontal;
+  .show-today {
+    text-decoration: underline;
+    text-underline-position: under;
+    margin-left: 1em;
+  }
+  .change-today {
+    margin-left: 4em;
+  }
 `;
 
 const GlobalStyled = { ProfileBackgroundDiv, Golbal };

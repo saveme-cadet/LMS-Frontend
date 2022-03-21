@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import { getDayName } from 'Utils';
 import DatePicker from 'react-datepicker';
-import { add, format } from 'date-fns';
+import { add } from 'date-fns';
 
 import Popover from '@mui/material/Popover';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -11,7 +10,6 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import 'react-datepicker/dist/react-datepicker.css';
-// import { getDay } from 'date-fns/esm';
 
 const CusDatePicker = ({ date, setDate }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,12 +46,9 @@ const CusDatePicker = ({ date, setDate }) => {
   };
 
   return (
-    <div>
-      <h1>
-        {format(date, 'yyyy/MM/dd')} {getDayName(date.getDay())}
-      </h1>
-
-      <KeyboardDoubleArrowLeftIcon
+ 
+<div className="change-today header">
+  <KeyboardDoubleArrowLeftIcon
         onClick={() => {
           handleChangeDate({ months: -1 });
         }}
@@ -75,7 +70,6 @@ const CusDatePicker = ({ date, setDate }) => {
           handleChangeDate({ months: 1 });
         }}
       />
-
       <Popover
         open={open}
         anchorEl={anchorEl}
@@ -94,7 +88,8 @@ const CusDatePicker = ({ date, setDate }) => {
           maxDate={new Date()}
         />
       </Popover>
-    </div>
+</div>
+   
   );
 };
 

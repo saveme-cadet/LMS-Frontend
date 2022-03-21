@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   AdminPage,
@@ -7,18 +8,21 @@ import {
   ErrorPage,
   TodoPage,
 } from 'Pages';
-import { SideBar } from 'Components';
+import { SideBar, ShowToday } from 'Components';
 
 import Styled from 'Styled/Global.styled';
 const App = () => {
+  const [date, setDate] = useState(new Date());
   return (
     <>
       <Styled.Golbal>
         <Router>
           <SideBar />
+          <ShowToday date={date}/>
+
           <Routes>
             <Route path="/*" element={<ErrorPage />} />
-            <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<MainPage date={date} setDate={setDate}/>} />
 
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/mine" element={<MinePage />} />

@@ -10,6 +10,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import Styled from './AdminPage.styled';
 
@@ -114,16 +115,17 @@ const AdminPage = () => {
     getUser();
   }, []);
 
-  // const temp = async () => {
-  //   let i = 0;
-  //   while (i < 6) {
-  //     const result = await AllTableService.postAllTable(i);
-  //     i++;
-  //   }
-  // };
-
   return (
     <Styled.AdminBackground>
+      <Styled.AdminFeature>
+        <div>
+          <Button>일괄 휴가 추가</Button><Button>월렛 보상 대상</Button>
+          <Button>팀 섞기</Button>
+        </div>
+        <div>
+          <Button>머슴이 할 일</Button>
+        </div>
+      </Styled.AdminFeature>
       <Styled.AdminTable>
         <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
           <Tabs value={tab} onChange={handleChangeTab}>

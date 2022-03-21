@@ -14,15 +14,13 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MainPage.styled';
 
-const Body = () => {
+const Body = ({ date, setDate }) => {
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
-
-  const [date, setDate] = useState(new Date());
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];

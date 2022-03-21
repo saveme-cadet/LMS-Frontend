@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const AdminBackground = styled.div`
   // position
   position: absolute;
-  top: 0px;
+  top: 5em;
   left: 7em;
 
   // layout
@@ -21,10 +21,21 @@ const AdminBackground = styled.div`
     border-radius: 1em;
   }
 `;
+const AdminFeature = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  button {
+    width: 20em;
+    height: 5em;
+    border: 1px solid #4870fd;
+    color: 4870fd;
+  }
+`;
 
 const AdminTable = styled.div`
   .table {
-    width: 100%;
+    width: 90%;
     height: 30em;
     margin: 1em;
     margin-bottom: 3em;
@@ -44,6 +55,9 @@ const AdminTable = styled.div`
 `;
 
 const AdminChange = styled.div`
+  width: 90%;
+  margin: 1em;
+
   button {
     color: #292929;
   }
@@ -67,7 +81,10 @@ const AdminChange = styled.div`
   }
 `;
 
-const AdminAddUser = styled.div``;
+const AdminAddUser = styled.div`
+  width: 90%;
+  margin: 1em;
+`;
 
 const AdminShakeUser = styled.div`
   .modal {
@@ -82,6 +99,7 @@ const AdminShakeUser = styled.div`
 
 const Styled = {
   AdminBackground,
+  AdminFeature,
   AdminTable,
   AdminChange,
   AdminAddUser,
