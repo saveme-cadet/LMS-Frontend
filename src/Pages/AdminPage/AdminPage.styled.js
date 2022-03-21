@@ -86,7 +86,7 @@ const AdminAddUser = styled.div`
   margin: 1em;
 `;
 
-const AdminShakeUser = styled.div`
+const Modal = styled.div`
   .modal {
     position: absolute;
     top: 0;
@@ -103,7 +103,7 @@ const Styled = {
   AdminTable,
   AdminChange,
   AdminAddUser,
-  AdminShakeUser,
+  Modal,
 };
 
 export default Styled;

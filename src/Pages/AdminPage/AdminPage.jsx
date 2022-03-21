@@ -4,8 +4,10 @@ import { UserInfoService, CRUDUserService } from 'Network';
 import { adminCloumns } from 'Utils';
 
 import SelectedUser from './SelectedUser';
-import NewUserForm from './NewUserForm';
+import AddVacation from './AddVacation';
+import FindTarget from './FindTarget';
 import ShakeTeam from './ShakeTeam';
+import NewUserForm from './NewUserForm';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { DataGrid } from '@mui/x-data-grid';
@@ -21,6 +23,7 @@ const AdminPage = () => {
 
   const [tab, setTab] = useState(0);
   const [selectRowData, setSelectRowData] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -62,6 +65,7 @@ const AdminPage = () => {
     const result = await UserInfoService.putTeam(userId, team);
     getUser();
   };
+
   const handleChangeRole = async event => {
     const result = await UserInfoService.putRole(
       selectUserId,
@@ -74,6 +78,11 @@ const AdminPage = () => {
     let result;
     if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
     else result = await UserInfoService.putVacationMinus(selectUserId);
+    getUser();
+    setSelectUserId(null);
+  };
+  const handleAddVacation = async select => {
+    const result = await UserInfoService.putVacationPlus(select);
     getUser();
     setSelectUserId(null);
   };
@@ -126,8 +135,30 @@ const AdminPage = () => {
     <Styled.AdminBackground>
       <Styled.AdminFeature>
         <div>
-          <Button>일괄 휴가 추가</Button><Button>월렛 보상 대상</Button>
-          <Button>팀 섞기</Button>
+          <Button
+            onClick={() => {
+              setIsOpen('add');
+            }}
+          >
+            일괄 휴가 추가
+          </Button>
+          
+          <Button
+            onClick={() => {
+              setIsOpen('find');
+            }}
+          >
+            월렛 보상 대상
+          </Button>
+          
+          <Button
+            onClick={() => {
+              setIsOpen('shake');
+            }}
+          >
+            팀 섞기
+          </Button>
+          
         </div>
         <div>
           <Button>머슴이 할 일</Button>
@@ -174,17 +205,37 @@ const AdminPage = () => {
 
       <Styled.AdminAddUser>
         <NewUserForm callbackSubmit={handleCreateUser} />
-        <button onClick={handleGetUser}>유저 얻기</button>
+        {/* <button onClick={handleGetUser}>유저 얻기</button> */}
       </Styled.AdminAddUser>
 
-      <Styled.AdminShakeUser>
-        {rowData && (
+      <Styled.Modal>
+        {isOpen === 'add' && (
+          <AddVacation
+            setIsOpen={setIsOpen}
+            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+            addVacation={handleAddVacation}
+          />
+        )}
+      </Styled.Modal>
+
+      <Styled.Modal>
+        {isOpen === 'find' && (
+          <FindTarget
+            setIsOpen={setIsOpen}
+            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+          />
+        )}
+      </Styled.Modal>
+
+      <Styled.Modal>
+        {isOpen === 'shake' && (
           <ShakeTeam
+            setIsOpen={setIsOpen}
             attendUser={rowData.filter(user => user.attendeStatus === '참가')}
             onClickChangeShuffleTeam={handleChangeShuffleTeam}
           />
         )}
-      </Styled.AdminShakeUser>
+      </Styled.Modal>
     </Styled.AdminBackground>
   );
 };
