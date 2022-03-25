@@ -4,7 +4,6 @@ const AdminBackground = styled.div`
   // position
   position: absolute;
   top: 5em;
-  left: 7em;
 
   // layout
   display: flex;

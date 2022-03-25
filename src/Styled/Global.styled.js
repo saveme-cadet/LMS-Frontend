@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 const ProfileBackgroundDiv = styled.div`
   // position
@@ -24,7 +26,7 @@ const Golbal = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: horizontal;
+  flex-direction: row;
   .show-today {
     text-decoration: underline;
     text-underline-position: under;
@@ -35,6 +37,20 @@ const Golbal = styled.div`
   }
 `;
 
-const GlobalStyled = { ProfileBackgroundDiv, Golbal };
+const CusTab = styled(Tabs)`
+  background-color: #220646;
+  height: 100em;
+  width: 7em;
+  button {
+    color: #ffffff;
+    width: 9em;
+  }
+`;
+
+const Body = styled.div`
+  margin-left: 5em;
+`;
+
+const GlobalStyled = { ProfileBackgroundDiv, Golbal, CusTab, Body };
 
 export default GlobalStyled;

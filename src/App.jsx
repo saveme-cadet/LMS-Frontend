@@ -17,19 +17,26 @@ const App = () => {
     <>
       <Styled.Golbal>
         <Router>
-          <SideBar />
-          <ShowToday date={date}/>
+          <Styled.CusTab>
+            <SideBar />
+          </Styled.CusTab>
+          <Styled.Body>
+            <ShowToday date={date} />
 
-          <Routes>
-            <Route path="/*" element={<ErrorPage />} />
-            <Route path="/" element={<MainPage date={date} setDate={setDate}/>} />
+            <Routes>
+              <Route path="/*" element={<ErrorPage />} />
+              <Route
+                path="/"
+                element={<MainPage date={date} setDate={setDate} />}
+              />
 
-            <Route path="/todo" element={<TodoPage />} />
-            <Route path="/mine" element={<MinePage />} />
-            <Route path="/admin" element={<AdminPage />} />
+              <Route path="/todo" element={<TodoPage />} />
+              <Route path="/mine" element={<MinePage />} />
+              <Route path="/admin" element={<AdminPage />} />
 
-            {/* <Route path="/stats" element={<StatsPage />} /> */}
-          </Routes>
+              {/* <Route path="/stats" element={<StatsPage />} /> */}
+            </Routes>
+          </Styled.Body>
         </Router>
       </Styled.Golbal>
     </>

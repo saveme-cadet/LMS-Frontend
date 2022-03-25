@@ -4,7 +4,7 @@ const CheckBackground = styled.div`
   // position
   position: absolute;
   top: 0px;
-  left: 7em;
+  // left: 7em;
 
   // layout
   display: flex;

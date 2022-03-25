@@ -4,7 +4,7 @@ const MainBackground = styled.div`
   // position
   position: absolute;
   top: 5em;
-  left: 7em;
+  // left: 7em;
 
   // layout
   display: flex;
