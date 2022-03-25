@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   AdminPage,
   MainPage,
@@ -14,7 +14,7 @@ import Styled from 'Styled/Global.styled';
 const App = () => {
   return (
     <Styled.Golbal>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/*" element={<ErrorPage />} />
 
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/mine" element={<MainRoute />} />
           <Route path="/admin" element={<MainRoute />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </Styled.Golbal>
   );
 };

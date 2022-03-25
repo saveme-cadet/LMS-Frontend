@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AdminPage, MainPage, MinePage, ErrorPage, TodoPage } from 'Pages';
+import { Routes, Route } from 'react-router-dom';
+import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
 import { SideBar, ShowToday } from 'Components';
 
 import Styled from 'Styled/Global.styled';
