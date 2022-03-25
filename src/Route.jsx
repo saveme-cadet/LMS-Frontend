@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
 import { SideBar, ShowToday } from 'Components';
 
@@ -8,7 +8,7 @@ import Styled from 'Styled/Global.styled';
 const MainRoute = () => {
   const [date, setDate] = useState(new Date());
   return (
-    <>
+    <BrowserRouter>
       <Styled.CusTab>
         <SideBar />
       </Styled.CusTab>
@@ -24,7 +24,7 @@ const MainRoute = () => {
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Styled.Body>
-    </>
+    </BrowserRouter>
   );
 };
 
