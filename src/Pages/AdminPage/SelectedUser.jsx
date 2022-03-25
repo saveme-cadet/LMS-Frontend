@@ -17,8 +17,9 @@ const SelectedUser = ({
 
   return (
     <div className="box">
-      <h1>
-        현재 선택 : {userInfo.userName}
+      <text className="title">현재 선택 : {userInfo.userName}</text>
+
+      <span className="user-status">
         <Chip
           label={userInfo.attendeStatus}
           className={userInfo.attendeStatus}
@@ -29,45 +30,52 @@ const SelectedUser = ({
             <Chip label={userInfo.role} className={userInfo.role} />
           </>
         )}
-      </h1>
+      </span>
 
-      <Select
-        value={userInfo.attendeStatus}
-        onChange={onClickChangeAttend}
-        displayEmpty
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value={'참가'}>참가</MenuItem>
-        <MenuItem value={'불참'}>불참</MenuItem>
-      </Select>
+      <div className="action">
+        <Select
+          value={userInfo.attendeStatus}
+          onChange={onClickChangeAttend}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value={'참가'}>참가</MenuItem>
+          <MenuItem value={'불참'}>불참</MenuItem>
+        </Select>
 
-      {userInfo.attendeStatus === '참가' && (
-        <>
-          <Select
-            value={userInfo.team}
-            onChange={onClickChangeTeam}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem value={'red'}>RED</MenuItem>
-            <MenuItem value={'blue'}>BLUE</MenuItem>
-          </Select>
-          <Select
-            value={userInfo.role}
-            onChange={onClickChangeRole}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem value={'머슴'}>머슴</MenuItem>
-            <MenuItem value={'일반'}>일반</MenuItem>
-          </Select>
-          <Button variant="contained" onClick={() => onClickChangeVacation(1)}>
-            휴가 + 0.5
-          </Button>
-          <Button variant="contained" onClick={() => onClickChangeVacation(-1)}>
-            휴가 - 0.5
-          </Button>
-          {/* <Button
+        {userInfo.attendeStatus === '참가' && (
+          <>
+            <Select
+              value={userInfo.team}
+              onChange={onClickChangeTeam}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value={'red'}>RED</MenuItem>
+              <MenuItem value={'blue'}>BLUE</MenuItem>
+            </Select>
+            <Select
+              value={userInfo.role}
+              onChange={onClickChangeRole}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value={'머슴'}>머슴</MenuItem>
+              <MenuItem value={'일반'}>일반</MenuItem>
+            </Select>
+            <Button
+              variant="contained"
+              onClick={() => onClickChangeVacation(1)}
+            >
+              휴가 + 0.5
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => onClickChangeVacation(-1)}
+            >
+              휴가 - 0.5
+            </Button>
+            {/* <Button
             onClick={() =>
               onClickDeleteUser({
                 userName: userInfo.userName,
@@ -77,8 +85,9 @@ const SelectedUser = ({
           >
             유저 삭제
           </Button> */}
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

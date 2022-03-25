@@ -14,10 +14,15 @@ const AdminBackground = styled.div`
 
   // box
   .box {
-    background-color: #d8d8d8;
+    // background-color: #d8d8d8;
     margin: 0.5em;
     padding: 1em;
     border-radius: 1em;
+    border: 1px solid #dbdbdb;
+  }
+  .title {
+    font-size: 30px;
+    font-weight: bold;
   }
 `;
 const AdminFeature = styled.div`
@@ -56,9 +61,14 @@ const AdminTable = styled.div`
 const AdminChange = styled.div`
   width: 90%;
   margin: 1em;
-
-  button {
+  .action > * {
     color: #292929;
+    width: 8em;
+    height: 4em;
+    margin: 0 0.5em 0 0.5em;
+  }
+  .user-status > * {
+    margin: 0.4em;
   }
   .off {
     background-color: #848484;

@@ -35,6 +35,7 @@ const Golbal = styled.div`
   .change-today {
     margin-left: 4em;
   }
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 
 const CusTab = styled(Tabs)`

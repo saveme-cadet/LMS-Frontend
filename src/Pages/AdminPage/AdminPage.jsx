@@ -187,8 +187,10 @@ const AdminPage = () => {
       </Styled.AdminTable>
       <Styled.AdminChange>
         <div className="select box">
-          <h1>멤버 정보 수정</h1>
-          <h2>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h2>
+          <text>
+            <text className="title">멤버 정보 수정</text>자정(00:00)을 기준으로
+            수정사항이 출결표에 갱신됩니다
+          </text>
 
           {selectUserId !== null && (
             <SelectedUser
