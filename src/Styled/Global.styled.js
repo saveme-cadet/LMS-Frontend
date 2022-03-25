@@ -40,7 +40,7 @@ const Golbal = styled.div`
 const CusTab = styled(Tabs)`
   background-color: #220646;
   height: 100em;
-  width: 7em;
+  width: 9em;
   button {
     color: #ffffff;
     width: 9em;
