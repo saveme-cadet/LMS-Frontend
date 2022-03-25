@@ -95,6 +95,32 @@ const Modal = styled.div`
     background-color: rgba(216, 216, 216, 0.9);
   }
 `;
+const ShakeTeam = styled.div`
+  .team-members {
+    display: flex;
+    flex-direction: row;
+  }
+  .team-member {
+    border-radius: 10%;
+    margin: 5px;
+    padding: 5px;
+  }
+  .red {
+    .team-member {
+      background-color: #dc143c;
+    }
+  }
+  .blue {
+    .team-member {
+      background-color: #0079f0;
+    }
+  }
+  .newtral {
+    .team-member {
+      background-color: gray;
+    }
+  }
+`;
 
 const Styled = {
   AdminBackground,
@@ -103,6 +129,7 @@ const Styled = {
   AdminChange,
   AdminAddUser,
   Modal,
+  ShakeTeam,
 };
 
 export default Styled;

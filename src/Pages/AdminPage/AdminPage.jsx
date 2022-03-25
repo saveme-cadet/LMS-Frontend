@@ -229,11 +229,13 @@ const AdminPage = () => {
 
       <Styled.Modal>
         {isOpen === 'shake' && (
-          <ShakeTeam
-            setIsOpen={setIsOpen}
-            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
-            onClickChangeShuffleTeam={handleChangeShuffleTeam}
-          />
+          <Styled.ShakeTeam>
+            <ShakeTeam
+              setIsOpen={setIsOpen}
+              attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+              onClickChangeShuffleTeam={handleChangeShuffleTeam}
+            />
+          </Styled.ShakeTeam>
         )}
       </Styled.Modal>
     </Styled.AdminBackground>

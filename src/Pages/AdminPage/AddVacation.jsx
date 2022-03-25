@@ -26,7 +26,8 @@ const AddVacation = ({ setIsOpen, attendUser, addVacation }) => {
     <div className="modal">
       <h1>일괄 휴가 추가</h1>
       <h3>참가 중인 사용자들의 휴가를 추가합니다.</h3>
-      <h3>얼마나 추가하시겠습니까?</h3> {value}일
+      <h3>얼마나 추가하시겠습니까?</h3>
+      <h1>{value}일</h1>
       <Slider
         defaultValue={0}
         value={value}

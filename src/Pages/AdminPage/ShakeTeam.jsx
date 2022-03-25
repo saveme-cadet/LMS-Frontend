@@ -67,9 +67,10 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
           return (
             <div key={team} className={`team ${team}`}>
               <h1>{team}</h1>
-              <div className="team-member">
+              <div className="team-members">
                 {curUsers.map(user => {
-                  if (user.team === team) return <div>{user.userName}</div>;
+                  if (user.team === team)
+                    return <div className="team-member">{user.userName}</div>;
                 })}
               </div>
             </div>
@@ -77,9 +78,13 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
         })}
         <div className="team newtral">
           <h1>neutral</h1>
-          {neutral.map((user, i) => (
-            <div key={i}>{user.userName}</div>
-          ))}
+          <div className="team-members">
+            {neutral.map((user, i) => (
+              <div className="team-member" key={i}>
+                {user.userName}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <Button onClick={handleShakeTeam}>팀 섞기</Button>

@@ -13,7 +13,6 @@ const FindTarget = ({ setIsOpen, attendUser }) => {
     return 0;
   });
 
-  console.log(attendUser);
   return (
     <div className="modal">
       <h1>월렛 보상 대상</h1>
