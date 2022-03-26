@@ -13,9 +13,11 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CusDatePicker } from 'Components';
 
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
+import { DatePicker } from '@mui/lab';
 
 const ProgressBar = props => {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -86,33 +88,41 @@ function TodoPage() {
   const [number, setNumber] = useState(null);
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
+  const [date, setDate] = useState(new Date());
+
   const today = new Date();
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault(); //refresh 방지
     if (toDo.content === '') {
       //empty input 방지
-      return ;
+      return;
     }
-const nextId = toDos[toDos.length - 1].todoId;
-console.log("next : ", nextId);
+
+    let nextId = 0;
+    if (toDos.length === 0) {
+      nextId = 0;
+    } else {
+      nextId = toDos[toDos.length - 1].todoId;
+    }
 
     const result = await TodoService.postTodo({
-      "writerId": 1,
-      "todoId": nextId + 1,
-      "title": toDo.content,
-      "titleCheck": false,
-      "todoDay": format(today, 'yyyy-MM-dd'),
+      writerId: 1,
+      todoId: nextId + 1,
+      title: toDo.content,
+      titleCheck: false,
+      todoDay: format(today, 'yyyy-MM-dd'),
     });
+
     console.log(result);
-    setNumber(current => current + 1);
+    setNumber(nextId);
     setToDo({
       number: 0,
       content: '',
       checked: false,
     });
-  
   };
+
   const onChange = event => {
     setToDo({
       number: number,
@@ -120,58 +130,73 @@ console.log("next : ", nextId);
       checked: false,
     });
   };
-  const alterCheck = async(index) => {
+
+  const alterCheck = async index => {
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
+    console.log(result);
     getTodos();
   };
 
-  const deleteToDo = event => {
+  const removeToDo = async event => {
+    let toDoNumber;
     if (event.target.tagName === 'BUTTON') {
-      // console.log('button');
       setToDos(
         toDos.filter(
-          toDo => parseInt(event.target.previousSibling.id) !== toDo.number,
+          toDo => parseInt(event.target.previousSibling.id) !== toDo.todoId,
         ),
       );
+      toDoNumber = parseInt(event.target.previousSibling.id);
     } else if (event.target.tagName === 'svg') {
-      // console.log('svg');
       setToDos(
         toDos.filter(
           toDo =>
             parseInt(event.target.parentElement.previousSibling.id) !==
-            toDo.number,
+            toDo.todoId,
         ),
       );
+      toDoNumber = parseInt(event.target.parentElement.previousSibling.id);
     } else if (event.target.tagName === 'path') {
-      // console.log('path');
       setToDos(
         toDos.filter(
           toDo =>
             parseInt(
               event.target.parentElement.parentElement.previousSibling.id,
-            ) !== toDo.number,
+            ) !== toDo.todoId,
         ),
       );
+      toDoNumber = parseInt(
+        event.target.parentElement.parentElement.previousSibling.id,
+      );
     }
+    console.log({
+      writerId: 1,
+      todoId: toDoNumber,
+      todoDay: format(today, 'yyyy-MM-dd'),
+    });
+    const result = await TodoService.deleteTodo(
+      1,
+      toDoNumber,
+      format(date, 'yyyy-MM-dd'),
+    );
+    console.log(result);
+    getTodos();
   };
 
   // useEffect(() => {
   //   console.log(toDos);
   // }, [toDos]);
 
-const getTodos = async () => {
-  const result = await TodoService.getTodo(1, format(today, 'yyyy-MM-dd'));
-  setToDos(result.data);
-  setNumber(toDos.length);
+  const getTodos = async () => {
+    const result = await TodoService.getTodo(1, format(date, 'yyyy-MM-dd'));
+    setToDos(result.data);
+    // setNumber(toDos.length);
+    // setDate(today);
+  };
 
-  console.log(toDos.length);
-
-}
-
-useEffect(() => {
-  getTodos();
-}, []);
+  useEffect(() => {
+    getTodos();
+  }, [toDo, date]);
 
   useEffect(() => {
     const total = toDos.length;
@@ -197,6 +222,7 @@ useEffect(() => {
         flexDirection: 'column',
       }}
     >
+      <CusDatePicker date={date} setDate={setDate} />
       <Box
         sx={{
           flexDirection: 'column',
@@ -210,10 +236,10 @@ useEffect(() => {
           borderRadius: 5,
           // minWidth: '40%',
           maxWidth: '100%',
-          minHeight: 780,
+          minHeight: 600,
         }}
       >
-        <div style={{ minHeight: 700 }}>
+        <div style={{ minHeight: 600 }}>
           <form onSubmit={onSubmit}>
             <div>
               <TextField
@@ -244,7 +270,10 @@ useEffect(() => {
             {toDos.map((item, index) => (
               <div key={index}>
                 <div key={index}>
-                  <Checkbox onClick={() => alterCheck(index)} checked={item.titleCheck} />
+                  <Checkbox
+                    onClick={() => alterCheck(index)}
+                    checked={item.titleCheck}
+                  />
                   {item.titleCheck === false ? (
                     <span style={{ fontSize: 20 }} id={item.todoId}>
                       {item.title}
@@ -264,7 +293,7 @@ useEffect(() => {
                   <IconButton
                     aria-label="delete"
                     size="large"
-                    onClick={deleteToDo}
+                    onClick={removeToDo}
                   >
                     <DeleteForeverIcon />
                   </IconButton>

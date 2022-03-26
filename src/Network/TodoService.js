@@ -5,7 +5,7 @@ const TodoUrl = path => {
 };
 
 const TodoService = {
-  putTodo: async (body) => {
+  putTodo: async body => {
     const url = TodoUrl(`todo`);
     let response;
     try {
@@ -15,7 +15,7 @@ const TodoService = {
     }
     return response;
   },
-  postTodo: async (body) => {
+  postTodo: async body => {
     const url = TodoUrl(`usertodo`);
     let response;
     try {
@@ -35,11 +35,22 @@ const TodoService = {
     }
     return response;
   },
-  deleteTodo: async (body) => {
-    const url = TodoUrl(`delete`);
+  // deleteTodo: async body => {
+  //   const url = TodoUrl(`delete`);
+  //   console.log(body);
+  //   let response;
+  //   try {
+  //     response = await instance.delete(url, body);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
+  deleteTodo: async (userId, todoId, date) => {
+    const url = TodoUrl(`delete/${userId}/${todoId}?date=${date}`);
     let response;
     try {
-      response = await instance.delete(url, body);
+      response = await instance.delete(url);
     } catch (e) {
       alert(e);
     }
