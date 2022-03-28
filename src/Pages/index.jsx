@@ -6,6 +6,7 @@ import StatsPage from './StatsPage';
 import CheckPage from './CheckPage';
 import AdminPage from './AdminPage';
 import LoginPage from './LoginPage';
+import OAuthPage from './OAuthPage';
 export {
   MainPage,
   MinePage,
@@ -15,4 +16,5 @@ export {
   CheckPage,
   AdminPage,
   LoginPage,
+  OAuthPage,
 };
