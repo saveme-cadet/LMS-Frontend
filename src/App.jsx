@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+
 import {
   AdminPage,
   MainPage,
@@ -13,9 +14,10 @@ import Styled from 'Styled/Global.styled';
 
 const App = () => {
   return (
-    <Styled.Golbal>
-      <MainRoute />
-      {/* <BrowserRouter>
+    <BrowserRouter>
+      <Styled.Golbal>
+        <MainRoute />
+        {/* <BrowserRouter>
         <Routes>
           <Route path="/*" element={<ErrorPage />} />
 
@@ -26,7 +28,8 @@ const App = () => {
           <Route path="/admin" element={<MainRoute />} />
         </Routes>
       </BrowserRouter> */}
-    </Styled.Golbal>
+      </Styled.Golbal>
+    </BrowserRouter>
   );
 };
 

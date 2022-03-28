@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 
 import {
   AdminPage,
@@ -15,14 +15,20 @@ import Styled from 'Styled/Global.styled';
 
 const MainRoute = () => {
   const [date, setDate] = useState(new Date());
+  const navi = useNavigate();
+  const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    if (!token) navi('/login');
+  }, []);
   return (
-    <BrowserRouter>
+    <>
       <Styled.CusTab>
         <SideBar />
       </Styled.CusTab>
       <Styled.Body>
         <ShowToday date={date} />
+
         <Routes>
           <Route
             path="/"
@@ -35,7 +41,7 @@ const MainRoute = () => {
           <Route path="/oauth/kakao/callback" element={<OAuthPage />} />
         </Routes>
       </Styled.Body>
-    </BrowserRouter>
+    </>
   );
 };
 
