@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 
 const ProfileBackgroundDiv = styled.div`
   // position
@@ -32,9 +31,6 @@ const Golbal = styled.div`
     text-underline-position: under;
     margin-left: 1em;
   }
-  .change-today {
-    margin-left: 4em;
-  }
   font-family: 'Noto Sans KR', sans-serif;
 `;
 
@@ -50,6 +46,8 @@ const CusTab = styled(Tabs)`
 
 const Body = styled.div`
   margin-left: 5em;
+  width: 100%;
+  text-align: center;
 `;
 
 const GlobalStyled = { ProfileBackgroundDiv, Golbal, CusTab, Body };

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { UserInfoService, CRUDUserService } from 'Network';
 import { adminCloumns } from 'Utils';
 
+import { ShowToday } from 'Components';
+
 import SelectedUser from './SelectedUser';
 import AddVacation from './AddVacation';
 import FindTarget from './FindTarget';
@@ -17,6 +19,8 @@ import Button from '@mui/material/Button';
 import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
+  const [date, setDate] = useState(new Date());
+
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
   const [rowData, setRowData] = useState(null);
@@ -133,6 +137,8 @@ const AdminPage = () => {
 
   return (
     <Styled.AdminBackground>
+      <ShowToday date={date} />
+
       <Styled.AdminFeature>
         <div>
           <Button

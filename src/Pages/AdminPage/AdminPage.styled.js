@@ -47,7 +47,6 @@ const AdminTable = styled.div`
       width: 8em;
       padding: 0.2em;
       border-radius: 10em;
-      text-align: center;
     }
     .red {
       background-color: #dc143c;

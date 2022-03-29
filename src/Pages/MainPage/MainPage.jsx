@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CusDatePicker } from 'Components';
+import { CusDatePicker, ShowToday } from 'Components';
 import Check from './Check';
 import WrongDay from './WrongDay';
 
@@ -14,7 +14,9 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MainPage.styled';
 
-const MainPage = ({ date, setDate }) => {
+const MainPage = () => {
+  const [date, setDate] = useState(new Date());
+
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
@@ -124,9 +126,11 @@ const MainPage = ({ date, setDate }) => {
 
   return (
     <Styled.MainBackground>
-      <Styled.MainTable>
+      <div className="time">
+        <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} />
-
+      </div>
+      <Styled.MainTable>
         <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="전체 보기" />
