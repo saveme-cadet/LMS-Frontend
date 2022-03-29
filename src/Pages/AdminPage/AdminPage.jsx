@@ -13,7 +13,6 @@ import NewUserForm from './NewUserForm';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { DataGrid } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import Styled from './AdminPage.styled';
@@ -123,6 +122,7 @@ const AdminPage = () => {
         participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
+        aojiScore: 0,
       };
       newArray.push(newData);
     });

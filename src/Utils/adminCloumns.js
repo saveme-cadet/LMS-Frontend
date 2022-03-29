@@ -40,6 +40,12 @@ const adminCloumns = [
     width: 120,
   },
   {
+    field: 'aojiScore',
+    headerName: '아오지 기록',
+    type: 'number',
+    width: 120,
+  },
+  {
     field: 'attendScore',
     headerName: '결석 점수',
     type: 'number',

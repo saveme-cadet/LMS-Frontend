@@ -47,7 +47,6 @@ const CusTab = styled(Tabs)`
 const Body = styled.div`
   margin-left: 5em;
   width: 100%;
-  text-align: center;
 `;
 
 const GlobalStyled = { ProfileBackgroundDiv, Golbal, CusTab, Body };
