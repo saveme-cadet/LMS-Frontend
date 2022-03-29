@@ -89,6 +89,16 @@ const AdminPage = () => {
     getUser();
     setSelectUserId(null);
   };
+  const handleMinusVacation = async select => {
+    const selectUser = rowData.filter(user => user.id === select);
+    if (selectUser[0].vacation === 0) {
+      console.log('감소시킬 휴가가 없습니다!');
+      return;
+    }
+    const result = await UserInfoService.putVacationMinus(select);
+    getUser();
+    setSelectUserId(null);
+  };
 
   const handleCreateUser = async data => {
     const result = await CRUDUserService.postUser(data);
@@ -126,7 +136,7 @@ const AdminPage = () => {
       };
       newArray.push(newData);
     });
-    console.log(newArray);
+    // console.log(newArray);
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };
@@ -146,7 +156,7 @@ const AdminPage = () => {
               setIsOpen('add');
             }}
           >
-            일괄 휴가 추가
+            일괄 휴가 변경
           </Button>
           
           <Button
@@ -219,6 +229,7 @@ const AdminPage = () => {
             setIsOpen={setIsOpen}
             attendUser={rowData.filter(user => user.attendeStatus === '참가')}
             addVacation={handleAddVacation}
+            minusVacation={handleMinusVacation}
           />
         )}
       </Styled.Modal>
