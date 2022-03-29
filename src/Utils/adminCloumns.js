@@ -1,5 +1,3 @@
-import Chip from '@mui/material/Chip';
-
 const adminCloumns = [
   {
     field: 'attendeStatus',
@@ -13,7 +11,7 @@ const adminCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
@@ -22,7 +20,7 @@ const adminCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {

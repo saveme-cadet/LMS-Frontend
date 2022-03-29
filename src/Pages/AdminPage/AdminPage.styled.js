@@ -43,17 +43,23 @@ const AdminTable = styled.div`
     height: 30em;
     margin: 1em;
     margin-bottom: 3em;
+    .info {
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
     .red {
       background-color: #dc143c;
     }
     .blue {
       background-color: #0079f0;
     }
-    .out {
-      background-color: #808080;
-    }
     .머슴 {
-      background-color: #ffd700;
+      background-color: yellow;
+    }
+    .일반 {
+      background-color: #cccccc;
     }
   }
 `;

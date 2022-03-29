@@ -18,6 +18,12 @@ const MainTable = styled.div`
   .table {
     width: 100%;
     height: 30em;
+    .info {
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
     .red {
       background-color: #dc143c;
     }
@@ -31,20 +37,30 @@ const MainTable = styled.div`
       background-color: #cccccc;
     }
 
+    .type {
+      color: #ffffff;
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
     .check {
-      color: green;
+      background-color: #2ce054;
     }
     .late {
-      color: yellow;
+      background-color: #ffcb46;
     }
     .not {
-      color: red;
+      background-color: #ff4646;
     }
     .vacancy {
-      color: blue;
+      background-color: #a477ee;
     }
     .illness {
-      color: purple;
+      background-color: #a477ee;
+    }
+    .vacation {
+      background-color: #2891f1;
     }
   }
 `;
