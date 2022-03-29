@@ -171,7 +171,7 @@ const AdminPage = () => {
         </div>
       </Styled.AdminFeature>
       <Styled.AdminTable>
-        <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
+        <div className="table box">
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="전체 보기" />
             <Tab label="참가한 사용자" />
@@ -189,15 +189,12 @@ const AdminPage = () => {
               hideFooterSelectedRowCount={true} // row count 숨기기
             />
           )}
-        </Box>
+        </div>
       </Styled.AdminTable>
       <Styled.AdminChange>
         <div className="select box">
-          <text>
-            <text className="title">멤버 정보 수정</text>자정(00:00)을 기준으로
-            수정사항이 출결표에 갱신됩니다
-          </text>
-
+          <span className="title">멤버 정보 수정</span>자정(00:00)을 기준으로
+          수정사항이 출결표에 갱신됩니다
           {selectUserId !== null && (
             <SelectedUser
               userInfo={rowData.find(array => array.id === selectUserId)}

@@ -4,6 +4,9 @@ const adminCloumns = [
     headerName: '참여 상태',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      return <div className={`${params.value} info`}>{params.value}</div>;
+    },
   },
   {
     field: 'team',
