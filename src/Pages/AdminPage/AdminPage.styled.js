@@ -89,10 +89,13 @@ const AdminChange = styled.div`
     margin: 0.4em;
   }
   .불참 {
-    background-color: #848484;
+    color: white;
+    background-color: black;
   }
   .참가 {
-    background-color: #cfcfcf;
+    color: black;
+    border: 1px solid black;
+    background-color: white;
   }
   .red {
     background-color: #dc143c;
