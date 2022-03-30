@@ -1,5 +1,3 @@
-import Chip from '@mui/material/Chip';
-
 import { GetCheckIcons } from 'Components';
 
 const checkCloumns = [
@@ -9,7 +7,7 @@ const checkCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
@@ -18,7 +16,7 @@ const checkCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {

@@ -1,24 +1,17 @@
-import CheckIcon from '@mui/icons-material/Check';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import CloseIcon from '@mui/icons-material/Close';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import HotelIcon from '@mui/icons-material/Hotel';
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
-
 const GetCheckIcons = ({ type }) => {
   switch (type) {
     case 1:
-      return <CheckIcon className="check" />;
+      return <div className="check type">출석</div>;
     case 2:
-      return <PriorityHighIcon className="late" />;
+      return <div className="late type">지각</div>;
     case 3:
-      return <CloseIcon className="not" />;
+      return <div className="not type">결석</div>;
     case 4:
-      return <BusinessCenterIcon className="vacancy" />;
+      return <div className="vacancy type">공결</div>;
     case 5:
-      return <HotelIcon className="illness" />;
+      return <div className="illness type">병결</div>;
     case 6:
-      return <AirplanemodeActiveIcon />;
+      return <div className="vacation type">휴가</div>;
     default:
       return <></>;
   }

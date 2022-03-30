@@ -1,25 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
-import { UserInfoService, CRUDUserService } from 'Network';
+import { AuthContext } from 'App';
 import { adminCloumns } from 'Utils';
+import { UserInfoService, CRUDUserService } from 'Network';
 
+import { ShowToday, NotValid } from 'Components';
 import SelectedUser from './SelectedUser';
-import NewUserForm from './NewUserForm';
+import AddVacation from './AddVacation';
+import FindTarget from './FindTarget';
 import ShakeTeam from './ShakeTeam';
+import NewUserForm from './NewUserForm';
+import { DataGrid } from '@mui/x-data-grid';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { DataGrid } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
+  const auth = useContext(AuthContext);
+
+  const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
   const [rowData, setRowData] = useState(null);
 
   const [tab, setTab] = useState(0);
   const [selectRowData, setSelectRowData] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -42,13 +50,17 @@ const AdminPage = () => {
     console.log('id : ', e.id);
   };
 
-  const handleChangeAttend = async status => {
-    const result = await UserInfoService.putAttend(selectUserId, status);
+  const handleChangeAttend = async event => {
+    const value = event.target.value === '참가' ? 1 : 0;
+    const result = await UserInfoService.putAttend(selectUserId, value);
     getUser();
     setSelectUserId(null);
   };
-  const handleChangeTeam = async team => {
-    const result = await UserInfoService.putTeam(selectUserId, team);
+  const handleChangeTeam = async event => {
+    const result = await UserInfoService.putTeam(
+      selectUserId,
+      event.target.value,
+    );
     getUser();
     setSelectUserId(null);
   };
@@ -57,8 +69,12 @@ const AdminPage = () => {
     const result = await UserInfoService.putTeam(userId, team);
     getUser();
   };
-  const handleChangeRole = async role => {
-    const result = await UserInfoService.putRole(selectUserId, role);
+
+  const handleChangeRole = async event => {
+    const result = await UserInfoService.putRole(
+      selectUserId,
+      event.target.value,
+    );
     getUser();
     setSelectUserId(null);
   };
@@ -66,6 +82,21 @@ const AdminPage = () => {
     let result;
     if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
     else result = await UserInfoService.putVacationMinus(selectUserId);
+    getUser();
+    setSelectUserId(null);
+  };
+  const handleAddVacation = async select => {
+    const result = await UserInfoService.putVacationPlus(select);
+    getUser();
+    setSelectUserId(null);
+  };
+  const handleMinusVacation = async select => {
+    const selectUser = rowData.filter(user => user.id === select);
+    if (selectUser[0].vacation === 0) {
+      console.log('감소시킬 휴가가 없습니다!');
+      return;
+    }
+    const result = await UserInfoService.putVacationMinus(select);
     getUser();
     setSelectUserId(null);
   };
@@ -102,80 +133,136 @@ const AdminPage = () => {
         participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
+        aojiScore: 0,
       };
       newArray.push(newData);
     });
-    console.log(newArray);
+    // console.log(newArray);
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };
 
   useEffect(() => {
     getUser();
+    console.log('auth', auth);
   }, []);
-
-  // const temp = async () => {
-  //   let i = 0;
-  //   while (i < 6) {
-  //     const result = await AllTableService.postAllTable(i);
-  //     i++;
-  //   }
-  // };
 
   return (
     <Styled.AdminBackground>
-      <Styled.AdminTable>
-        <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
-          <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="전체 보기" />
-            <Tab label="참가한 사용자" />
-            <Tab label="불참한 사용자" />
-          </Tabs>
-          {selectRowData && (
-            <DataGrid
-              rows={selectRowData}
-              columns={adminCloumns}
-              onCellClick={handleCellClick}
-              getRowClassName={params => {
-                return params.row.attendeStatus === '불참' && 'out';
-              }}
-              hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
-              hideFooterSelectedRowCount={true} // row count 숨기기
-            />
-          )}
-        </Box>
-      </Styled.AdminTable>
-      <Styled.AdminChange>
-        <div className="select box">
-          <h1>멤버 정보 수정</h1>
-          <h2>자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다</h2>
-
-          {selectUserId !== null && (
-            <SelectedUser
-              userInfo={rowData.find(array => array.id === selectUserId)}
-              onClickChangeAttend={handleChangeAttend}
-              onClickChangeTeam={handleChangeTeam}
-              onClickChangeRole={handleChangeRole}
-              onClickChangeVacation={handleChangeVacation}
-              onClickDeleteUser={handleDeleteUser}
-            />
-          )}
-        </div>
-      </Styled.AdminChange>
-
-      <Styled.AdminAddUser>
-        <NewUserForm callbackSubmit={handleCreateUser} />
-        <button onClick={handleGetUser}>유저 얻기</button>
-      </Styled.AdminAddUser>
-
-      <Styled.AdminShakeUser>
-        {rowData && (
-          <ShakeTeam
-            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
-            onClickChangeShuffleTeam={handleChangeShuffleTeam}
-          />
-        )}
-      </Styled.AdminShakeUser>
+      <ShowToday date={date} />
+      {auth.userRole === '머슴' ? (
+        <>
+          <Styled.AdminFeature>
+            <div>
+              <Button
+                onClick={() => {
+                  setIsOpen('add');
+                }}
+              >
+                일괄 휴가 변경
+              </Button>
+              
+              <Button
+                onClick={() => {
+                  setIsOpen('find');
+                }}
+              >
+                월렛 보상 대상
+              </Button>
+              
+              <Button
+                onClick={() => {
+                  setIsOpen('shake');
+                }}
+              >
+                팀 섞기
+              </Button>
+              
+            </div>
+            <div>
+              <Button>머슴이 할 일</Button>
+            </div>
+          </Styled.AdminFeature>
+          <Styled.AdminTable>
+            <div className="table box">
+              <Tabs value={tab} onChange={handleChangeTab}>
+                <Tab label="전체 보기" />
+                <Tab label="참가한 사용자" />
+                <Tab label="불참한 사용자" />
+              </Tabs>
+              {selectRowData && (
+                <DataGrid
+                  rows={selectRowData}
+                  columns={adminCloumns}
+                  onCellClick={handleCellClick}
+                  getRowClassName={params => {
+                    return params.row.attendeStatus === '불참' && 'out';
+                  }}
+                  hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
+                  hideFooterSelectedRowCount={true} // row count 숨기기
+                />
+              )}
+            </div>
+          </Styled.AdminTable>
+          <Styled.AdminChange>
+            <div className="select box">
+              <span className="title">멤버 정보 수정</span>자정(00:00)을
+              기준으로 수정사항이 출결표에 갱신됩니다
+              {selectUserId !== null && (
+                <SelectedUser
+                  userInfo={rowData.find(array => array.id === selectUserId)}
+                  onClickChangeAttend={handleChangeAttend}
+                  onClickChangeTeam={handleChangeTeam}
+                  onClickChangeRole={handleChangeRole}
+                  onClickChangeVacation={handleChangeVacation}
+                  onClickDeleteUser={handleDeleteUser}
+                />
+              )}
+            </div>
+          </Styled.AdminChange>
+          <Styled.AdminAddUser>
+            <NewUserForm callbackSubmit={handleCreateUser} />
+            {/* <button onClick={handleGetUser}>유저 얻기</button> */}
+          </Styled.AdminAddUser>
+          <Styled.Modal>
+            {isOpen === 'add' && (
+              <AddVacation
+                setIsOpen={setIsOpen}
+                attendUser={rowData.filter(
+                  user => user.attendeStatus === '참가',
+                )}
+                addVacation={handleAddVacation}
+                minusVacation={handleMinusVacation}
+              />
+            )}
+          </Styled.Modal>
+          <Styled.Modal>
+            {isOpen === 'find' && (
+              <FindTarget
+                setIsOpen={setIsOpen}
+                attendUser={rowData.filter(
+                  user => user.attendeStatus === '참가',
+                )}
+              />
+            )}
+          </Styled.Modal>
+          <Styled.Modal>
+            {isOpen === 'shake' && (
+              <Styled.ShakeTeam>
+                <ShakeTeam
+                  setIsOpen={setIsOpen}
+                  attendUser={rowData.filter(
+                    user => user.attendeStatus === '참가',
+                  )}
+                  onClickChangeShuffleTeam={handleChangeShuffleTeam}
+                />
+              </Styled.ShakeTeam>
+            )}
+          </Styled.Modal>
+        </>
+      ) : (
+        <NotValid code={0} />
+      )}
     </Styled.AdminBackground>
   );
 };
