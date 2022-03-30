@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CusDatePicker, ShowToday } from 'Components';
 import Check from './Check';
 import WrongDay from './WrongDay';
@@ -8,13 +8,22 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
+import { AuthContext } from 'App';
 import { checkCloumns, vaildDay } from 'Utils';
 import { format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MainPage.styled';
 
+const isVaildCheck = (selectUserInfo, myInfo) => {
+  if (myInfo.role === '일반' && selectUserInfo.id !== myInfo.id) return -1;
+  if (myInfo.role === '머슴' && selectUserInfo.team !== myInfo.team) return -2;
+  return 0;
+};
+
 const MainPage = () => {
+  const auth = useContext(AuthContext);
+  console.log('auth : ', auth);
   const [date, setDate] = useState(new Date());
 
   const [tab, setTab] = useState(0);
@@ -44,6 +53,15 @@ const MainPage = () => {
   const handleClickCell = (params, event) => {
     const field = params.field;
     if (field !== 'checkIn' && field !== 'checkOut') return;
+
+    const selectUserInfo = selectRowData.find(array => array.id === params.id);
+    const myInfo = rowData.find(array => array.id === auth.userId);
+    const vaild = isVaildCheck(selectUserInfo, myInfo);
+    console.log(vaild);
+    if (vaild) {
+      vaild === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
+      return;
+    }
     setAnchorEl(event.currentTarget);
     setCurFocus({ id: params.id, select: field });
   };
@@ -53,11 +71,11 @@ const MainPage = () => {
     const select = curFocus.select;
     const today = new Date();
     let result;
-    console.log('id : ', id, value);
-    console.log('row', selectRowData);
-    const selectUser = selectRowData.find(array => array.id === id);
+    // console.log('id : ', id, value);
+    // console.log('row', selectRowData);
+    const selectUserInfo = selectRowData.find(array => array.id === id);
 
-    if (value === 6 && selectUser.vacation === 0) {
+    if (value === 6 && selectUserInfo.vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
       setAnchorEl(null);
       return;

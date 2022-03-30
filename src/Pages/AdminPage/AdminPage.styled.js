@@ -77,6 +77,11 @@ const AdminTable = styled.div`
 `;
 
 const AdminChange = styled.div`
+  border: 1px solid #c0c0c0;
+  border-radius: 1em;
+  padding: 1em;
+  height: 50%;
+
   .action > * {
     color: #292929;
     width: 8em;
