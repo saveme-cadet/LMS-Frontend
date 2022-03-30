@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { checkCloumns, vaildDay, isVaildCheck } from 'Utils';
 import AllTableService from 'Network/AllTableService';
+import CRUDUserService from 'Network/CRUDUserService';
 
 import { format } from 'date-fns';
 
@@ -140,7 +141,17 @@ const MainPage = () => {
   useEffect(() => {
     getUsers();
   }, [date]);
+  const login = async () => {
+    const result = CRUDUserService.login({ email: 1234, password: 4242 });
+    console.log(result);
 
+    console.log(result.data);
+  };
+
+  const logout = async () => {
+    const result = CRUDUserService.logout();
+    console.log(result.data);
+  };
   return (
     <Styled.MainBackground>
       <div className="time">
@@ -175,6 +186,8 @@ const MainPage = () => {
           )}
         </Box>
       </Styled.MainTable>
+      <button onClick={login}>login</button>
+      <button onClick={logout}>logout</button>
     </Styled.MainBackground>
   );
 };

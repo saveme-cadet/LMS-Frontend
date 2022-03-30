@@ -1,84 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import ProgressBar from './ProgressBar';
+
+import { AuthContext } from 'App';
 import Styled from './TodoPage.styled';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Container from '@mui/material/Container';
-import LinearProgress, {
-  linearProgressClasses,
-} from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
+
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { CusDatePicker } from 'Components';
 
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
-import { DatePicker } from '@mui/lab';
 
-const ProgressBar = props => {
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor:
-        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
-    },
-  }));
-  let proportion = 0;
-  if (props.total === 0 && props.checked === 0) {
-    proportion = 0;
-  } else proportion = (props.checked / props.total) * 100;
-
-  return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'inline-flex',
-      }}
-    >
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 500,
-        }}
-      >
-        <Typography
-          variant="caption"
-          component="div"
-          color="text.secondary"
-          style={{
-            fontSize: 30,
-            width: 100,
-          }}
-        >
-          {props.checked} / {props.total}
-        </Typography>
-        <BorderLinearProgress
-          style={{ width: 300 }}
-          variant="determinate"
-          value={proportion.toFixed(0)}
-        />
-      </Box>
-    </Box>
-  );
-};
-
-function TodoPage() {
+const TodoPage = () => {
+  const auth = useContext(AuthContext);
+  console.log(auth);
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -107,7 +49,7 @@ function TodoPage() {
     }
 
     const result = await TodoService.postTodo({
-      writerId: 1,
+      writerId: auth.userId,
       todoId: nextId + 1,
       title: toDo.content,
       titleCheck: false,
@@ -140,14 +82,15 @@ function TodoPage() {
 
   const removeToDo = async event => {
     let toDoNumber;
-    if (event.target.tagName === 'BUTTON') {
+    const tagName = event.target.tagName;
+    if (tagName === 'BUTTON') {
       setToDos(
         toDos.filter(
           toDo => parseInt(event.target.previousSibling.id) !== toDo.todoId,
         ),
       );
       toDoNumber = parseInt(event.target.previousSibling.id);
-    } else if (event.target.tagName === 'svg') {
+    } else if (tagName === 'svg') {
       setToDos(
         toDos.filter(
           toDo =>
@@ -156,7 +99,7 @@ function TodoPage() {
         ),
       );
       toDoNumber = parseInt(event.target.parentElement.previousSibling.id);
-    } else if (event.target.tagName === 'path') {
+    } else if (tagName === 'path') {
       setToDos(
         toDos.filter(
           toDo =>
@@ -176,7 +119,7 @@ function TodoPage() {
     });
 
     const result = await TodoService.deleteTodo(
-      1,
+      auth.userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
@@ -189,7 +132,10 @@ function TodoPage() {
   // }, [toDos]);
 
   const getTodos = async () => {
-    const result = await TodoService.getTodo(1, format(date, 'yyyy-MM-dd'));
+    const result = await TodoService.getTodo(
+      auth.userId,
+      format(date, 'yyyy-MM-dd'),
+    );
     setToDos(result.data);
     // setNumber(toDos.length);
     // setDate(today);
@@ -363,5 +309,5 @@ function TodoPage() {
       </Box>
     </Styled.CusDiv>
   );
-}
+};
 export default TodoPage;

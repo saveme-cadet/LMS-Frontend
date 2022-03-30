@@ -37,6 +37,26 @@ const CRUDUserService = {
     }
     return response;
   },
+  login: async body => {
+    const url = '/login';
+    let response;
+    try {
+      response = await instance.post(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  logout: async () => {
+    const url = '/logout';
+    let response;
+    try {
+      response = await instance.post(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default CRUDUserService;

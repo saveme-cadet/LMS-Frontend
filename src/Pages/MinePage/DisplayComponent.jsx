@@ -257,12 +257,6 @@ const DisplayComponent = props => {
           }}
         >
           <span>⛏️ 보충학습 시작</span>
-          <br />
-          <br />
-          {/* <DigitalText /> */}
-          <br />
-          <br />
-          <br />
           <Buttons />
           <br />
         </Box>
