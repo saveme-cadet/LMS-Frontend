@@ -210,6 +210,8 @@ const DisplayComponent = props => {
   };
 
   const Modal = () => {
+    const date =
+      format(new Date(), 'yyyy-MM-dd') + 'T' + format(new Date(), 'HH:mm');
     return (
       <div>
         {buttonNumber == '0' ? (
@@ -217,7 +219,7 @@ const DisplayComponent = props => {
         ) : (
           <div>시작 : {props.time[parseInt(buttonNumber) - 1].start}</div>
         )}
-        종료 : <input type="time" />
+        종료 : <input type="datetime-local" defaultValue={date} />
         {/* {buttonNumber == '0' ? (
           ''
         ) : (
