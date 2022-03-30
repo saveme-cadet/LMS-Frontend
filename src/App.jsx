@@ -1,6 +1,14 @@
-import { useState, createContext, useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { useState, createContext, useEffect, useContext } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+import {
+  AdminPage,
+  MainPage,
+  MinePage,
+  TodoPage,
+  LoginPage,
+  OAuthPage,
+} from 'Pages';
 import MainRoute from './Route';
 
 import Styled from 'Styled/Global.styled';
@@ -23,7 +31,7 @@ const AuthProvider = ({ children }) => {
       // setCurUser(response.data);
       // setState(response.state);
       setCurUser(1);
-      setState(200);
+      setState(401);
       setIsLoading(false);
     };
     initState();
@@ -36,12 +44,39 @@ const AuthProvider = ({ children }) => {
   );
 };
 
+const Loading = () => {
+  return <div>로딩중!!!</div>;
+};
+
+const OAuthCheckRoute = ({ children }) => {
+  const auth = useContext(AuthContext);
+  console.log('auth : ', auth);
+  if (auth.isLoading) {
+    return <Loading />;
+  } else {
+    if (auth.state !== 401) return children;
+    else return <Navigate to="/login" />;
+    // return children;
+  }
+};
+
 const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Styled.Golbal>
-          <MainRoute />
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/oauth/kakao/callback" element={<OAuthPage />} />
+            <Route
+              path="/*"
+              element={
+                <OAuthCheckRoute>
+                  <MainRoute />
+                </OAuthCheckRoute>
+              }
+            />
+          </Routes>
         </Styled.Golbal>
       </BrowserRouter>
     </AuthProvider>
