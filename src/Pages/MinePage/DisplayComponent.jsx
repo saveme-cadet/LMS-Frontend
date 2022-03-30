@@ -1,12 +1,11 @@
-import * as React from 'react';
 import Styled from './Timer.styled';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
+
+import { aojiCloumns } from 'Utils';
 import { format, parseISO } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
-import { blue, grey } from '@mui/material/colors';
-import { SettingsAccessibilityTwoTone } from '@mui/icons-material';
 import { AojiService } from 'Network';
 
 const DisplayComponent = props => {
@@ -109,62 +108,6 @@ const DisplayComponent = props => {
     );
   };
 
-  const columns = [
-    {
-      field: 'startTime',
-      headerName: '시작',
-      width: 200,
-      editable: false,
-      hideable: false,
-      sortable: false,
-      type: 'dateTime',
-    },
-    {
-      field: 'finishedTime',
-      headerName: '종료',
-      width: 200,
-      editable: false,
-      hideable: false,
-      sortable: false,
-      type: 'dateTime',
-    },
-    {
-      field: 'checkedTime',
-      headerName: '기록',
-      editable: false,
-      hideable: false,
-      sortable: false,
-      width: 150,
-      type: 'dateTime',
-    },
-    {
-      field: 'deducted',
-      headerName: '차감점수',
-      editable: false,
-      hideable: false,
-      sortable: false,
-      width: 150,
-      type: 'dateTime',
-    },
-    {
-      field: 'fixButton',
-      headerName: '',
-      width: 100,
-      editable: false,
-      hideable: false,
-      sortable: false,
-      renderCell: params => (
-        <Button
-          sx={{ width: 50, height: 30 }}
-          variant="outlined"
-          onClick={OpenModal}
-        >
-          수정
-        </Button>
-      ),
-    },
-  ];
-
   const rows = props.time.map((item, index) => ({
     id: index,
     // date: format(parseISO(item.start), 'yyyy-MM-dd'),
@@ -220,11 +163,6 @@ const DisplayComponent = props => {
           <div>시작 : {props.time[parseInt(buttonNumber) - 1].start}</div>
         )}
         종료 : <input type="datetime-local" defaultValue={date} />
-        {/* {buttonNumber == '0' ? (
-          ''
-        ) : (
-          <div>종료 : {props.time[parseInt(buttonNumber) - 1].finish}</div>
-        )} */}
         <div>
           <button onClick={CloseModal}>확인</button>
           <button>취소</button>
@@ -232,91 +170,33 @@ const DisplayComponent = props => {
       </div>
     );
   }; // 팝업 띄우기
-
+  const fixButton = () => {
+    console.log('asfsafas');
+  };
   return (
-    <div
-      style={{
-        backgroundColor: 'white',
-      }}
-    >
-      <br />
-      <Styled.CusDiv>
-        <Box
-          sx={{
-            flexDirection: 'column',
-            display: 'flex',
-            // alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 30,
-            border: 1,
-            borderColor: '#C0C0C0',
-            boxShadow: 1,
-            borderRadius: 5,
-            width: '25%',
-            height: 400,
-          }}
-        >
-          <span>⛏️ 보충학습 시작</span>
-          <Buttons />
-          <br />
-        </Box>
-        <Box
-          sx={{
-            flexDirection: 'column',
-            display: 'flex',
-            // alignItems: 'center',
-            // justifyContent: 'center',
-            fontSize: 30,
-            border: 1,
-            borderColor: '#C0C0C0',
-            boxShadow: 1,
-            borderRadius: 5,
-            width: '100%',
-            height: 400,
-          }}
-        >
-          <div>⛏️ 보충학습 기록</div>
-          <br />
-          <div
-            style={{
-              height: 300,
-              width: 1050,
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              rowsPerPageOptions={[5]}
-              hideFooterSelectedRowCount={true} // row count 숨기기
-              hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
-              disableSelectionOnClick
-            />
-          </div>
-          <br />
-          <br />
-          <Box
-            sx={{
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              flexDirection: 'column',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 30,
-            }}
-          >
-            {isClosed === 0 ? <Modal /> : ''}
-          </Box>
-        </Box>
-      </Styled.CusDiv>
-      <br />
-    </div>
+    <Styled.CusDiv>
+      <div className="start">
+        <h2>⛏️ 보충학습 시작</h2>
+        <Buttons />
+        <br />
+      </div>
+
+      <div className="log">
+        <h2>⛏️ 보충학습 기록</h2>
+
+        <DataGrid
+          rows={rows}
+          columns={aojiCloumns}
+          callback={fixButton}
+          rowsPerPageOptions={[5]}
+          hideFooterSelectedRowCount={true} // row count 숨기기
+          hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
+          disableSelectionOnClick
+        />
+      </div>
+
+      {isClosed === 0 ? <Modal /> : ''}
+    </Styled.CusDiv>
   );
 };
 

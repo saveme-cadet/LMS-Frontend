@@ -141,19 +141,12 @@ const MainPage = () => {
   useEffect(() => {
     getUsers();
   }, [date]);
-  const login = async () => {
-    const result = CRUDUserService.login({ email: 1234, password: 4242 });
-    console.log(result);
-
-    console.log(result.data);
-  };
-
-  const logout = async () => {
-    const result = CRUDUserService.logout();
-    console.log(result.data);
-  };
+  console.log(auth);
   return (
     <Styled.MainBackground>
+      <div>
+        안녕하세요 유저 {auth.userId}! 오늘 당신은 {auth.userTeam}입니다!
+      </div>
       <div className="time">
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} />
@@ -186,8 +179,6 @@ const MainPage = () => {
           )}
         </Box>
       </Styled.MainTable>
-      <button onClick={login}>login</button>
-      <button onClick={logout}>logout</button>
     </Styled.MainBackground>
   );
 };
