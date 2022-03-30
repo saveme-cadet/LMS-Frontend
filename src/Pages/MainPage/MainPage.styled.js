@@ -27,11 +27,11 @@ const MainBackground = styled.div`
 const MainTable = styled.div`
   border: 1px solid #c0c0c0;
   padding: 1em;
-  height: 60%;
+  height: 70%;
   border-radius: 1em;
 
   .table {
-    height: 60%;
+    height: 70%;
     .info {
       width: 8em;
       padding: 0.2em;

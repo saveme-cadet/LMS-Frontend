@@ -10,6 +10,11 @@ const Golbal = styled.div`
     text-underline-position: under;
     margin-left: 1em;
   }
+  .warning {
+    font-size: 30px;
+    text-align: center;
+    color: #c0c0c0;
+  }
   font-family: 'Noto Sans KR', sans-serif;
 `;
 

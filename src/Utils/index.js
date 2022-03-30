@@ -4,6 +4,7 @@ import adminCloumns from './adminCloumns';
 import checkCloumns from './checkCloumns';
 import vaildDay from './vaildDay';
 import getDayName from './getDayName';
+import isVaildCheck from './isVaildCheck';
 export {
   getStatusMessage,
   getCheckMessage,
@@ -11,4 +12,5 @@ export {
   checkCloumns,
   vaildDay,
   getDayName,
+  isVaildCheck,
 };

@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
   const [state, setState] = useState(200);
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
     const initState = async () => {
@@ -24,6 +25,7 @@ const AuthProvider = ({ children }) => {
       // setUserId(response.data);
       // setState(response.state);
       setUserId(5);
+      setUserRole('머슴');
       setState(200);
       setIsLoading(false);
     };
@@ -31,7 +33,9 @@ const AuthProvider = ({ children }) => {
   }, [isLoading]);
 
   return (
-    <AuthContext.Provider value={{ state, isLoading, userId, setIsLoading }}>
+    <AuthContext.Provider
+      value={{ state, isLoading, setIsLoading, userId, userRole }}
+    >
       {children}
     </AuthContext.Provider>
   );

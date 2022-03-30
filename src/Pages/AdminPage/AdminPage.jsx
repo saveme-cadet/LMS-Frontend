@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
-import { UserInfoService, CRUDUserService } from 'Network';
+import { AuthContext } from 'App';
 import { adminCloumns } from 'Utils';
+import { UserInfoService, CRUDUserService } from 'Network';
 
-import { ShowToday } from 'Components';
-
+import { ShowToday, NotValid } from 'Components';
 import SelectedUser from './SelectedUser';
 import AddVacation from './AddVacation';
 import FindTarget from './FindTarget';
 import ShakeTeam from './ShakeTeam';
 import NewUserForm from './NewUserForm';
+import { DataGrid } from '@mui/x-data-grid';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
 import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
-  const [date, setDate] = useState(new Date());
+  const auth = useContext(AuthContext);
 
+  const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
   const [rowData, setRowData] = useState(null);
@@ -143,117 +144,125 @@ const AdminPage = () => {
 
   useEffect(() => {
     getUser();
+    console.log('auth', auth);
   }, []);
 
   return (
     <Styled.AdminBackground>
       <ShowToday date={date} />
-
-      <Styled.AdminFeature>
-        <div>
-          <Button
-            onClick={() => {
-              setIsOpen('add');
-            }}
-          >
-            일괄 휴가 변경
-          </Button>
-          
-          <Button
-            onClick={() => {
-              setIsOpen('find');
-            }}
-          >
-            월렛 보상 대상
-          </Button>
-          
-          <Button
-            onClick={() => {
-              setIsOpen('shake');
-            }}
-          >
-            팀 섞기
-          </Button>
-          
-        </div>
-        <div>
-          <Button>머슴이 할 일</Button>
-        </div>
-      </Styled.AdminFeature>
-      <Styled.AdminTable>
-        <div className="table box">
-          <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="전체 보기" />
-            <Tab label="참가한 사용자" />
-            <Tab label="불참한 사용자" />
-          </Tabs>
-          {selectRowData && (
-            <DataGrid
-              rows={selectRowData}
-              columns={adminCloumns}
-              onCellClick={handleCellClick}
-              getRowClassName={params => {
-                return params.row.attendeStatus === '불참' && 'out';
-              }}
-              hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
-              hideFooterSelectedRowCount={true} // row count 숨기기
-            />
-          )}
-        </div>
-      </Styled.AdminTable>
-      <Styled.AdminChange>
-        <div className="select box">
-          <span className="title">멤버 정보 수정</span>자정(00:00)을 기준으로
-          수정사항이 출결표에 갱신됩니다
-          {selectUserId !== null && (
-            <SelectedUser
-              userInfo={rowData.find(array => array.id === selectUserId)}
-              onClickChangeAttend={handleChangeAttend}
-              onClickChangeTeam={handleChangeTeam}
-              onClickChangeRole={handleChangeRole}
-              onClickChangeVacation={handleChangeVacation}
-              onClickDeleteUser={handleDeleteUser}
-            />
-          )}
-        </div>
-      </Styled.AdminChange>
-
-      <Styled.AdminAddUser>
-        <NewUserForm callbackSubmit={handleCreateUser} />
-        {/* <button onClick={handleGetUser}>유저 얻기</button> */}
-      </Styled.AdminAddUser>
-
-      <Styled.Modal>
-        {isOpen === 'add' && (
-          <AddVacation
-            setIsOpen={setIsOpen}
-            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
-            addVacation={handleAddVacation}
-            minusVacation={handleMinusVacation}
-          />
-        )}
-      </Styled.Modal>
-
-      <Styled.Modal>
-        {isOpen === 'find' && (
-          <FindTarget
-            setIsOpen={setIsOpen}
-            attendUser={rowData.filter(user => user.attendeStatus === '참가')}
-          />
-        )}
-      </Styled.Modal>
-
-      <Styled.Modal>
-        {isOpen === 'shake' && (
-          <Styled.ShakeTeam>
-            <ShakeTeam
-              setIsOpen={setIsOpen}
-              attendUser={rowData.filter(user => user.attendeStatus === '참가')}
-              onClickChangeShuffleTeam={handleChangeShuffleTeam}
-            />
-          </Styled.ShakeTeam>
-        )}
-      </Styled.Modal>
+      {auth.userRole === '머슴' ? (
+        <>
+          <Styled.AdminFeature>
+            <div>
+              <Button
+                onClick={() => {
+                  setIsOpen('add');
+                }}
+              >
+                일괄 휴가 변경
+              </Button>
+              
+              <Button
+                onClick={() => {
+                  setIsOpen('find');
+                }}
+              >
+                월렛 보상 대상
+              </Button>
+              
+              <Button
+                onClick={() => {
+                  setIsOpen('shake');
+                }}
+              >
+                팀 섞기
+              </Button>
+              
+            </div>
+            <div>
+              <Button>머슴이 할 일</Button>
+            </div>
+          </Styled.AdminFeature>
+          <Styled.AdminTable>
+            <div className="table box">
+              <Tabs value={tab} onChange={handleChangeTab}>
+                <Tab label="전체 보기" />
+                <Tab label="참가한 사용자" />
+                <Tab label="불참한 사용자" />
+              </Tabs>
+              {selectRowData && (
+                <DataGrid
+                  rows={selectRowData}
+                  columns={adminCloumns}
+                  onCellClick={handleCellClick}
+                  getRowClassName={params => {
+                    return params.row.attendeStatus === '불참' && 'out';
+                  }}
+                  hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
+                  hideFooterSelectedRowCount={true} // row count 숨기기
+                />
+              )}
+            </div>
+          </Styled.AdminTable>
+          <Styled.AdminChange>
+            <div className="select box">
+              <span className="title">멤버 정보 수정</span>자정(00:00)을
+              기준으로 수정사항이 출결표에 갱신됩니다
+              {selectUserId !== null && (
+                <SelectedUser
+                  userInfo={rowData.find(array => array.id === selectUserId)}
+                  onClickChangeAttend={handleChangeAttend}
+                  onClickChangeTeam={handleChangeTeam}
+                  onClickChangeRole={handleChangeRole}
+                  onClickChangeVacation={handleChangeVacation}
+                  onClickDeleteUser={handleDeleteUser}
+                />
+              )}
+            </div>
+          </Styled.AdminChange>
+          <Styled.AdminAddUser>
+            <NewUserForm callbackSubmit={handleCreateUser} />
+            {/* <button onClick={handleGetUser}>유저 얻기</button> */}
+          </Styled.AdminAddUser>
+          <Styled.Modal>
+            {isOpen === 'add' && (
+              <AddVacation
+                setIsOpen={setIsOpen}
+                attendUser={rowData.filter(
+                  user => user.attendeStatus === '참가',
+                )}
+                addVacation={handleAddVacation}
+                minusVacation={handleMinusVacation}
+              />
+            )}
+          </Styled.Modal>
+          <Styled.Modal>
+            {isOpen === 'find' && (
+              <FindTarget
+                setIsOpen={setIsOpen}
+                attendUser={rowData.filter(
+                  user => user.attendeStatus === '참가',
+                )}
+              />
+            )}
+          </Styled.Modal>
+          <Styled.Modal>
+            {isOpen === 'shake' && (
+              <Styled.ShakeTeam>
+                <ShakeTeam
+                  setIsOpen={setIsOpen}
+                  attendUser={rowData.filter(
+                    user => user.attendeStatus === '참가',
+                  )}
+                  onClickChangeShuffleTeam={handleChangeShuffleTeam}
+                />
+              </Styled.ShakeTeam>
+            )}
+          </Styled.Modal>
+        </>
+      ) : (
+        <NotValid code={0} />
+      )}
     </Styled.AdminBackground>
   );
 };
