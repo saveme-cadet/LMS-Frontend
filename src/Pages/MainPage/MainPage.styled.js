@@ -12,12 +12,33 @@ const MainBackground = styled.div`
   // size
   width: 100%;
   height: 100%;
+  .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .change-today {
+    // position: absolute;
+  }
 `;
 
 const MainTable = styled.div`
+  border: 1px solid #c0c0c0;
+  padding: 1em;
+  height: 60%;
+  border-radius: 1em;
+
   .table {
     width: 100%;
-    height: 30em;
+    height: 60%;
+    .info {
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
     .red {
       background-color: #dc143c;
     }
@@ -31,20 +52,30 @@ const MainTable = styled.div`
       background-color: #cccccc;
     }
 
+    .type {
+      color: #ffffff;
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
     .check {
-      color: green;
+      background-color: #2ce054;
     }
     .late {
-      color: yellow;
+      background-color: #ffcb46;
     }
     .not {
-      color: red;
+      background-color: #ff4646;
     }
     .vacancy {
-      color: blue;
+      background-color: #a477ee;
     }
     .illness {
-      color: purple;
+      background-color: #a477ee;
+    }
+    .vacation {
+      background-color: #2891f1;
     }
   }
 `;

@@ -12,13 +12,11 @@ const AdminBackground = styled.div`
   width: 100%;
   height: 100%;
 
-  // box
   .box {
-    // background-color: #d8d8d8;
-    margin: 0.5em;
     padding: 1em;
     border-radius: 1em;
     border: 1px solid #dbdbdb;
+    text-align: left;
   }
   .title {
     font-size: 30px;
@@ -38,29 +36,49 @@ const AdminFeature = styled.div`
 `;
 
 const AdminTable = styled.div`
+  margin: 1em 0 1em 0;
+  border: 1px solid #c0c0c0;
+  padding: 1em;
+  height: 60%;
+  border-radius: 1em;
+
   .table {
     width: 90%;
     height: 30em;
     margin: 1em;
     margin-bottom: 3em;
+    .info {
+      width: 8em;
+      padding: 0.2em;
+      border-radius: 10em;
+      text-align: center;
+    }
+    .불참 {
+      color: white;
+      background-color: black;
+    }
+    .참가 {
+      color: black;
+      border: 1px solid black;
+      background-color: white;
+    }
     .red {
       background-color: #dc143c;
     }
     .blue {
       background-color: #0079f0;
     }
-    .out {
-      background-color: #808080;
-    }
     .머슴 {
-      background-color: #ffd700;
+      background-color: yellow;
+    }
+    .일반 {
+      background-color: #cccccc;
     }
   }
 `;
 
 const AdminChange = styled.div`
   width: 90%;
-  margin: 1em;
   .action > * {
     color: #292929;
     width: 8em;
@@ -70,11 +88,14 @@ const AdminChange = styled.div`
   .user-status > * {
     margin: 0.4em;
   }
-  .off {
-    background-color: #848484;
+  .불참 {
+    color: white;
+    background-color: black;
   }
-  .on {
-    background-color: #cfcfcf;
+  .참가 {
+    color: black;
+    border: 1px solid black;
+    background-color: white;
   }
   .red {
     background-color: #dc143c;
@@ -92,7 +113,7 @@ const AdminChange = styled.div`
 
 const AdminAddUser = styled.div`
   width: 90%;
-  margin: 1em;
+  margin: 1em 0 1em 0;
 `;
 
 const Modal = styled.div`
