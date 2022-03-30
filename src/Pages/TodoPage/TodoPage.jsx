@@ -174,6 +174,7 @@ function TodoPage() {
       todoId: toDoNumber,
       todoDay: format(today, 'yyyy-MM-dd'),
     });
+
     const result = await TodoService.deleteTodo(
       1,
       toDoNumber,

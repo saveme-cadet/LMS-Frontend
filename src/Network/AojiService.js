@@ -5,7 +5,7 @@ const AojiUrl = path => {
 };
 
 const AojiService = {
-  endAoji: async (userId) => {
+  endAoji: async userId => {
     const url = AojiUrl(`update/${userId}`);
     let response;
     try {
@@ -15,6 +15,7 @@ const AojiService = {
     }
     return response;
   },
+
   putAoji: async (userId, body) => {
     const url = AojiUrl(`aojitime/${userId}`);
     let response;
@@ -25,7 +26,8 @@ const AojiService = {
     }
     return response;
   },
-  postAoji: async (userId) => {
+
+  postAoji: async userId => {
     const url = AojiUrl(`create/${userId}`);
     let response;
     try {
@@ -35,6 +37,7 @@ const AojiService = {
     }
     return response;
   },
+
   getMyAoji: async () => {
     const url = AojiUrl(`studyuser`);
     let response;
@@ -45,7 +48,8 @@ const AojiService = {
     }
     return response;
   },
-  getOtherAoji : async(userId) => {
+
+  getOtherAoji: async userId => {
     const url = AojiUrl(`read/${userId}`);
     let response;
     try {

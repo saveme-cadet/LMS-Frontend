@@ -2,13 +2,24 @@ import * as React from 'react';
 import Styled from './Timer.styled';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
-import { grey } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 import { SettingsAccessibilityTwoTone } from '@mui/icons-material';
+import { AojiService } from 'Network';
 
 const DisplayComponent = props => {
+  const [isClosed, setIsClosed] = useState(1);
+  const [buttonNumber, setButtonNumber] = useState(0);
+
+  const OpenModal = event => {
+    setIsClosed(0);
+    setButtonNumber(
+      parseInt(event.target.parentNode.parentNode.getAttribute('data-id')) + 1,
+    );
+  };
+
   const DigitalText = () => {
     return (
       <Box>
@@ -143,7 +154,11 @@ const DisplayComponent = props => {
       hideable: false,
       sortable: false,
       renderCell: params => (
-        <Button sx={{ width: 50, height: 30 }} variant="outlined">
+        <Button
+          sx={{ width: 50, height: 30 }}
+          variant="outlined"
+          onClick={OpenModal}
+        >
           수정
         </Button>
       ),
@@ -188,6 +203,33 @@ const DisplayComponent = props => {
   let seconds = String(total % 60).padStart(2, '0');
   let minutes = String(parseInt((total / 60) % 60)).padStart(2, '0');
   let hours = String(parseInt(total / (60 * 60))).padStart(2, '0');
+  console.log('Total = ' + hours + ' : ' + minutes + ' : ' + seconds);
+
+  const CloseModal = () => {
+    setIsClosed(1);
+  };
+
+  const Modal = () => {
+    return (
+      <div>
+        {buttonNumber == '0' ? (
+          ''
+        ) : (
+          <div>시작 : {props.time[parseInt(buttonNumber) - 1].start}</div>
+        )}
+        종료 : <input type="time" />
+        {/* {buttonNumber == '0' ? (
+          ''
+        ) : (
+          <div>종료 : {props.time[parseInt(buttonNumber) - 1].finish}</div>
+        )} */}
+        <div>
+          <button onClick={CloseModal}>확인</button>
+          <button>취소</button>
+        </div>
+      </div>
+    );
+  }; // 팝업 띄우기
 
   return (
     <div
@@ -215,7 +257,7 @@ const DisplayComponent = props => {
           <span>⛏️ 보충학습 시작</span>
           <br />
           <br />
-          <DigitalText />
+          {/* <DigitalText /> */}
           <br />
           <br />
           <br />
@@ -273,9 +315,7 @@ const DisplayComponent = props => {
               fontSize: 30,
             }}
           >
-            {/* <div style={{ textAlign: '70%' }}>
-              총 합계 | {hours}:{minutes}:{seconds}
-            </div> */}
+            {isClosed === 0 ? <Modal /> : ''}
           </Box>
         </Box>
       </Styled.CusDiv>
