@@ -22,6 +22,15 @@ const SideBar = () => {
 
   return (
     <>
+      <div
+        className="home"
+        onClick={() => {
+          navi('/');
+        }}
+      >
+        <img src="asset/saveme.png" alt="saveme" />
+        구해줘 카뎃
+      </div>
       {curPage !== null && (
         <Tabs
           orientation="vertical"

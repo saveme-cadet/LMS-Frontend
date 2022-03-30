@@ -9,13 +9,13 @@ const AdminBackground = styled.div`
   display: flex;
   flex-direction: column;
   // size
-  width: 100%;
+  width: 80%;
   height: 100%;
 
   .box {
     padding: 1em;
     border-radius: 1em;
-    border: 1px solid #dbdbdb;
+    // border: 1px solid #dbdbdb;
     text-align: left;
   }
   .title {
@@ -25,7 +25,6 @@ const AdminBackground = styled.div`
 `;
 const AdminFeature = styled.div`
   display: flex;
-  width: 90%;
   justify-content: space-between;
   button {
     width: 20em;
@@ -39,11 +38,11 @@ const AdminTable = styled.div`
   margin: 1em 0 1em 0;
   border: 1px solid #c0c0c0;
   padding: 1em;
+
   height: 60%;
   border-radius: 1em;
 
   .table {
-    width: 90%;
     height: 30em;
     margin: 1em;
     margin-bottom: 3em;
@@ -78,7 +77,6 @@ const AdminTable = styled.div`
 `;
 
 const AdminChange = styled.div`
-  width: 90%;
   .action > * {
     color: #292929;
     width: 8em;
@@ -112,7 +110,6 @@ const AdminChange = styled.div`
 `;
 
 const AdminAddUser = styled.div`
-  width: 90%;
   margin: 1em 0 1em 0;
 `;
 

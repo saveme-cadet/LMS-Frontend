@@ -10,7 +10,7 @@ const MainBackground = styled.div`
   display: flex;
   flex-direction: column;
   // size
-  width: 100%;
+  width: 80%;
   height: 100%;
   .time {
     display: flex;
@@ -31,7 +31,6 @@ const MainTable = styled.div`
   border-radius: 1em;
 
   .table {
-    width: 100%;
     height: 60%;
     .info {
       width: 8em;

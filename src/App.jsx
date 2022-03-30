@@ -1,14 +1,7 @@
 import { useState, createContext, useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import {
-  AdminPage,
-  MainPage,
-  MinePage,
-  TodoPage,
-  LoginPage,
-  OAuthPage,
-} from 'Pages';
+import { LoginPage, OAuthPage } from 'Pages';
 import MainRoute from './Route';
 
 import Styled from 'Styled/Global.styled';
@@ -31,7 +24,7 @@ const AuthProvider = ({ children }) => {
       // setCurUser(response.data);
       // setState(response.state);
       setCurUser(1);
-      setState(401);
+      setState(200);
       setIsLoading(false);
     };
     initState();

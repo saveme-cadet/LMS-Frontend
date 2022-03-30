@@ -1,13 +1,5 @@
-import { useContext } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import {
-  AdminPage,
-  MainPage,
-  MinePage,
-  TodoPage,
-  LoginPage,
-  OAuthPage,
-} from 'Pages';
+import { Routes, Route } from 'react-router-dom';
+import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
 import { SideBar } from 'Components';
 
 import Styled from 'Styled/Global.styled';
@@ -15,9 +7,9 @@ import Styled from 'Styled/Global.styled';
 const MainRoute = () => {
   return (
     <>
-      <Styled.CusTab>
+      <Styled.SideBar>
         <SideBar />
-      </Styled.CusTab>
+      </Styled.SideBar>
       <Styled.Body>
         <Routes>
           <Route path="/" element={<MainPage />} />

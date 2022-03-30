@@ -1,31 +1,10 @@
 import styled from 'styled-components';
-import Tabs from '@mui/material/Tabs';
-
-const ProfileBackgroundDiv = styled.div`
-  // position
-  position: absolute;
-  top: 0px;
-  left: 0px;
-
-  // layout
-  display: flex;
-  flex-direction: column;
-  margin: 0px;
-  padding: 0px;
-
-  // size
-  width: 100%;
-  height: 100%;
-
-  // color
-  background-color: #2a2d38;
-`;
 
 const Golbal = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  height: 100%;
   .show-today {
     text-decoration: underline;
     text-underline-position: under;
@@ -34,21 +13,36 @@ const Golbal = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 `;
 
-const CusTab = styled(Tabs)`
+const SideBar = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #220646;
   height: 100em;
-  width: 9em;
+  width: 10%;
+  min-width: 9em;
+  max-width: 13em;
+  .home {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2em;
+    cursor: pointer;
+    img {
+      margin: 0.2em;
+    }
+  }
   button {
     color: #ffffff;
-    width: 9em;
+    max-width: 13em;
   }
 `;
 
 const Body = styled.div`
   margin-left: 5em;
-  width: 100%;
+  width: 90%;
 `;
 
-const GlobalStyled = { ProfileBackgroundDiv, Golbal, CusTab, Body };
+const GlobalStyled = { Golbal, SideBar, Body };
 
 export default GlobalStyled;
