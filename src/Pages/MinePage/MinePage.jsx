@@ -4,28 +4,11 @@ import { AuthContext } from 'App';
 import { aojiCloumns } from 'Utils';
 import { AojiService } from 'Network';
 
-import {
-  format,
-  parseISO,
-  differenceInHours,
-  differenceInMinutes,
-  differenceInSeconds,
-} from 'date-fns';
+import Timer from './Timer';
+import AojiButton from './AojiButton';
 import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MinePage.styled';
-
-const AojiButton = ({ onClickAoji, state }) => {
-  return (
-    <>
-      {!state ? (
-        <button onClick={onClickAoji}>시작!</button>
-      ) : (
-        <button onClick={onClickAoji}>종료!</button>
-      )}
-    </>
-  );
-};
 
 const AojiLog = ({ data }) => {
   return (
@@ -37,31 +20,21 @@ const AojiLog = ({ data }) => {
   );
 };
 
-const Timer = ({ startTime, now }) => {
-  console.log('start', startTime);
-  console.log('now', now);
-  return (
-    <h1>
-      {differenceInHours(now, startTime)}:{differenceInMinutes(now, startTime)}:
-      {differenceInSeconds(now, startTime)}
-    </h1>
-  );
-};
-
 const MinePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDoing, setIsDoing] = useState(false);
   const [aojiLogs, setAojiLogs] = useState(null);
   const [startTime, setStartTime] = useState();
   const [now, setNow] = useState(new Date());
-  let interv;
-  // format(new Date(), 'HH:mm:ss')
+
   const auth = useContext(AuthContext);
+  let interv;
 
   const handleClickButton = async () => {
     let result;
     if (isDoing) {
       clearInterval(interv);
+      setStartTime(null);
       result = await AojiService.putEndAoji(auth.userId);
     } else {
       setStartTime(new Date());
@@ -91,16 +64,15 @@ const MinePage = () => {
       if (log.endAt === null) doingState = true;
     });
     if (doingState) {
-      console.log('asfas');
       clockStart();
-      setStartTime(logs[logs.length - 1].startAt);
+      const fotmatDate = new Date(logs[logs.length - 1].startAt);
+      setStartTime(fotmatDate);
     }
     setAojiLogs(logs);
     setIsDoing(doingState);
   };
   useEffect(() => {
     getMyAoji();
-
     return () => {
       clearInterval(interv); // cleanup function을 이용
     };
