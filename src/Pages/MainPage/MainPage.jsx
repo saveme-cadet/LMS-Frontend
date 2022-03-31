@@ -150,7 +150,7 @@ const MainPage = () => {
       </div>
       <div className="time">
         <ShowToday date={date} />
-        <CusDatePicker date={date} setDate={setDate} />
+        <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
       </div>
       <Styled.MainTable>
         <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>

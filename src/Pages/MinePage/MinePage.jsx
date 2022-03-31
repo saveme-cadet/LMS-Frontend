@@ -24,11 +24,17 @@ const MinePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDoing, setIsDoing] = useState(false);
   const [aojiLogs, setAojiLogs] = useState(null);
-  const [startTime, setStartTime] = useState();
+  const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(new Date());
 
   const auth = useContext(AuthContext);
   let interv;
+
+  const clockStart = () => {
+    interv = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+  };
 
   const handleClickButton = async () => {
     let result;
@@ -46,15 +52,10 @@ const MinePage = () => {
     getMyAoji();
   };
 
-  const clockStart = () => {
-    interv = setInterval(() => {
-      setNow(new Date());
-    }, 1000);
-  };
-
   const CloseModal = () => {
     setIsOpen(false);
   };
+
   const getMyAoji = async () => {
     const result = await AojiService.getMyAoji(auth.userId);
     const logs = result.data;
@@ -71,6 +72,7 @@ const MinePage = () => {
     setAojiLogs(logs);
     setIsDoing(doingState);
   };
+
   useEffect(() => {
     getMyAoji();
     return () => {
