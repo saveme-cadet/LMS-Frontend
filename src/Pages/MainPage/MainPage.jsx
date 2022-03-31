@@ -19,6 +19,7 @@ import Styled from './MainPage.styled';
 
 const MainPage = () => {
   const auth = useContext(AuthContext);
+  console.log(auth);
   const [date, setDate] = useState(new Date());
 
   const [tab, setTab] = useState(0);
