@@ -18,8 +18,6 @@ import Button from '@mui/material/Button';
 import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
-  const auth = useContext(AuthContext);
-
   const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
@@ -28,6 +26,10 @@ const AdminPage = () => {
   const [tab, setTab] = useState(0);
   const [selectRowData, setSelectRowData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const auth = useContext(AuthContext);
+  const userRole = auth.status.role;
+  const userId = auth.status.userId;
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -143,7 +145,7 @@ const AdminPage = () => {
   return (
     <Styled.AdminBackground>
       <ShowToday date={date} />
-      {auth.userRole === '머슴' ? (
+      {userRole === '머슴' ? (
         <>
           <Styled.AdminFeature>
             <div>

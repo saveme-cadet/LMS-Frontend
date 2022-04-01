@@ -19,6 +19,7 @@ const MinePage = () => {
   const [now, setNow] = useState(new Date());
 
   const auth = useContext(AuthContext);
+  const userId = auth.status.userId;
   let interv;
 
   const clockStart = () => {
@@ -32,11 +33,11 @@ const MinePage = () => {
     if (isDoing) {
       clearInterval(interv);
       setStartTime(null);
-      result = await AojiService.putEndAoji(auth.userId);
+      result = await AojiService.putEndAoji(userId);
     } else {
       setStartTime(new Date());
       clockStart();
-      result = await AojiService.postStartAoji(auth.userId);
+      result = await AojiService.postStartAoji(userId);
     }
     console.log(result.data);
     setIsDoing(!isDoing);
@@ -48,7 +49,7 @@ const MinePage = () => {
   };
 
   const getMyAoji = async () => {
-    const result = await AojiService.getMyAoji(auth.userId);
+    const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
     console.log(logs);
