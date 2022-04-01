@@ -20,7 +20,7 @@ const NewUserForm = ({ callbackSubmit }) => {
     callbackSubmit({
       name: name,
       email: email, // 중복되면 안됨.
-      password: 'forTest',
+      password: '4242',
       birthday: '2022-02-18',
     });
     setName('');

@@ -109,7 +109,7 @@ const MainPage = () => {
   const getUsers = async () => {
     if (vaildDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await AllTableService.getAllTable(dateFormat);
+    const result = await AllTableService.getAllTable(dateFormat, auth.userId);
     if (!result) {
       if (confirm('에러가 발생했습니다. 오늘 날짜로 돌아가시겠습니까?')) {
         const today = new Date();
