@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Button from '@mui/material/Button';
 
-const NewUserForm = ({ callbackSubmit }) => {
+const NewUserForm = ({ onClickLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -17,7 +17,7 @@ const NewUserForm = ({ callbackSubmit }) => {
       alert('이름과 이메일을 입력하세요!');
       return;
     }
-    callbackSubmit({
+    onClickLogin({
       name: name,
       email: email, // 중복되면 안됨.
       password: '4242',

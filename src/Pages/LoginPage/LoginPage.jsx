@@ -3,49 +3,55 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { CRUDUserService } from 'Network';
 
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 import Button from '@mui/material/Button';
 
 import Styled from './LoginPage.styled';
 
 const LoginPage = () => {
   const navi = useNavigate();
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const [status, setStatus] = useState('login');
 
-  const handleChangeId = event => {
-    setId(event.target.value);
-  };
-  const handleChangePassword = event => {
-    setPassword(event.target.value);
-  };
-  const handleClick = async () => {
-    if (!id || !password) {
-      alert('전부 입력해주세요!');
+  const handleLogin = async body => {
+    const result = await CRUDUserService.postLogin(body);
+    if (!result) {
+      alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
-    const result = await CRUDUserService.postLogin({
-      name: id,
-      password: password,
-    });
-    setId('');
-    setPassword('');
+    console.log(result);
+    navi('/');
   };
-
+  const handleRegister = async body => {
+    const name = body.name;
+    const result = await CRUDUserService.postUser(body);
+    if (!result) {
+      alert('회원가입 에러! ');
+      return;
+    }
+    const login = await CRUDUserService.postLogin({
+      name: name,
+      password: 4242,
+    });
+    navi('/');
+  };
   return (
     <Styled.LoginBackground>
       <div>
         <text className="title">구해줘 카뎃</text>
-
-        <input value={id} placeholder="아이디" onChange={handleChangeId} />
-        <input
-          value={password}
-          placeholder="비밀번호"
-          onChange={handleChangePassword}
-        />
-
-        <Button onClick={handleClick}>로그인</Button>
-
-        <Button onClick={handleClick}>회원가입</Button>
+        {status === 'login' ? (
+          <>
+            <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
+          </>
+        ) : (
+          <>
+            <RegisterForm
+              onClickRegister={handleRegister}
+              setStatus={setStatus}
+            />
+            ;
+          </>
+        )}
       </div>
     </Styled.LoginBackground>
   );

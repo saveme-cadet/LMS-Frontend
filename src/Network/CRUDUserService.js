@@ -43,7 +43,9 @@ const CRUDUserService = {
     try {
       response = await instance.post(url, body);
     } catch (e) {
-      alert(e);
+      console.log(e);
+      return null;
+      // alert(e);
     }
     return response;
   },

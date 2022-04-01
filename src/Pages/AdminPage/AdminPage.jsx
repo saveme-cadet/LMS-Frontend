@@ -101,22 +101,16 @@ const AdminPage = () => {
     setSelectUserId(null);
   };
 
-  const handleCreateUser = async data => {
-    const result = await CRUDUserService.postUser(data);
-    getUser();
-    setSelectUserId(null);
-  };
+  // const handleGetUser = async () => {
+  //   const result = await CRUDUserService.getUser();
+  //   console.log(result.data);
+  // };
 
-  const handleGetUser = async () => {
-    const result = await CRUDUserService.getUser();
-    console.log(result.data);
-  };
-
-  const handleDeleteUser = async data => {
-    const result = await CRUDUserService.deleteUser(data);
-    getUser();
-    setSelectUserId(null);
-  };
+  // const handleDeleteUser = async data => {
+  //   const result = await CRUDUserService.deleteUser(data);
+  //   getUser();
+  //   setSelectUserId(null);
+  // };
 
   const getUser = async () => {
     const result = await UserInfoService.getAllUser(5);
@@ -214,15 +208,11 @@ const AdminPage = () => {
                   onClickChangeTeam={handleChangeTeam}
                   onClickChangeRole={handleChangeRole}
                   onClickChangeVacation={handleChangeVacation}
-                  onClickDeleteUser={handleDeleteUser}
                 />
               )}
             </div>
           </Styled.AdminChange>
-          <Styled.AdminAddUser>
-            <NewUserForm callbackSubmit={handleCreateUser} />
-            {/* <button onClick={handleGetUser}>유저 얻기</button> */}
-          </Styled.AdminAddUser>
+
           <Styled.Modal>
             {isOpen === 'add' && (
               <AddVacation

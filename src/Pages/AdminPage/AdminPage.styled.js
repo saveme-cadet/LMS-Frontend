@@ -114,10 +114,6 @@ const AdminChange = styled.div`
   }
 `;
 
-const AdminAddUser = styled.div`
-  margin: 1em 0 1em 0;
-`;
-
 const Modal = styled.div`
   .modal {
     position: absolute;
@@ -160,7 +156,6 @@ const Styled = {
   AdminFeature,
   AdminTable,
   AdminChange,
-  AdminAddUser,
   Modal,
   ShakeTeam,
 };
