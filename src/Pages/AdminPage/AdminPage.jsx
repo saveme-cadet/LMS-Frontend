@@ -21,9 +21,9 @@ const AdminPage = () => {
   const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
-  const [rowData, setRowData] = useState(null);
 
   const [tab, setTab] = useState(0);
+  const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -156,7 +156,7 @@ const AdminPage = () => {
               >
                 일괄 휴가 변경
               </Button>
-              
+
               <Button
                 onClick={() => {
                   setIsOpen('find');
@@ -164,7 +164,7 @@ const AdminPage = () => {
               >
                 월렛 보상 대상
               </Button>
-              
+
               <Button
                 onClick={() => {
                   setIsOpen('shake');
@@ -172,10 +172,9 @@ const AdminPage = () => {
               >
                 팀 섞기
               </Button>
-              
             </div>
             <div>
-              <Button>머슴이 할 일</Button>
+              <Button>머슴이 할 일</Button>
             </div>
           </Styled.AdminFeature>
           <Styled.AdminTable>

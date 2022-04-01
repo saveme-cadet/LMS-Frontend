@@ -70,7 +70,7 @@ const AdminTable = styled.div`
     .머슴 {
       background-color: yellow;
     }
-    .일반 {
+    .카뎃 {
       background-color: #cccccc;
     }
   }
@@ -109,7 +109,7 @@ const AdminChange = styled.div`
   .머슴 {
     background-color: yellow;
   }
-  .일반 {
+  .카뎃 {
     background-color: #cccccc;
   }
 `;

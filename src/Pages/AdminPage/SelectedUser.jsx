@@ -61,7 +61,7 @@ const SelectedUser = ({
               inputProps={{ 'aria-label': 'Without label' }}
             >
               <MenuItem value={'머슴'}>머슴</MenuItem>
-              <MenuItem value={'일반'}>일반</MenuItem>
+              <MenuItem value={'카뎃'}>카뎃</MenuItem>
             </Select>
             <Button
               variant="contained"
