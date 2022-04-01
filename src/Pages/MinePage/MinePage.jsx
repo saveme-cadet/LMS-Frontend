@@ -6,19 +6,10 @@ import { AojiService } from 'Network';
 
 import Timer from './Timer';
 import AojiButton from './AojiButton';
+import AojiLog from './AojiLog';
 import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MinePage.styled';
-
-const AojiLog = ({ data }) => {
-  return (
-    <h3>
-      시작 시간 : {data.startAt}
-      종료 시간 : {data.endAt}
-      기록 시간 : {data.recodeTime}
-    </h3>
-  );
-};
 
 const MinePage = () => {
   const [isOpen, setIsOpen] = useState(false);
