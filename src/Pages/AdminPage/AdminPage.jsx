@@ -133,7 +133,6 @@ const AdminPage = () => {
         participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
-        aojiScore: 0,
       };
       newArray.push(newData);
     });
