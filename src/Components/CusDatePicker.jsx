@@ -11,7 +11,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const CusDatePicker = ({ date, setDate }) => {
+const CusDatePicker = ({ date, setDate, isWeekend }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = e => {
@@ -41,14 +41,14 @@ const CusDatePicker = ({ date, setDate }) => {
   };
 
   const isWeekday = date => {
+    if (isWeekend) return true;
     const day = date.getDay();
     return day !== 0 && day !== 6;
   };
 
   return (
- 
-<div className="change-today header">
-  <KeyboardDoubleArrowLeftIcon
+    <div className="change-today header">
+      <KeyboardDoubleArrowLeftIcon
         onClick={() => {
           handleChangeDate({ months: -1 });
         }}
@@ -88,8 +88,7 @@ const CusDatePicker = ({ date, setDate }) => {
           maxDate={new Date()}
         />
       </Popover>
-</div>
-   
+    </div>
   );
 };
 

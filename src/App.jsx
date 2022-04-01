@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
       // }
       // setUserId(response.data);
       // setState(response.state);
-      setUserId(5);
+      setUserId(1);
       setUserRole('머슴');
       setState(200);
       setIsLoading(false);
