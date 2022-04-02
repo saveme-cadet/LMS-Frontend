@@ -70,7 +70,7 @@ const AdminTable = styled.div`
     .머슴 {
       background-color: yellow;
     }
-    .일반 {
+    .카뎃 {
       background-color: #cccccc;
     }
   }
@@ -109,13 +109,9 @@ const AdminChange = styled.div`
   .머슴 {
     background-color: yellow;
   }
-  .일반 {
+  .카뎃 {
     background-color: #cccccc;
   }
-`;
-
-const AdminAddUser = styled.div`
-  margin: 1em 0 1em 0;
 `;
 
 const Modal = styled.div`
@@ -160,7 +156,6 @@ const Styled = {
   AdminFeature,
   AdminTable,
   AdminChange,
-  AdminAddUser,
   Modal,
   ShakeTeam,
 };

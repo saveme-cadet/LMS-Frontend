@@ -20,7 +20,8 @@ import { format } from 'date-fns';
 
 const TodoPage = () => {
   const auth = useContext(AuthContext);
-  console.log(auth);
+  const userId = auth.status.userId;
+
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -49,7 +50,7 @@ const TodoPage = () => {
     }
 
     const result = await TodoService.postTodo({
-      writerId: auth.userId,
+      writerId: userId,
       todoId: nextId + 1,
       title: toDo.content,
       titleCheck: false,
@@ -119,7 +120,7 @@ const TodoPage = () => {
     });
 
     const result = await TodoService.deleteTodo(
-      auth.userId,
+      userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
@@ -133,7 +134,7 @@ const TodoPage = () => {
 
   const getTodos = async () => {
     const result = await TodoService.getTodo(
-      auth.userId,
+      userId,
       format(date, 'yyyy-MM-dd'),
     );
     setToDos(result.data);

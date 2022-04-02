@@ -17,7 +17,7 @@ const SelectedUser = ({
 
   return (
     <div className="box">
-      <text className="title">현재 선택 : {userInfo.userName}</text>
+      <span className="title">현재 선택 : {userInfo.userName}</span>
 
       <span className="user-status">
         <Chip
@@ -61,7 +61,7 @@ const SelectedUser = ({
               inputProps={{ 'aria-label': 'Without label' }}
             >
               <MenuItem value={'머슴'}>머슴</MenuItem>
-              <MenuItem value={'일반'}>일반</MenuItem>
+              <MenuItem value={'카뎃'}>카뎃</MenuItem>
             </Select>
             <Button
               variant="contained"

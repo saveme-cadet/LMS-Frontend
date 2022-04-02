@@ -18,7 +18,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import Styled from './MainPage.styled';
 
 const MainPage = () => {
-  const auth = useContext(AuthContext);
   const [date, setDate] = useState(new Date());
 
   const [tab, setTab] = useState(0);
@@ -27,6 +26,12 @@ const MainPage = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+
+  const auth = useContext(AuthContext);
+  const userId = auth.status.userId;
+
+  console.log('userId : ', userId);
+  // console.log('auth : ', auth.status);
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -37,7 +42,6 @@ const MainPage = () => {
       if (array.team !== filter) filterArray.push(array);
     });
     setSelectRowData(filterArray);
-    console.log('filter : ', filterArray);
   };
 
   const handleChangeTab = (event, dstTab) => {
@@ -50,14 +54,16 @@ const MainPage = () => {
     if (field !== 'checkIn' && field !== 'checkOut') return;
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    const myInfo = rowData.find(array => array.id === auth.userId);
+    const myInfo = rowData.find(array => array.id === userId);
+    console.log('myinfo :', myInfo);
+    console.log('selectUserInfo : ', selectUserInfo);
     const vaild = isVaildCheck(
       selectUserInfo,
       myInfo.id,
       myInfo.role,
       myInfo.team,
     );
-    console.log(vaild);
+    console.log('valud:', vaild);
     if (vaild) {
       vaild === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
@@ -108,7 +114,7 @@ const MainPage = () => {
   const getUsers = async () => {
     if (vaildDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await AllTableService.getAllTable(dateFormat);
+    const result = await AllTableService.getAllTable(dateFormat, userId);
     if (!result) {
       if (confirm('에러가 발생했습니다. 오늘 날짜로 돌아가시겠습니까?')) {
         const today = new Date();
@@ -117,7 +123,6 @@ const MainPage = () => {
       return;
     }
     const arrays = result.data;
-    console.log('array : ', arrays);
 
     const newArray = [];
     arrays.map(array => {
@@ -139,24 +144,19 @@ const MainPage = () => {
   };
 
   useEffect(() => {
+    console.log('today : ', date);
     getUsers();
   }, [date]);
-  const login = async () => {
-    const result = CRUDUserService.login({ email: 1234, password: 4242 });
-    console.log(result);
 
-    console.log(result.data);
-  };
-
-  const logout = async () => {
-    const result = CRUDUserService.logout();
-    console.log(result.data);
-  };
   return (
     <Styled.MainBackground>
+      <div>
+        안녕하세요 {auth.status.userName}! 당신의 팀은 {auth.status.team}{' '}
+        팀입니다!
+      </div>
       <div className="time">
         <ShowToday date={date} />
-        <CusDatePicker date={date} setDate={setDate} />
+        <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
       </div>
       <Styled.MainTable>
         <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
@@ -186,8 +186,6 @@ const MainPage = () => {
           )}
         </Box>
       </Styled.MainTable>
-      <button onClick={login}>login</button>
-      <button onClick={logout}>logout</button>
     </Styled.MainBackground>
   );
 };

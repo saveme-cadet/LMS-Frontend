@@ -1,26 +1,69 @@
+import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
+import { AuthContext } from 'App';
+import { CRUDUserService } from 'Network';
+
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import Button from '@mui/material/Button';
+
 import Styled from './LoginPage.styled';
-
-const REST_API_KEY = 'f671f59a6deb4cc1e2daa5fc1ab0cc62';
-const REDIRECT_URI = 'http://localhost:3000/oauth/kakao/callback';
-
-const OAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 const LoginPage = () => {
   const navi = useNavigate();
+  const auth = useContext(AuthContext);
 
+  const [status, setStatus] = useState('login');
+
+  const handleLogin = async body => {
+    const result = await CRUDUserService.postLogin(body);
+    if (!result) {
+      alert('잘못된 아이디나 비밀번호 입니다!');
+      return;
+    }
+    alert(`환영합니다, ${body.name}!`);
+    auth.setIsLoading(true);
+    auth.setStatus(result.data[0]);
+    auth.setIsLoading(false);
+    navi('/');
+  };
+  const handleRegister = async body => {
+    const name = body.name;
+    const result = await CRUDUserService.postUser(body);
+    if (!result) {
+      alert('회원가입 에러! ');
+      return;
+    }
+    handleLogin({
+      name: name,
+      password: 4242,
+    });
+    // const login = await CRUDUserService.postLogin({
+    //   name: name,
+    //   password: 4242,
+    // });
+    // if (!result) {
+    //   alert('잘못된 아이디나 비밀번호 입니다!');
+    //   return;
+    // }
+    // navi('/');
+  };
   return (
     <Styled.LoginBackground>
-      <div>
-        <text className="title">구해줘 카뎃</text>
-        {/* <button
-          onClick={() => {
-            navi(OAuthUrl);
-          }}
-        >
-        </button> */}
-        <a href={OAuthUrl}>Login</a>
-      </div>
+      <span className="title">구해줘 카뎃</span>
+      {status === 'login' ? (
+        <>
+          <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
+        </>
+      ) : (
+        <>
+          <RegisterForm
+            onClickRegister={handleRegister}
+            setStatus={setStatus}
+          />
+        </>
+      )}
     </Styled.LoginBackground>
   );
 };

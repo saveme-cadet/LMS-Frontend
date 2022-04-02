@@ -27,7 +27,7 @@ const MainBackground = styled.div`
 const MainTable = styled.div`
   border: 1px solid #c0c0c0;
   padding: 1em;
-  height: 70%;
+  height: 100%;
   border-radius: 1em;
 
   .table {
@@ -47,7 +47,7 @@ const MainTable = styled.div`
     .머슴 {
       background-color: yellow;
     }
-    .일반 {
+    .카뎃 {
       background-color: #cccccc;
     }
 
