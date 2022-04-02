@@ -46,7 +46,7 @@ const Check = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton onClick={() => onChangeCheck(5)}>
-            <ListItemText primary="병가" />
+            <ListItemText primary="병결" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>

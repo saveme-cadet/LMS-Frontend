@@ -1,11 +1,12 @@
-import Chip from '@mui/material/Chip';
-
 const adminCloumns = [
   {
     field: 'attendeStatus',
     headerName: '참여 상태',
     type: 'string',
     width: 120,
+    renderCell: params => {
+      return <div className={`${params.value} info`}>{params.value}</div>;
+    },
   },
   {
     field: 'team',
@@ -13,7 +14,7 @@ const adminCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
@@ -22,7 +23,7 @@ const adminCloumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <Chip label={params.value} className={params.value} />;
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
@@ -38,6 +39,7 @@ const adminCloumns = [
     type: 'number',
     width: 120,
   },
+
   {
     field: 'attendScore',
     headerName: '결석 점수',

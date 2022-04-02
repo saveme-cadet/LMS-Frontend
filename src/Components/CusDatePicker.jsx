@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import { getDayName } from 'Utils';
 import DatePicker from 'react-datepicker';
-import { add, format } from 'date-fns';
+import { add } from 'date-fns';
 
 import Popover from '@mui/material/Popover';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -11,9 +10,8 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import 'react-datepicker/dist/react-datepicker.css';
-// import { getDay } from 'date-fns/esm';
 
-const CusDatePicker = ({ date, setDate }) => {
+const CusDatePicker = ({ date, setDate, isWeekend }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = e => {
@@ -32,27 +30,24 @@ const CusDatePicker = ({ date, setDate }) => {
   const handleChangeDate = type => {
     let newDate = add(date, type);
     let dayOf = newDate.getDay();
-    if (dayOf === 0 || dayOf === 6) {
-      const abs = Object.values(type)[0];
-      while (dayOf === 0 || dayOf === 6) {
-        newDate = add(newDate, { days: abs });
-        dayOf = newDate.getDay();
-      }
-    }
+    // if (dayOf === 0 || dayOf === 6) {
+    //   const abs = Object.values(type)[0];
+    //   while (dayOf === 0 || dayOf === 6) {
+    //     newDate = add(newDate, { days: abs });
+    //     dayOf = newDate.getDay();
+    //   }
+    // }
     setDate(newDate);
   };
 
   const isWeekday = date => {
+    if (isWeekend) return true;
     const day = date.getDay();
     return day !== 0 && day !== 6;
   };
 
   return (
-    <div>
-      <h1>
-        {format(date, 'yyyy/MM/dd')} {getDayName(date.getDay())}
-      </h1>
-
+    <div className="change-today header">
       <KeyboardDoubleArrowLeftIcon
         onClick={() => {
           handleChangeDate({ months: -1 });
@@ -75,7 +70,6 @@ const CusDatePicker = ({ date, setDate }) => {
           handleChangeDate({ months: 1 });
         }}
       />
-
       <Popover
         open={open}
         anchorEl={anchorEl}

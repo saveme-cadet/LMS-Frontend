@@ -27,8 +27,8 @@ const AllTableService = {
     return response;
   },
 
-  getAllTable: async date => {
-    const url = AllTableUrl(`day?date=${date}`);
+  getAllTable: async (date, userId) => {
+    const url = AllTableUrl(`day?date=${date}&userId=${userId}`);
     let response;
 
     try {

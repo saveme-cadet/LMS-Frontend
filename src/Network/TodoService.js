@@ -5,8 +5,8 @@ const TodoUrl = path => {
 };
 
 const TodoService = {
-  putTodo: async (userId, body) => {
-    const url = TodoUrl(`todo?userId=${userId}`);
+  putTodo: async body => {
+    const url = TodoUrl(`todo`);
     let response;
     try {
       response = await instance.put(url, body);
@@ -15,8 +15,8 @@ const TodoService = {
     }
     return response;
   },
-  postTodo: async (userId, body) => {
-    const url = TodoUrl(`usertodo?userId=${userId}`);
+  postTodo: async body => {
+    const url = TodoUrl(`usertodo`);
     let response;
     try {
       response = await instance.post(url, body);
@@ -26,7 +26,7 @@ const TodoService = {
     return response;
   },
   getTodo: async (userId, date) => {
-    const url = TodoUrl(`day?userId=${userId}&date=${date}`);
+    const url = TodoUrl(`day/${userId}?date=${date}`);
     let response;
     try {
       response = await instance.get(url);
@@ -35,8 +35,19 @@ const TodoService = {
     }
     return response;
   },
-  deleteTodo: async () => {
-    const url = TodoUrl(`delete`);
+  // deleteTodo: async body => {
+  //   const url = TodoUrl(`delete`);
+  //   console.log(body);
+  //   let response;
+  //   try {
+  //     response = await instance.delete(url, body);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
+  deleteTodo: async (userId, todoId, date) => {
+    const url = TodoUrl(`delete/${userId}/${todoId}?date=${date}`);
     let response;
     try {
       response = await instance.delete(url);
