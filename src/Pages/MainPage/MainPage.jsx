@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { CusDatePicker, ShowToday } from 'Components';
 import Check from './Check';
 import WrongDay from './WrongDay';
+import UserGuide from './UserGuide';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -30,7 +31,7 @@ const MainPage = () => {
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
 
-  console.log('userId : ', userId);
+  // console.log('userInfo : ', userId, userName, role, team);
   // console.log('auth : ', auth.status);
 
   const updateSelectRowData = (curArrays, curTab) => {
@@ -151,10 +152,7 @@ const MainPage = () => {
 
   return (
     <Styled.MainBackground>
-      <div>
-        안녕하세요 {auth.status.userName}! 당신의 팀은 {auth.status.team}{' '}
-        팀입니다!
-      </div>
+      <UserGuide status={auth.status} />
       <div className="time">
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
