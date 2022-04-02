@@ -123,7 +123,7 @@ const MainPage = () => {
       return;
     }
     const arrays = result.data;
-
+    console.log(arrays);
     const newArray = [];
     arrays.map(array => {
       const newData = {
@@ -136,6 +136,7 @@ const MainPage = () => {
         role: array.role,
         checkIn: array.checkIn,
         checkOut: array.checkOut,
+        todoRate: array.dayObjectiveAchievementRate,
       };
       newArray.push(newData);
     });
