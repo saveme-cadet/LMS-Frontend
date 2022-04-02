@@ -151,7 +151,8 @@ const MainPage = () => {
   return (
     <Styled.MainBackground>
       <div>
-        안녕하세요 유저 {userId}! 오늘 당신은 {auth.status.team} 팀입니다!
+        안녕하세요 {auth.status.userName}! 당신의 팀은 {auth.status.team}{' '}
+        팀입니다!
       </div>
       <div className="time">
         <ShowToday date={date} />

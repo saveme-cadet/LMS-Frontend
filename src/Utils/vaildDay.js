@@ -1,7 +1,7 @@
 const vaildDay = day => {
   const today = new Date();
 
-  const todayNum = today.getDay();
+  // return (0);
   const selcetDayNum = day.getDay();
   if (day.getTime() > today.getTime()) return -1;
   else if (selcetDayNum === 0 || selcetDayNum === 6) return -2;
