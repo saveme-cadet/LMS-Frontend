@@ -5,17 +5,6 @@ const CRUDUserAPI = path => {
 };
 
 const CRUDUserService = {
-  postUser: async body => {
-    const url = CRUDUserAPI(`usermake/sign-up`);
-    let response;
-
-    try {
-      response = await instance.post(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
   getUser: async () => {
     const url = CRUDUserAPI(`user/alluser`);
     let response;
@@ -37,9 +26,10 @@ const CRUDUserService = {
     }
     return response;
   },
-  login: async body => {
-    const url = '/login';
+  postUser: async body => {
+    const url = CRUDUserAPI(`sign-up`);
     let response;
+
     try {
       response = await instance.post(url, body);
     } catch (e) {
@@ -47,8 +37,20 @@ const CRUDUserService = {
     }
     return response;
   },
-  logout: async () => {
-    const url = '/logout';
+  postLogin: async body => {
+    const url = CRUDUserAPI('login');
+    let response;
+    try {
+      response = await instance.post(url, body);
+    } catch (e) {
+      console.log(e);
+      return null;
+      // alert(e);
+    }
+    return response;
+  },
+  postLogout: async () => {
+    const url = CRUDUserAPI('logout');
     let response;
     try {
       response = await instance.post(url);

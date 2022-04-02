@@ -1,19 +1,95 @@
-import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import { AuthContext } from 'App';
+import { aojiCloumns } from 'Utils';
+import { AojiService } from 'Network';
+
 import Timer from './Timer';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { useEffect } from 'react';
+import AojiButton from './AojiButton';
+import AojiLog from './AojiLog';
+import { DataGrid } from '@mui/x-data-grid';
+
+import Styled from './MinePage.styled';
 
 const MinePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDoing, setIsDoing] = useState(false);
+  const [aojiLogs, setAojiLogs] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(new Date());
+
+  const auth = useContext(AuthContext);
+  const userId = auth.status.userId;
+  let interv;
+
+  const clockStart = () => {
+    interv = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+  };
+
+  const handleClickButton = async () => {
+    let result;
+    if (isDoing) {
+      clearInterval(interv);
+      setStartTime(null);
+      result = await AojiService.putEndAoji(userId);
+    } else {
+      setStartTime(new Date());
+      clockStart();
+      result = await AojiService.postStartAoji(userId);
+    }
+    console.log(result.data);
+    setIsDoing(!isDoing);
+    getMyAoji();
+  };
+
+  const CloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const getMyAoji = async () => {
+    const result = await AojiService.getMyAoji(userId);
+    const logs = result.data;
+    let doingState = false;
+    console.log(logs);
+    logs.map(log => {
+      if (log.endAt === null) doingState = true;
+    });
+    if (doingState) {
+      clockStart();
+      const fotmatDate = new Date(logs[logs.length - 1].startAt);
+      setStartTime(fotmatDate);
+    }
+    setAojiLogs(logs);
+    setIsDoing(doingState);
+  };
+
+  useEffect(() => {
+    getMyAoji();
+    return () => {
+      clearInterval(interv); // cleanup function을 이용
+    };
+  }, []);
+
   return (
-    <Container maxWidth="90%">
-      <Box sx={{ height: '100vh' }}>
-        <Timer />
-      </Box>
-    </Container>
+    <Styled.AojiBackground>
+      <div className="timer box">
+        <Timer startTime={startTime} now={now} />
+        <h2>⛏️ 보충학습 시작</h2>
+        <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+      </div>
+
+      <div className="log box">
+        <h2>⛏️ 보충학습 기록</h2>
+        {aojiLogs &&
+          aojiLogs.map(log => {
+            return <AojiLog data={log} key={log.aojiTimeIndex} />;
+          })}
+      </div>
+
+      {/* {isOpen === 0 && <Modal />} */}
+    </Styled.AojiBackground>
   );
 };
 

@@ -18,16 +18,18 @@ import Button from '@mui/material/Button';
 import Styled from './AdminPage.styled';
 
 const AdminPage = () => {
-  const auth = useContext(AuthContext);
-
   const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
-  const [rowData, setRowData] = useState(null);
 
   const [tab, setTab] = useState(0);
+  const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const auth = useContext(AuthContext);
+  const userRole = auth.status.role;
+  const userId = auth.status.userId;
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -101,22 +103,16 @@ const AdminPage = () => {
     setSelectUserId(null);
   };
 
-  const handleCreateUser = async data => {
-    const result = await CRUDUserService.postUser(data);
-    getUser();
-    setSelectUserId(null);
-  };
+  // const handleGetUser = async () => {
+  //   const result = await CRUDUserService.getUser();
+  //   console.log(result.data);
+  // };
 
-  const handleGetUser = async () => {
-    const result = await CRUDUserService.getUser();
-    console.log(result.data);
-  };
-
-  const handleDeleteUser = async data => {
-    const result = await CRUDUserService.deleteUser(data);
-    getUser();
-    setSelectUserId(null);
-  };
+  // const handleDeleteUser = async data => {
+  //   const result = await CRUDUserService.deleteUser(data);
+  //   getUser();
+  //   setSelectUserId(null);
+  // };
 
   const getUser = async () => {
     const result = await UserInfoService.getAllUser(5);
@@ -133,7 +129,6 @@ const AdminPage = () => {
         participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
-        aojiScore: 0,
       };
       newArray.push(newData);
     });
@@ -150,7 +145,7 @@ const AdminPage = () => {
   return (
     <Styled.AdminBackground>
       <ShowToday date={date} />
-      {auth.userRole === '머슴' ? (
+      {userRole === '머슴' ? (
         <>
           <Styled.AdminFeature>
             <div>
@@ -161,7 +156,7 @@ const AdminPage = () => {
               >
                 일괄 휴가 변경
               </Button>
-              
+
               <Button
                 onClick={() => {
                   setIsOpen('find');
@@ -169,7 +164,7 @@ const AdminPage = () => {
               >
                 월렛 보상 대상
               </Button>
-              
+
               <Button
                 onClick={() => {
                   setIsOpen('shake');
@@ -177,10 +172,9 @@ const AdminPage = () => {
               >
                 팀 섞기
               </Button>
-              
             </div>
             <div>
-              <Button>머슴이 할 일</Button>
+              <Button>머슴이 할 일</Button>
             </div>
           </Styled.AdminFeature>
           <Styled.AdminTable>
@@ -215,15 +209,11 @@ const AdminPage = () => {
                   onClickChangeTeam={handleChangeTeam}
                   onClickChangeRole={handleChangeRole}
                   onClickChangeVacation={handleChangeVacation}
-                  onClickDeleteUser={handleDeleteUser}
                 />
               )}
             </div>
           </Styled.AdminChange>
-          <Styled.AdminAddUser>
-            <NewUserForm callbackSubmit={handleCreateUser} />
-            {/* <button onClick={handleGetUser}>유저 얻기</button> */}
-          </Styled.AdminAddUser>
+
           <Styled.Modal>
             {isOpen === 'add' && (
               <AddVacation

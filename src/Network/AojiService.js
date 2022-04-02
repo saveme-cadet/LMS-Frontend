@@ -5,18 +5,7 @@ const AojiUrl = path => {
 };
 
 const AojiService = {
-  endAoji: async userId => {
-    const url = AojiUrl(`update/${userId}`);
-    let response;
-    try {
-      response = await instance.put(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-
-  putAoji: async (userId, body) => {
+  putEditAoji: async (userId, body) => {
     const url = AojiUrl(`aojitime/${userId}`);
     let response;
     try {
@@ -27,7 +16,7 @@ const AojiService = {
     return response;
   },
 
-  postAoji: async userId => {
+  postStartAoji: async userId => {
     const url = AojiUrl(`create/${userId}`);
     let response;
     try {
@@ -37,8 +26,17 @@ const AojiService = {
     }
     return response;
   },
-
-  getMyAoji: async () => {
+  putEndAoji: async userId => {
+    const url = AojiUrl(`update/${userId}`);
+    let response;
+    try {
+      response = await instance.put(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  getOtherAoji: async () => {
     const url = AojiUrl(`studyuser`);
     let response;
     try {
@@ -49,7 +47,7 @@ const AojiService = {
     return response;
   },
 
-  getOtherAoji: async userId => {
+  getMyAoji: async userId => {
     const url = AojiUrl(`read/${userId}`);
     let response;
     try {

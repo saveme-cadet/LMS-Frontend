@@ -16,7 +16,8 @@ import { format } from 'date-fns';
 
 const TodoPage = () => {
   const auth = useContext(AuthContext);
-  if (vaildDay(new Date()) == -1) console.log(1);
+  const userId = auth.status.userId;
+
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -44,7 +45,7 @@ const TodoPage = () => {
     }
 
     const result = await TodoService.postTodo({
-      writerId: auth.userId,
+      writerId: userId,
       todoId: nextId + 1,
       title: toDo.content,
       titleCheck: false,
@@ -100,7 +101,7 @@ const TodoPage = () => {
     });
 
     const result = await TodoService.deleteTodo(
-      auth.userId,
+      userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );

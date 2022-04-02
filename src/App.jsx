@@ -9,32 +9,29 @@ import Styled from 'Styled/Global.styled';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [state, setState] = useState(200);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userId, setUserId] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  // const [state, setState] = useState(200);
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(null);
+  // useEffect(() => {
+  //   const initState = async () => {
+  //     let response;
+  //     try {
+  //       response = await UserService.getUser();
+  //     } catch (e) {
+  //       console.log('app : ', e);
+  //     }
+  //     setUserId(response.data);
+  //     setState(response.state);
 
-  useEffect(() => {
-    const initState = async () => {
-      let response;
-      // try {
-      //   response = await UserService.getUser();
-      // } catch (e) {
-      //   console.log('app : ', e);
-      // }
-      // setUserId(response.data);
-      // setState(response.state);
-      setUserId(1);
-      setUserRole('머슴');
-      setState(200);
-      setIsLoading(false);
-    };
-    initState();
-  }, [isLoading]);
+  //     setState(200);
+  //     setIsLoading(false);
+  //   };
+  //   initState();
+  // }, [isLoading]);
 
   return (
     <AuthContext.Provider
-      value={{ state, isLoading, setIsLoading, userId, userRole }}
+      value={{ isLoading, setIsLoading, status, setStatus }}
     >
       {children}
     </AuthContext.Provider>
@@ -51,7 +48,7 @@ const OAuthCheckRoute = ({ children }) => {
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (auth.state !== 401) return children;
+    if (auth.status) return children;
     else return <Navigate to="/login" />;
     // return children;
   }
