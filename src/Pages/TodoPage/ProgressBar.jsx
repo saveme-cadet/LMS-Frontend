@@ -1,14 +1,13 @@
 import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import { styled } from '@mui/material/styles';
 
 const ProgressBar = props => {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
+    height: 12,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
       backgroundColor:
@@ -25,43 +24,29 @@ const ProgressBar = props => {
   } else proportion = (props.checked / props.total) * 100;
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'inline-flex',
-      }}
-    >
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 500,
-        }}
-      >
+    <div>
+      <div>
         <Typography
           variant="caption"
           component="div"
           color="text.secondary"
           style={{
-            fontSize: 30,
-            width: 100,
+            fontSize: '20px',
+            width: '97%',
+            textAlign: 'right',
+            marginBottom: '10px',
           }}
         >
           {props.checked} / {props.total}
         </Typography>
+      </div>
+      <div>
         <BorderLinearProgress
-          style={{ width: 300 }}
           variant="determinate"
           value={proportion.toFixed(0)}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

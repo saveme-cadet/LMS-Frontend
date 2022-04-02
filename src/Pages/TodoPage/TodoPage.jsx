@@ -1,19 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 
 import ProgressBar from './ProgressBar';
+import { CusDatePicker, ShowToday } from 'Components';
+import { vaildDay } from 'Utils';
 
 import { AuthContext } from 'App';
 import Styled from './TodoPage.styled';
-import { styled } from '@mui/material/styles';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Box from '@mui/material/Box';
 
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { CusDatePicker } from 'Components';
 
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
@@ -36,9 +32,8 @@ const TodoPage = () => {
   const today = new Date();
 
   const onSubmit = async event => {
-    event.preventDefault(); //refresh 방지
+    event.preventDefault();
     if (toDo.content === '') {
-      //empty input 방지
       return;
     }
 
@@ -78,40 +73,26 @@ const TodoPage = () => {
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
     console.log(result);
-    getTodos();
+    getTodos(auth.userId);
   };
 
   const removeToDo = async event => {
     let toDoNumber;
     const tagName = event.target.tagName;
     if (tagName === 'BUTTON') {
-      setToDos(
-        toDos.filter(
-          toDo => parseInt(event.target.previousSibling.id) !== toDo.todoId,
-        ),
-      );
-      toDoNumber = parseInt(event.target.previousSibling.id);
+      const toDoIdButton = parseInt(event.target.previousSibling.id);
+      setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId));
+      toDoNumber = toDoIdButton;
     } else if (tagName === 'svg') {
-      setToDos(
-        toDos.filter(
-          toDo =>
-            parseInt(event.target.parentElement.previousSibling.id) !==
-            toDo.todoId,
-        ),
-      );
-      toDoNumber = parseInt(event.target.parentElement.previousSibling.id);
+      const toDoIdSvg = parseInt(event.target.parentElement.previousSibling.id);
+      setToDos(toDos.filter(toDo => toDoIdSvg !== toDo.todoId));
+      toDoNumber = toDoIdSvg;
     } else if (tagName === 'path') {
-      setToDos(
-        toDos.filter(
-          toDo =>
-            parseInt(
-              event.target.parentElement.parentElement.previousSibling.id,
-            ) !== toDo.todoId,
-        ),
-      );
-      toDoNumber = parseInt(
+      const toDoIdpath = parseInt(
         event.target.parentElement.parentElement.previousSibling.id,
       );
+      setToDos(toDos.filter(toDo => toDoIdpath !== toDo.todoId));
+      toDoNumber = toDoIdpath;
     }
     console.log({
       writerId: 1,
@@ -125,25 +106,19 @@ const TodoPage = () => {
       format(date, 'yyyy-MM-dd'),
     );
     console.log(result);
-    getTodos();
+    getTodos(auth.userId);
   };
 
-  // useEffect(() => {
-  //   console.log(toDos);
-  // }, [toDos]);
-
-  const getTodos = async () => {
+  const getTodos = async userId => {
     const result = await TodoService.getTodo(
       userId,
       format(date, 'yyyy-MM-dd'),
     );
     setToDos(result.data);
-    // setNumber(toDos.length);
-    // setDate(today);
   };
 
   useEffect(() => {
-    getTodos();
+    getTodos(auth.userId);
   }, [toDo, date]);
 
   useEffect(() => {
@@ -164,151 +139,71 @@ const TodoPage = () => {
   }, [toDos]);
 
   return (
-    <Styled.CusDiv
-      maxWidth="90%"
-      sx={{
-        flexDirection: 'column',
-      }}
-    >
-      <CusDatePicker date={date} setDate={setDate} />
-      <Box
-        sx={{
-          flexDirection: 'column',
-          // display: 'flex',
-          // alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 30,
-          border: 1,
-          borderColor: '#C0C0C0',
-          boxShadow: 1,
-          borderRadius: 5,
-          // minWidth: '40%',
-          maxWidth: '100%',
-          minHeight: 600,
-        }}
-      >
-        <div style={{ minHeight: 600 }}>
+    <Styled.MainBackground>
+      <div className="time">
+        <ShowToday date={date} />
+        <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
+      </div>
+      <div className="main">
+        <div className="todo">
           <form onSubmit={onSubmit}>
             <div>
-              <TextField
-                style={{
-                  width: 500,
-                  // fontSize: 12,
-                }}
+              <input
                 onChange={onChange}
                 value={toDo.content}
                 type="text"
                 placeholder="오늘 할 일을 입력하세요."
+                className="text"
               />
-              &nbsp;
-              <Button
-                style={{
-                  width: 100,
-                  height: 55,
-                  fontSize: 15,
-                }}
-                variant="contained"
-                onClick={onSubmit}
-              >
+              <button variant="contained" onClick={onSubmit} className="button">
                 추가
-              </Button>
+              </button>
             </div>
           </form>
-          <ul>
-            {toDos.map((item, index) => (
-              <div key={index}>
+          <div className="form">
+            <div className="ulist">
+              {toDos.map((item, index) => (
                 <div key={index}>
-                  <Checkbox
-                    onClick={() => alterCheck(index)}
-                    checked={item.titleCheck}
-                  />
-                  {item.titleCheck === false ? (
-                    <span style={{ fontSize: 20 }} id={item.todoId}>
-                      {item.title}
-                    </span>
-                  ) : (
-                    <span
-                      id={item.todoId}
-                      style={{
-                        textDecorationLine: 'line-through',
-                        color: 'gray',
-                        fontSize: 20,
-                      }}
+                  <div key={index} className="check">
+                    <Checkbox
+                      onClick={() => alterCheck(index)}
+                      checked={item.titleCheck}
+                    />
+                    {item.titleCheck === false ? (
+                      <span id={item.todoId}>{item.title}</span>
+                    ) : (
+                      <span
+                        id={item.todoId}
+                        style={{
+                          textDecorationLine: 'line-through',
+                          color: 'gray',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.title}
+                      </span>
+                    )}
+                    <IconButton
+                      aria-label="delete"
+                      size="large"
+                      onClick={removeToDo}
                     >
-                      {item.title}
-                    </span>
-                  )}
-                  <IconButton
-                    aria-label="delete"
-                    size="large"
-                    onClick={removeToDo}
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </ul>
+              ))}
+            </div>
+            <div className="progressbar">
+              <ProgressBar total={total} checked={checked} />
+            </div>
+          </div>
         </div>
-        <div>
-          <ProgressBar style={{ width: 100 }} total={total} checked={checked} />
+        <div className="othercadet">
+          <span>👀 다른 카뎃 구경하기</span>
         </div>
-      </Box>
-      <Box
-        sx={{
-          flexDirection: 'column',
-          // display: 'flex',
-          // alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 30,
-          border: 1,
-          borderColor: '#C0C0C0',
-          boxShadow: 1,
-          borderRadius: 5,
-          // minWidth: '40%',
-          maxWidth: '100%',
-          minHeight: 780,
-        }}
-      >
-        <span>👀 다른 카뎃 구경하기</span>
-        {/* <Styled.CusDiv> */}
-
-        <Box
-          sx={{
-            flexDirection: 'column',
-            // display: 'flex',
-            // alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 30,
-            border: 1,
-            borderColor: '#C0C0C0',
-            boxShadow: 1,
-            borderRadius: 5,
-            // minWidth: '40%',
-            maxWidth: '48%',
-            minHeight: 340,
-          }}
-        ></Box>
-        <br />
-        <Box
-          sx={{
-            flexDirection: 'column',
-            // display: 'flex',
-            // alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 30,
-            border: 1,
-            borderColor: '#C0C0C0',
-            boxShadow: 1,
-            borderRadius: 5,
-            // minWidth: '40%',
-            maxWidth: '48%',
-            minHeight: 340,
-          }}
-        ></Box>
-        {/* </Styled.CusDiv> */}
-      </Box>
-    </Styled.CusDiv>
+      </div>
+    </Styled.MainBackground>
   );
 };
 export default TodoPage;
