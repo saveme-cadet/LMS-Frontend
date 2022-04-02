@@ -106,7 +106,7 @@ const TodoPage = () => {
       format(date, 'yyyy-MM-dd'),
     );
     console.log(result);
-    getTodos(auth.userId);
+    getTodos(userId);
   };
 
   const getTodos = async userId => {
@@ -118,7 +118,7 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
-    getTodos(auth.userId);
+    getTodos(userId);
   }, [toDo, date]);
 
   useEffect(() => {
