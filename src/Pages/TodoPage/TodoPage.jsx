@@ -2,15 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 
 import ProgressBar from './ProgressBar';
 import { CusDatePicker, ShowToday } from 'Components';
+import { vaildDay } from 'Utils';
 
 import { AuthContext } from 'App';
 import Styled from './TodoPage.styled';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Box from '@mui/material/Box';
 
-import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 
 import { TodoService } from 'Network';
@@ -18,7 +16,7 @@ import { format } from 'date-fns';
 
 const TodoPage = () => {
   const auth = useContext(AuthContext);
-  console.log(auth);
+  if (vaildDay(new Date()) == -1) console.log(1);
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -74,7 +72,7 @@ const TodoPage = () => {
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
     console.log(result);
-    getTodos();
+    getTodos(auth.userId);
   };
 
   const removeToDo = async event => {
@@ -107,19 +105,19 @@ const TodoPage = () => {
       format(date, 'yyyy-MM-dd'),
     );
     console.log(result);
-    getTodos();
+    getTodos(auth.userId);
   };
 
-  const getTodos = async () => {
+  const getTodos = async userId => {
     const result = await TodoService.getTodo(
-      auth.userId,
+      userId,
       format(date, 'yyyy-MM-dd'),
     );
     setToDos(result.data);
   };
 
   useEffect(() => {
-    getTodos();
+    getTodos(auth.userId);
   }, [toDo, date]);
 
   useEffect(() => {
