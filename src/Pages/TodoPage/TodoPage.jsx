@@ -73,7 +73,7 @@ const TodoPage = () => {
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
     console.log(result);
-    getTodos(auth.userId);
+    getTodos(userId);
   };
 
   const removeToDo = async event => {
