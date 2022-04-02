@@ -40,14 +40,22 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   return (
     <>
       <h2>회원가입</h2>
-      <input value={id} placeholder="아이디" onChange={handleChangeId} />
-      <input value={email} placeholder="이메일" onChange={handleChangeEmail} />
+      <div className="id">
+        <input value={id} placeholder="아이디" onChange={handleChangeId} />
+      </div>
+      <div className="email">
+        <input
+          value={email}
+          placeholder="이메일"
+          onChange={handleChangeEmail}
+        />
+      </div>
+
       {/* <input
         value={password}
         placeholder="비밀번호"
         onChange={handleChangePassword}
       /> */}
-
       <Button onClick={handleClick}>입력</Button>
       <Button onClick={() => setStatus('login')}>로그인으로</Button>
     </>

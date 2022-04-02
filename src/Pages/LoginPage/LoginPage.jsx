@@ -22,6 +22,7 @@ const LoginPage = () => {
       alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
+    alert(`환영합니다, ${body.name}!`);
     auth.setIsLoading(true);
     auth.setStatus(result.data[0]);
     auth.setIsLoading(false);
@@ -34,38 +35,35 @@ const LoginPage = () => {
       alert('회원가입 에러! ');
       return;
     }
-    // handleLogin({
-    //   name: name,
-    //   password: 4242,
-    // });
-    const login = await CRUDUserService.postLogin({
+    handleLogin({
       name: name,
       password: 4242,
     });
-    if (!result) {
-      alert('잘못된 아이디나 비밀번호 입니다!');
-      return;
-    }
-    navi('/');
+    // const login = await CRUDUserService.postLogin({
+    //   name: name,
+    //   password: 4242,
+    // });
+    // if (!result) {
+    //   alert('잘못된 아이디나 비밀번호 입니다!');
+    //   return;
+    // }
+    // navi('/');
   };
   return (
     <Styled.LoginBackground>
-      <div>
-        <text className="title">구해줘 카뎃</text>
-        {status === 'login' ? (
-          <>
-            <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
-          </>
-        ) : (
-          <>
-            <RegisterForm
-              onClickRegister={handleRegister}
-              setStatus={setStatus}
-            />
-            ;
-          </>
-        )}
-      </div>
+      <span className="title">구해줘 카뎃</span>
+      {status === 'login' ? (
+        <>
+          <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
+        </>
+      ) : (
+        <>
+          <RegisterForm
+            onClickRegister={handleRegister}
+            setStatus={setStatus}
+          />
+        </>
+      )}
     </Styled.LoginBackground>
   );
 };

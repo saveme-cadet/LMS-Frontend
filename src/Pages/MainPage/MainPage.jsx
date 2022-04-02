@@ -144,8 +144,10 @@ const MainPage = () => {
   };
 
   useEffect(() => {
+    console.log('today : ', date);
     getUsers();
   }, [date]);
+
   return (
     <Styled.MainBackground>
       <div>

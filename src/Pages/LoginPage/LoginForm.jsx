@@ -31,12 +31,16 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   return (
     <>
       <h2>로그인</h2>
-      <input value={id} placeholder="아이디" onChange={handleChangeId} />
-      <input
-        value={password}
-        placeholder="비밀번호"
-        onChange={handleChangePassword}
-      />
+      <div className="id">
+        <input value={id} placeholder="아이디" onChange={handleChangeId} />
+      </div>
+      <div className="password">
+        <input
+          value={password}
+          placeholder="비밀번호"
+          onChange={handleChangePassword}
+        />
+      </div>
 
       <Button onClick={handleClick}>입력</Button>
       <Button onClick={() => setStatus('register')}>회원가입으로</Button>

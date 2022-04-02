@@ -17,7 +17,7 @@ const SelectedUser = ({
 
   return (
     <div className="box">
-      <text className="title">현재 선택 : {userInfo.userName}</text>
+      <span className="title">현재 선택 : {userInfo.userName}</span>
 
       <span className="user-status">
         <Chip
