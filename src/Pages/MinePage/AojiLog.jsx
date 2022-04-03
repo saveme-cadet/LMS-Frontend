@@ -19,11 +19,6 @@ const fotmatRecord = record => {
   return newRecord.join(':');
 };
 const AojiLog = ({ data }) => {
-  const validClick = isEnd => {
-    if (isEnd) return <div className="button valid">수정</div>;
-    else return <div className="button not-valid">수정</div>;
-  };
-  console.log(data);
   const earnedPoint = (
     differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
     60 /
@@ -31,6 +26,19 @@ const AojiLog = ({ data }) => {
     8.0
   ).toFixed(2);
 
+  const validClick = isEnd => {
+    if (isEnd)
+      return (
+        <div className="button valid" onClick={handleEditLog}>
+          수정
+        </div>
+      );
+    else return <div className="button not-valid">수정</div>;
+  };
+
+  const handleEditLog = () => {
+    alert('준비중입니다!');
+  };
   return (
     <div className="row">
       <div>{fotmatDate(data.startAt)}</div>

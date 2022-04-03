@@ -22,6 +22,10 @@ const Golbal = styled.div`
     justify-content: center;
     font-size: 40px;
     font-weight: bold;
+    margin: 10px;
+  }
+  .message {
+    color: #c0c0c0;
   }
 `;
 

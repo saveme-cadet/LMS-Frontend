@@ -15,6 +15,7 @@ const AojiBackground = styled.div`
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     text-align: left;
+    height: 800px;
   }
   .header {
     font-size: 40px;
@@ -23,9 +24,6 @@ const AojiBackground = styled.div`
   .body {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80%;
   }
 `;
 
@@ -47,6 +45,11 @@ const AojiTimer = styled.div`
     font-size: 20px;
     font-weight: bold;
   }
+  .body {
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+  }
   .start {
     background-color: #4870fd;
   }
@@ -59,11 +62,10 @@ const AojiLog = styled.div`
   flex: 5;
 
   .body {
-    // overflow-x: hidden;
-    // overflow-y: auto;
-    // scrollbar-width: none;
-
     overflow: auto;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
   }
   .row {
     display: flex;
@@ -92,6 +94,11 @@ const AojiLog = styled.div`
   }
   .temp {
     width: 98%;
+  }
+  .score {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px;
   }
 `;
 const Styled = { AojiBackground, AojiBody, AojiTimer, AojiLog };

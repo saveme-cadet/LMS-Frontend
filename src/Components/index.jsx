@@ -5,6 +5,7 @@ import Clock from './Clock';
 import Today from './Today';
 import GetCheckIcons from './GetCheckIcons';
 import NotValid from './NotValid';
+import NoData from './NoData';
 export {
   SideBar,
   CusDatePicker,
@@ -13,4 +14,5 @@ export {
   Today,
   GetCheckIcons,
   NotValid,
+  NoData,
 };
