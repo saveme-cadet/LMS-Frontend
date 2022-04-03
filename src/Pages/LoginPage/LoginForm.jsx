@@ -27,18 +27,26 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
     setId('');
     setPassword('');
   };
-
+  const handlePressEnter = e => {
+    if (e.key === 'Enter') handleClick();
+  };
   return (
     <>
       <h2>로그인</h2>
       <div className="id">
-        <input value={id} placeholder="아이디" onChange={handleChangeId} />
+        <input
+          value={id}
+          placeholder="아이디"
+          onChange={handleChangeId}
+          onKeyPress={handlePressEnter}
+        />
       </div>
       <div className="password">
         <input
           value={password}
           placeholder="비밀번호"
           onChange={handleChangePassword}
+          onKeyPress={handlePressEnter}
         />
       </div>
 
