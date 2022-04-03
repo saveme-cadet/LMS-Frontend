@@ -144,7 +144,9 @@ const AdminPage = () => {
 
   return (
     <Styled.AdminBackground>
-      <ShowToday date={date} />
+      <div className="time">
+        <ShowToday date={date} />
+      </div>
       {userRole === '머슴' ? (
         <>
           <Styled.AdminFeature>

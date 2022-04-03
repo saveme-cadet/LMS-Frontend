@@ -35,6 +35,16 @@ const TodoService = {
     }
     return response;
   },
+  getOthers: async date => {
+    const url = TodoUrl(`day/?date=${date}`);
+    let response;
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
   // deleteTodo: async body => {
   //   const url = TodoUrl(`delete`);
   //   console.log(body);
