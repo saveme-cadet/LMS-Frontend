@@ -24,7 +24,14 @@ const LoginPage = () => {
     }
     alert(`환영합니다, ${body.name}!`);
     auth.setIsLoading(true);
-    auth.setStatus(result.data[0]);
+    const status = result.data[0];
+    auth.setStatus(status);
+    console.log('role : ', status);
+    localStorage.setItem('userId', status.userId);
+    localStorage.setItem('userName', status.userName);
+    localStorage.setItem('role', status.role);
+    localStorage.setItem('team', status.team);
+
     auth.setIsLoading(false);
     navi('/');
   };
