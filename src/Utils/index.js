@@ -6,6 +6,7 @@ import aojiCloumns from './aojiCloumns';
 import vaildDay from './vaildDay';
 import getDayName from './getDayName';
 import isVaildCheck from './isVaildCheck';
+import vaildDayTodoPage from './vaildDayTodoPage';
 export {
   getStatusMessage,
   getCheckMessage,
@@ -15,4 +16,5 @@ export {
   vaildDay,
   getDayName,
   isVaildCheck,
+  vaildDayTodoPage,
 };
