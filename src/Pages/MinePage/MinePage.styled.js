@@ -14,10 +14,9 @@ const AojiBackground = styled.div`
 
   .box {
     height: 60%;
-
     padding: 10px;
     margin: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 1px solid #dbdbdb;
     text-align: left;
   }
@@ -32,14 +31,13 @@ const AojiBackground = styled.div`
     justify-content: center;
     height: 80%;
   }
-  .body > * {
-    margin: 50px;
-  }
-  .timer {
-    flex: 2;
-    font-size: 60px;
-    font-weight: bold;
-  }
+`;
+
+const AojiTimer = styled.div`
+  flex: 2;
+  font-size: 60px;
+  font-weight: bold;
+
   button {
     width: 170px;
     height: 50px;
@@ -56,10 +54,40 @@ const AojiBackground = styled.div`
   .end {
     background-color: #ff4646;
   }
-  .log {
-    flex: 5;
-  }
 `;
 
-const Styled = { AojiBackground };
+const AojiLog = styled.div`
+  flex: 5;
+
+  .body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    // overflow: auto;
+  }
+  .row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    * {
+      flex: 1 1;
+      text-align: center;
+      margin: 15px 0 15px 0;
+    }
+    .button {
+      border: 1px solid #4870fd;
+      border-radius: 10px;
+      color: #4870fd;
+      width: 60px;
+      text-align: center;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+  }
+  .temp {
+    width: 98%;
+  }
+`;
+const Styled = { AojiBackground, AojiTimer, AojiLog };
 export default Styled;

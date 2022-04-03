@@ -46,7 +46,7 @@ const MinePage = () => {
       clockStart();
       result = await AojiService.postStartAoji(userId);
     }
-    console.log(result.data);
+    // console.log(result.data);
     setIsDoing(!isDoing);
     getMyAoji();
   };
@@ -59,7 +59,7 @@ const MinePage = () => {
     const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
-    console.log(logs);
+    // console.log(logs);
     logs.map(log => {
       if (log.endAt === null) doingState = true;
     });
@@ -81,24 +81,33 @@ const MinePage = () => {
 
   return (
     <Styled.AojiBackground>
-      <div className="timer box">
-        <div className="header">⛏️ 보충학습 시작</div>
-        <div className="body">
-          <Timer startTime={startTime} now={now} />
+      <Styled.AojiTimer>
+        <div className="timer box">
+          <div className="header">⛏️ 보충학습 시작</div>
+          <div className="body">
+            <Timer startTime={startTime} now={now} />
 
-          <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+            <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+          </div>
         </div>
-      </div>
+      </Styled.AojiTimer>
+      <Styled.AojiLog>
+        <div className="log box">
+          <div className="header">⛏️ 보충학습 기록</div>
+          <div className="temp row">
+            <div>시작 시간</div>
+            <div>종료 시간</div> <div>공부 시간</div> <div>차감 점수</div>
+            <div className=""></div>
+          </div>
 
-      <div className="log box">
-        <div className="header">⛏️ 보충학습 기록</div>
-        <div className="body">
-          {aojiLogs &&
-            aojiLogs.map(log => {
-              return <AojiLog data={log} key={log.aojiTimeIndex} />;
-            })}
+          <div className="body">
+            {aojiLogs &&
+              aojiLogs.map(log => {
+                return <AojiLog data={log} key={log.aojiTimeIndex} />;
+              })}
+          </div>
         </div>
-      </div>
+      </Styled.AojiLog>
 
       {/* {isOpen === 0 && <Modal />} */}
     </Styled.AojiBackground>

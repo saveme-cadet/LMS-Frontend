@@ -5,7 +5,7 @@ import {
 } from 'date-fns';
 
 const getPastedTime = (startTime, now) => {
-  if (!startTime) return '00:00:00';
+  if (!startTime) return '00 : 00 : 00';
   let hour = differenceInHours(now, startTime) % 24;
   let minute = differenceInMinutes(now, startTime) % 60;
   let second = differenceInSeconds(now, startTime) % 60;

@@ -1,3 +1,5 @@
+import { differenceInSeconds, parseISO } from 'date-fns';
+
 import { format } from 'date-fns';
 
 const fotmatDate = date => {
@@ -17,12 +19,25 @@ const fotmatRecord = record => {
   return newRecord.join(':');
 };
 const AojiLog = ({ data }) => {
+  // console.log(data);
+  const earnedPoint = (
+    differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
+    60 /
+    60 /
+    8.0
+  ).toFixed(2);
+
   return (
-    <h3>
-      시작 시간 : {fotmatDate(data.startAt)}
-      종료 시간 : {fotmatDate(data.endAt)}
-      기록 시간 : {fotmatRecord(data.recodeTime)}
-    </h3>
+    <div className="row">
+      <div>{fotmatDate(data.startAt)}</div>
+      <div>{fotmatDate(data.endAt)}</div>
+      <div>{fotmatRecord(data.recodeTime)}</div>
+      <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
+
+      <div>
+        <div className="button">수정</div>
+      </div>
+    </div>
   );
 };
 
