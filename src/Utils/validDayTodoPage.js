@@ -1,4 +1,4 @@
-const vaildDayTodoPage = day => {
+const validDayTodoPage = day => {
   const today = new Date();
 
   // return (0);
@@ -7,4 +7,4 @@ const vaildDayTodoPage = day => {
   else return 0;
 };
 
-export default vaildDayTodoPage;
+export default validDayTodoPage;
