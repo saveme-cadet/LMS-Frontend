@@ -73,6 +73,15 @@ const AdminPage = () => {
   };
 
   const handleChangeRole = async event => {
+    console.log(selectUserId, userId);
+
+    if (selectUserId === parseInt(userId)) {
+      const select = confirm(
+        '다른 사람에게 머슴을 넘겨주셨나요? 변경하는 즉시 로그아웃됩니다.',
+      );
+      if (!select) return;
+      handleLogout();
+    }
     const result = await UserInfoService.putRole(
       selectUserId,
       event.target.value,
@@ -103,6 +112,11 @@ const AdminPage = () => {
     setSelectUserId(null);
   };
 
+  const handleLogout = async () => {
+    const result = CRUDUserService.postLogout();
+    localStorage.clear();
+    auth.setStatus(null);
+  };
   // const handleGetUser = async () => {
   //   const result = await CRUDUserService.getUser();
   //   console.log(result.data);
