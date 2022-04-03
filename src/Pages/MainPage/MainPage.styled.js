@@ -12,12 +12,6 @@ const MainBackground = styled.div`
   // size
   width: 80%;
   height: 100%;
-  .time {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
 
   .change-today {
     // position: absolute;

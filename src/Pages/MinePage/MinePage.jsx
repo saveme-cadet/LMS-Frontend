@@ -3,7 +3,9 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { aojiCloumns } from 'Utils';
 import { AojiService } from 'Network';
+import { differenceInSeconds } from 'date-fns';
 
+import { CusDatePicker, ShowToday } from 'Components';
 import Timer from './Timer';
 import AojiButton from './AojiButton';
 import AojiLog from './AojiLog';
@@ -17,7 +19,7 @@ const MinePage = () => {
   const [aojiLogs, setAojiLogs] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(new Date());
-
+  const date = new Date();
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
   let interv;
@@ -29,6 +31,12 @@ const MinePage = () => {
   };
 
   const handleClickButton = async () => {
+    // console.log(differenceInSeconds(now, startTime));
+    // -0 이 나올 경우 DB가 고장나버림
+    if (startTime && differenceInSeconds(now, startTime) < 1) {
+      alert('측정하지 못했습니다!');
+      return;
+    }
     let result;
     if (isDoing) {
       clearInterval(interv);
@@ -39,7 +47,7 @@ const MinePage = () => {
       clockStart();
       result = await AojiService.postStartAoji(userId);
     }
-    console.log(result.data);
+    // console.log(result.data);
     setIsDoing(!isDoing);
     getMyAoji();
   };
@@ -74,21 +82,40 @@ const MinePage = () => {
 
   return (
     <Styled.AojiBackground>
-      <div className="timer box">
-        <Timer startTime={startTime} now={now} />
-        <h2>⛏️ 보충학습 시작</h2>
-        <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+      <div className="time">
+        <ShowToday date={date} />
       </div>
+      <Styled.AojiBody>
+        <Styled.AojiTimer>
+          <div className="timer box">
+            <div className="header">⛏️ 보충학습 시작</div>
+            <div className="body">
+              <Timer startTime={startTime} now={now} />
 
-      <div className="log box">
-        <h2>⛏️ 보충학습 기록</h2>
-        {aojiLogs &&
-          aojiLogs.map(log => {
-            return <AojiLog data={log} key={log.aojiTimeIndex} />;
-          })}
-      </div>
+              <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+            </div>
+          </div>
+        </Styled.AojiTimer>
+        <Styled.AojiLog>
+          <div className="log box">
+            <div className="header">⛏️ 보충학습 기록</div>
+            <div className="temp row">
+              <div>시작 시간</div>
+              <div>종료 시간</div> <div>공부 시간</div> <div>차감 점수</div>
+              <div className=""></div>
+            </div>
 
-      {/* {isOpen === 0 && <Modal />} */}
+            <div className="body">
+              {aojiLogs &&
+                aojiLogs.map(log => {
+                  return <AojiLog data={log} key={log.aojiTimeIndex} />;
+                })}
+            </div>
+          </div>
+        </Styled.AojiLog>
+
+        {/* {isOpen === 0 && <Modal />} */}
+      </Styled.AojiBody>
     </Styled.AojiBackground>
   );
 };

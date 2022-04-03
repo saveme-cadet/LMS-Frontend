@@ -20,12 +20,7 @@ const MainBackground = styled.div`
   // size
   width: 80%;
   height: 85%;
-  .time {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
+
   .main {
     display: flex;
     flex-direction: row;

@@ -15,6 +15,14 @@ const Golbal = styled.div`
     text-align: center;
     color: #c0c0c0;
   }
+  .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+  }
 `;
 
 const SideBar = styled.div`
