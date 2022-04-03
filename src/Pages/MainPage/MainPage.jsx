@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { checkCloumns, vaildDay, isVaildCheck } from 'Utils';
+import { checkCloumns, validDay, isValidCheck } from 'Utils';
 import AllTableService from 'Network/AllTableService';
 import CRUDUserService from 'Network/CRUDUserService';
 
@@ -56,17 +56,22 @@ const MainPage = () => {
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
     const myInfo = rowData.find(array => array.id === userId);
-    console.log('myinfo :', myInfo);
-    console.log('selectUserInfo : ', selectUserInfo);
-    const vaild = isVaildCheck(
+    // console.log('myinfo :', myInfo);
+    // console.log('selectUserInfo : ', selectUserInfo);
+    if (myInfo === undefined) {
+      alert('이번 달에 참가하고 있지 않습니다!');
+      return;
+    }
+
+    const valid = isValidCheck(
       selectUserInfo,
       myInfo.id,
       myInfo.role,
       myInfo.team,
     );
-    console.log('valud:', vaild);
-    if (vaild) {
-      vaild === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
+    console.log('valud:', valid);
+    if (valid) {
+      valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
     }
     setAnchorEl(event.currentTarget);
@@ -113,7 +118,7 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
-    if (vaildDay(date) !== 0) return;
+    if (validDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat, userId);
     if (!result) {
@@ -164,8 +169,8 @@ const MainPage = () => {
             <Tab label="레드 팀" />
             <Tab label="블루 팀" />
           </Tabs>
-          {vaildDay(date) ? (
-            <WrongDay wrongType={vaildDay(date)} />
+          {validDay(date) ? (
+            <WrongDay wrongType={validDay(date)} />
           ) : (
             <>
               <DataGrid
