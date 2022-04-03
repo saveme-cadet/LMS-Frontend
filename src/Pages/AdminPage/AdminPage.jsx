@@ -7,7 +7,7 @@ import { UserInfoService, CRUDUserService } from 'Network';
 import { ShowToday, NotValid } from 'Components';
 import SelectedUser from './SelectedUser';
 import AddVacation from './AddVacation';
-import FindTarget from './FindTarget';
+import AttendLeaderboard from './AttendLeaderboard';
 import ShakeTeam from './ShakeTeam';
 import NewUserForm from './NewUserForm';
 import { DataGrid } from '@mui/x-data-grid';
@@ -244,7 +244,7 @@ const AdminPage = () => {
           </Styled.Modal>
           <Styled.Modal>
             {isOpen === 'find' && (
-              <FindTarget
+              <AttendLeaderboard
                 setIsOpen={setIsOpen}
                 attendUser={rowData.filter(
                   user => user.attendeStatus === '참가',
