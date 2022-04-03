@@ -36,26 +36,36 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
     setEmail('');
     setPassword('');
   };
-
+  const handlePressEnter = e => {
+    if (e.key === 'Enter') handleClick();
+  };
   return (
     <>
       <h2>회원가입</h2>
-      <div className="id">
-        <input value={id} placeholder="아이디" onChange={handleChangeId} />
-      </div>
-      <div className="email">
-        <input
-          value={email}
-          placeholder="이메일"
-          onChange={handleChangeEmail}
-        />
-      </div>
-
-      {/* <input
+      <form onKeyPress={handlePressEnter}>
+        <div className="id">
+          <input
+            value={id}
+            placeholder="아이디"
+            onChange={handleChangeId}
+            onKeyPress={handlePressEnter}
+          />
+        </div>
+        <div className="email">
+          <input
+            value={email}
+            placeholder="이메일"
+            onChange={handleChangeEmail}
+            onKeyPress={handlePressEnter}
+          />
+        </div>
+        {/* <input
         value={password}
         placeholder="비밀번호"
         onChange={handleChangePassword}
       /> */}
+      </form>
+
       <Button onClick={handleClick}>입력</Button>
       <Button onClick={() => setStatus('login')}>로그인으로</Button>
     </>
