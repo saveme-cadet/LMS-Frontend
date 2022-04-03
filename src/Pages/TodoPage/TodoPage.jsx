@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import ProgressBar from './ProgressBar';
 import { CusDatePicker, ShowToday } from 'Components';
-import { vaildDayTodoPage } from 'Utils';
+import { validDayTodoPage } from 'Utils';
 import WrongDay from './WrongDay';
 
 import { AuthContext } from 'App';
@@ -160,9 +160,9 @@ const TodoPage = () => {
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
       </div>
       <div className="main">
-        {vaildDayTodoPage(date) ? (
+        {validDayTodoPage(date) ? (
           <div className="todo">
-            <WrongDay wrongType={vaildDayTodoPage(date)} />
+            <WrongDay wrongType={validDayTodoPage(date)} />
           </div>
         ) : (
           <div className="todo">
