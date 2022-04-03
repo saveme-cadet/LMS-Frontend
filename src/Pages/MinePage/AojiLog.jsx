@@ -19,7 +19,11 @@ const fotmatRecord = record => {
   return newRecord.join(':');
 };
 const AojiLog = ({ data }) => {
-  // console.log(data);
+  const validClick = isEnd => {
+    if (isEnd) return <div className="button valid">수정</div>;
+    else return <div className="button not-valid">수정</div>;
+  };
+  console.log(data);
   const earnedPoint = (
     differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
     60 /
@@ -34,9 +38,7 @@ const AojiLog = ({ data }) => {
       <div>{fotmatRecord(data.recodeTime)}</div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
 
-      <div>
-        <div className="button">수정</div>
-      </div>
+      <div> {validClick(data.endAt)}</div>
     </div>
   );
 };

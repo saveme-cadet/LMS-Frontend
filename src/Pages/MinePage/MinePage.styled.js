@@ -10,7 +10,6 @@ const AojiBackground = styled.div`
   height: 100%;
 
   .box {
-    height: 60%;
     padding: 10px;
     margin: 20px;
     border-radius: 10px;
@@ -36,7 +35,8 @@ const AojiBody = styled.div`
 `;
 const AojiTimer = styled.div`
   flex: 2;
-
+  font-size: 40px;
+  font-weight: bold;
   button {
     width: 170px;
     height: 50px;
@@ -59,11 +59,11 @@ const AojiLog = styled.div`
   flex: 5;
 
   .body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    // scrollbar-width: none;
 
-    // overflow: auto;
+    overflow: auto;
   }
   .row {
     display: flex;
@@ -75,13 +75,19 @@ const AojiLog = styled.div`
       margin: 15px 0 15px 0;
     }
     .button {
-      border: 1px solid #4870fd;
       border-radius: 10px;
-      color: #4870fd;
       width: 60px;
       text-align: center;
-      cursor: pointer;
       margin: 0 auto;
+    }
+    .valid {
+      border: 1px solid #4870fd;
+      color: #4870fd;
+      cursor: pointer;
+    }
+    .not-valid {
+      border: 1px solid #a7a7a7;
+      color: #a7a7a7;
     }
   }
   .temp {
