@@ -50,8 +50,13 @@ const SideBar = styled.div`
   }
   .logout {
     text-align: center;
-    border: 1px solid red;
+    border: 1px solid transparent;
+    background-color: #110323;
     cursor: pointer;
+    position: fixed;
+    bottom: 0;
+    width: 10%;
+    min-width: 10em;
   }
 `;
 

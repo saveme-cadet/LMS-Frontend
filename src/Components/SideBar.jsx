@@ -50,11 +50,13 @@ const SideBar = () => {
           <Tab className="button" label="오늘 할 일" value="todo" />
           <Tab className="button" label="아오지 탄광" value="mine" />
           <Tab className="button" label="머슴" value="admin" />
+          <Tab
+            className="button logout"
+            label="로그아웃"
+            onClick={handleClickLogout}
+          />
         </Tabs>
       )}
-      <div className="button logout" onClick={handleClickLogout}>
-        로그아웃
-      </div>
     </>
   );
 };
