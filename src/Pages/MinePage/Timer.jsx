@@ -12,11 +12,11 @@ const getPastedTime = (startTime, now) => {
   if (hour < 10) hour = '0' + hour;
   if (minute < 10) minute = '0' + minute;
   if (second < 10) second = '0' + second;
-  return `${hour}:${minute}:${second}`;
+  return `${hour} : ${minute} : ${second}`;
 };
 
 const Timer = ({ startTime, now }) => {
-  return <h1>{getPastedTime(startTime, now)}</h1>;
+  return <div>{getPastedTime(startTime, now)}</div>;
 };
 
 export default Timer;

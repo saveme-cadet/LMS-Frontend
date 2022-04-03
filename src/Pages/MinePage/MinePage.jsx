@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { aojiCloumns } from 'Utils';
 import { AojiService } from 'Network';
+import { differenceInSeconds } from 'date-fns';
 
 import Timer from './Timer';
 import AojiButton from './AojiButton';
@@ -29,6 +30,12 @@ const MinePage = () => {
   };
 
   const handleClickButton = async () => {
+    // console.log(differenceInSeconds(now, startTime));
+    // -0 이 나올 경우 DB가 고장나버림
+    if (startTime && differenceInSeconds(now, startTime) < 1) {
+      alert('측정하지 못했습니다!');
+      return;
+    }
     let result;
     if (isDoing) {
       clearInterval(interv);
@@ -75,17 +82,22 @@ const MinePage = () => {
   return (
     <Styled.AojiBackground>
       <div className="timer box">
-        <Timer startTime={startTime} now={now} />
-        <h2>⛏️ 보충학습 시작</h2>
-        <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+        <div className="header">⛏️ 보충학습 시작</div>
+        <div className="body">
+          <Timer startTime={startTime} now={now} />
+
+          <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+        </div>
       </div>
 
       <div className="log box">
-        <h2>⛏️ 보충학습 기록</h2>
-        {aojiLogs &&
-          aojiLogs.map(log => {
-            return <AojiLog data={log} key={log.aojiTimeIndex} />;
-          })}
+        <div className="header">⛏️ 보충학습 기록</div>
+        <div className="body">
+          {aojiLogs &&
+            aojiLogs.map(log => {
+              return <AojiLog data={log} key={log.aojiTimeIndex} />;
+            })}
+        </div>
       </div>
 
       {/* {isOpen === 0 && <Modal />} */}

@@ -2,9 +2,13 @@ const AojiButton = ({ onClickAoji, state }) => {
   return (
     <>
       {!state ? (
-        <button onClick={onClickAoji}>시작!</button>
+        <button onClick={onClickAoji} className="start">
+          시작!
+        </button>
       ) : (
-        <button onClick={onClickAoji}>종료!</button>
+        <button onClick={onClickAoji} className="end">
+          종료!
+        </button>
       )}
     </>
   );
