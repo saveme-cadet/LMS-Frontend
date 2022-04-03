@@ -3,16 +3,16 @@ import getCheckMessage from './getCheckMessage';
 import adminCloumns from './adminCloumns';
 import checkCloumns from './checkCloumns';
 import aojiCloumns from './aojiCloumns';
-import vaildDay from './vaildDay';
+import validDay from './validDay';
 import getDayName from './getDayName';
-import isVaildCheck from './isVaildCheck';
+import isValidCheck from './isValidCheck';
 export {
   getStatusMessage,
   getCheckMessage,
   adminCloumns,
   checkCloumns,
   aojiCloumns,
-  vaildDay,
+  validDay,
   getDayName,
-  isVaildCheck,
+  isValidCheck,
 };

@@ -37,9 +37,14 @@ const SideBar = styled.div`
       margin: 0.2em;
     }
   }
-  button {
+  .button {
     color: #ffffff;
     max-width: 13em;
+  }
+  .logout {
+    text-align: center;
+    border: 1px solid red;
+    cursor: pointer;
   }
 `;
 

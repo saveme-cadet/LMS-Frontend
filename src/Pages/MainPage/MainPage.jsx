@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { checkCloumns, vaildDay, isVaildCheck } from 'Utils';
+import { checkCloumns, validDay, isValidCheck } from 'Utils';
 import AllTableService from 'Network/AllTableService';
 import CRUDUserService from 'Network/CRUDUserService';
 
@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { CusDatePicker, ShowToday } from 'Components';
 import Check from './Check';
 import WrongDay from './WrongDay';
+import UserGuide from './UserGuide';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -30,7 +31,7 @@ const MainPage = () => {
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
 
-  console.log('userId : ', userId);
+  // console.log('userInfo : ', userId, userName, role, team);
   // console.log('auth : ', auth.status);
 
   const updateSelectRowData = (curArrays, curTab) => {
@@ -55,17 +56,22 @@ const MainPage = () => {
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
     const myInfo = rowData.find(array => array.id === userId);
-    console.log('myinfo :', myInfo);
-    console.log('selectUserInfo : ', selectUserInfo);
-    const vaild = isVaildCheck(
+    // console.log('myinfo :', myInfo);
+    // console.log('selectUserInfo : ', selectUserInfo);
+    if (myInfo === undefined) {
+      alert('이번 달에 참가하고 있지 않습니다!');
+      return;
+    }
+
+    const valid = isValidCheck(
       selectUserInfo,
       myInfo.id,
       myInfo.role,
       myInfo.team,
     );
-    console.log('valud:', vaild);
-    if (vaild) {
-      vaild === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
+    console.log('valud:', valid);
+    if (valid) {
+      valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
     }
     setAnchorEl(event.currentTarget);
@@ -112,7 +118,7 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
-    if (vaildDay(date) !== 0) return;
+    if (validDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat, userId);
     if (!result) {
@@ -123,7 +129,7 @@ const MainPage = () => {
       return;
     }
     const arrays = result.data;
-
+    console.log(arrays);
     const newArray = [];
     arrays.map(array => {
       const newData = {
@@ -136,6 +142,7 @@ const MainPage = () => {
         role: array.role,
         checkIn: array.checkIn,
         checkOut: array.checkOut,
+        todoRate: array.dayObjectiveAchievementRate,
       };
       newArray.push(newData);
     });
@@ -150,10 +157,7 @@ const MainPage = () => {
 
   return (
     <Styled.MainBackground>
-      <div>
-        안녕하세요 {auth.status.userName}! 당신의 팀은 {auth.status.team}{' '}
-        팀입니다!
-      </div>
+      <UserGuide status={auth.status} />
       <div className="time">
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
@@ -165,8 +169,8 @@ const MainPage = () => {
             <Tab label="레드 팀" />
             <Tab label="블루 팀" />
           </Tabs>
-          {vaildDay(date) ? (
-            <WrongDay wrongType={vaildDay(date)} />
+          {validDay(date) ? (
+            <WrongDay wrongType={validDay(date)} />
           ) : (
             <>
               <DataGrid

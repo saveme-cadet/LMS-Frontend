@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import ProgressBar from './ProgressBar';
 import { CusDatePicker, ShowToday } from 'Components';
-import { vaildDay } from 'Utils';
+import { validDay } from 'Utils';
 
 import { AuthContext } from 'App';
 import Styled from './TodoPage.styled';
