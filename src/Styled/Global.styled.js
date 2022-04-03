@@ -15,7 +15,6 @@ const Golbal = styled.div`
     text-align: center;
     color: #c0c0c0;
   }
-  font-family: 'Noto Sans KR', sans-serif;
 `;
 
 const SideBar = styled.div`
