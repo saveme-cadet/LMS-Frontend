@@ -24,23 +24,30 @@ const MainBackground = styled.div`
   .main {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: 750px;
   }
   .todo {
     border: 1px solid #c0c0c0;
     padding: 1em;
     border-radius: 1em;
 
-    margin-right: 5%;
+    margin-left: 5%;
+    margin-right: 10%;
     width: 40%;
     heigh: 50%;
   }
   .othercadet {
+    overflow: auto;
+    flex-wrap: wrap;
     background-color: #eeeeee;
+    border: 1px solid #eeeeee;
     padding: 1em;
     border-radius: 1em;
-    width: 50%;
+    flex-direction: column;
+    width: 45%;
+    max-height: 100%;
   }
+
   .text {
     border: 0px;
     border-bottom: 3px solid #c0c0c0;
@@ -75,6 +82,55 @@ const MainBackground = styled.div`
   }
   .check {
     height: 35px;
+  }
+  .cadetlist {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-left: 8%;
+    height: 95%;
+  }
+  .cadet {
+    border: 0px;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: white;
+
+    flex: 1 1 40%;
+    margin: 10px 10px 40px 10px;
+    max-width: 40%;
+    height: 300px;
+  }
+  .title {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+  .otherstodolist {
+    margin-left: -10px;
+    margin-bottom: -5px;
+  }
+  .othercadetname {
+    margin-top: -5px;
+    font-size: 20px;
+  }
+  .otherstodo {
+    overflow: auto;
+    margin-top: 5%;
+    margin-left: 5%;
+    height: 80%;
+  }
+  .none {
+    justify-content: center;
+    align-item: center;
+    text-align: center;
+    margin-top: 45%;
+    margin-left: -5%;
+  }
+  .notvaliddate {
+    justify-content: center;
+    align-item: center;
+    text-align: center;
+    margin-top: 50%;
   }
 `;
 
