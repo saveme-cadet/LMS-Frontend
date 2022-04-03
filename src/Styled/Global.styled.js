@@ -15,7 +15,14 @@ const Golbal = styled.div`
     text-align: center;
     color: #c0c0c0;
   }
-  font-family: 'Noto Sans KR', sans-serif;
+  .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+  }
 `;
 
 const SideBar = styled.div`
@@ -37,9 +44,14 @@ const SideBar = styled.div`
       margin: 0.2em;
     }
   }
-  button {
+  .button {
     color: #ffffff;
     max-width: 13em;
+  }
+  .logout {
+    text-align: center;
+    border: 1px solid red;
+    cursor: pointer;
   }
 `;
 

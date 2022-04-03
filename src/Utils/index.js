@@ -3,7 +3,7 @@ import getCheckMessage from './getCheckMessage';
 import adminCloumns from './adminCloumns';
 import checkCloumns from './checkCloumns';
 import aojiCloumns from './aojiCloumns';
-import vaildDay from './vaildDay';
+import validDay from './validDay';
 import getDayName from './getDayName';
 import isVaildCheck from './isVaildCheck';
 import vaildDayTodoPage from './vaildDayTodoPage';
@@ -13,7 +13,7 @@ export {
   adminCloumns,
   checkCloumns,
   aojiCloumns,
-  vaildDay,
+  validDay,
   getDayName,
   isVaildCheck,
   vaildDayTodoPage,

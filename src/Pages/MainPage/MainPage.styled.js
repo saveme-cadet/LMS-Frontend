@@ -12,12 +12,6 @@ const MainBackground = styled.div`
   // size
   width: 80%;
   height: 100%;
-  .time {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
 
   .change-today {
     // position: absolute;
@@ -27,7 +21,6 @@ const MainBackground = styled.div`
 const MainTable = styled.div`
   border: 1px solid #c0c0c0;
   padding: 1em;
-  height: 100%;
   border-radius: 1em;
 
   .table {

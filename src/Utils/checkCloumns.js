@@ -1,4 +1,6 @@
 import { GetCheckIcons } from 'Components';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const checkCloumns = [
   {
@@ -55,10 +57,21 @@ const checkCloumns = [
   {
     field: 'checkOut',
     headerName: '체크아웃',
-    type: 'string',
     width: 120,
     renderCell: params => {
       return <GetCheckIcons type={params.value} />;
+    },
+  },
+  {
+    field: 'todoRate',
+    headerName: '목표 진척도',
+    width: 200,
+    renderCell: params => {
+      return (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress variant="determinate" value={params.value} />
+        </Box>
+      );
     },
   },
 ];
