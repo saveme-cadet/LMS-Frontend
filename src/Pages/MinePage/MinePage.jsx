@@ -5,6 +5,7 @@ import { aojiCloumns } from 'Utils';
 import { AojiService } from 'Network';
 import { differenceInSeconds } from 'date-fns';
 
+import { CusDatePicker, ShowToday } from 'Components';
 import Timer from './Timer';
 import AojiButton from './AojiButton';
 import AojiLog from './AojiLog';
@@ -18,7 +19,7 @@ const MinePage = () => {
   const [aojiLogs, setAojiLogs] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(new Date());
-
+  const date = new Date();
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
   let interv;
@@ -59,7 +60,7 @@ const MinePage = () => {
     const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
-    // console.log(logs);
+    console.log(logs);
     logs.map(log => {
       if (log.endAt === null) doingState = true;
     });
@@ -81,35 +82,40 @@ const MinePage = () => {
 
   return (
     <Styled.AojiBackground>
-      <Styled.AojiTimer>
-        <div className="timer box">
-          <div className="header">⛏️ 보충학습 시작</div>
-          <div className="body">
-            <Timer startTime={startTime} now={now} />
+      <div className="time">
+        <ShowToday date={date} />
+      </div>
+      <Styled.AojiBody>
+        <Styled.AojiTimer>
+          <div className="timer box">
+            <div className="header">⛏️ 보충학습 시작</div>
+            <div className="body">
+              <Timer startTime={startTime} now={now} />
 
-            <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+              <AojiButton onClickAoji={handleClickButton} state={isDoing} />
+            </div>
           </div>
-        </div>
-      </Styled.AojiTimer>
-      <Styled.AojiLog>
-        <div className="log box">
-          <div className="header">⛏️ 보충학습 기록</div>
-          <div className="temp row">
-            <div>시작 시간</div>
-            <div>종료 시간</div> <div>공부 시간</div> <div>차감 점수</div>
-            <div className=""></div>
-          </div>
+        </Styled.AojiTimer>
+        <Styled.AojiLog>
+          <div className="log box">
+            <div className="header">⛏️ 보충학습 기록</div>
+            <div className="temp row">
+              <div>시작 시간</div>
+              <div>종료 시간</div> <div>공부 시간</div> <div>차감 점수</div>
+              <div className=""></div>
+            </div>
 
-          <div className="body">
-            {aojiLogs &&
-              aojiLogs.map(log => {
-                return <AojiLog data={log} key={log.aojiTimeIndex} />;
-              })}
+            <div className="body">
+              {aojiLogs &&
+                aojiLogs.map(log => {
+                  return <AojiLog data={log} key={log.aojiTimeIndex} />;
+                })}
+            </div>
           </div>
-        </div>
-      </Styled.AojiLog>
+        </Styled.AojiLog>
 
-      {/* {isOpen === 0 && <Modal />} */}
+        {/* {isOpen === 0 && <Modal />} */}
+      </Styled.AojiBody>
     </Styled.AojiBackground>
   );
 };

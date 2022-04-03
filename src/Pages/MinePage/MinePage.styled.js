@@ -5,9 +5,6 @@ const AojiBackground = styled.div`
   position: absolute;
   top: 5em;
 
-  // layout
-  display: flex;
-  flex-direction: row;
   // size
   width: 80%;
   height: 100%;
@@ -33,10 +30,12 @@ const AojiBackground = styled.div`
   }
 `;
 
+const AojiBody = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const AojiTimer = styled.div`
   flex: 2;
-  font-size: 60px;
-  font-weight: bold;
 
   button {
     width: 170px;
@@ -89,5 +88,5 @@ const AojiLog = styled.div`
     width: 98%;
   }
 `;
-const Styled = { AojiBackground, AojiTimer, AojiLog };
+const Styled = { AojiBackground, AojiBody, AojiTimer, AojiLog };
 export default Styled;
