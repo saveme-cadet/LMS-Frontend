@@ -29,7 +29,7 @@ const SideBar = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #220646;
-  height: 100em;
+  height: 100%;
   width: 10%;
   min-width: 9em;
   max-width: 13em;
@@ -44,14 +44,24 @@ const SideBar = styled.div`
       margin: 0.2em;
     }
   }
+  .tabs {
+    height: 100%;
+  }
   .button {
     color: #ffffff;
     max-width: 13em;
   }
   .logout {
     text-align: center;
-    border: 1px solid red;
+    border: 1px solid transparent;
+    background-color: #110323;
     cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5rem;
+    font-size: 20px;
+    font-weight: bold;
   }
 `;
 
