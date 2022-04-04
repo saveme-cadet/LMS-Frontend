@@ -55,7 +55,7 @@ const MainPage = () => {
     if (field !== 'checkIn' && field !== 'checkOut') return;
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    const myInfo = rowData.find(array => array.id === userId);
+    const myInfo = rowData.find(array => array.id === +userId);
     // console.log('myinfo :', myInfo);
     // console.log('selectUserInfo : ', selectUserInfo);
     if (myInfo === undefined) {
@@ -129,7 +129,6 @@ const MainPage = () => {
       return;
     }
     const arrays = result.data;
-    console.log(arrays);
     const newArray = [];
     arrays.map(array => {
       const newData = {
@@ -153,6 +152,7 @@ const MainPage = () => {
   useEffect(() => {
     console.log('today : ', date);
     getUsers();
+    console.log('row data : ', rowData);
   }, [date]);
 
   return (
@@ -163,7 +163,7 @@ const MainPage = () => {
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
       </div>
       <Styled.MainTable>
-        <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
+        <Box className="table">
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="전체 보기" />
             <Tab label="레드 팀" />
