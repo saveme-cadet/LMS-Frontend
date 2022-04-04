@@ -85,7 +85,7 @@ const LoginBackground = styled.div`
 
   .registerform {
     margin-top : 3%;
-    width : 550px;
+    width : 600px;
     height : 70%;
     background-color : #FFFFFF;
     border-radius: 1em;
