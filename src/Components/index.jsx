@@ -5,6 +5,7 @@ import Clock from './Clock';
 import Today from './Today';
 import GetCheckIcons from './GetCheckIcons';
 import NotValid from './NotValid';
+import NoData from './NoData';
 import NotValidTodoPage from './NotValidTodoPage';
 export {
   SideBar,
@@ -14,5 +15,6 @@ export {
   Today,
   GetCheckIcons,
   NotValid,
+  NoData,
   NotValidTodoPage,
 };

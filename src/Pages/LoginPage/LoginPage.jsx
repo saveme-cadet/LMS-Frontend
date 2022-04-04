@@ -33,7 +33,6 @@ const LoginPage = () => {
     localStorage.setItem('team', status.team);
 
     auth.setIsLoading(false);
-
     navi('/');
   };
   const handleRegister = async body => {

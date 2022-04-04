@@ -10,12 +10,12 @@ const AojiBackground = styled.div`
   height: 100%;
 
   .box {
-    height: 60%;
     padding: 10px;
     margin: 20px;
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     text-align: left;
+    height: 800px;
   }
   .header {
     font-size: 40px;
@@ -24,9 +24,6 @@ const AojiBackground = styled.div`
   .body {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80%;
   }
 `;
 
@@ -36,7 +33,8 @@ const AojiBody = styled.div`
 `;
 const AojiTimer = styled.div`
   flex: 2;
-
+  font-size: 40px;
+  font-weight: bold;
   button {
     width: 170px;
     height: 50px;
@@ -46,6 +44,11 @@ const AojiTimer = styled.div`
     color: white;
     font-size: 20px;
     font-weight: bold;
+  }
+  .body {
+    align-items: center;
+    justify-content: center;
+    height: 600px;
   }
   .start {
     background-color: #4870fd;
@@ -59,11 +62,10 @@ const AojiLog = styled.div`
   flex: 5;
 
   .body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none;
-
-    // overflow: auto;
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
   }
   .row {
     display: flex;
@@ -75,17 +77,28 @@ const AojiLog = styled.div`
       margin: 15px 0 15px 0;
     }
     .button {
-      border: 1px solid #4870fd;
       border-radius: 10px;
-      color: #4870fd;
       width: 60px;
       text-align: center;
-      cursor: pointer;
       margin: 0 auto;
+    }
+    .valid {
+      border: 1px solid #4870fd;
+      color: #4870fd;
+      cursor: pointer;
+    }
+    .not-valid {
+      border: 1px solid #a7a7a7;
+      color: #a7a7a7;
     }
   }
   .temp {
     width: 98%;
+  }
+  .score {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px;
   }
 `;
 const Styled = { AojiBackground, AojiBody, AojiTimer, AojiLog };

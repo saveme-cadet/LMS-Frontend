@@ -1,15 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { aojiCloumns } from 'Utils';
-import { AojiService } from 'Network';
+import { AojiService, UserInfoService } from 'Network';
 import { differenceInSeconds } from 'date-fns';
 
-import { CusDatePicker, ShowToday } from 'Components';
+import { NoData, ShowToday } from 'Components';
 import Timer from './Timer';
 import AojiButton from './AojiButton';
 import AojiLog from './AojiLog';
-import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MinePage.styled';
 
@@ -17,6 +15,7 @@ const MinePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDoing, setIsDoing] = useState(false);
   const [aojiLogs, setAojiLogs] = useState(null);
+  const [attendScore, setAttendScore] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(new Date());
   const date = new Date();
@@ -50,6 +49,7 @@ const MinePage = () => {
     // console.log(result.data);
     setIsDoing(!isDoing);
     getMyAoji();
+    getCurAttendScore();
   };
 
   const CloseModal = () => {
@@ -60,7 +60,7 @@ const MinePage = () => {
     const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
-    console.log(logs);
+    // console.log(logs);
     logs.map(log => {
       if (log.endAt === null) doingState = true;
     });
@@ -73,8 +73,15 @@ const MinePage = () => {
     setIsDoing(doingState);
   };
 
+  const getCurAttendScore = async () => {
+    const result = await UserInfoService.getAllUser(userId);
+    const curUser = result.data.find(array => array.userId === userId);
+    setAttendScore(curUser.attendScore.toFixed(2));
+  };
+
   useEffect(() => {
     getMyAoji();
+    getCurAttendScore();
     return () => {
       clearInterval(interv); // cleanup function을 이용
     };
@@ -106,11 +113,15 @@ const MinePage = () => {
             </div>
 
             <div className="body">
-              {aojiLogs &&
+              {aojiLogs && aojiLogs.length ? (
                 aojiLogs.map(log => {
                   return <AojiLog data={log} key={log.aojiTimeIndex} />;
-                })}
+                })
+              ) : (
+                <NoData code={1} />
+              )}
             </div>
+            <div className="score">현재 출결 점수 : {attendScore}</div>
           </div>
         </Styled.AojiLog>
 

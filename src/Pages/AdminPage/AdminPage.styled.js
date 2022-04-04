@@ -3,8 +3,7 @@ import styled from 'styled-components';
 const AdminBackground = styled.div`
   // position
   position: absolute;
-  top: 5em;
-
+  top: 10px;
   // layout
   display: flex;
   flex-direction: column;
