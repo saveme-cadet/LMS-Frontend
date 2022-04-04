@@ -45,6 +45,7 @@ const SideBar = () => {
           orientation="vertical"
           value={curPage}
           onChange={handleChangePage}
+          className="tabs"
         >
           <Tab className="button" label="출결표" value="" />
           <Tab className="button" label="오늘 할 일" value="todo" />
