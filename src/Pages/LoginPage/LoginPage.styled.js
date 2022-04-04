@@ -80,7 +80,7 @@ const LoginBackground = styled.div`
     font-size: 20px;
     text-decoration: underline;
     color : white;
-    width: 500px;
+    width: 250px;
   }
 
   .registerform {
@@ -126,7 +126,7 @@ const LoginBackground = styled.div`
     font-size: 20px;
     text-decoration: underline;
     color : #000000;
-    width: 500px;
+    width: 150px;
   }
 `;
 
