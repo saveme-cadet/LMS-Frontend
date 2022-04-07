@@ -26,14 +26,13 @@ const LoginPage = () => {
     auth.setIsLoading(true);
     const status = result.data[0];
     auth.setStatus(status);
-    console.log('role : ', status);
+    // console.log('role : ', status);
     localStorage.setItem('userId', status.userId);
     localStorage.setItem('userName', status.userName);
     localStorage.setItem('role', status.role);
     localStorage.setItem('team', status.team);
 
     auth.setIsLoading(false);
-
     navi('/');
   };
   const handleRegister = async body => {
@@ -59,7 +58,10 @@ const LoginPage = () => {
   };
   return (
     <Styled.LoginBackground>
-      <span className="title">구해줘 카뎃</span>
+      <div className="main">
+        <img src="/asset/saveme.png" alt="logo" />
+        <span className="title">구해줘 카뎃</span>
+      </div>
       {status === 'login' ? (
         <>
           <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />

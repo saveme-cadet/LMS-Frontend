@@ -20,10 +20,10 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
   const teamList = ['red', 'blue'];
 
   const handleCloseModal = isAccept => {
-    console.log(curUsers);
+    // console.log(curUsers);
     if (isAccept) {
       curUsers.map(user => {
-        console.log(user.id, user.team);
+        // console.log(user.id, user.team);
         onClickChangeShuffleTeam(user.id, user.team);
       });
     }
@@ -56,7 +56,7 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
   }, []);
 
   useEffect(() => {
-    console.log('isChanged?');
+    // console.log('isChanged?');
   }, [curUsers]);
   return (
     <div className="modal">

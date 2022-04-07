@@ -7,7 +7,7 @@ import { UserInfoService, CRUDUserService } from 'Network';
 import { ShowToday, NotValid } from 'Components';
 import SelectedUser from './SelectedUser';
 import AddVacation from './AddVacation';
-import FindTarget from './FindTarget';
+import AttendLeaderboard from './AttendLeaderboard';
 import ShakeTeam from './ShakeTeam';
 import NewUserForm from './NewUserForm';
 import { DataGrid } from '@mui/x-data-grid';
@@ -49,11 +49,16 @@ const AdminPage = () => {
 
   const handleCellClick = e => {
     setSelectUserId(e.id);
-    console.log('id : ', e.id);
+    // console.log('id : ', e.id);
   };
 
   const handleChangeAttend = async event => {
     const value = event.target.value === '참가' ? 1 : 0;
+    if (value === 0) {
+      if (validChangeRole()) return;
+      let temp = await UserInfoService.putRole(selectUserId, '카뎃');
+      // temp = await UserInfoService.putTeam(selectUserId, 'white');
+    }
     const result = await UserInfoService.putAttend(selectUserId, value);
     getUser();
     setSelectUserId(null);
@@ -72,16 +77,25 @@ const AdminPage = () => {
     getUser();
   };
 
-  const handleChangeRole = async event => {
-    console.log(selectUserId, userId);
-
-    if (selectUserId === parseInt(userId)) {
+  const validChangeRole = () => {
+    if (selectUserId === +userId) {
+      if (rowData.filter(data => data.role === '머슴').length === 1) {
+        alert('머슴이 한 명 뿐입니다!');
+        return -1;
+      }
       const select = confirm(
         '다른 사람에게 머슴을 넘겨주셨나요? 변경하는 즉시 로그아웃됩니다.',
       );
-      if (!select) return;
+      if (!select) return -1;
       handleLogout();
     }
+    return 0;
+  };
+
+  const handleChangeRole = async event => {
+    // console.log(selectUserId, userId);
+    if (validChangeRole()) return;
+
     const result = await UserInfoService.putRole(
       selectUserId,
       event.target.value,
@@ -104,7 +118,7 @@ const AdminPage = () => {
   const handleMinusVacation = async select => {
     const selectUser = rowData.filter(user => user.id === select);
     if (selectUser[0].vacation === 0) {
-      console.log('감소시킬 휴가가 없습니다!');
+      // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
     const result = await UserInfoService.putVacationMinus(select);
@@ -119,7 +133,7 @@ const AdminPage = () => {
   };
   // const handleGetUser = async () => {
   //   const result = await CRUDUserService.getUser();
-  //   console.log(result.data);
+  //   // console.log(result.data);
   // };
 
   // const handleDeleteUser = async data => {
@@ -153,7 +167,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     getUser();
-    console.log('auth', auth);
+    // console.log('auth', auth);
   }, []);
 
   return (
@@ -244,7 +258,7 @@ const AdminPage = () => {
           </Styled.Modal>
           <Styled.Modal>
             {isOpen === 'find' && (
-              <FindTarget
+              <AttendLeaderboard
                 setIsOpen={setIsOpen}
                 attendUser={rowData.filter(
                   user => user.attendeStatus === '참가',

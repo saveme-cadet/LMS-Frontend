@@ -1,15 +1,14 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 import { AuthContext } from 'App';
-import { aojiCloumns } from 'Utils';
-import { AojiService } from 'Network';
+import { AojiService, UserInfoService } from 'Network';
+import { useInterval } from 'Utils';
 import { differenceInSeconds } from 'date-fns';
 
-import { CusDatePicker, ShowToday } from 'Components';
+import { NoData, ShowToday } from 'Components';
 import Timer from './Timer';
 import AojiButton from './AojiButton';
 import AojiLog from './AojiLog';
-import { DataGrid } from '@mui/x-data-grid';
 
 import Styled from './MinePage.styled';
 
@@ -17,15 +16,22 @@ const MinePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDoing, setIsDoing] = useState(false);
   const [aojiLogs, setAojiLogs] = useState(null);
+  const [attendScore, setAttendScore] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(new Date());
   const date = new Date();
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
-  let interv;
-
+  const interv = useRef();
   const clockStart = () => {
-    interv = setInterval(() => {
+    // console.log('called!');
+    if (interv.current) {
+      clearInterval(interv.current);
+      interv.current = null;
+    }
+    interv.current = setInterval(() => {
+      // console.log('timer!');
+      // console.log('why?');
       setNow(new Date());
     }, 1000);
   };
@@ -39,32 +45,38 @@ const MinePage = () => {
     }
     let result;
     if (isDoing) {
-      clearInterval(interv);
+      // console.log('clearrr');
+      clearInterval(interv.current);
+      interv.current = null;
       setStartTime(null);
       result = await AojiService.putEndAoji(userId);
     } else {
       setStartTime(new Date());
+      // console.log('call handleClickButton');
       clockStart();
       result = await AojiService.postStartAoji(userId);
     }
     // console.log(result.data);
     setIsDoing(!isDoing);
     getMyAoji();
+    getCurAttendScore();
   };
 
   const CloseModal = () => {
     setIsOpen(false);
   };
 
-  const getMyAoji = async () => {
+  const getMyAoji = async isFirst => {
     const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
-    console.log(logs);
+    // console.log(logs);
     logs.map(log => {
       if (log.endAt === null) doingState = true;
     });
     if (doingState) {
+      // console.log('is doing');
+      // console.log('call getMyAoji');
       clockStart();
       const fotmatDate = new Date(logs[logs.length - 1].startAt);
       setStartTime(fotmatDate);
@@ -73,10 +85,18 @@ const MinePage = () => {
     setIsDoing(doingState);
   };
 
+  const getCurAttendScore = async () => {
+    const result = await UserInfoService.getAllUser(userId);
+    const curUser = result.data.find(array => array.userId === +userId);
+    setAttendScore(curUser.attendScore.toFixed(2));
+  };
+
   useEffect(() => {
     getMyAoji();
+    getCurAttendScore();
     return () => {
-      clearInterval(interv); // cleanup function을 이용
+      clearInterval(interv.current);
+      interv.current = null;
     };
   }, []);
 
@@ -106,11 +126,15 @@ const MinePage = () => {
             </div>
 
             <div className="body">
-              {aojiLogs &&
+              {aojiLogs && aojiLogs.length ? (
                 aojiLogs.map(log => {
                   return <AojiLog data={log} key={log.aojiTimeIndex} />;
-                })}
+                })
+              ) : (
+                <NoData code={1} />
+              )}
             </div>
+            <div className="score">현재 출결 점수 : {attendScore}</div>
           </div>
         </Styled.AojiLog>
 

@@ -12,7 +12,7 @@ import Styled from './CheckPage.styled';
 
 const curWhich = time => {
   const CheckTime = dayjs().set('hour', 15).set('minute', 0);
-  console.log('curwhich');
+  // console.log('curwhich');
   if (time < CheckTime) return 0;
   else return 1;
 };
@@ -24,15 +24,15 @@ const CheckPage = () => {
   let timer;
 
   const handleChangeCheck = change => {
-    console.log('checkArray:', checkArray);
-    console.log('change : ', change);
+    // console.log('checkArray:', checkArray);
+    // console.log('change : ', change);
     checkArray[which] = change;
     setCheckArray(checkArray);
   };
 
   useEffect(async () => {
     const result = await UserInfoService.getAllUser(1);
-    console.log(result.data);
+    // console.log(result.data);
     // 맨 처음 해당 유저의 그날의 체크인, 체크아웃에 대한 값을 연동해서 받아와야 한다.
     // 해당 유저가 참가하고 있다면 해당 유저의 정보(출결 점수, 오늘의 목표, 휴가)를 받아와야 한다.
     // 해당 유저가 참가하고 있지 않다면 참가하고 있지 않다는 예외처리를 해야 한다.

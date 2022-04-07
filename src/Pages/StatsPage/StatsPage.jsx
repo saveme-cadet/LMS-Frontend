@@ -16,7 +16,7 @@ const MemberList = () => {
           <Avatar
             key={i}
             onClick={() => {
-              console.log('click!');
+              // console.log('click!');
             }}
           />
         );
@@ -58,7 +58,7 @@ const DayInfo = ({ date }) => {
 const StatsPage = () => {
   const [date, setDate] = useState(new Date());
   const today = new Date();
-  console.log(date.getTime(), today.getTime());
+  // console.log(date.getTime(), today.getTime());
   return (
     <>
       <Styled.Stat>

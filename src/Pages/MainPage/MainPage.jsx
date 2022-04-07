@@ -55,7 +55,7 @@ const MainPage = () => {
     if (field !== 'checkIn' && field !== 'checkOut') return;
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    const myInfo = rowData.find(array => array.id === userId);
+    const myInfo = rowData.find(array => array.id === +userId);
     // console.log('myinfo :', myInfo);
     // console.log('selectUserInfo : ', selectUserInfo);
     if (myInfo === undefined) {
@@ -69,7 +69,7 @@ const MainPage = () => {
       myInfo.role,
       myInfo.team,
     );
-    console.log('valud:', valid);
+    // console.log('valud:', valid);
     if (valid) {
       valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
@@ -129,7 +129,6 @@ const MainPage = () => {
       return;
     }
     const arrays = result.data;
-    console.log(arrays);
     const newArray = [];
     arrays.map(array => {
       const newData = {
@@ -151,19 +150,20 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    console.log('today : ', date);
+    // console.log('today : ', date);
     getUsers();
+    // console.log('row data : ', rowData);
   }, [date]);
 
   return (
     <Styled.MainBackground>
-      <UserGuide status={auth.status} />
+      {rowData && <UserGuide rowData={rowData} userId={userId} />}
       <div className="time">
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
       </div>
       <Styled.MainTable>
-        <Box className="table" sx={{ width: '100%', bgcolor: '#fff' }}>
+        <Box className="table">
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="전체 보기" />
             <Tab label="레드 팀" />

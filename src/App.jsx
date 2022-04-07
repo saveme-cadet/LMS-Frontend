@@ -40,8 +40,8 @@ const validStatus = ({ userId, userName, role, team }) => {
 
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
-  console.log('cur auth : ', auth);
-  console.log('cur status : ', auth.status);
+  // console.log('cur auth : ', auth);
+  // console.log('cur status : ', auth.status);
 
   if (auth.isLoading) {
     return <Loading />;

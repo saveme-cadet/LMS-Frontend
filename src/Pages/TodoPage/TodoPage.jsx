@@ -224,6 +224,10 @@ const TodoPage = () => {
                         aria-label="delete"
                         size="large"
                         onClick={removeToDo}
+                        disabled={
+                          format(today, 'yyyy-MM-dd') !==
+                          format(date, 'yyyy-MM-dd')
+                        }
                       >
                         <DeleteForeverIcon />
                       </IconButton>

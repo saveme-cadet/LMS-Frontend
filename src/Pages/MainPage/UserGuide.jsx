@@ -1,18 +1,60 @@
-const userGuide = ({ status }) => {
-  const { userName, role, team } = status;
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import styled from 'styled-components';
+
+const UserGuide = ({ rowData, userId }) => {
+  const myInfo = rowData.find(array => array.id === +userId);
+  // console.log('status : ', myInfo);
+
   return (
     <>
-      <div>
-        안녕하세요 {userName}! 당신의 팀은 {team}
-        팀입니다!
-      </div>
-      {role === '머슴' ? (
-        <>게더에서 {team}팀 체크인 체크아웃을 진행해주세요!</>
-      ) : (
-        <>목표 작성 후 체크인 체크아웃에 참가하세요!</>
+      {myInfo !== undefined && (
+        <StyledUserGuide>
+          <Alert severity="info" className={myInfo.team}>
+            <AlertTitle>
+              <strong>안녕하세요, {myInfo.name}!</strong>
+            </AlertTitle>
+            당신의 팀은 {myInfo.team}
+            팀입니다!
+          </Alert>
+          <Alert severity="info" className={myInfo.role}>
+            {myInfo.role === '머슴' ? (
+              <>
+                <AlertTitle>
+                  <strong>당신은 이번 주 머슴입니다!</strong>
+                </AlertTitle>
+                42 게더 타운에서 {myInfo.team} 팀 체크인, 체크 아웃을
+                진행해주세요!
+              </>
+            ) : (
+              <>
+                <AlertTitle>
+                  <strong>당신은 이번 주 카뎃입니다!</strong>
+                </AlertTitle>
+                오늘 목표를 작성하고 42 게더 타운에서 머슴이 진행하는 체크인,
+                체크아웃에 참가해주세요!
+              </>
+            )}
+          </Alert>
+        </StyledUserGuide>
       )}
     </>
   );
 };
 
-export default userGuide;
+export default UserGuide;
+
+const StyledUserGuide = styled.div`
+  .red {
+    background-color: #ee3e61;
+  }
+  .blue {
+    background-color: #0079f0;
+  }
+  .머슴 {
+    background-color: yellow;
+  }
+  .카뎃 {
+    background-color: #cccccc;
+  }
+`;

@@ -32,26 +32,33 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   };
   return (
     <>
-      <h2>로그인</h2>
       <div className="id">
         <input
           value={id}
-          placeholder="아이디"
+          placeholder="인트라 ID"
           onChange={handleChangeId}
           onKeyPress={handlePressEnter}
+          className="idinput"
         />
       </div>
-      <div className="password">
+      <div>
         <input
+          type="password"
           value={password}
           placeholder="비밀번호"
           onChange={handleChangePassword}
           onKeyPress={handlePressEnter}
+          className="passwordinput"
+          // required
         />
       </div>
 
-      <Button onClick={handleClick}>입력</Button>
-      <Button onClick={() => setStatus('register')}>회원가입으로</Button>
+      <Button onClick={handleClick} className="loginbutton" variant="contained">
+        로그인
+      </Button>
+      <Button onClick={() => setStatus('register')} className="registerbutton">
+        아직 회원이 아니신가요?
+      </Button>
     </>
   );
 };

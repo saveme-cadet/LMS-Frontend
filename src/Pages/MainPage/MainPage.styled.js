@@ -22,9 +22,10 @@ const MainTable = styled.div`
   border: 1px solid #c0c0c0;
   padding: 1em;
   border-radius: 1em;
-
+  height: 700px;
   .table {
-    height: 70%;
+    height: 600px;
+
     .info {
       width: 8em;
       padding: 0.2em;
