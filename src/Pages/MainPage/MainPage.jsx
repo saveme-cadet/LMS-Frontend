@@ -157,7 +157,7 @@ const MainPage = () => {
 
   return (
     <Styled.MainBackground>
-      <UserGuide status={auth.status} />
+      {rowData && <UserGuide rowData={rowData} userId={userId} />}
       <div className="time">
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
