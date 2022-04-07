@@ -58,7 +58,10 @@ const LoginPage = () => {
   };
   return (
     <Styled.LoginBackground>
-      <span className="title">구해줘 카뎃</span>
+      <div className="main">
+        <img src="/asset/saveme.png" alt="logo" />
+        <span className="title">구해줘 카뎃</span>
+      </div>
       {status === 'login' ? (
         <>
           <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />

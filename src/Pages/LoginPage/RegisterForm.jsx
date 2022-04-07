@@ -41,33 +41,47 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   };
   return (
     <>
-      <h2>회원가입</h2>
-      <form onKeyPress={handlePressEnter}>
-        <div className="id">
-          <input
-            value={id}
-            placeholder="아이디"
-            onChange={handleChangeId}
-            onKeyPress={handlePressEnter}
-          />
-        </div>
-        <div className="email">
-          <input
-            value={email}
-            placeholder="이메일"
-            onChange={handleChangeEmail}
-            onKeyPress={handlePressEnter}
-          />
-        </div>
-        {/* <input
+      <div className="registerform">
+        <form onKeyPress={handlePressEnter}>
+          <div className="welcome">
+            <h2>환영합니다!</h2>
+            <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
+          </div>
+          <div className="id">
+            <input
+              value={id}
+              placeholder="인트라 ID"
+              onChange={handleChangeId}
+              onKeyPress={handlePressEnter}
+              className="registeridinput"
+            />
+          </div>
+          <div className="email">
+            <input
+              value={email}
+              placeholder="이메일 ex) example@student.42seoul.kr"
+              onChange={handleChangeEmail}
+              onKeyPress={handlePressEnter}
+              className="registerpasswordinput"
+            />
+          </div>
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            className="loginbutton"
+          >
+            함께하기!
+          </Button>
+          <Button onClick={() => setStatus('login')} className="backbutton">
+            되돌아가기
+          </Button>
+          {/* <input
         value={password}
         placeholder="비밀번호"
         onChange={handleChangePassword}
       /> */}
-      </form>
-
-      <Button onClick={handleClick}>입력</Button>
-      <Button onClick={() => setStatus('login')}>로그인으로</Button>
+        </form>
+      </div>
     </>
   );
 };
