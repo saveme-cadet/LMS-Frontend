@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const UserGuide = ({ rowData, userId }) => {
   const myInfo = rowData.find(array => array.id === +userId);
-  console.log('status : ', myInfo);
+  // console.log('status : ', myInfo);
 
   return (
     <>

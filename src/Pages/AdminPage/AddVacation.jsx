@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 
 const AddVacation = ({ setIsOpen, attendUser, addVacation, minusVacation }) => {
   const [value, setValue] = useState(0);
-  console.log('attend', attendUser);
+  // console.log('attend', attendUser);
 
   const handleCloseModal = isAccept => {
     if (isAccept && value) {

@@ -49,7 +49,7 @@ const AdminPage = () => {
 
   const handleCellClick = e => {
     setSelectUserId(e.id);
-    console.log('id : ', e.id);
+    // console.log('id : ', e.id);
   };
 
   const handleChangeAttend = async event => {
@@ -93,7 +93,7 @@ const AdminPage = () => {
   };
 
   const handleChangeRole = async event => {
-    console.log(selectUserId, userId);
+    // console.log(selectUserId, userId);
     if (validChangeRole()) return;
 
     const result = await UserInfoService.putRole(
@@ -118,7 +118,7 @@ const AdminPage = () => {
   const handleMinusVacation = async select => {
     const selectUser = rowData.filter(user => user.id === select);
     if (selectUser[0].vacation === 0) {
-      console.log('감소시킬 휴가가 없습니다!');
+      // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
     const result = await UserInfoService.putVacationMinus(select);
@@ -133,7 +133,7 @@ const AdminPage = () => {
   };
   // const handleGetUser = async () => {
   //   const result = await CRUDUserService.getUser();
-  //   console.log(result.data);
+  //   // console.log(result.data);
   // };
 
   // const handleDeleteUser = async data => {
@@ -167,7 +167,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     getUser();
-    console.log('auth', auth);
+    // console.log('auth', auth);
   }, []);
 
   return (

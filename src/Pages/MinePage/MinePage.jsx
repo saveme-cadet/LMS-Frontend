@@ -24,14 +24,14 @@ const MinePage = () => {
   const userId = auth.status.userId;
   const interv = useRef();
   const clockStart = () => {
-    console.log('called!');
+    // console.log('called!');
     if (interv.current) {
       clearInterval(interv.current);
       interv.current = null;
     }
     interv.current = setInterval(() => {
-      console.log('timer!');
-      console.log('why?');
+      // console.log('timer!');
+      // console.log('why?');
       setNow(new Date());
     }, 1000);
   };
@@ -45,14 +45,14 @@ const MinePage = () => {
     }
     let result;
     if (isDoing) {
-      console.log('clearrr');
+      // console.log('clearrr');
       clearInterval(interv.current);
       interv.current = null;
       setStartTime(null);
       result = await AojiService.putEndAoji(userId);
     } else {
       setStartTime(new Date());
-      console.log('call handleClickButton');
+      // console.log('call handleClickButton');
       clockStart();
       result = await AojiService.postStartAoji(userId);
     }
@@ -75,8 +75,8 @@ const MinePage = () => {
       if (log.endAt === null) doingState = true;
     });
     if (doingState) {
-      console.log('is doing');
-      console.log('call getMyAoji');
+      // console.log('is doing');
+      // console.log('call getMyAoji');
       clockStart();
       const fotmatDate = new Date(logs[logs.length - 1].startAt);
       setStartTime(fotmatDate);

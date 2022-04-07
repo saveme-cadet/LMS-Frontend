@@ -47,7 +47,7 @@ const TodoService = {
   },
   // deleteTodo: async body => {
   //   const url = TodoUrl(`delete`);
-  //   console.log(body);
+  //   // console.log(body);
   //   let response;
   //   try {
   //     response = await instance.delete(url, body);

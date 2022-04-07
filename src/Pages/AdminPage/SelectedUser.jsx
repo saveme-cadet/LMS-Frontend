@@ -13,7 +13,7 @@ const SelectedUser = ({
   onClickChangeVacation,
   onClickDeleteUser,
 }) => {
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <div className="box">

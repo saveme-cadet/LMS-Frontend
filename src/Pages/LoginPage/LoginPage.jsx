@@ -26,7 +26,7 @@ const LoginPage = () => {
     auth.setIsLoading(true);
     const status = result.data[0];
     auth.setStatus(status);
-    console.log('role : ', status);
+    // console.log('role : ', status);
     localStorage.setItem('userId', status.userId);
     localStorage.setItem('userName', status.userName);
     localStorage.setItem('role', status.role);

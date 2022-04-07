@@ -13,7 +13,7 @@ const SideBar = () => {
   const auth = useContext(AuthContext);
 
   const handleChangePage = (event, value) => {
-    console.log('login : ', value);
+    // console.log('login : ', value);
     setCurPage(value);
     navi(`/${value}`);
   };

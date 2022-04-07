@@ -69,7 +69,7 @@ const MainPage = () => {
       myInfo.role,
       myInfo.team,
     );
-    console.log('valud:', valid);
+    // console.log('valud:', valid);
     if (valid) {
       valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
@@ -150,9 +150,9 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    console.log('today : ', date);
+    // console.log('today : ', date);
     getUsers();
-    console.log('row data : ', rowData);
+    // console.log('row data : ', rowData);
   }, [date]);
 
   return (
