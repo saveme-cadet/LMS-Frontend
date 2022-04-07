@@ -87,7 +87,7 @@ const MinePage = () => {
 
   const getCurAttendScore = async () => {
     const result = await UserInfoService.getAllUser(userId);
-    const curUser = result.data.find(array => array.userId === userId);
+    const curUser = result.data.find(array => array.userId === +userId);
     setAttendScore(curUser.attendScore.toFixed(2));
   };
 

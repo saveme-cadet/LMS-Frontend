@@ -17,7 +17,6 @@ const CRUDUserService = {
   },
   deleteUser: async body => {
     const url = CRUDUserAPI(`user/delete`);
-    // console.log(body);
     let response;
     try {
       response = await instance.delete(url, body);
