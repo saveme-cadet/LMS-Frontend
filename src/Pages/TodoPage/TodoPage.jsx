@@ -262,7 +262,7 @@ const TodoPage = () => {
                     {item.todoDtoList.length === 0 ? (
                       <div className="none">
                         <span style={{ color: 'gray' }}>
-                          등록된 오늘 할 일이 없습니다!
+                          등록된 할 일이 없습니다!
                         </span>
                       </div>
                     ) : (
