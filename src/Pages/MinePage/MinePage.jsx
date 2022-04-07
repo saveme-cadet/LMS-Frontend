@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 import { AuthContext } from 'App';
 import { AojiService, UserInfoService } from 'Network';
+import { useInterval } from 'Utils';
 import { differenceInSeconds } from 'date-fns';
 
 import { NoData, ShowToday } from 'Components';
@@ -21,10 +22,16 @@ const MinePage = () => {
   const date = new Date();
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
-  let interv;
-
+  const interv = useRef();
   const clockStart = () => {
-    interv = setInterval(() => {
+    console.log('called!');
+    if (interv.current) {
+      clearInterval(interv.current);
+      interv.current = null;
+    }
+    interv.current = setInterval(() => {
+      console.log('timer!');
+      console.log('why?');
       setNow(new Date());
     }, 1000);
   };
@@ -38,11 +45,14 @@ const MinePage = () => {
     }
     let result;
     if (isDoing) {
-      clearInterval(interv);
+      console.log('clearrr');
+      clearInterval(interv.current);
+      interv.current = null;
       setStartTime(null);
       result = await AojiService.putEndAoji(userId);
     } else {
       setStartTime(new Date());
+      console.log('call handleClickButton');
       clockStart();
       result = await AojiService.postStartAoji(userId);
     }
@@ -56,7 +66,7 @@ const MinePage = () => {
     setIsOpen(false);
   };
 
-  const getMyAoji = async () => {
+  const getMyAoji = async isFirst => {
     const result = await AojiService.getMyAoji(userId);
     const logs = result.data;
     let doingState = false;
@@ -65,6 +75,8 @@ const MinePage = () => {
       if (log.endAt === null) doingState = true;
     });
     if (doingState) {
+      console.log('is doing');
+      console.log('call getMyAoji');
       clockStart();
       const fotmatDate = new Date(logs[logs.length - 1].startAt);
       setStartTime(fotmatDate);
@@ -83,7 +95,8 @@ const MinePage = () => {
     getMyAoji();
     getCurAttendScore();
     return () => {
-      clearInterval(interv); // cleanup function을 이용
+      clearInterval(interv.current);
+      interv.current = null;
     };
   }, []);
 
