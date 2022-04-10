@@ -44,7 +44,7 @@ const MainBackground = styled.div`
     padding: 1em;
     border-radius: 1em;
     flex-direction: column;
-    width: 45%;
+    width: 50%;
     max-height: 100%;
   }
 
@@ -87,7 +87,7 @@ const MainBackground = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    margin-left: 8%;
+    // margin-left: 3%;
     height: 95%;
   }
   .cadet {
@@ -97,7 +97,7 @@ const MainBackground = styled.div`
     background-color: white;
 
     flex: 1 1 40%;
-    margin: 10px 10px 40px 10px;
+    margin: 0px 0px 40px 10px;
     max-width: 40%;
     height: 300px;
   }
