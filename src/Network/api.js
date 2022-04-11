@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = 'http://15.165.148.236:8080/api';
+const apiUrl = 'https://www.savemecadet.click/api';
 
 const OAuthUrl = 'https://kauth.kakao.com/oauth';
 export const instance = axios.create({
