@@ -9,7 +9,7 @@ const AdminBackground = styled.div`
   flex-direction: column;
   // size
   width: 80%;
-  height: 100%;
+  // height: 100%;
 
   .box {
     padding: 1em;
@@ -44,7 +44,7 @@ const AdminTable = styled.div`
   .table {
     height: 30em;
     margin: 1em;
-    margin-bottom: 3em;
+    margin-bottom: 2em;
     .info {
       width: 8em;
       padding: 0.2em;
