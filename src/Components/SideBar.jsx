@@ -35,6 +35,7 @@ const SideBar = () => {
         className="home"
         onClick={() => {
           navi('/');
+          setCurPage('');
         }}
       >
         <img src="asset/saveme.png" alt="saveme" />
