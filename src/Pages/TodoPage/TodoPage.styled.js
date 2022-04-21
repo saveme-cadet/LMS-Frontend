@@ -40,15 +40,17 @@ const MainBackground = styled.div`
     heigh: 50%;
   }
   .othercadet {
+    .title {
+      margin-left: 10px;
+    }
     overflow: auto;
     flex-wrap: wrap;
     background-color: #eeeeee;
     border: 1px solid #eeeeee;
-    padding: 1em;
+    padding: 10px;
     border-radius: 1em;
     flex-direction: column;
     width: 50%;
-    max-height: 100%;
   }
 
   .text {
@@ -87,21 +89,19 @@ const MainBackground = styled.div`
   .check {
   }
   .cadetlist {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    // margin-left: 3%;
-    height: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
   }
   .cadet {
     border: 0px;
     padding: 1em;
     border-radius: 1em;
     background-color: white;
-
-    flex: 1 1 40%;
-    margin: 0px 0px 40px 10px;
-    max-width: 40%;
+    width: 100%;
+    box-sizing: border-box;
     height: 300px;
   }
   .title {

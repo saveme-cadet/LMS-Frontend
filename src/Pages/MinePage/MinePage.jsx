@@ -122,7 +122,7 @@ const MinePage = () => {
             <div className="temp row">
               <div>시작 시간</div>
               <div>종료 시간</div> <div>공부 시간</div> <div>차감 점수</div>
-              <div className=""></div>
+              <div className="">수정</div>
             </div>
 
             <div className="body">

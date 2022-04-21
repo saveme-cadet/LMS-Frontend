@@ -4,7 +4,8 @@ const AojiBackground = styled.div`
   // position
 
   // size
-  height: 100%;
+  // height: 100%;
+  padding: 0 50px;
 
   .box {
     padding: 10px;
@@ -15,7 +16,7 @@ const AojiBackground = styled.div`
     // height: 800px;
   }
   .header {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
   }
   .body {
@@ -30,7 +31,7 @@ const AojiBody = styled.div`
 `;
 const AojiTimer = styled.div`
   flex: 1;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   height: 400px;
   button {
@@ -93,7 +94,7 @@ const AojiLog = styled.div`
   .temp {
   }
   .score {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     margin: 10px;
   }
