@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 const MainBackground = styled.div`
   // position
-  position: absolute;
-  top: 5em;
-  // left: 7em;
+  position: relative;
+  box-sizing: border-box;
+  padding: 50px;
 
   // layout
   display: flex;
   flex-direction: column;
   // size
-  width: 80%;
+  width: 100%;
   height: 100%;
 
   .change-today {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Golbal = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -30,11 +31,14 @@ const Golbal = styled.div`
 `;
 
 const SideBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   background-color: #220646;
   height: 100%;
-  width: 10%;
+  width: 150px;
   min-width: 9em;
   max-width: 13em;
   .home {
@@ -70,8 +74,9 @@ const SideBar = styled.div`
 `;
 
 const Body = styled.div`
-  margin-left: 5em;
-  width: 90%;
+  margin-left: 150px;
+  width: calc(100% - 150px);
+  overflow-y: scroll;
 `;
 
 const GlobalStyled = { Golbal, SideBar, Body };
