@@ -40,7 +40,7 @@ const SideBar = styled.div`
   height: 100%;
   width: 150px;
   .home {
-    margin-top: 10px;
+    margin: 10px 0 20px;
     color: white;
     display: flex;
     align-items: center;
