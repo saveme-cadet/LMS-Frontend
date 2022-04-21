@@ -39,17 +39,20 @@ const SideBar = styled.div`
   background-color: #220646;
   height: 100%;
   width: 150px;
-  min-width: 9em;
-  max-width: 13em;
   .home {
+    margin-top: 10px;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 2em;
     cursor: pointer;
     img {
-      margin: 0.2em;
+      width: 35px;
+      height: 35px;
+      margin: 0 5px;
+    }
+    span {
+      white-space: nowrap;
     }
   }
   .tabs {

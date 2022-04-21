@@ -39,7 +39,7 @@ const SideBar = () => {
         }}
       >
         <img src="asset/saveme.png" alt="saveme" />
-        구해줘 카뎃
+        <span>구해줘 카뎃</span>
       </div>
       {curPage !== null && (
         <Tabs
