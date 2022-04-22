@@ -4,7 +4,6 @@ const AojiBackground = styled.div`
   // position
 
   // size
-  // height: 100%;
   padding: 0 50px;
 
   .box {
@@ -13,7 +12,6 @@ const AojiBackground = styled.div`
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     text-align: left;
-    // height: 800px;
   }
   .header {
     font-size: 30px;
