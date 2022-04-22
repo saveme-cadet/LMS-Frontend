@@ -11,61 +11,67 @@ const CusBox = styled(Box)`
 
 const MainBackground = styled.div`
   // position
-  position: absolute;
-  top: 5em;
-  // left: 7em;
+  position: relative;
+  box-sizing: border-box;
+  padding: 50px;
   // layout
   display: flex;
   flex-direction: column;
   // size
-  width: 80%;
-  height: 85%;
+  width: 100%;
+  height: 100%;
+
+  .time {
+    margin-bottom: 25px;
+  }
 
   .main {
     display: flex;
     flex-direction: row;
-    height: 750px;
+    height: calc(100vh - 183px);
   }
   .todo {
     border: 1px solid #c0c0c0;
     padding: 1em;
     border-radius: 1em;
 
-    margin-left: 5%;
-    margin-right: 10%;
+    margin-right: 50px;
     width: 40%;
     heigh: 50%;
   }
   .othercadet {
+    .title {
+      margin-left: 10px;
+    }
     overflow: auto;
     flex-wrap: wrap;
     background-color: #eeeeee;
     border: 1px solid #eeeeee;
-    padding: 1em;
+    padding: 10px;
     border-radius: 1em;
     flex-direction: column;
     width: 50%;
-    max-height: 100%;
   }
 
   .text {
     border: 0px;
     border-bottom: 3px solid #c0c0c0;
     margin-top: 30px;
-    margin-left: 20px;
     font-size: 17px;
     height: 35px;
-    width: 75%;
+    width: calc(100% - 80px);
     text-align: center;
   }
   .form {
-    margin-left: 10px;
-    margin-top: 30px;
-    height: 85%;
+    // margin-left: 10px;
+    // margin-top: 30px;
+    // height: 85%;
     font-size: 15px;
   }
+  .todo__header {
+    width: 100%;
+  }
   .ulist {
-    height: 80%;
   }
   .progressbar {
     width: 90%;
@@ -75,30 +81,27 @@ const MainBackground = styled.div`
   .button {
     border-radius: 5px;
     margin-left: 15px;
-    width: 15%;
+    width: 60px;
     height: 40px;
     font-size: 17px;
     background-color: transparent;
   }
   .check {
-    height: 35px;
   }
   .cadetlist {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    // margin-left: 3%;
-    height: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
   }
   .cadet {
     border: 0px;
     padding: 1em;
     border-radius: 1em;
     background-color: white;
-
-    flex: 1 1 40%;
-    margin: 0px 0px 40px 10px;
-    max-width: 40%;
+    width: 100%;
+    box-sizing: border-box;
     height: 300px;
   }
   .title {

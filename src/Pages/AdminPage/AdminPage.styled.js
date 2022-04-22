@@ -2,14 +2,12 @@ import styled from 'styled-components';
 
 const AdminBackground = styled.div`
   // position
-  position: absolute;
-  top: 10px;
+
   // layout
   display: flex;
   flex-direction: column;
   // size
-  width: 80%;
-  // height: 100%;
+  padding: 50px;
 
   .box {
     padding: 1em;
@@ -26,10 +24,11 @@ const AdminFeature = styled.div`
   display: flex;
   justify-content: space-between;
   button {
-    width: 20em;
-    height: 5em;
+    width: 150px;
+    height: 50px;
     border: 1px solid #4870fd;
     color: 4870fd;
+    margin: 5px;
   }
 `;
 

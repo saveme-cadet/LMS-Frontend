@@ -167,7 +167,7 @@ const TodoPage = () => {
         ) : (
           <div className="todo">
             <form onSubmit={onSubmit}>
-              <div>
+              <div className="todo__header">
                 <input
                   onChange={onChange}
                   value={toDo.content}

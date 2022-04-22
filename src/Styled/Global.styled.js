@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Golbal = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -30,22 +31,28 @@ const Golbal = styled.div`
 `;
 
 const SideBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   background-color: #220646;
   height: 100%;
-  width: 10%;
-  min-width: 9em;
-  max-width: 13em;
+  width: 150px;
   .home {
+    margin: 10px 0 20px;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 2em;
     cursor: pointer;
     img {
-      margin: 0.2em;
+      width: 35px;
+      height: 35px;
+      margin: 0 5px;
+    }
+    span {
+      white-space: nowrap;
     }
   }
   .tabs {
@@ -70,8 +77,9 @@ const SideBar = styled.div`
 `;
 
 const Body = styled.div`
-  margin-left: 5em;
-  width: 90%;
+  margin-left: 150px;
+  width: calc(100% - 150px);
+  overflow-y: scroll;
 `;
 
 const GlobalStyled = { Golbal, SideBar, Body };

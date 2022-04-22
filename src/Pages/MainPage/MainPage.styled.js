@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 const MainBackground = styled.div`
   // position
-  position: absolute;
-  top: 5em;
-  // left: 7em;
+  position: relative;
+  box-sizing: border-box;
+  padding: 50px;
 
   // layout
   display: flex;
   flex-direction: column;
   // size
-  width: 80%;
-  height: 100%;
+  margin: auto;
+  // max-width: 900px;
 
   .change-today {
     // position: absolute;
@@ -22,9 +22,14 @@ const MainTable = styled.div`
   border: 1px solid #c0c0c0;
   padding: 1em;
   border-radius: 1em;
-  height: 700px;
+  height: 550px;
+  position: relative;
   .table {
-    height: 600px;
+    height: calc(100% - 50px);
+
+    .MuiDataGrid-footerContainer {
+      display: none;
+    }
 
     .info {
       width: 8em;
