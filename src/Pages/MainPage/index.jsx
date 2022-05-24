@@ -9,8 +9,10 @@ import { format } from 'date-fns';
 import { CusDatePicker, ShowToday } from 'Components';
 import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
+import Box from '@mui/material/Box';
 
 import Styled from './MainPage.styled';
+import MainPageTableTabs from './MainPageTableTabs';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
@@ -87,14 +89,16 @@ const MainPage = () => {
         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
       </div>
       <Styled.MainTable>
-        <MainPageTable
-          tab={tab}
-          handleChangeTab={handleChangeTab}
-          date={date}
-          rowData={rowData}
-          selectRowData={selectRowData}
-          userId={userId}
-        />
+        <Box className="table">
+          <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
+          <MainPageTable
+            date={date}
+            rowData={rowData}
+            selectRowData={selectRowData}
+            getUsers={getUsers}
+            userId={userId}
+          />
+        </Box>
       </Styled.MainTable>
     </Styled.MainBackground>
   );

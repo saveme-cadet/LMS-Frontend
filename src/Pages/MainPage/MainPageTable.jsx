@@ -7,9 +7,6 @@ import { format } from 'date-fns';
 
 import PopoverCheckAttend from './PopoverCheckAttend';
 import WrongDay from './WrongDay';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
 const MainPageTable = ({
@@ -93,32 +90,25 @@ const MainPageTable = ({
 
   return (
     <>
-      <Box className="table">
-        <Tabs value={tab} onChange={handleChangeTab}>
-          <Tab label="전체 보기" />
-          <Tab label="레드 팀" />
-          <Tab label="블루 팀" />
-        </Tabs>
-        {validDay(date) ? (
-          <WrongDay wrongType={validDay(date)} />
-        ) : (
-          <>
-            <DataGrid
-              rows={selectRowData}
-              columns={checkCloumns}
-              onCellClick={handleClickCell}
-              hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
-              hideFooterSelectedRowCount={true} // row count 숨기기
-              getRowClassName="cell"
-            />
-            <PopoverCheckAttend
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
-              onChangeCheck={handleChangeCheck}
-            />
-          </>
-        )}
-      </Box>
+      {validDay(date) ? (
+        <WrongDay wrongType={validDay(date)} />
+      ) : (
+        <>
+          <DataGrid
+            rows={selectRowData}
+            columns={checkCloumns}
+            onCellClick={handleClickCell}
+            hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
+            hideFooterSelectedRowCount={true} // row count 숨기기
+            getRowClassName="cell"
+          />
+          <PopoverCheckAttend
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            onChangeCheck={handleChangeCheck}
+          />
+        </>
+      )}
     </>
   );
 };
