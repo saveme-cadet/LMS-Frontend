@@ -3,12 +3,11 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { checkCloumns, validDay, isValidCheck } from 'Utils';
 import AllTableService from 'Network/AllTableService';
-import CRUDUserService from 'Network/CRUDUserService';
 
 import { format } from 'date-fns';
 
 import { CusDatePicker, ShowToday } from 'Components';
-import Check from './Check';
+import PopoverCheckAttend from './PopoverCheckAttend';
 import WrongDay from './WrongDay';
 import UserGuide from './UserGuide';
 import Tabs from '@mui/material/Tabs';
@@ -181,7 +180,7 @@ const MainPage = () => {
                 hideFooterSelectedRowCount={true} // row count 숨기기
                 getRowClassName="cell"
               />
-              <Check
+              <PopoverCheckAttend
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
                 onChangeCheck={handleChangeCheck}

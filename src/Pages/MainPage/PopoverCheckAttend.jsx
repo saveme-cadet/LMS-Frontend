@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Popover from '@mui/material/Popover';
 
-const Check = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
+const PopoverCheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -59,4 +59,4 @@ const Check = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
   );
 };
 
-export default Check;
+export default PopoverCheckAttend;
