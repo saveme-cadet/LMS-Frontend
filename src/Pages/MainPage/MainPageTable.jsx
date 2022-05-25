@@ -9,15 +9,7 @@ import PopoverCheckAttend from './PopoverCheckAttend';
 import WrongDay from './WrongDay';
 import { DataGrid } from '@mui/x-data-grid';
 
-const MainPageTable = ({
-  tab,
-  handleChangeTab,
-  date,
-  rowData,
-  selectRowData,
-  getUsers,
-  userId,
-}) => {
+const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
