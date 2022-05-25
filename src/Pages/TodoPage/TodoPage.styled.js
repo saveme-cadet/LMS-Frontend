@@ -37,7 +37,8 @@ const MainBackground = styled.div`
 
     margin-right: 50px;
     width: 40%;
-    heigh: 50%;
+    max-height: 100%;
+    overflow : auto;
   }
   .othercadet {
     .title {
@@ -67,6 +68,7 @@ const MainBackground = styled.div`
     // margin-top: 30px;
     // height: 85%;
     font-size: 15px;
+    overflow : auto;
   }
   .todo__header {
     width: 100%;
@@ -75,8 +77,7 @@ const MainBackground = styled.div`
   }
   .progressbar {
     width: 90%;
-    margin-top: 10px;
-    margin-left: 20px;
+    margin-left: 5%;
   }
   .button {
     border-radius: 5px;

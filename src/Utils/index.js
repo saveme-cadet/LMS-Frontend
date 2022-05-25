@@ -7,7 +7,7 @@ import validDay from './validDay';
 import getDayName from './getDayName';
 import isValidCheck from './isValidCheck';
 import getMessage from './getMessage';
-import validDayTodoPage from './validDayTodoPage';
+import isFutureTodo from './isFutureTodo';
 import useInterval from './useInterval';
 export {
   getStatusMessage,
@@ -19,6 +19,6 @@ export {
   getDayName,
   isValidCheck,
   getMessage,
-  validDayTodoPage,
+  isFutureTodo,
   useInterval,
 };
