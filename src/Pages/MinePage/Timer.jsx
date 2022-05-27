@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   differenceInHours,
   differenceInMinutes,
@@ -15,7 +16,22 @@ const getPastedTime = (startTime, now) => {
   return `${hour} : ${minute} : ${second}`;
 };
 
-const Timer = ({ startTime, now }) => {
+const Timer = ({ startTime }) => {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    console.log(startTime);
+    let timer;
+    if (startTime) {
+      timer = setInterval(() => {
+        setNow(new Date());
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [startTime]);
+
   return <div>{getPastedTime(startTime, now)}</div>;
 };
 

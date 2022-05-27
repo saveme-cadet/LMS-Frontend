@@ -2,14 +2,14 @@ import { differenceInSeconds, parseISO } from 'date-fns';
 
 import { format } from 'date-fns';
 
-const fotmatDate = date => {
+const formatDate = date => {
   if (!date) return '공부 중!';
   date = new Date(date);
 
   return format(date, 'HH:mm:ss');
 };
 
-const fotmatRecord = record => {
+const formatRecord = record => {
   if (record === 'doing study') return '00:00:00';
   const arr = record.split(':');
   const newRecord = arr.map(i => {
@@ -39,11 +39,12 @@ const MineLogData = ({ data }) => {
   const handleEditLog = () => {
     alert('준비중입니다!');
   };
+  console.log(data);
   return (
     <div className="row">
-      <div>{fotmatDate(data.startAt)}</div>
-      <div>{fotmatDate(data.endAt)}</div>
-      <div>{fotmatRecord(data.recodeTime)}</div>
+      <div>{formatDate(data.startAt)}</div>
+      <div>{formatDate(data.endAt)}</div>
+      <div>{formatRecord(data.recodeTime)}</div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
 
       <div> {validClick(data.endAt)}</div>
