@@ -1,4 +1,4 @@
-const AojiButton = ({ onClickAoji, state }) => {
+const MineButton = ({ onClickAoji, state }) => {
   return (
     <>
       {!state ? (
@@ -14,4 +14,4 @@ const AojiButton = ({ onClickAoji, state }) => {
   );
 };
 
-export default AojiButton;
+export default MineButton;

@@ -6,8 +6,8 @@ import { differenceInSeconds } from 'date-fns';
 
 import { ShowToday } from 'Components';
 import Timer from './Timer';
-import AojiButton from './AojiButton';
-import AojiLog from './AojiLog';
+import AojiButton from './MineButton';
+import MineLog from './MineLog';
 
 import Styled from './MinePage.styled';
 
@@ -95,7 +95,7 @@ const MinePage = () => {
           </div>
         </Styled.AojiTimer>
         <Styled.AojiLog>
-          <AojiLog aojiLogs={aojiLogs} attendScore={attendScore} />
+          <MineLog aojiLogs={aojiLogs} attendScore={attendScore} />
         </Styled.AojiLog>
       </Styled.AojiBody>
     </Styled.AojiBackground>

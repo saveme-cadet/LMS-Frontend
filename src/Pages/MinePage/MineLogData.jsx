@@ -18,7 +18,7 @@ const fotmatRecord = record => {
 
   return newRecord.join(':');
 };
-const AojiLogData = ({ data }) => {
+const MineLogData = ({ data }) => {
   const earnedPoint = (
     differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
     60 /
@@ -51,4 +51,4 @@ const AojiLogData = ({ data }) => {
   );
 };
 
-export default AojiLogData;
+export default MineLogData;

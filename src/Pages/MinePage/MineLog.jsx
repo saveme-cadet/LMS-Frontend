@@ -1,9 +1,9 @@
 import React from 'react';
 import { NoData } from 'Components';
 
-import AojiLogData from './AojiLogData';
+import MineLogData from './MineLogData';
 
-function AojiLog({ aojiLogs, attendScore }) {
+function MineLog({ aojiLogs, attendScore }) {
   return (
     <div className="log box">
       <div className="header">⛏️ 보충학습 기록</div>
@@ -18,7 +18,7 @@ function AojiLog({ aojiLogs, attendScore }) {
       <div className="body">
         {aojiLogs && aojiLogs.length ? (
           aojiLogs.map(log => {
-            return <AojiLogData data={log} key={log.aojiTimeIndex} />;
+            return <MineLogData data={log} key={log.aojiTimeIndex} />;
           })
         ) : (
           <NoData code={1} />
@@ -29,4 +29,4 @@ function AojiLog({ aojiLogs, attendScore }) {
   );
 }
 
-export default AojiLog;
+export default MineLog;
