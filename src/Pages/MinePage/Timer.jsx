@@ -20,7 +20,6 @@ const Timer = ({ startTime }) => {
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
-    console.log(startTime);
     let timer;
     if (startTime) {
       timer = setInterval(() => {
