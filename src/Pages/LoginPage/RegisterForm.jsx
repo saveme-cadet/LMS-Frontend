@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 
 const RegisterForm = ({ onClickRegister, setStatus }) => {
-  const navi = useNavigate();
   const [id, setId] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,9 +15,10 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
     setEmail(event.target.value);
   };
 
-  const handleChangePassword = event => {
-    setPassword(event.target.value);
-  };
+  // NOTE : change password method
+  // const handleChangePassword = event => {
+  //   setPassword(event.target.value);
+  // };
 
   const handleClick = async () => {
     if (!id || !email) {
@@ -29,7 +28,7 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
     onClickRegister({
       name: id,
       email: email,
-      password: 4242, // 비밀번호는 4242로 통일
+      password: 4242, // TODO : each user has a unique password
       birthday: '2022-04-01',
     });
     setId('');
@@ -42,7 +41,7 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   return (
     <>
       <div className="registerform">
-        <form onKeyPress={handlePressEnter}>
+        <form>
           <div className="welcome">
             <h2>환영합니다!</h2>
             <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>

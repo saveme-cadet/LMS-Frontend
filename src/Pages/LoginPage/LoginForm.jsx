@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 
 const LoginForm = ({ onClickLogin, setStatus }) => {
-  const navi = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
