@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 
 const AojiBackground = styled.div`
-  // position
-
-  // size
-  padding: 0 50px;
+  padding: 0 30px;
 
   .box {
     padding: 10px;
@@ -26,6 +23,9 @@ const AojiBackground = styled.div`
 const AojiBody = styled.div`
   display: flex;
   flex-direction: row;
+  @media (max-width: 1200px) {
+    flex-direction: column;
+  }
 `;
 const AojiTimer = styled.div`
   flex: 1;
@@ -61,8 +61,10 @@ const AojiLog = styled.div`
   .body {
     overflow: auto;
     align-items: center;
-    justify-content: center;
-    height: 400px;
+    max-height: 400px;
+    @media (min-width: 1200px) {
+      height: 400px;
+    }
   }
   .row {
     display: flex;
