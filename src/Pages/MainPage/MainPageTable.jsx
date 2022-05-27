@@ -5,7 +5,7 @@ import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
 
-import PopoverCheckAttend from './PopoverCheckAttend';
+import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -94,7 +94,7 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
             hideFooterSelectedRowCount={true} // row count 숨기기
             getRowClassName="cell"
           />
-          <PopoverCheckAttend
+          <CheckAttend
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
             onChangeCheck={handleChangeCheck}
