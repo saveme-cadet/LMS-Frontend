@@ -57,15 +57,9 @@ const MainPage = () => {
       return;
     }
     const newArray = result.data.map(array => ({
+      ...array,
       id: array.writer_id,
-      team: array.team,
       name: array.userName,
-      attendScore: array.attendScore,
-      participateScore: array.participateScore,
-      vacation: array.vacation,
-      role: array.role,
-      checkIn: array.checkIn,
-      checkOut: array.checkOut,
       todoRate: array.dayObjectiveAchievementRate,
     }));
     setRowData(newArray);
