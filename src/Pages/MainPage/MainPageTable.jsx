@@ -19,8 +19,6 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
     const myInfo = rowData.find(array => array.id === +userId);
-    // console.log('myinfo :', myInfo);
-    // console.log('selectUserInfo : ', selectUserInfo);
     if (myInfo === undefined) {
       alert('이번 달에 참가하고 있지 않습니다!');
       return;
@@ -32,7 +30,6 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       myInfo.role,
       myInfo.team,
     );
-    // console.log('valud:', valid);
     if (valid) {
       valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
       return;
@@ -46,8 +43,6 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
     const select = curFocus.select;
     const today = new Date();
     let result;
-    // console.log('id : ', id, value);
-    // console.log('row', selectRowData);
     const selectUserInfo = selectRowData.find(array => array.id === id);
 
     if (value === 6 && selectUserInfo.vacation === 0) {
