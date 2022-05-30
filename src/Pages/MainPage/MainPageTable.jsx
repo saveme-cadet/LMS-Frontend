@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { checkCloumns, validDay, isValidCheck } from 'Utils';
+import { checkCloumns, validDay, isValidCheck, constants } from 'Utils';
 import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
@@ -15,7 +15,7 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
 
   const handleClickCell = (params, event) => {
     const field = params.field;
-    if (field !== 'checkIn' && field !== 'checkOut') return;
+    if (field !== constants.CHECK_IN && field !== constants.CHECK_OUT) return;
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
     const myInfo = rowData.find(array => array.id === +userId);
