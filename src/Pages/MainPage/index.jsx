@@ -25,6 +25,11 @@ const MainPage = () => {
   const TEAM = constants.TEAM;
 
   const updateSelectRowData = curTab => {
+    // 마운트 되었을 때 updateSelectRowData 함수를 호출한 시점에서
+    // useState의 비동기 호출 때문에 rowData에는 null이 들어가 있다.
+    // 부득이 하게 중복된 코드를 useEffect로 호출되는 getUsers에 넣어서
+    // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
+    // console.log('rowData : ', rowData);
     if (curTab === TEAM.ALL) setSelectRowData(rowData);
     else {
       const team = curTab === TEAM.BLUE ? 'blue' : 'red';
@@ -47,30 +52,32 @@ const MainPage = () => {
     const result = await AllTableService.getAllTable(dateFormat, userId);
     if (!result) {
       if (confirm('에러가 발생했습니다. 오늘 날짜로 돌아가시겠습니까?')) {
-        const today = new Date();
-        setDate(today);
+        setDate(new Date());
       }
       return;
     }
-    const arrays = result.data;
-    const newArray = [];
-    arrays.map(array => {
-      const newData = {
-        id: array.writer_id,
-        team: array.team,
-        name: array.userName,
-        attendScore: array.attendScore,
-        participateScore: array.participateScore,
-        vacation: array.vacation,
-        role: array.role,
-        checkIn: array.checkIn,
-        checkOut: array.checkOut,
-        todoRate: array.dayObjectiveAchievementRate,
-      };
-      newArray.push(newData);
-    });
+    const newArray = result.data.map(array => ({
+      id: array.writer_id,
+      team: array.team,
+      name: array.userName,
+      attendScore: array.attendScore,
+      participateScore: array.participateScore,
+      vacation: array.vacation,
+      role: array.role,
+      checkIn: array.checkIn,
+      checkOut: array.checkOut,
+      todoRate: array.dayObjectiveAchievementRate,
+    }));
     setRowData(newArray);
-    updateSelectRowData(newArray, tab);
+    if (tab === TEAM.ALL) setSelectRowData(newArray);
+    else {
+      const team = tab === TEAM.BLUE ? 'blue' : 'red';
+      setSelectRowData(
+        rowData.filter(data => {
+          return data.team === team;
+        }),
+      );
+    }
   };
 
   useEffect(() => {
@@ -79,23 +86,27 @@ const MainPage = () => {
 
   return (
     <Styled.MainBackground>
-      {rowData && <UserGuide rowData={rowData} userId={userId} />}
-      <div className="time">
-        <ShowToday date={date} />
-        <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-      </div>
-      <Styled.MainTable>
-        <Box className="table">
-          <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
-          <MainPageTable
-            date={date}
-            rowData={rowData}
-            selectRowData={selectRowData}
-            getUsers={getUsers}
-            userId={userId}
-          />
-        </Box>
-      </Styled.MainTable>
+      {selectRowData && (
+        <>
+          <UserGuide rowData={rowData} userId={userId} />
+          <div className="time">
+            <ShowToday date={date} />
+            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+          </div>
+          <Styled.MainTable>
+            <Box className="table">
+              <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
+              <MainPageTable
+                date={date}
+                rowData={rowData}
+                selectRowData={selectRowData}
+                getUsers={getUsers}
+                userId={userId}
+              />
+            </Box>
+          </Styled.MainTable>
+        </>
+      )}
     </Styled.MainBackground>
   );
 };
