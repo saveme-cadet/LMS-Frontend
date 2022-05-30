@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { validDay } from 'Utils';
+import { validDay, constants } from 'Utils';
 import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
@@ -16,31 +16,29 @@ import MainPageTableTabs from './MainPageTableTabs';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
-
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
+  const TEAM = constants.TEAM;
 
-  // console.log('userInfo : ', userId, userName, role, team);
-  // console.log('auth : ', auth.status);
-
-  const updateSelectRowData = (curArrays, curTab) => {
-    const filterArray = [];
-    let filter = '';
-    if (curTab === 1) filter = 'blue';
-    else if (curTab === 2) filter = 'red';
-    curArrays.map(array => {
-      if (array.team !== filter) filterArray.push(array);
-    });
-    setSelectRowData(filterArray);
+  const updateSelectRowData = curTab => {
+    if (curTab === TEAM.ALL) setSelectRowData(rowData);
+    else {
+      const team = curTab === TEAM.BLUE ? 'blue' : 'red';
+      setSelectRowData(
+        rowData.filter(data => {
+          return data.team === team;
+        }),
+      );
+    }
   };
 
   const handleChangeTab = (event, dstTab) => {
     setTab(dstTab);
-    updateSelectRowData(rowData, dstTab);
+    updateSelectRowData(dstTab);
   };
 
   const getUsers = async () => {
@@ -76,9 +74,7 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    // console.log('today : ', date);
     getUsers();
-    // console.log('row data : ', rowData);
   }, [date]);
 
   return (

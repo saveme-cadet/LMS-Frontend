@@ -1,5 +1,4 @@
 const CHECK_IN = 'checkIn';
-
 const CHECK_OUT = 'checkOut';
 
 const TARGET_AUTH = {
@@ -8,6 +7,11 @@ const TARGET_AUTH = {
   ADMIN_OTHER_TEAM: -2,
 };
 
-const constants = { CHECK_IN, CHECK_OUT, TARGET_AUTH };
+const TEAM = {
+  ALL: 0,
+  RED: 1,
+  BLUE: 2,
+};
+const constants = { CHECK_IN, CHECK_OUT, TARGET_AUTH, TEAM };
 
 export default constants;
