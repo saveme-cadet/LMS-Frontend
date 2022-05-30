@@ -5,9 +5,20 @@ import ListItemText from '@mui/material/ListItemText';
 import Popover from '@mui/material/Popover';
 
 const CheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
+  const ListItemTexts = [
+    'null',
+    '출석',
+    '지각',
+    '결석',
+    '공결',
+    '병결',
+    '휴가',
+  ];
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <Popover
       open={Boolean(anchorEl)}
@@ -19,41 +30,15 @@ const CheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
       }}
     >
       <List>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(0)}>
-            <ListItemText primary="null" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(1)}>
-            <ListItemText primary="출석" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(2)}>
-            <ListItemText primary="지각" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(3)}>
-            <ListItemText primary="결석" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(4)}>
-            <ListItemText primary="공결" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(5)}>
-            <ListItemText primary="병결" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onChangeCheck(6)}>
-            <ListItemText primary="휴가" />
-          </ListItemButton>
-        </ListItem>
+        {ListItemTexts.map((text, index) => {
+          return (
+            <ListItem disablePadding key={index}>
+              <ListItemButton onClick={() => onChangeCheck(index)}>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Popover>
   );
