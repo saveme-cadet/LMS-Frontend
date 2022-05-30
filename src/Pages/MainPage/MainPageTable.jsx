@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { checkCloumns, validDay, isValidCheck, constants } from 'Utils';
+import { checkCloumns, validDay, canChangeCheckInOut, constants } from 'Utils';
 import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
@@ -12,6 +12,7 @@ import { DataGrid } from '@mui/x-data-grid';
 const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+  const targetAuth = constants.TARGET_AUTH;
 
   const handleClickCell = (params, event) => {
     const field = params.field;
@@ -24,14 +25,16 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       return;
     }
 
-    const valid = isValidCheck(
+    const valid = canChangeCheckInOut(
       selectUserInfo,
       myInfo.id,
       myInfo.role,
       myInfo.team,
     );
     if (valid) {
-      valid === -1 ? alert('수정 권한이 없습니다!') : alert('다른 팀입니다!');
+      valid === targetAuth.CADET_OTHER_CADET
+        ? alert('수정 권한이 없습니다!')
+        : alert('다른 팀입니다!');
       return;
     }
     setAnchorEl(event.currentTarget);

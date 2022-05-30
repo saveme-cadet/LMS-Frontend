@@ -5,7 +5,7 @@ import checkCloumns from './checkCloumns';
 import aojiCloumns from './aojiCloumns';
 import validDay from './validDay';
 import getDayName from './getDayName';
-import isValidCheck from './isValidCheck';
+import canChangeCheckInOut from './canChangeCheckInOut';
 import getMessage from './getMessage';
 import validDayTodoPage from './validDayTodoPage';
 import useInterval from './useInterval';
@@ -19,7 +19,7 @@ export {
   aojiCloumns,
   validDay,
   getDayName,
-  isValidCheck,
+  canChangeCheckInOut,
   getMessage,
   validDayTodoPage,
   useInterval,
