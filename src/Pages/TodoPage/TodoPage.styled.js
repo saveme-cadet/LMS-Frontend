@@ -70,15 +70,6 @@ const MainBackground = styled.div`
     font-size: 15px;
     overflow : auto;
   }
-  .todo__header {
-    width: 100%;
-  }
-  .ulist {
-  }
-  .progressbar {
-    width: 90%;
-    margin-left: 5%;
-  }
   .button {
     border-radius: 5px;
     margin-left: 15px;

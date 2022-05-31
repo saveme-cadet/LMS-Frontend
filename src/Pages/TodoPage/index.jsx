@@ -5,7 +5,7 @@ import { isFutureTodo } from 'Utils';
 import WrongDay from './WrongDay';
 
 import { AuthContext } from 'App';
-import Styled from './TodoPage.styled';
+import styled from 'styled-components';
 
 import TodoList from './TodoList';
 import OtherCadetList from './OtherCadetList';
@@ -17,23 +17,56 @@ const TodoPage = () => {
   const [date, setDate] = useState(new Date());
 
   return (
-    <Styled.MainBackground>
-      <div className="time">
+    <TodoMainBackground>
+      <TodoHeader>
         <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
-      </div>
-      <div className="main">
+      </TodoHeader>
+      <TodoBody>
         {isFutureTodo(date) ? (
-          <div className="todo">
+          <TodoWarningSign>
             <WrongDay wrongType={isFutureTodo(date)} />
-          </div>
+          </TodoWarningSign>
         ) : (
           <TodoList userId={userId} date={date}/>
         )}
         <OtherCadetList date={date}/>
-      </div>
-    </Styled.MainBackground>
+      </TodoBody>
+    </TodoMainBackground>
   );
 };
+
+const TodoMainBackground = styled.div`
+position: relative;
+box-sizing: border-box;
+padding: 50px;
+display: flex;
+flex-direction: column;
+width: 100%;
+height: 100%;
+`
+const TodoHeader = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+font-size: 40px;
+font-weight: bold;
+margin: 10px;
+`
+const TodoBody = styled.div`
+display: flex;
+flex-direction: row;
+height: calc(100vh - 183px);
+`
+const TodoWarningSign = styled.div`
+border: 1px solid #c0c0c0;
+padding: 1em;
+border-radius: 1em;
+margin-right: 50px;
+width: 40%;
+max-height: 100%;
+overflow : auto;
+`
 
 export default TodoPage;

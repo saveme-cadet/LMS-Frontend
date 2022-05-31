@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
 import ProgressBar from './ProgressBar';
 
-import Styled from './TodoPage.styled';
+import styled from 'styled-components';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -10,6 +10,77 @@ import IconButton from '@mui/material/IconButton';
 
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
+
+const TodoInputForm = (({onSubmit, onChange, toDo, today, date})=> {
+  return (
+    <form onSubmit={onSubmit}>
+      <InputFormBody>
+        <InputFormInput
+          onChange={onChange}
+          value={toDo.content}
+          type="text"
+          placeholder="오늘 할 일을 입력하세요."
+        />
+        <InputFormButton
+          variant="contained"
+          onClick={onSubmit}
+          disabled={
+            format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
+          }
+        >
+          추가
+        </InputFormButton>
+      </InputFormBody>
+    </form>
+  );
+})
+
+const ItemNotChecked = (({item, index, alterCheck}) => {
+  return (
+    <span id={item.todoId} onClick={() => alterCheck(index)}>
+      {item.title}
+    </span>
+  );
+})
+
+const ItemChecked = (({item, index, alterCheck}) => {
+  return (
+    <span
+      id={item.todoId}
+      onClick={() => alterCheck(index)}
+      style={{
+        textDecorationLine: 'line-through',
+        color: 'gray',
+        fontSize: 15,
+      }}
+    >
+      {item.title}
+    </span>
+  );
+})
+
+const DeleteButton = (({today, date, removeToDo}) => {
+  return (
+    <IconButton
+    aria-label="delete"
+    size="large"
+    onClick={removeToDo} // map 돌리는데 id를 주는 방법은 return을 컴포넌트로 하고 id를 props로 넘겨 줌
+    disabled={
+      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
+    }
+  >
+    <DeleteForeverIcon />
+  </IconButton>
+  );
+})
+
+const TodoProgressBar = (({total, checked}) => {
+  return (
+    <ProgressBarBody>
+          <ProgressBar total={total} checked={checked} />
+    </ProgressBarBody>
+  );
+})
 
 const TodoList = ({userId, date}) => {
   const [toDo, setToDo] = useState({
@@ -73,6 +144,12 @@ const TodoList = ({userId, date}) => {
     getTodos(userId); // GET
   };
 
+
+  //이벤트 버블링
+
+  //접근 방식
+
+  // 아이디 배열을 따로 state로 관리
   const removeToDo = async event => { // 삭제 버튼 click event 콜백 함수
     let toDoNumber;
     const tagName = event.target.tagName;
@@ -137,80 +214,71 @@ const TodoList = ({userId, date}) => {
     // console.log(toDos);
     setTotal(total);
     setChecked(checked);
-  }, [toDos]); // 진행 상황이 바뀔 때마다
+  }, [toDos]);
 
   return (
-    <div className="todo">
-      <form onSubmit={onSubmit}>
-        <div className="todo__header">
-          <input
-            onChange={onChange}
-            value={toDo.content}
-            type="text"
-            placeholder="오늘 할 일을 입력하세요."
-            className="text"
-          />
-          <button
-            variant="contained"
-            onClick={onSubmit}
-            className="button"
-            disabled={
-              format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-            }
-          >
-            추가
-          </button>
-        </div>
-      </form>
-      <div className="form">
-        <div className="ulist">
-          {toDos.map((item, index) => (
-            <div key={index}>
-              <div key={index} className="check">
-                <Checkbox
-                  onClick={() => alterCheck(index)}
-                  checked={item.titleCheck}
-                  disabled={
-                    format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-                  }
-                />
-                {item.titleCheck === false ? (
-                  <span id={item.todoId} onClick={() => alterCheck(index)}>
-                    {item.title}
-                  </span>
-                ) : (
-                  <span
-                    id={item.todoId}
-                    onClick={() => alterCheck(index)}
-                    style={{
-                      textDecorationLine: 'line-through',
-                      color: 'gray',
-                      fontSize: 15,
-                    }}
-                  >
-                    {item.title}
-                  </span>
-                )}
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  onClick={removeToDo}
-                  disabled={
-                    format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-                  }
-                >
-                  <DeleteForeverIcon />
-                </IconButton>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="progressbar">
-          <ProgressBar total={total} checked={checked} />
-      </div>
-    </div>
+    <TodoListBody>
+      <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} today={today} date={date}/>
+      <TodoMyListBody>
+        {toDos.map((item, index) => (
+          <TodoMyListContainer key={index}>
+            <Checkbox onClick={() => alterCheck(index)} checked={item.titleCheck}
+              disabled={
+                format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
+              }
+            />
+            {item.titleCheck === false ? (
+              <ItemNotChecked item={item} index={index} alterCheck={alterCheck}/>
+            ) : (
+              <ItemChecked item={item} index={index} alterCheck={alterCheck}/>
+            )}
+            <DeleteButton today={today} date={date} removeToDo={removeToDo}/>
+          </TodoMyListContainer>
+        ))}
+      </TodoMyListBody>
+      <TodoProgressBar total={total} checked={checked}/>
+    </TodoListBody>
   );
 };
+
+const TodoListBody = styled.div`
+border: 1px solid #c0c0c0;
+padding: 1em;
+border-radius: 1em;
+margin-right: 50px;
+width: 40%;
+max-height: 100%;
+overflow : auto;
+`
+const TodoMyListBody = styled.div`
+font-size: 15px;
+overflow : auto;
+`
+const TodoMyListContainer = styled.div`
+`
+const InputFormBody = styled.div`
+width: 100%;
+`
+const ProgressBarBody = styled.div`
+width: 90%;
+margin-left: 5%;
+`
+const InputFormInput = styled.input`
+border: 0px;
+border-bottom: 3px solid #c0c0c0;
+margin-top: 30px;
+font-size: 17px;
+height: 35px;
+width: calc(100% - 80px);
+text-align: center;
+`
+const InputFormButton = styled.button`
+border-radius: 5px;
+margin-left: 15px;
+width: 60px;
+height: 40px;
+font-size: 17px;
+background-color: transparent;
+`
 
 export default TodoList;
