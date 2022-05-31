@@ -6,13 +6,13 @@ import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
 
-import { CusDatePicker, ShowToday } from 'Components';
+import ShowDate from './ShowDate';
 import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
+import MainPageTableTabs from './MainPageTableTabs';
 import Box from '@mui/material/Box';
 
-import Styled from './MainPage.styled';
-import MainPageTableTabs from './MainPageTableTabs';
+import styled from 'styled-components';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
@@ -79,16 +79,14 @@ const MainPage = () => {
   }, [date]);
 
   return (
-    <Styled.MainBackground>
+    <MainPageContainer>
       {selectRowData && (
         <>
           <UserGuide rowData={rowData} userId={userId} />
-          <div className="time">
-            <ShowToday date={date} />
-            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-          </div>
-          <Styled.MainTable>
-            <Box className="table">
+          <ShowDate date={date} setDate={setDate} />
+
+          <MainPageTableContainer>
+            <MainPageBody>
               <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
               <MainPageTable
                 date={date}
@@ -97,12 +95,81 @@ const MainPage = () => {
                 getUsers={getUsers}
                 userId={userId}
               />
-            </Box>
-          </Styled.MainTable>
+            </MainPageBody>
+          </MainPageTableContainer>
         </>
       )}
-    </Styled.MainBackground>
+    </MainPageContainer>
   );
 };
 
 export default MainPage;
+
+const MainPageContainer = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  padding: 50px;
+
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+`;
+
+const MainPageTableContainer = styled.div`
+  border: 1px solid #c0c0c0;
+  padding: 1em;
+  border-radius: 1em;
+  height: 550px;
+  position: relative;
+`;
+
+const MainPageBody = styled.div`
+  height: calc(100% - 50px);
+  .MuiDataGrid-footerContainer {
+    display: none;
+  }
+  .info {
+    width: 8em;
+    padding: 0.2em;
+    border-radius: 10em;
+    text-align: center;
+  }
+  .red {
+    background-color: #dc143c;
+  }
+  .blue {
+    background-color: #0079f0;
+  }
+  .머슴 {
+    background-color: yellow;
+  }
+  .카뎃 {
+    background-color: #cccccc;
+  }
+
+  .type {
+    color: #ffffff;
+    width: 8em;
+    padding: 0.2em;
+    border-radius: 10em;
+    text-align: center;
+  }
+  .check {
+    background-color: #2ce054;
+  }
+  .late {
+    background-color: #ffcb46;
+  }
+  .not {
+    background-color: #ff4646;
+  }
+  .vacancy {
+    background-color: #a477ee;
+  }
+  .illness {
+    background-color: #a477ee;
+  }
+  .vacation {
+    background-color: #2891f1;
+  }
+`;
