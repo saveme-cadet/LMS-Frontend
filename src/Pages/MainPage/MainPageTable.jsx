@@ -63,7 +63,7 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       setAnchorEl(null);
       return;
     }
-    if (select === 'checkIn') {
+    if (select === constants.CHECK_IN) {
       result = await AllTableService.putAllTableCheckIn({
         userId: id,
         checkIn: value,

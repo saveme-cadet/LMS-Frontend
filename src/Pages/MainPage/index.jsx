@@ -10,7 +10,6 @@ import ShowDate from './ShowDate';
 import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
-import Box from '@mui/material/Box';
 
 import styled from 'styled-components';
 
@@ -22,6 +21,7 @@ const MainPage = () => {
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
+  const TEAM_ID = constants.TEAM_ID;
   const TEAM = constants.TEAM;
 
   const updateSelectRowData = curTab => {
@@ -30,9 +30,9 @@ const MainPage = () => {
     // 부득이 하게 중복된 코드를 useEffect로 호출되는 getUsers에 넣어서
     // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
     // console.log('rowData : ', rowData);
-    if (curTab === TEAM.ALL) setSelectRowData(rowData);
+    if (curTab === TEAM_ID.ALL) setSelectRowData(rowData);
     else {
-      const team = curTab === TEAM.BLUE ? 'blue' : 'red';
+      const team = curTab === TEAM_ID.BLUE ? 'blue' : 'red';
       setSelectRowData(
         rowData.filter(data => {
           return data.team === team;
@@ -63,9 +63,9 @@ const MainPage = () => {
       todoRate: array.dayObjectiveAchievementRate,
     }));
     setRowData(newArray);
-    if (tab === TEAM.ALL) setSelectRowData(newArray);
+    if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
-      const team = tab === TEAM.BLUE ? 'blue' : 'red';
+      const team = tab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
       setSelectRowData(
         rowData.filter(data => {
           return data.team === team;

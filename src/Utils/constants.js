@@ -7,11 +7,17 @@ const TARGET_AUTH = {
   ADMIN_OTHER_TEAM: -2,
 };
 
-const TEAM = {
+const TEAM_ID = {
   ALL: 0,
   RED: 1,
   BLUE: 2,
 };
-const constants = { CHECK_IN, CHECK_OUT, TARGET_AUTH, TEAM };
+
+const TEAM = {
+  RED: 'red',
+  BLUE: 'blue',
+};
+
+const constants = { CHECK_IN, CHECK_OUT, TARGET_AUTH, TEAM, TEAM_ID };
 
 export default constants;
