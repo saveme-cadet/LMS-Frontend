@@ -65,6 +65,7 @@ const UserInfoService = {
   },
 
   postUserInfo: async (id, body) => {
+    // 미사용
     const url = UserInfoUrl(`info?userId=${id}`);
     let response;
     try {
@@ -76,6 +77,7 @@ const UserInfoService = {
   },
 
   getAllUserInfo: async id => {
+    // 미사용
     const url = UserInfoUrl(`allinfo?userId=${id}`);
     let response;
 
