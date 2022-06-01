@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
+import { TodoService } from 'Network';
+import { format } from 'date-fns';
 
 import ProgressBar from './ProgressBar';
 
 import styled from 'styled-components';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-
-import { TodoService } from 'Network';
-import { format } from 'date-fns';
 
 const TodoInputForm = (({onSubmit, onChange, toDo, today, date})=> {
   return (
@@ -35,19 +34,22 @@ const TodoInputForm = (({onSubmit, onChange, toDo, today, date})=> {
   );
 })
 
-const ItemNotChecked = (({item, index, alterCheck}) => {
+const ItemNotChecked = (({item, index, changeCheck}) => {
   return (
-    <span id={item.todoId} onClick={() => alterCheck(index)}>
+    <span id={item.todoId} onClick={() => changeCheck(index)}
+    style={{
+      fontSize: 15,
+    }}>
       {item.title}
     </span>
   );
 })
 
-const ItemChecked = (({item, index, alterCheck}) => {
+const ItemChecked = (({item, index, changeCheck}) => {
   return (
     <span
       id={item.todoId}
-      onClick={() => alterCheck(index)}
+      onClick={() => changeCheck(index)}
       style={{
         textDecorationLine: 'line-through',
         color: 'gray',
@@ -63,8 +65,8 @@ const DeleteButton = (({today, date, removeToDo}) => {
   return (
     <IconButton
     aria-label="delete"
-    size="large"
-    onClick={removeToDo} // map 돌리는데 id를 주는 방법은 return을 컴포넌트로 하고 id를 props로 넘겨 줌
+    size="small"
+    onClick={removeToDo}
     disabled={
       format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
     }
@@ -95,23 +97,23 @@ const TodoList = ({userId, date}) => {
   const [othersToDo, setOthersToDo] = useState([]);
   const today = new Date();
 
-  const onSubmit = async event => { // input 태그 submit event 콜백 함수
+  const onSubmit = async event => {
     event.preventDefault();
     if (
-      toDo.content === '' || // input이 비었을 경우
-      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') // 입력대상 날짜가 오늘이 아닌 경우
+      toDo.content === '' ||
+      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
     ) {
       return;
     }
 
     let nextId = 0;
     if (toDos.length === 0) {
-      nextId = 0; // todo list가 비었을 경우, todoId 0으로 초기화
+      nextId = 0;
     } else {
-      nextId = toDos[toDos.length - 1].todoId; // 아닌 경우, list 마지막 요소 todoId를 가져옴
+      nextId = toDos[toDos.length - 1].todoId;
     }
 
-    const result = await TodoService.postTodo({ // POST
+    const result = await TodoService.postTodo({
       writerId: userId,
       todoId: nextId + 1,
       title: toDo.content,
@@ -125,10 +127,10 @@ const TodoList = ({userId, date}) => {
       number: 0,
       content: '',
       checked: false,
-    }); // object 초기화
+    });
   };
 
-  const onChange = event => { // input 태그 change event 콜백 함수
+  const onChange = event => {
     setToDo({
       number: number,
       content: event.target.value,
@@ -136,29 +138,22 @@ const TodoList = ({userId, date}) => {
     });
   };
 
-  const alterCheck = async index => { // checkbox 태그 click event 콜백 함수
-    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return; // 오늘이 아닌 경우
-    toDos[index].titleCheck = !toDos[index].titleCheck; // checked 값 변경
-    const result = await TodoService.putTodo(toDos[index]); // PUT
+  const changeCheck = async index => {
+    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
+    toDos[index].titleCheck = !toDos[index].titleCheck;
+    const result = await TodoService.putTodo(toDos[index]);
     // console.log(result);
-    getTodos(userId); // GET
+    getTodos(userId);
   };
 
-
-  //이벤트 버블링
-
-  //접근 방식
-
-  // 아이디 배열을 따로 state로 관리
-  const removeToDo = async event => { // 삭제 버튼 click event 콜백 함수
+  const removeToDo = async event => {
     let toDoNumber;
     const tagName = event.target.tagName;
-    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return; // 오늘이 아닌 경우
-    // 버튼 html 구조에 따라 다르게 처리
+    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
     if (tagName === 'BUTTON') { 
-      const toDoIdButton = parseInt(event.target.previousSibling.id); // 삭제 버튼 태그 선택
-      setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId)); // 해당 태그만 필터링
-      toDoNumber = toDoIdButton; // 삭제된 태그의 todoId 저장
+      const toDoIdButton = parseInt(event.target.previousSibling.id);
+      setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId));
+      toDoNumber = toDoIdButton;
     } else if (tagName === 'svg') {
       const toDoIdSvg = parseInt(event.target.parentElement.previousSibling.id);
       setToDos(toDos.filter(toDo => toDoIdSvg !== toDo.todoId));
@@ -171,33 +166,33 @@ const TodoList = ({userId, date}) => {
       toDoNumber = toDoIdpath;
     }
 
-    const result = await TodoService.deleteTodo( // PUT
+    const result = await TodoService.deleteTodo(
       userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
     console.log(result);
-    getTodos(userId); // GET
+    getTodos(userId);
   };
 
-  const getTodos = async userId => { // GET
+  const getTodos = async userId => {
     const result = await TodoService.getTodo(
       userId,
       format(date, 'yyyy-MM-dd'),
     );
-    setToDos(result.data); // 나의 todo list 설정
+    setToDos(result.data);
   };
 
-  const getOthers = async () => { // 여기 있어야 하나?
+  const getOthers = async () => {
     const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
     console.log(result.data);
     setOthersToDo(result.data);
   };
 
   useEffect(() => {
-    getTodos(userId); // 나의 todo list 불러오기
-    getOthers(); // 다른 카뎃 todo list 불러오기
-  }, [number]); // submit 될 때마다
+    getTodos(userId);
+    getOthers();
+  }, [number]);
 
   useEffect(() => {
     const total = toDos.length;
@@ -222,15 +217,15 @@ const TodoList = ({userId, date}) => {
       <TodoMyListBody>
         {toDos.map((item, index) => (
           <TodoMyListContainer key={index}>
-            <Checkbox onClick={() => alterCheck(index)} checked={item.titleCheck}
+            <Checkbox onClick={() => changeCheck(index)} checked={item.titleCheck}
               disabled={
                 format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-              }
+              } size="small"
             />
             {item.titleCheck === false ? (
-              <ItemNotChecked item={item} index={index} alterCheck={alterCheck}/>
+              <ItemNotChecked item={item} index={index} changeCheck={changeCheck}/>
             ) : (
-              <ItemChecked item={item} index={index} alterCheck={alterCheck}/>
+              <ItemChecked item={item} index={index} changeCheck={changeCheck}/>
             )}
             <DeleteButton today={today} date={date} removeToDo={removeToDo}/>
           </TodoMyListContainer>
@@ -247,19 +242,23 @@ padding: 1em;
 border-radius: 1em;
 margin-right: 50px;
 width: 40%;
-max-height: 100%;
-overflow : auto;
+height: 100%;
 `
 const TodoMyListBody = styled.div`
+height: 75%;
+margin-top: 2%;
 font-size: 15px;
 overflow : auto;
 `
 const TodoMyListContainer = styled.div`
+display: table;
 `
 const InputFormBody = styled.div`
 width: 100%;
 `
 const ProgressBarBody = styled.div`
+position : absoulte;
+// margin-top: 50%;
 width: 90%;
 margin-left: 5%;
 `

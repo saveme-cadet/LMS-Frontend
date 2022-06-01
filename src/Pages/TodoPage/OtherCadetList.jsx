@@ -1,11 +1,10 @@
 import React, { useState, useEffect} from 'react';
+import { TodoService } from 'Network';
+import { format } from 'date-fns';
 
 import styled from 'styled-components';
 
 import Checkbox from '@mui/material/Checkbox';
-
-import { TodoService } from 'Network';
-import { format } from 'date-fns';
 
 const OtherCadetTitle = (() => {
   return (<OtherCadetTitleName>👀 다른 카뎃은 무엇을?</OtherCadetTitleName>);
@@ -51,15 +50,16 @@ const OtherCadetListCheckbox = (({list}) => {
     {list.titleCheck === true ? (
       <Checkbox
         defaultChecked
+        size="small"
         sx={{
-          '& .MuiSvgIcon-root': { fontSize: 17 },
+          '& .MuiSvgIcon-root': { fontSize: 15 },
         }}
         disabled
       />
     ) : (
       <Checkbox
         sx={{
-          '& .MuiSvgIcon-root': { fontSize: 17 },
+          '& .MuiSvgIcon-root': { fontSize: 15 },
         }}
         disabled
       />
@@ -170,6 +170,7 @@ height: 80%;
 const TodoEachCadetListContainer = styled.div`
 `
 const TodoEachCadetListEntity = styled.div`
+display: table;
 `
 const OtherCadetTitleName = styled.div`
 font-size: 25px;

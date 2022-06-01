@@ -1,14 +1,14 @@
 import { useState, useContext } from 'react';
-
 import { CusDatePicker, ShowToday } from 'Components';
 import { isFutureTodo } from 'Utils';
-import WrongDay from './WrongDay';
-
 import { AuthContext } from 'App';
-import styled from 'styled-components';
+
 
 import TodoList from './TodoList';
 import OtherCadetList from './OtherCadetList';
+import ProgressBar from './ProgressBar';
+import WrongDay from './WrongDay';
+import styled from 'styled-components';
 
 
 const TodoPage = () => {
