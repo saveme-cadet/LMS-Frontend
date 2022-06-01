@@ -5,12 +5,11 @@ import checkCloumns from './checkCloumns';
 import aojiCloumns from './aojiCloumns';
 import validDay from './validDay';
 import getDayName from './getDayName';
-import canChangeCheckInOut from './canChangeCheckInOut';
+import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import validDayTodoPage from './validDayTodoPage';
 import useInterval from './useInterval';
 
-import constants from './constants';
 export {
   getStatusMessage,
   getCheckMessage,
@@ -19,9 +18,8 @@ export {
   aojiCloumns,
   validDay,
   getDayName,
-  canChangeCheckInOut,
+  isWrongAccess,
   getMessage,
   validDayTodoPage,
   useInterval,
-  constants,
 };

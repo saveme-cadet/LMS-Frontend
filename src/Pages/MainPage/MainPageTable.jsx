@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { checkCloumns, validDay, canChangeCheckInOut, constants } from 'Utils';
+import { checkCloumns, validDay, isWrongAccess } from 'Utils';
+import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
@@ -14,11 +15,10 @@ import styled from 'styled-components';
 const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
-  const TARGET_AUTH = constants.TARGET_AUTH;
 
   const handleClickCell = (params, event) => {
     const field = params.field;
-    if (field !== constants.CHECK_IN && field !== constants.CHECK_OUT) return;
+    if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
     const selectUserInfo = selectRowData.find(array => array.id === params.id);
     const myInfo = rowData.find(array => array.id === +userId);
@@ -27,16 +27,8 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       return;
     }
 
-    const valid = canChangeCheckInOut(
-      selectUserInfo,
-      myInfo.id,
-      myInfo.role,
-      myInfo.team,
-    );
-    if (valid) {
-      valid === TARGET_AUTH.CADET_OTHER_CADET
-        ? alert('수정 권한이 없습니다!')
-        : alert('다른 팀입니다!');
+    if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
+      alert('수정할 수 없습니다!');
       return;
     }
     setAnchorEl(event.currentTarget);
@@ -63,7 +55,7 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       setAnchorEl(null);
       return;
     }
-    if (select === constants.CHECK_IN) {
+    if (select === CHECK_IN) {
       result = await AllTableService.putAllTableCheckIn({
         userId: id,
         checkIn: value,

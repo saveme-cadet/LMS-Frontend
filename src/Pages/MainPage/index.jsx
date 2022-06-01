@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { validDay, constants } from 'Utils';
+import { validDay } from 'Utils';
+import { TEAM, TEAM_ID } from 'Utils/constants';
 import AllTableService from 'Network/AllTableService';
 
 import { format } from 'date-fns';
@@ -21,8 +22,6 @@ const MainPage = () => {
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
-  const TEAM_ID = constants.TEAM_ID;
-  const TEAM = constants.TEAM;
 
   const updateSelectRowData = curTab => {
     // 마운트 되었을 때 updateSelectRowData 함수를 호출한 시점에서
@@ -50,12 +49,7 @@ const MainPage = () => {
     if (validDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat, userId);
-    if (!result) {
-      if (confirm('에러가 발생했습니다. 오늘 날짜로 돌아가시겠습니까?')) {
-        setDate(new Date());
-      }
-      return;
-    }
+
     const newArray = result.data.map(array => ({
       ...array,
       id: array.writer_id,
