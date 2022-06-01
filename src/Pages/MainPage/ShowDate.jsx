@@ -18,7 +18,5 @@ const ShowDateContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  font-weight: bold;
   margin: 10px;
 `;

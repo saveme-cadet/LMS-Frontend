@@ -6,11 +6,7 @@ const Golbal = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  .show-today {
-    text-decoration: underline;
-    text-underline-position: under;
-    margin-left: 1em;
-  }
+
   .warning {
     font-size: 30px;
     text-align: center;
