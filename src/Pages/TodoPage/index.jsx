@@ -6,7 +6,6 @@ import { AuthContext } from 'App';
 
 import TodoList from './TodoList';
 import OtherCadetList from './OtherCadetList';
-import ProgressBar from './ProgressBar';
 import WrongDay from './WrongDay';
 import styled from 'styled-components';
 

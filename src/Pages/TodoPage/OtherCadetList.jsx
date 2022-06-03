@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import Checkbox from '@mui/material/Checkbox';
 
-const OtherCadetTitle = (() => {
-  return (<OtherCadetTitleName>👀 다른 카뎃은 무엇을?</OtherCadetTitleName>);
+const OtherTitle = (() => {
+  return (<OtherTitleName>👀 다른 카뎃은 무엇을?</OtherTitleName>);
 })
 
 const WarningSignBeforeApril = (() => {
@@ -36,17 +36,17 @@ const WarningSignAfterToday = (() => {
   )
 })
 
-const OtherCadetName = (({index, item}) => {
+const OtherName = (({index, item}) => {
   return (
-    <OtherCadetNames key={index}>
+    <OtherNames key={index}>
       {item.userName}
-    </OtherCadetNames>
+    </OtherNames>
   );
 })
 
-const OtherCadetListCheckbox = (({list}) => {
+const OtherListCheckbox = (({list}) => {
   return (
-    <OtherCadetListCheckboxes>
+    <OtherListCheckboxes>
     {list.titleCheck === true ? (
       <Checkbox
         defaultChecked
@@ -64,11 +64,11 @@ const OtherCadetListCheckbox = (({list}) => {
         disabled
       />
     )}
-  </OtherCadetListCheckboxes>
+  </OtherListCheckboxes>
   );
 })
 
-const OtherCadetListObject = (({list}) => {
+const OtherListObject = (({list}) => {
   return (
     <span>
       {list.titleCheck === false ? (
@@ -102,40 +102,40 @@ const OtherCadetList = ({date}) => {
   }, [date]);
 
   return (
-    <TodoOtherCadetBody>
-      <OtherCadetTitle />
+    <TodoOtherBody>
+      <OtherTitle />
       {format(new Date('2022-04-03'), 'yyyy-MM-dd') > format(date, 'yyyy-MM-dd') ? (
       <WarningSignBeforeApril />) : ('')}
       {format(today, 'yyyy-MM-dd') >= format(date, 'yyyy-MM-dd') ? (
-      <TodoOtherCadetListBody key="index">
+      <TodoOtherListBody key="index">
       {othersToDo.map((item, index) => (
-        <TodoOtherCadetListContainer key={index}>
-          <OtherCadetName index={index} item={item}/>
-          <TodoEachCadetListBody>
+        <TodoOtherListContainer key={index}>
+          <OtherName index={index} item={item}/>
+          <TodoEachListBody>
             {item.todoDtoList.length === 0 ? (
               <WarningSignNoList />
             ) : (
-              <TodoEachCadetListContainer>
+              <TodoEachListContainer>
                 {item.todoDtoList.map((list, index) => (
-                  <TodoEachCadetListEntity key={index}>
-                    <OtherCadetListCheckbox list={list}/>
-                    <OtherCadetListObject list={list}/>
-                  </TodoEachCadetListEntity>
+                  <TodoEachListEntity key={index}>
+                    <OtherListCheckbox list={list}/>
+                    <OtherListObject list={list}/>
+                  </TodoEachListEntity>
                 ))}
-              </TodoEachCadetListContainer>
+              </TodoEachListContainer>
             )}
-          </TodoEachCadetListBody>
-        </TodoOtherCadetListContainer>
+          </TodoEachListBody>
+        </TodoOtherListContainer>
       ))}
-        </TodoOtherCadetListBody>
+        </TodoOtherListBody>
       ) : (
         <WarningSignAfterToday />
       )}
-    </TodoOtherCadetBody>
+    </TodoOtherBody>
   );
 };
 
-const TodoOtherCadetBody = styled.div`
+const TodoOtherBody = styled.div`
 overflow: auto;
 flex-wrap: wrap;
 background-color: #eeeeee;
@@ -145,14 +145,14 @@ border-radius: 1em;
 flex-direction: column;
 width: 50%;
 `
-const TodoOtherCadetListBody = styled.div`
+const TodoOtherListBody = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
 gap: 10px;
 padding: 10px;
 margin-bottom: 10px;
 `
-const TodoOtherCadetListContainer = styled.div`
+const TodoOtherListContainer = styled.div`
 border: 0px;
 padding: 1em;
 border-radius: 1em;
@@ -161,18 +161,18 @@ width: 100%;
 box-sizing: border-box;
 height: 300px;
 `
-const TodoEachCadetListBody = styled.div`
+const TodoEachListBody = styled.div`
 overflow: auto;
 margin-top: 5%;
 margin-left: 5%;
 height: 80%;
 `
-const TodoEachCadetListContainer = styled.div`
+const TodoEachListContainer = styled.div`
 `
-const TodoEachCadetListEntity = styled.div`
+const TodoEachListEntity = styled.div`
 display: table;
 `
-const OtherCadetTitleName = styled.div`
+const OtherTitleName = styled.div`
 font-size: 25px;
 margin-bottom: 10px;
 `
@@ -189,11 +189,11 @@ text-align: center;
 margin-top: 45%;
 margin-left: -5%;
 `
-const OtherCadetNames = styled.div`
+const OtherNames = styled.div`
 margin-top: -5px;
 font-size: 20px;
 `
-const OtherCadetListCheckboxes = styled.span`
+const OtherListCheckboxes = styled.span`
 margin-left: -10px;
 margin-bottom: -5px;
 `
