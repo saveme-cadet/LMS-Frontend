@@ -40,8 +40,10 @@ const ItemNotChecked = (({item, index, changeCheck}) => {
   return (
     <span id={item.todoId} onClick={() => changeCheck(index)}
     style={{
-      fontSize: 15,
       cursor: "default",
+      fontSize: 15,
+      marginLeft: 10,
+      marginRight: 10,
     }}>
       {item.title}
     </span>
@@ -58,6 +60,8 @@ const ItemChecked = (({item, index, changeCheck}) => {
         color: 'gray',
         cursor: "default",
         fontSize: 15,
+        marginLeft: 10,
+        marginRight: 10,
       }}
     >
       {item.title}
@@ -100,8 +104,6 @@ const TodoList = ({userId, date}) => {
   const [total, setTotal] = useState(0);
   const [othersToDo, setOthersToDo] = useState([]);
   const today = new Date();
-
-  console.log(toDos);
 
   const onSubmit = async event => {
     event.preventDefault();
@@ -198,7 +200,7 @@ const TodoList = ({userId, date}) => {
   useEffect(() => {
     getTodos(userId);
     getOthers();
-  }, [number]);
+  }, [number, date]);
 
   useEffect(() => {
     const total = toDos.length;
@@ -275,6 +277,7 @@ height: 100%;
 const TodoMyList = styled.div`
 height: 80%;
 margin-top: 2%;
+padding : 1% 3%;
 font-size: 15px;
 overflow : auto;
 `
