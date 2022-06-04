@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
 
-import ProgressBar from './ProgressBar';
+import { checkDateTodo } from 'Utils';
+import WrongDay from './WrongDay';
+import Progress from './Progress';
 
 import styled from 'styled-components';
 
@@ -78,11 +80,11 @@ const DeleteButton = (({today, date, removeToDo}) => {
   );
 })
 
-const TodoProgressBar = (({total, checked}) => {
+const TodoProgress = (({total, checked}) => {
   return (
-    <ProgressBarBody>
-          <ProgressBar total={total} checked={checked} />
-    </ProgressBarBody>
+    <ProgressBody>
+          <Progress total={total} checked={checked} />
+    </ProgressBody>
   );
 })
 
@@ -215,54 +217,75 @@ const TodoList = ({userId, date}) => {
 
   return (
     <TodoListBody>
-      <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} today={today} date={date}/>
-      <TodoMyListBody>
-        {toDos.map((item, index) => (
-          <TodoMyListContainer key={index}>
-            <Checkbox onClick={() => changeCheck(index)} checked={item.titleCheck}
-              disabled={
-                format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-              } size="small"
-            />
-            {item.titleCheck === false ? (
-              <ItemNotChecked item={item} index={index} changeCheck={changeCheck}/>
-            ) : (
-              <ItemChecked item={item} index={index} changeCheck={changeCheck}/>
-            )}
-            <DeleteButton today={today} date={date} removeToDo={removeToDo}/>
-          </TodoMyListContainer>
-        ))}
-      </TodoMyListBody>
-      <TodoProgressBar total={total} checked={checked}/>
-    </TodoListBody>
+    {checkDateTodo(date) ? (
+      <WarningSignNotVaildDate>
+        <WrongDay wrongType={checkDateTodo(date)} />
+      </WarningSignNotVaildDate>
+    ) : (
+      <TodoListContainer>
+        <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} today={today} date={date}/>
+        <TodoMyList>
+          {toDos.map((item, index) => (
+            <TodoMyListBody key={index}>
+              <Checkbox onClick={() => changeCheck(index)} checked={item.titleCheck}
+                disabled={
+                  format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
+                } size="small"
+              />
+              {item.titleCheck === false ? (
+                <ItemNotChecked item={item} index={index} changeCheck={changeCheck}/>
+              ) : (
+                <ItemChecked item={item} index={index} changeCheck={changeCheck}/>
+              )}
+              <DeleteButton today={today} date={date} removeToDo={removeToDo}/>
+            </TodoMyListBody>
+          ))}
+        </TodoMyList>
+        <TodoProgress total={total} checked={checked}/>
+      </TodoListContainer>
+  )}
+  </TodoListBody>
   );
 };
 
-const TodoListBody = styled.div`
+const WarningSignNotVaildDate = styled.div`
+overflow : auto;
+display: flex;
+flex-direction: column;
 border: 1px solid #c0c0c0;
-padding: 1em;
+padding: 10px;
 border-radius: 1em;
 margin-right: 50px;
-width: 40%;
 height: 100%;
 `
-const TodoMyListBody = styled.div`
-height: 75%;
+const TodoListBody = styled.div`
+width : 50%;
+`
+const TodoListContainer = styled.div`
+display: flex;
+flex-direction: column;
+border: 1px solid #c0c0c0;
+padding: 10px;
+border-radius: 1em;
+margin-right: 50px;
+height: 100%;
+`
+const TodoMyList = styled.div`
+height: 80%;
 margin-top: 2%;
 font-size: 15px;
 overflow : auto;
 `
-const TodoMyListContainer = styled.div`
+const TodoMyListBody = styled.div`
 display: table;
 `
 const InputFormBody = styled.div`
 width: 100%;
 `
-const ProgressBarBody = styled.div`
-position : absoulte;
-// margin-top: 50%;
+const ProgressBody = styled.div`
 width: 90%;
 margin-left: 5%;
+margin-bottom: 5%;
 `
 const InputFormInput = styled.input`
 border: 0px;
@@ -282,4 +305,5 @@ font-size: 17px;
 background-color: transparent;
 cursor: pointer;
 `
+
 export default TodoList;

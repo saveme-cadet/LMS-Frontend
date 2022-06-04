@@ -2,20 +2,14 @@ import React, { useState, useEffect} from 'react';
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
 
+import { checkDateTodo } from 'Utils';
+
 import styled from 'styled-components';
 
 import Checkbox from '@mui/material/Checkbox';
 
 const OtherTitle = (() => {
   return (<OtherTitleName>👀 다른 카뎃은 무엇을?</OtherTitleName>);
-})
-
-const WarningSignBeforeApril = (() => {
-  return (
-    <WarningSignDate style={{ color: 'gray' }}>
-      진행하지 않은 날짜입니다!
-    </WarningSignDate>
-  );
 })
 
 const WarningSignNoList = (() => {
@@ -28,7 +22,7 @@ const WarningSignNoList = (() => {
   );
 })
 
-const WarningSignAfterToday = (() => {
+const WarningSignNotVaildDate = (() => {
   return (
     <WarningSignDate style={{ color: 'gray' }}>
       아직 진행하지 않은 날짜입니다!
@@ -104,32 +98,30 @@ const OtherCadetList = ({date}) => {
   return (
     <TodoOtherBody>
       <OtherTitle />
-      {format(new Date('2022-04-03'), 'yyyy-MM-dd') > format(date, 'yyyy-MM-dd') ? (
-      <WarningSignBeforeApril />) : ('')}
-      {format(today, 'yyyy-MM-dd') >= format(date, 'yyyy-MM-dd') ? (
-      <TodoOtherListBody key="index">
-      {othersToDo.map((item, index) => (
-        <TodoOtherListContainer key={index}>
-          <OtherName index={index} item={item}/>
-          <TodoEachListBody>
-            {item.todoDtoList.length === 0 ? (
-              <WarningSignNoList />
-            ) : (
-              <TodoEachListContainer>
-                {item.todoDtoList.map((list, index) => (
-                  <TodoEachListEntity key={index}>
-                    <OtherListCheckbox list={list}/>
-                    <OtherListObject list={list}/>
-                  </TodoEachListEntity>
-                ))}
-              </TodoEachListContainer>
-            )}
-          </TodoEachListBody>
-        </TodoOtherListContainer>
-      ))}
-        </TodoOtherListBody>
+      {checkDateTodo(date) ? (
+      <WarningSignNotVaildDate />
       ) : (
-        <WarningSignAfterToday />
+        <TodoOtherListBody key="index">
+        {othersToDo.map((item, index) => (
+          <TodoOtherListContainer key={index}>
+            <OtherName index={index} item={item}/>
+            <TodoEachListBody>
+              {item.todoDtoList.length === 0 ? (
+                <WarningSignNoList />
+              ) : (
+                <TodoEachListContainer>
+                  {item.todoDtoList.map((list, index) => (
+                    <TodoEachListEntity key={index}>
+                      <OtherListCheckbox list={list}/>
+                      <OtherListObject list={list}/>
+                    </TodoEachListEntity>
+                  ))}
+                </TodoEachListContainer>
+              )}
+            </TodoEachListBody>
+          </TodoOtherListContainer>
+        ))}
+          </TodoOtherListBody>
       )}
     </TodoOtherBody>
   );
@@ -144,6 +136,7 @@ padding: 10px;
 border-radius: 1em;
 flex-direction: column;
 width: 50%;
+height: 100%;
 `
 const TodoOtherListBody = styled.div`
 display: grid;

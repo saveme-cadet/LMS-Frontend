@@ -5,7 +5,7 @@ import Styled from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-const ProgressBar = props => {
+const Progress = props => {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 12,
     borderRadius: 5,
@@ -24,8 +24,8 @@ const ProgressBar = props => {
   } else proportion = (props.checked / props.total) * 100;
 
   return (
-    <ProgressBarBody>
-      <ProgressBarNumber>
+    <ProgressBody>
+      <ProgressRatio>
         <Typography
           variant="caption"
           component="div"
@@ -39,22 +39,22 @@ const ProgressBar = props => {
         >
           {props.checked} / {props.total}
         </Typography>
-      </ProgressBarNumber>
-      <ProgressBarBar>
+      </ProgressRatio>
+      <ProgressBar>
         <BorderLinearProgress
           variant="determinate"
           value={proportion.toFixed(0)}
         />
-      </ProgressBarBar>
-    </ProgressBarBody>
+      </ProgressBar>
+    </ProgressBody>
   );
 };
 
-const ProgressBarBody = Styled.div`
+const ProgressBody = Styled.div`
 `
-const ProgressBarNumber = Styled.div`
+const ProgressRatio = Styled.div`
 `
-const ProgressBarBar = Styled.div`
+const ProgressBar = Styled.div`
 `
 
-export default ProgressBar;
+export default Progress;
