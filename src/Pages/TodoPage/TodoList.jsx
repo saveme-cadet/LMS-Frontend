@@ -39,6 +39,7 @@ const ItemNotChecked = (({item, index, changeCheck}) => {
     <span id={item.todoId} onClick={() => changeCheck(index)}
     style={{
       fontSize: 15,
+      cursor: "default",
     }}>
       {item.title}
     </span>
@@ -53,6 +54,7 @@ const ItemChecked = (({item, index, changeCheck}) => {
       style={{
         textDecorationLine: 'line-through',
         color: 'gray',
+        cursor: "default",
         fontSize: 15,
       }}
     >
@@ -278,6 +280,6 @@ width: 60px;
 height: 40px;
 font-size: 17px;
 background-color: transparent;
+cursor: pointer;
 `
-
 export default TodoList;
