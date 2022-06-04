@@ -41,23 +41,14 @@ const OtherName = (({index, item}) => {
 const OtherListCheckbox = (({list}) => {
   return (
     <OtherListCheckboxes>
-    {list.titleCheck === true ? (
       <Checkbox
-        defaultChecked
+        checked={list.titleCheck}
         size="small"
         sx={{
           '& .MuiSvgIcon-root': { fontSize: 15 },
         }}
         disabled
       />
-    ) : (
-      <Checkbox
-        sx={{
-          '& .MuiSvgIcon-root': { fontSize: 15 },
-        }}
-        disabled
-      />
-    )}
   </OtherListCheckboxes>
   );
 })
@@ -65,17 +56,17 @@ const OtherListCheckbox = (({list}) => {
 const OtherListObject = (({list}) => {
   return (
     <span>
-      {list.titleCheck === false ? (
-        <span>{list.title}</span>
+      {list.titleCheck === true ? (
+          <span
+            style={{
+              textDecorationLine: 'line-through',
+              color: 'gray',
+          }}
+        >
+          {list.title}
+        </span>
       ) : (
-        <span
-          style={{
-            textDecorationLine: 'line-through',
-            color: 'gray',
-         }}
-       >
-         {list.title}
-       </span>
+          <span>{list.title}</span>
       )}
     </span>
   );
@@ -83,7 +74,6 @@ const OtherListObject = (({list}) => {
 
 const OtherCadetList = ({date}) => {
   const [othersToDo, setOthersToDo] = useState([]);
-  const today = new Date();
 
   const getOthers = async () => {
     const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
@@ -173,7 +163,8 @@ const WarningSignDate = styled.div`
 justify-content: center;
 align-item: center;
 text-align: center;
-margin-top: 50%;
+margin-top: 43%;
+margin-bottom: 40%;
 `
 const WarningSignList = styled.div`
 text-align: center;

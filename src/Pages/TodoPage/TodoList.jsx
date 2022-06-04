@@ -92,6 +92,14 @@ const TodoProgress = (({total, checked}) => {
   );
 })
 
+const WarningSignNotVaildDate = (({date}) => {
+  return (
+    <WarningSignDate>
+      <WrongDay wrongType={checkDateTodo(date)} />
+    </WarningSignDate>
+  )
+})
+
 const TodoList = ({userId, date}) => {
   const [toDo, setToDo] = useState({
     number: 0,
@@ -193,7 +201,6 @@ const TodoList = ({userId, date}) => {
 
   const getOthers = async () => {
     const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
-    console.log(result.data);
     setOthersToDo(result.data);
   };
 
@@ -222,9 +229,7 @@ const TodoList = ({userId, date}) => {
   return (
     <TodoListBody>
     {checkDateTodo(date) ? (
-      <WarningSignNotVaildDate>
-        <WrongDay wrongType={checkDateTodo(date)} />
-      </WarningSignNotVaildDate>
+      <WarningSignNotVaildDate date={date}/>
     ) : (
       <TodoListContainer>
         <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} today={today} date={date}/>
@@ -252,16 +257,6 @@ const TodoList = ({userId, date}) => {
   );
 };
 
-const WarningSignNotVaildDate = styled.div`
-overflow : auto;
-display: flex;
-flex-direction: column;
-border: 1px solid #c0c0c0;
-padding: 10px;
-border-radius: 1em;
-margin-right: 50px;
-height: 100%;
-`
 const TodoListBody = styled.div`
 width : 50%;
 `
@@ -309,6 +304,16 @@ height: 40px;
 font-size: 17px;
 background-color: transparent;
 cursor: pointer;
+`
+const WarningSignDate = styled.div`
+overflow : auto;
+display: flex;
+flex-direction: column;
+border: 1px solid #c0c0c0;
+padding: 10px;
+border-radius: 1em;
+margin-right: 50px;
+height: 100%;
 `
 
 export default TodoList;
