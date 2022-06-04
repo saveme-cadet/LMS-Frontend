@@ -23,15 +23,14 @@ const MainPage = () => {
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
 
-  const updateSelectRowData = curTab => {
-    // 마운트 되었을 때 updateSelectRowData 함수를 호출한 시점에서
+  const updateSelectData = curTab => {
+    // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
     // useState의 비동기 호출 때문에 rowData에는 null이 들어가 있다.
     // 부득이 하게 중복된 코드를 useEffect로 호출되는 getUsers에 넣어서
     // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
-    // console.log('rowData : ', rowData);
     if (curTab === TEAM_ID.ALL) setSelectRowData(rowData);
     else {
-      const team = curTab === TEAM_ID.BLUE ? 'blue' : 'red';
+      const team = curTab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
       setSelectRowData(
         rowData.filter(data => {
           return data.team === team;
@@ -42,7 +41,7 @@ const MainPage = () => {
 
   const handleChangeTab = (event, dstTab) => {
     setTab(dstTab);
-    updateSelectRowData(dstTab);
+    updateSelectData(dstTab);
   };
 
   const getUsers = async () => {
