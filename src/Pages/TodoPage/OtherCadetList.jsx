@@ -176,10 +176,9 @@ text-align: center;
 margin-top: 50%;
 `
 const WarningSignList = styled.div`
-justify-content: center;
-align-item: center;
 text-align: center;
-margin-top: 45%;
+// vertical-align: middle;
+margin-top: 80px;
 margin-left: -5%;
 `
 const OtherNames = styled.div`

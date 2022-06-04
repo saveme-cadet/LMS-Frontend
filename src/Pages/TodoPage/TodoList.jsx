@@ -101,6 +101,8 @@ const TodoList = ({userId, date}) => {
   const [othersToDo, setOthersToDo] = useState([]);
   const today = new Date();
 
+  console.log(toDos);
+
   const onSubmit = async event => {
     event.preventDefault();
     if (
