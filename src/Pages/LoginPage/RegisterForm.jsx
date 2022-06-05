@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styledComp from 'styled-components';
+import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
 const RegisterForm = ({ onClickRegister, setStatus }) => {
@@ -79,7 +80,7 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
 
 export default RegisterForm;
 
-const RegisterMain = styled.div`
+const RegisterMain = styledComp.div`
   margin-top: 3%;
   width: 600px;
   height: 70%;
@@ -87,14 +88,14 @@ const RegisterMain = styled.div`
   border-radius: 1em;
 `;
 
-const RegisterWelcome = styled.div`
+const RegisterWelcome = styledComp.div`
   margin-top: 5%;
   color: black;
   font-family: 'BMJUA';
   font-size: 25px;
 `;
 
-const RegisterIDinput = styled.input`
+const RegisterIDinput = styledComp.input`
   border: 2px solid #868a8c;
   margin-top: 5%;
   padding-left: 10px;
@@ -105,7 +106,7 @@ const RegisterIDinput = styled.input`
   font-family: 'BMJUA';
 `;
 
-const RegisterPasswordInput = styled.input`
+const RegisterPasswordInput = styledComp.input`
   border: 2px solid #868a8c;
   margin-top: 2%;
   padding-left: 10px;
@@ -116,23 +117,22 @@ const RegisterPasswordInput = styled.input`
   font-family: 'BMJUA';
 `;
 
-const LoginButton = styled.button`
-  border-radius: 0.3em;
-  font-family: 'BMJUA';
-  font-size: 20px;
-  color: white;
-  width: 510px;
-  height: 2.5em;
-  margin: 1em;
-  //  cursor: pointer;
-  background-color: #00aaff;
-`;
+const LoginButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  color: 'white',
+  width: '510px',
+  height: '2.5em',
+  margin: '1em',
+  backgroundColor: '#00aaff',
+});
 
-const BackButton = styled.button`
-  margin-top: 15%;
-  font-family: 'BMJUA';
-  font-size: 20px;
-  text-decoration: underline;
-  color: #000000;
-  width: 150px;
-`;
+const BackButton = styled(Button)({
+  marginTop: '15%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: '#000000',
+  width: '150px',
+});

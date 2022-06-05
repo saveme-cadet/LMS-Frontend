@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styledComp from 'styled-components';
+import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
 const LoginForm = ({ onClickLogin, setStatus }) => {
@@ -57,14 +58,31 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
     </>
   );
 };
+// import React from 'react';
+// import { styled } from '@material-ui/core/styles';
+// import Button from '@material-ui/core/Button';
+
+// const MyButton = styled(Button)({
+//   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//   border: 0,
+//   borderRadius: 3,
+//   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//   color: 'white',
+//   height: 48,
+//   padding: '0 30px',
+// });
+
+// export default function StyledComponents() {
+//   return <MyButton>Styled Components</MyButton>;
+// }
 
 export default LoginForm;
 
-const LoginFormID = styled.div`
+const LoginFormID = styledComp.div`
   margin-top: 5%;
 `;
 
-const LoginFormIDInput = styled.input`
+const LoginFormIDInput = styledComp.input`
   padding-left: 10px;
   border-color: transparent;
   border-radius: 0.3em;
@@ -74,8 +92,8 @@ const LoginFormIDInput = styled.input`
   font-family: 'BMJUA';
 `;
 
-const LoginFormPassword = styled.div``;
-const LoginFormPasswordInput = styled.input`
+const LoginFormPassword = styledComp.div``;
+const LoginFormPasswordInput = styledComp.input`
   padding-left: 10px;
   border-color: transparent;
   border-radius: 0.3em;
@@ -86,23 +104,22 @@ const LoginFormPasswordInput = styled.input`
   font-family: 'BMJUA';
 `;
 
-const LoginButton = styled.button`
-  border-radius: 0.3em;
-  font-family: 'BMJUA';
-  font-size: 20px;
-  color: white;
-  width: 510px;
-  height: 2.5em;
-  margin: 1em;
-  //  cursor: pointer;
-  background-color: #00aaff;
-`;
+const LoginButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  color: 'white',
+  width: '510px',
+  height: '2.5em',
+  margin: '1em',
+  backgroundColor: '#00aaff',
+});
 
-const RegisterButton = styled.button`
-  margin-top: 5%;
-  font-family: 'BMJUA';
-  font-size: 20px;
-  text-decoration: underline;
-  color: white;
-  width: 250px;
-`;
+const RegisterButton = styled(Button)({
+  marginRop: '5%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'white',
+  width: '250px',
+});
