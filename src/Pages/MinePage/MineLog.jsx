@@ -3,7 +3,7 @@ import { NoData } from 'Components';
 
 import MineLogData from './MineLogData';
 
-function MineLog({ aojiLogs, attendScore }) {
+function MineLog({ mineLogs, attendScore }) {
   return (
     <div className="log box">
       <div className="header">⛏️ 보충학습 기록</div>
@@ -16,9 +16,9 @@ function MineLog({ aojiLogs, attendScore }) {
       </div>
 
       <div className="body">
-        {aojiLogs && aojiLogs.length ? (
-          aojiLogs.map(log => {
-            return <MineLogData data={log} key={log.aojiTimeIndex} />;
+        {mineLogs && mineLogs.length ? (
+          mineLogs.map(log => {
+            return <MineLogData data={log} key={log.mineTimeIndex} />;
           })
         ) : (
           <NoData code={1} />
