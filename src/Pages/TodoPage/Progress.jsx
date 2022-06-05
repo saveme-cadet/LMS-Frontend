@@ -1,4 +1,6 @@
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import LinearProgress, {
+  linearProgressClasses,
+} from '@mui/material/LinearProgress';
 
 import Styled from 'styled-components';
 
@@ -51,10 +53,10 @@ const Progress = props => {
 };
 
 const ProgressBody = Styled.div`
-`
+`;
 const ProgressRatio = Styled.div`
-`
+`;
 const ProgressBar = Styled.div`
-`
+`;
 
 export default Progress;

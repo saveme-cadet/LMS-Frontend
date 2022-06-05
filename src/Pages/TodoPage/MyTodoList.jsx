@@ -9,8 +9,7 @@ import Progress from './Progress';
 
 import styled from 'styled-components';
 
-
-const TodoInputForm = (({onSubmit, onChange, toDo, date})=> {
+const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
   const today = new Date();
 
   return (
@@ -25,34 +24,32 @@ const TodoInputForm = (({onSubmit, onChange, toDo, date})=> {
         <InputFormButton
           variant="contained"
           onClick={onSubmit}
-          disabled={
-            format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-          }
+          disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
         >
           추가
         </InputFormButton>
       </InputFormBody>
     </form>
   );
-})
+};
 
-const TodoProgress = (({total, checked}) => {
+const TodoProgress = ({ total, checked }) => {
   return (
     <ProgressBody>
-          <Progress total={total} checked={checked} />
+      <Progress total={total} checked={checked} />
     </ProgressBody>
   );
-})
+};
 
-const WarningSignNotVaildDate = (({date}) => {
+const WarningSignNotVaildDate = ({ date }) => {
   return (
     <WarningSignDate>
       <WrongDay wrongType={checkDateTodo(date)} />
     </WarningSignDate>
-  )
-})
+  );
+};
 
-const MyTodoList = ({userId, date}) => {
+const MyTodoList = ({ userId, date }) => {
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -118,7 +115,7 @@ const MyTodoList = ({userId, date}) => {
     let toDoNumber;
     const tagName = event.target.tagName;
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
-    if (tagName === 'BUTTON') { 
+    if (tagName === 'BUTTON') {
       const toDoIdButton = parseInt(event.target.previousSibling.id);
       setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId));
       toDoNumber = toDoIdButton;
@@ -180,67 +177,77 @@ const MyTodoList = ({userId, date}) => {
 
   return (
     <TodoListBody>
-    {checkDateTodo(date) ? (
-      <WarningSignNotVaildDate date={date}/>
-    ) : (
-      <TodoListContainer>
-        <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} date={date}/>
-        <TodoMyList toDos={toDos} date={date} changeCheck={changeCheck} removeToDo={removeToDo}/>
-        <TodoProgress total={total} checked={checked}/>
-      </TodoListContainer>
-  )}
-  </TodoListBody>
+      {checkDateTodo(date) ? (
+        <WarningSignNotVaildDate date={date} />
+      ) : (
+        <TodoListContainer>
+          <TodoInputForm
+            onSubmit={onSubmit}
+            onChange={onChange}
+            toDo={toDo}
+            date={date}
+          />
+          <TodoMyList
+            toDos={toDos}
+            date={date}
+            changeCheck={changeCheck}
+            removeToDo={removeToDo}
+          />
+          <TodoProgress total={total} checked={checked} />
+        </TodoListContainer>
+      )}
+    </TodoListBody>
   );
 };
 
 const TodoListBody = styled.div`
-width : 50%;
-`
+  width: 50%;
+`;
 const TodoListContainer = styled.div`
-display: flex;
-flex-direction: column;
-border: 1px solid #c0c0c0;
-padding: 10px;
-border-radius: 1em;
-margin-right: 50px;
-height: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #c0c0c0;
+  padding: 10px;
+  border-radius: 1em;
+  margin-right: 50px;
+  height: 100%;
+`;
 
 const InputFormBody = styled.div`
-width: 100%;
-`
+  width: 100%;
+`;
 const ProgressBody = styled.div`
-width: 90%;
-margin-left: 5%;
-margin-bottom: 5%;
-`
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+`;
 const InputFormInput = styled.input`
-border: 0px;
-border-bottom: 3px solid #c0c0c0;
-margin-top: 30px;
-font-size: 17px;
-height: 35px;
-width: calc(100% - 80px);
-text-align: center;
-`
+  border: 0px;
+  border-bottom: 3px solid #c0c0c0;
+  margin-top: 30px;
+  font-size: 17px;
+  height: 35px;
+  width: calc(100% - 80px);
+  text-align: center;
+`;
 const InputFormButton = styled.button`
-border-radius: 5px;
-margin-left: 15px;
-width: 60px;
-height: 40px;
-font-size: 17px;
-background-color: transparent;
-cursor: pointer;
-`
+  border-radius: 5px;
+  margin-left: 15px;
+  width: 60px;
+  height: 40px;
+  font-size: 17px;
+  background-color: transparent;
+  cursor: pointer;
+`;
 const WarningSignDate = styled.div`
-overflow : auto;
-display: flex;
-flex-direction: column;
-border: 1px solid #c0c0c0;
-padding: 10px;
-border-radius: 1em;
-margin-right: 50px;
-height: 100%;
-`
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #c0c0c0;
+  padding: 10px;
+  border-radius: 1em;
+  margin-right: 50px;
+  height: 100%;
+`;
 
 export default MyTodoList;
