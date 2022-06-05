@@ -2,11 +2,9 @@ import { useState, useContext } from 'react';
 import { CusDatePicker, ShowToday } from 'Components';
 import { AuthContext } from 'App';
 
-
-import TodoList from './TodoList';
+import MyTodoList from './MyTodoList';
 import OtherCadetList from './OtherCadetList';
 import styled from 'styled-components';
-
 
 const TodoPage = () => {
   const auth = useContext(AuthContext);
@@ -20,7 +18,7 @@ const TodoPage = () => {
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
       </TodoHeader>
       <TodoBody>
-        <TodoList userId={userId} date={date}/>
+        <MyTodoList userId={userId} date={date}/>
         <OtherCadetList date={date}/>
       </TodoBody>
     </TodoMainBackground>

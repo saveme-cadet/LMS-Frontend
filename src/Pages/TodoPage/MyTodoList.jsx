@@ -3,16 +3,16 @@ import { TodoService } from 'Network';
 import { format } from 'date-fns';
 
 import { checkDateTodo } from 'Utils';
+import TodoMyList from './TodoMyList';
 import WrongDay from './WrongDay';
 import Progress from './Progress';
 
 import styled from 'styled-components';
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 
-const TodoInputForm = (({onSubmit, onChange, toDo, today, date})=> {
+const TodoInputForm = (({onSubmit, onChange, toDo, date})=> {
+  const today = new Date();
+
   return (
     <form onSubmit={onSubmit}>
       <InputFormBody>
@@ -36,54 +36,6 @@ const TodoInputForm = (({onSubmit, onChange, toDo, today, date})=> {
   );
 })
 
-const ItemNotChecked = (({item, index, changeCheck}) => {
-  return (
-    <span id={item.todoId} onClick={() => changeCheck(index)}
-    style={{
-      cursor: "default",
-      fontSize: 15,
-      marginLeft: 10,
-      marginRight: 10,
-    }}>
-      {item.title}
-    </span>
-  );
-})
-
-const ItemChecked = (({item, index, changeCheck}) => {
-  return (
-    <span
-      id={item.todoId}
-      onClick={() => changeCheck(index)}
-      style={{
-        textDecorationLine: 'line-through',
-        color: 'gray',
-        cursor: "default",
-        fontSize: 15,
-        marginLeft: 10,
-        marginRight: 10,
-      }}
-    >
-      {item.title}
-    </span>
-  );
-})
-
-const DeleteButton = (({today, date, removeToDo}) => {
-  return (
-    <IconButton
-    aria-label="delete"
-    size="small"
-    onClick={removeToDo}
-    disabled={
-      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-    }
-  >
-    <DeleteForeverIcon />
-  </IconButton>
-  );
-})
-
 const TodoProgress = (({total, checked}) => {
   return (
     <ProgressBody>
@@ -100,7 +52,7 @@ const WarningSignNotVaildDate = (({date}) => {
   )
 })
 
-const TodoList = ({userId, date}) => {
+const MyTodoList = ({userId, date}) => {
   const [toDo, setToDo] = useState({
     number: 0,
     content: '',
@@ -232,24 +184,8 @@ const TodoList = ({userId, date}) => {
       <WarningSignNotVaildDate date={date}/>
     ) : (
       <TodoListContainer>
-        <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} today={today} date={date}/>
-        <TodoMyList>
-          {toDos.map((item, index) => (
-            <TodoMyListBody key={index}>
-              <Checkbox onClick={() => changeCheck(index)} checked={item.titleCheck}
-                disabled={
-                  format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-                } size="small"
-              />
-              {item.titleCheck === false ? (
-                <ItemNotChecked item={item} index={index} changeCheck={changeCheck}/>
-              ) : (
-                <ItemChecked item={item} index={index} changeCheck={changeCheck}/>
-              )}
-              <DeleteButton today={today} date={date} removeToDo={removeToDo}/>
-            </TodoMyListBody>
-          ))}
-        </TodoMyList>
+        <TodoInputForm onSubmit={onSubmit} onChange={onChange} toDo={toDo} date={date}/>
+        <TodoMyList toDos={toDos} date={date} changeCheck={changeCheck} removeToDo={removeToDo}/>
         <TodoProgress total={total} checked={checked}/>
       </TodoListContainer>
   )}
@@ -269,16 +205,7 @@ border-radius: 1em;
 margin-right: 50px;
 height: 100%;
 `
-const TodoMyList = styled.div`
-height: 80%;
-margin-top: 2%;
-padding : 1% 3%;
-font-size: 15px;
-overflow : auto;
-`
-const TodoMyListBody = styled.div`
-display: table;
-`
+
 const InputFormBody = styled.div`
 width: 100%;
 `
@@ -316,4 +243,4 @@ margin-right: 50px;
 height: 100%;
 `
 
-export default TodoList;
+export default MyTodoList;
