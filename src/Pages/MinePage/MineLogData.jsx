@@ -1,6 +1,5 @@
-import { differenceInSeconds, parseISO } from 'date-fns';
-
-import { format } from 'date-fns';
+import React from 'react';
+import { differenceInSeconds, parseISO, format } from 'date-fns';
 
 const formatDate = date => {
   if (!date) return '공부 중!';
@@ -39,17 +38,16 @@ const MineLogData = ({ data }) => {
   const handleEditLog = () => {
     alert('준비중입니다!');
   };
-  console.log(data);
+
   return (
     <div className="row">
       <div>{formatDate(data.startAt)}</div>
       <div>{formatDate(data.endAt)}</div>
       <div>{formatRecord(data.recodeTime)}</div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
-
-      <div> {validClick(data.endAt)}</div>
+      <div>{validClick(data.endAt)}</div>
     </div>
   );
 };
 
-export default MineLogData;
+export default React.memo(MineLogData);
