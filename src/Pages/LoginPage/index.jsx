@@ -8,7 +8,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Button from '@mui/material/Button';
 
-import Styled from './LoginPage.styled';
+import styled from 'styled-components';
 
 const LoginPage = () => {
   const navi = useNavigate();
@@ -55,11 +55,11 @@ const LoginPage = () => {
     // navi('/');
   };
   return (
-    <Styled.LoginBackground>
-      <div className="main">
+    <LoginBackground>
+      <LoginMain>
         <img src="/asset/saveme.png" alt="logo" />
-        <span className="title">구해줘 카뎃</span>
-      </div>
+        <LoginMainTitle>구해줘 카뎃</LoginMainTitle>
+      </LoginMain>
       {status === 'login' ? (
         <>
           <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
@@ -72,8 +72,41 @@ const LoginPage = () => {
           />
         </>
       )}
-    </Styled.LoginBackground>
+    </LoginBackground>
   );
 };
 
 export default LoginPage;
+
+const LoginBackground = styled.div`
+// layout
+display: flex;
+flex-direction: column;
+align-items: center;
+
+text-align: center;
+color: white;
+background-image: url('/asset/login.jpg'); no-repeat;
+background-size: cover;
+// background-color: #220646;
+
+// size
+width: 100%;
+height: 100%;
+
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}`;
+
+const LoginMain = styled.div`
+  margin-top: 5%;
+`;
+const LoginMainTitle = styled.span`
+  font-size: 70px;
+  margin: 20px;
+  font-family: 'BMJUA';
+`;

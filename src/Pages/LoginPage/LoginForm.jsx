@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import styled from 'styled-components';
 import Button from '@mui/material/Button';
 
 const LoginForm = ({ onClickLogin, setStatus }) => {
@@ -30,35 +30,79 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   };
   return (
     <>
-      <div className="id">
-        <input
+      <LoginFormID>
+        <LoginFormIDInput
           value={id}
           placeholder="인트라 ID"
           onChange={handleChangeId}
           onKeyPress={handlePressEnter}
-          className="idinput"
         />
-      </div>
-      <div>
-        <input
+      </LoginFormID>
+      <LoginFormPassword>
+        <LoginFormPasswordInput
           type="password"
           value={password}
           placeholder="비밀번호"
           onChange={handleChangePassword}
           onKeyPress={handlePressEnter}
-          className="passwordinput"
           // required
         />
-      </div>
-
-      <Button onClick={handleClick} className="loginbutton" variant="contained">
+      </LoginFormPassword>
+      <LoginButton onClick={handleClick} variant="contained">
         로그인
-      </Button>
-      <Button onClick={() => setStatus('register')} className="registerbutton">
+      </LoginButton>
+      <RegisterButton onClick={() => setStatus('register')}>
         아직 회원이 아니신가요?
-      </Button>
+      </RegisterButton>
     </>
   );
 };
 
 export default LoginForm;
+
+const LoginFormID = styled.div`
+  margin-top: 5%;
+`;
+
+const LoginFormIDInput = styled.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginFormPassword = styled.div``;
+const LoginFormPasswordInput = styled.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  margin-top: 1%;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginButton = styled.button`
+  border-radius: 0.3em;
+  font-family: 'BMJUA';
+  font-size: 20px;
+  color: white;
+  width: 510px;
+  height: 2.5em;
+  margin: 1em;
+  //  cursor: pointer;
+  background-color: #00aaff;
+`;
+
+const RegisterButton = styled.button`
+  margin-top: 5%;
+  font-family: 'BMJUA';
+  font-size: 20px;
+  text-decoration: underline;
+  color: white;
+  width: 250px;
+`;
