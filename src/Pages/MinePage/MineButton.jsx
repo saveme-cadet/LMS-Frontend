@@ -1,17 +1,38 @@
-const MineButton = ({ onClickAoji, state }) => {
+import React from 'react';
+import styled from 'styled-components';
+
+const MineButton = ({ onClickMine, state }) => {
   return (
     <>
       {!state ? (
-        <button onClick={onClickAoji} className="start">
+        <MineBtn onClick={onClickMine} className="start">
           시작!
-        </button>
+        </MineBtn>
       ) : (
-        <button onClick={onClickAoji} className="end">
+        <MineBtn onClick={onClickMine} className="end">
           종료!
-        </button>
+        </MineBtn>
       )}
     </>
   );
 };
+
+const MineBtn = styled.button`
+  width: 170px;
+  height: 50px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 0;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+
+  &.start {
+    background-color: #4870fd;
+  }
+  &.end {
+    background-color: #ff4646;
+  }
+`;
 
 export default MineButton;
