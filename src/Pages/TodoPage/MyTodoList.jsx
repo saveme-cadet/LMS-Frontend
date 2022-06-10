@@ -1,53 +1,14 @@
 import { useState, useEffect } from 'react';
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
-
 import { checkDateTodo } from 'Utils';
+
+import WarningNotVaildDate from './WarningNotValidDate';
+import TodoInputForm from './TodoInputForm';
 import TodoMyList from './TodoMyList';
-import WrongDay from './WrongDay';
-import Progress from './Progress';
+import TodoProgress from './TodoProgress';
 
 import styled from 'styled-components';
-
-const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
-  const today = new Date();
-
-  return (
-    <form onSubmit={onSubmit}>
-      <InputFormBody>
-        <InputFormInput
-          onChange={onChange}
-          value={toDo.content}
-          type="text"
-          placeholder="오늘 할 일을 입력하세요."
-        />
-        <InputFormButton
-          variant="contained"
-          onClick={onSubmit}
-          disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
-        >
-          추가
-        </InputFormButton>
-      </InputFormBody>
-    </form>
-  );
-};
-
-const TodoProgress = ({ total, checked }) => {
-  return (
-    <ProgressBody>
-      <Progress total={total} checked={checked} />
-    </ProgressBody>
-  );
-};
-
-const WarningSignNotVaildDate = ({ date }) => {
-  return (
-    <WarningSignDate>
-      <WrongDay wrongType={checkDateTodo(date)} />
-    </WarningSignDate>
-  );
-};
 
 const MyTodoList = ({ userId, date }) => {
   const [toDo, setToDo] = useState({
@@ -178,7 +139,7 @@ const MyTodoList = ({ userId, date }) => {
   return (
     <TodoListBody>
       {checkDateTodo(date) ? (
-        <WarningSignNotVaildDate date={date} />
+        <WarningNotVaildDate date={date} checkDateTodo={checkDateTodo} />
       ) : (
         <TodoListContainer>
           <TodoInputForm
@@ -204,43 +165,6 @@ const TodoListBody = styled.div`
   width: 50%;
 `;
 const TodoListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #c0c0c0;
-  padding: 10px;
-  border-radius: 1em;
-  margin-right: 50px;
-  height: 100%;
-`;
-
-const InputFormBody = styled.div`
-  width: 100%;
-`;
-const ProgressBody = styled.div`
-  width: 90%;
-  margin-left: 5%;
-  margin-bottom: 5%;
-`;
-const InputFormInput = styled.input`
-  border: 0px;
-  border-bottom: 3px solid #c0c0c0;
-  margin-top: 30px;
-  font-size: 17px;
-  height: 35px;
-  width: calc(100% - 80px);
-  text-align: center;
-`;
-const InputFormButton = styled.button`
-  border-radius: 5px;
-  margin-left: 15px;
-  width: 60px;
-  height: 40px;
-  font-size: 17px;
-  background-color: transparent;
-  cursor: pointer;
-`;
-const WarningSignDate = styled.div`
-  overflow: auto;
   display: flex;
   flex-direction: column;
   border: 1px solid #c0c0c0;

@@ -1,9 +1,8 @@
+import Styled from 'styled-components';
+
 import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
-
-import Styled from 'styled-components';
-
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 

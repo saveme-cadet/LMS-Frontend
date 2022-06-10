@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TodoService } from 'Network';
 import { format } from 'date-fns';
-
-import TodoOtherList from './TodoOtherList';
 import { checkDateTodo } from 'Utils';
 
+import TodoOtherList from './TodoOtherList';
+import WarningNotVaildDateText from './WarningNotValidDateText';
+import OtherTitle from './OtherTitle';
+
 import styled from 'styled-components';
-
-const OtherTitle = () => {
-  return <OtherTitleName>👀 다른 카뎃은 무엇을?</OtherTitleName>;
-};
-
-const WarningSignNotVaildDate = () => {
-  return (
-    <WarningSignDate style={{ color: 'gray' }}>
-      아직 진행하지 않은 날짜입니다!
-    </WarningSignDate>
-  );
-};
 
 const OtherCadetList = ({ date }) => {
   const [othersToDo, setOthersToDo] = useState([]);
@@ -36,7 +26,7 @@ const OtherCadetList = ({ date }) => {
     <TodoOtherBody>
       <OtherTitle />
       {checkDateTodo(date) ? (
-        <WarningSignNotVaildDate />
+        <WarningNotVaildDateText />
       ) : (
         <TodoOtherList othersToDo={othersToDo} />
       )}
@@ -54,17 +44,6 @@ const TodoOtherBody = styled.div`
   flex-direction: column;
   width: 50%;
   height: 100%;
-`;
-const OtherTitleName = styled.div`
-  font-size: 25px;
-  margin-bottom: 10px;
-`;
-const WarningSignDate = styled.div`
-  justify-content: center;
-  align-item: center;
-  text-align: center;
-  margin-top: 43%;
-  margin-bottom: 40%;
 `;
 
 export default React.memo(OtherCadetList);
