@@ -13,7 +13,7 @@ const ShowToday = ({ date }) => {
 
 export default ShowToday;
 
-const ShowTodayContainer = styled.div`
+const ShowTodayContainer = styled.span`
   align-items: center;
   justify-content: center;
 

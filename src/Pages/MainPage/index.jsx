@@ -45,7 +45,6 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
-    if (validDay(date) !== 0) return;
     const dateFormat = format(date, 'yyyy-MM-dd');
     const result = await AllTableService.getAllTable(dateFormat, userId);
 
@@ -137,6 +136,12 @@ const MainPageBody = styled.div`
     background-color: yellow;
   }
   .카뎃 {
+    background-color: #cccccc;
+  }
+  .admin {
+    background-color: yellow;
+  }
+  .cadet {
     background-color: #cccccc;
   }
 
