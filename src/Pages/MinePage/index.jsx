@@ -32,10 +32,10 @@ const MinePage = () => {
     }
     if (startTime) {
       setStartTime(null);
-      await AojiService.putEndMine(userId);
+      await AojiService.putEndAoji(userId);
     } else {
       setStartTime(new Date());
-      await AojiService.postStartMine(userId);
+      await AojiService.postStartAoji(userId);
     }
     getMyMine();
     getCurAttendScore();
