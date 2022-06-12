@@ -4,7 +4,7 @@ const TodoCadetName = ({ index, item }) => {
   return <TodoCadetNames key={index}>{item.userName}</TodoCadetNames>;
 };
 
-const TodoCadetNames = styled.div`
+const TodoCadetNames = styled.span`
   margin-top: -5px;
   font-size: 20px;
 `;
