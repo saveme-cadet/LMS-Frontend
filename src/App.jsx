@@ -9,7 +9,6 @@ import Styled from 'Styled/Global.styled';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  // const [state, setState] = useState(200);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
   useEffect(() => {
@@ -40,15 +39,12 @@ const validStatus = ({ userId, userName, role, team }) => {
 
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
-  // console.log('cur auth : ', auth);
-  // console.log('cur status : ', auth.status);
 
   if (auth.isLoading) {
     return <Loading />;
   } else {
     if (auth.status && validStatus(auth.status)) return children;
     else return <Navigate to="/login" />;
-    // return children;
   }
 };
 
@@ -60,7 +56,6 @@ const LoginCheckRoute = ({ children }) => {
   } else {
     if (!auth.status || !validStatus(auth.status)) return children;
     else return <Navigate to="/" />;
-    // return children;
   }
 };
 
