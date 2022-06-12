@@ -7,7 +7,7 @@ import validDay from './validDay';
 import getDayName from './getDayName';
 import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
-import validDayTodoPage from './validDayTodoPage';
+import checkDateTodo from './checkDateTodo';
 import useInterval from './useInterval';
 
 export {
@@ -20,6 +20,6 @@ export {
   getDayName,
   isWrongAccess,
   getMessage,
-  validDayTodoPage,
+  checkDateTodo,
   useInterval,
 };

@@ -1,7 +1,7 @@
-import { NotValidTodoPage } from 'Components';
+import { NotValid } from 'Components';
 
 const WrongDay = ({ wrongType }) => {
-  return <NotValidTodoPage code={wrongType} />;
+  return <NotValid code={wrongType} />;
 };
 
 export default WrongDay;
