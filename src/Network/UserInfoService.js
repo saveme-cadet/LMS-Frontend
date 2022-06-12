@@ -97,6 +97,17 @@ const UserInfoService = {
     }
     return response;
   },
+  getUserData: async id => {
+    const url = UserInfoUrl(`allinfo?userId=${id}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default UserInfoService;

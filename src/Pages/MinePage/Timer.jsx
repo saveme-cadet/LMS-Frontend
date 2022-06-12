@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   differenceInHours,
   differenceInMinutes,
@@ -5,7 +6,7 @@ import {
 } from 'date-fns';
 
 const getPastedTime = (startTime, now) => {
-  if (!startTime) return '00 : 00 : 00';
+  if (!startTime || startTime >= now) return '00 : 00 : 00';
   let hour = differenceInHours(now, startTime) % 24;
   let minute = differenceInMinutes(now, startTime) % 60;
   let second = differenceInSeconds(now, startTime) % 60;
@@ -15,7 +16,21 @@ const getPastedTime = (startTime, now) => {
   return `${hour} : ${minute} : ${second}`;
 };
 
-const Timer = ({ startTime, now }) => {
+const Timer = ({ startTime }) => {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    let timer;
+    if (startTime) {
+      timer = setInterval(() => {
+        setNow(new Date());
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [startTime]);
+
   return <div>{getPastedTime(startTime, now)}</div>;
 };
 
