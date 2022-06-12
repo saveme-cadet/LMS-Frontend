@@ -16,6 +16,7 @@ const CRUDUserService = {
     return response;
   },
   deleteUser: async body => {
+    // 미사용
     const url = CRUDUserAPI(`user/delete`);
     let response;
     try {

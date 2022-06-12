@@ -40,6 +40,7 @@ const AllTableService = {
   },
 
   postAllTable: async id => {
+    // 미사용
     const url = AllTableUrl(`saveshowtable?userId=${id + 1}`);
     let response;
     try {

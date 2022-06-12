@@ -5,10 +5,11 @@ import checkCloumns from './checkCloumns';
 import aojiCloumns from './aojiCloumns';
 import validDay from './validDay';
 import getDayName from './getDayName';
-import isValidCheck from './isValidCheck';
+import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import validDayTodoPage from './validDayTodoPage';
 import useInterval from './useInterval';
+
 export {
   getStatusMessage,
   getCheckMessage,
@@ -17,7 +18,7 @@ export {
   aojiCloumns,
   validDay,
   getDayName,
-  isValidCheck,
+  isWrongAccess,
   getMessage,
   validDayTodoPage,
   useInterval,
