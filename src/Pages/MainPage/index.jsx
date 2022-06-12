@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { validDay } from 'Utils';
 import { TEAM, TEAM_ID } from 'Utils/constants';
-import AllTableService from 'Network/AllTableService';
+import AllTableService from 'API/AllTableService';
 
 import { format } from 'date-fns';
 

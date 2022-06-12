@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from 'App';
-import { AojiService, UserInfoService } from 'Network';
+import { AojiService, UserInfoService } from 'API';
 import { differenceInSeconds } from 'date-fns';
 import { ShowToday } from 'Components';
 import Timer from './Timer';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { checkCloumns, validDay, isWrongAccess } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
-import AllTableService from 'Network/AllTableService';
+import AllTableService from 'API/AllTableService';
 
 import { format } from 'date-fns';
 

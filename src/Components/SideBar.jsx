@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { AuthContext } from 'App';
-import { CRUDUserService } from 'Network';
+import { CRUDUserService } from 'API';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
