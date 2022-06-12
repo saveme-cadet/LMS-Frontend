@@ -7,7 +7,7 @@ const formatDate = date => {
   if (!date) return '공부 중!';
   date = new Date(date);
 
-  return format(date, 'HH:mm:ss');
+  return format(date, 'M/d HH:mm:ss');
 };
 
 const MineLogData = ({ data, setActiveLog }) => {
