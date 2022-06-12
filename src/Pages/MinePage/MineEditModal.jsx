@@ -22,7 +22,6 @@ function MineEditModal({ data, setActiveLog, getMyMine }) {
     } else {
       setErrMsg('');
       setStartAt(e.target.value);
-      console.log(e.target.value);
     }
   };
 
@@ -32,7 +31,6 @@ function MineEditModal({ data, setActiveLog, getMyMine }) {
     } else {
       setErrMsg('');
       setEndAt(e.target.value);
-      console.log(e.target.value);
     }
   };
 
