@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import styledComp from 'styled-components';
+import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
 const LoginForm = ({ onClickLogin, setStatus }) => {
-  const navi = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,35 +31,95 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   };
   return (
     <>
-      <div className="id">
-        <input
+      <LoginFormID>
+        <LoginFormIDInput
           value={id}
           placeholder="인트라 ID"
           onChange={handleChangeId}
           onKeyPress={handlePressEnter}
-          className="idinput"
         />
-      </div>
-      <div>
-        <input
+      </LoginFormID>
+      <LoginFormPassword>
+        <LoginFormPasswordInput
           type="password"
           value={password}
           placeholder="비밀번호"
           onChange={handleChangePassword}
           onKeyPress={handlePressEnter}
-          className="passwordinput"
           // required
         />
-      </div>
-
-      <Button onClick={handleClick} className="loginbutton" variant="contained">
+      </LoginFormPassword>
+      <LoginButton onClick={handleClick} variant="contained">
         로그인
-      </Button>
-      <Button onClick={() => setStatus('register')} className="registerbutton">
+      </LoginButton>
+      <RegisterButton onClick={() => setStatus('register')}>
         아직 회원이 아니신가요?
-      </Button>
+      </RegisterButton>
     </>
   );
 };
+// import React from 'react';
+// import { styled } from '@material-ui/core/styles';
+// import Button from '@material-ui/core/Button';
+
+// const MyButton = styled(Button)({
+//   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//   border: 0,
+//   borderRadius: 3,
+//   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//   color: 'white',
+//   height: 48,
+//   padding: '0 30px',
+// });
+
+// export default function StyledComponents() {
+//   return <MyButton>Styled Components</MyButton>;
+// }
 
 export default LoginForm;
+
+const LoginFormID = styledComp.div`
+  margin-top: 5%;
+`;
+
+const LoginFormIDInput = styledComp.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginFormPassword = styledComp.div``;
+const LoginFormPasswordInput = styledComp.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  margin-top: 1%;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  color: 'white',
+  width: '510px',
+  height: '2.5em',
+  margin: '1em',
+  backgroundColor: '#00aaff',
+});
+
+const RegisterButton = styled(Button)({
+  marginRop: '5%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'white',
+  width: '250px',
+});
