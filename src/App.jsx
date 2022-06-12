@@ -1,10 +1,10 @@
 import { useState, createContext, useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { LoginPage, OAuthPage } from 'Pages';
+import { LoginPage } from 'Pages';
 import MainRoute from './Route';
 
-import Styled from 'Styled/Global.styled';
+import styled from 'styled-components';
 
 export const AuthContext = createContext();
 
@@ -63,7 +63,7 @@ const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Styled.Golbal>
+        <RootContainer>
           <Routes>
             <Route
               path="/login"
@@ -84,10 +84,28 @@ const App = () => {
               }
             />
           </Routes>
-        </Styled.Golbal>
+        </RootContainer>
       </BrowserRouter>
     </AuthProvider>
   );
 };
 
 export default App;
+
+const RootContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+
+  .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 10px;
+  }
+`;
