@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AojiBackground = styled.div`
+const MineBackground = styled.div`
   padding: 0 30px;
 
   .box {
@@ -20,14 +20,14 @@ const AojiBackground = styled.div`
   }
 `;
 
-const AojiBody = styled.div`
+const MineBody = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 1200px) {
     flex-direction: column;
   }
 `;
-const AojiTimer = styled.div`
+const MineTimer = styled.div`
   flex: 1;
   font-size: 30px;
   font-weight: bold;
@@ -55,7 +55,7 @@ const AojiTimer = styled.div`
   }
 `;
 
-const AojiLog = styled.div`
+const MineLog = styled.div`
   flex: 1;
 
   .body {
@@ -99,5 +99,5 @@ const AojiLog = styled.div`
     margin: 10px;
   }
 `;
-const Styled = { AojiBackground, AojiBody, AojiTimer, AojiLog };
+const Styled = { MineBackground, MineBody, MineTimer, MineLog };
 export default Styled;
