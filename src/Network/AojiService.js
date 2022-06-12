@@ -57,6 +57,17 @@ const AojiService = {
     }
     return response;
   },
+
+  editMineTime: async (userId, body) => {
+    const url = AojiUrl(`aojitime/${userId}`);
+    let response;
+    try {
+      response = await instance.put(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default AojiService;

@@ -7,11 +7,13 @@ import { ShowToday } from 'Components';
 import Timer from './Timer';
 import MineButton from './MineButton';
 import MineLog from './MineLog';
+import MineEditModal from './MineEditModal';
 
 const MinePage = () => {
   const [attendScore, setAttendScore] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [mineLogs, setMineLogs] = useState(null);
+  const [activeLog, setActiveLog] = useState(null);
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
 
@@ -71,8 +73,19 @@ const MinePage = () => {
             </MineTimeBody>
           </MineTimerWrap>
         </MineTimer>
-        <MineLog mineLogs={mineLogs} attendScore={attendScore} />
+        <MineLog
+          mineLogs={mineLogs}
+          attendScore={attendScore}
+          setActiveLog={setActiveLog}
+        />
       </MineBody>
+      {activeLog && (
+        <MineEditModal
+          data={mineLogs[activeLog - 1]}
+          setActiveLog={setActiveLog}
+          getMyMine={getMyMine}
+        />
+      )}
     </MineBackground>
   );
 };

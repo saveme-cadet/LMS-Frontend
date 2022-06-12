@@ -4,7 +4,7 @@ import { NoData } from 'Components';
 
 import MineLogData from './MineLogData';
 
-function MineLog({ mineLogs, attendScore }) {
+function MineLog({ mineLogs, attendScore, setActiveLog }) {
   return (
     <MineLogContainer>
       <MineHeader>⛏️ 보충학습 기록</MineHeader>
@@ -19,7 +19,9 @@ function MineLog({ mineLogs, attendScore }) {
       <MineLogRow>
         {mineLogs && mineLogs.length ? (
           mineLogs.map((log, index) => {
-            return <MineLogData data={log} key={index} />;
+            return (
+              <MineLogData data={log} key={index} setActiveLog={setActiveLog} />
+            );
           })
         ) : (
           <NoData code={1} />

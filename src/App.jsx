@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
   // const [state, setState] = useState(200);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
+  const [isModal, setIsModal] = useState(false);
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     const userName = localStorage.getItem('userName');
@@ -23,7 +24,14 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoading, setIsLoading, status, setStatus }}
+      value={{
+        isLoading,
+        setIsLoading,
+        status,
+        setStatus,
+        isModal,
+        setIsModal,
+      }}
     >
       {children}
     </AuthContext.Provider>

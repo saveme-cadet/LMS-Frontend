@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { differenceInSeconds, parseISO, format } from 'date-fns';
+import { AuthContext } from 'App';
 
 const formatDate = date => {
   if (!date) return '공부 중!';
@@ -9,16 +10,9 @@ const formatDate = date => {
   return format(date, 'HH:mm:ss');
 };
 
-const formatRecord = record => {
-  if (record === 'doing study') return '00:00:00';
-  const arr = record.split(':');
-  const newRecord = arr.map(i => {
-    return parseInt(i) < 10 ? '0' + i : i;
-  });
+const MineLogData = ({ data, setActiveLog }) => {
+  const { isModal, setIsModal } = useContext(AuthContext);
 
-  return newRecord.join(':');
-};
-const MineLogData = ({ data }) => {
   const earnedPoint = (
     differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
     60 /
@@ -27,14 +21,15 @@ const MineLogData = ({ data }) => {
   ).toFixed(2);
 
   const handleEditLog = () => {
-    alert('준비중입니다!');
+    setIsModal(!isModal);
+    setActiveLog(data.aojiTimeIndex);
   };
 
   return (
     <LogData>
       <div>{formatDate(data.startAt)}</div>
       <div>{formatDate(data.endAt)}</div>
-      <div>{formatRecord(data.recodeTime)}</div>
+      <div>{data.recodeTime}</div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
       <div>
         {data.endAt ? (
