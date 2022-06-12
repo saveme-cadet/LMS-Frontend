@@ -1,7 +1,7 @@
 import getStatusMessage from './getStatusMessage';
 import getCheckMessage from './getCheckMessage';
-import adminCloumns from './adminCloumns';
-import checkCloumns from './checkCloumns';
+import adminTableColumns from './adminTableColumns';
+import mainTableColumns from './mainTableColumns';
 import validDay from './validDay';
 import getDayName from './getDayName';
 import isWrongAccess from './isWrongAccess';
@@ -12,8 +12,8 @@ import useInterval from './useInterval';
 export {
   getStatusMessage,
   getCheckMessage,
-  adminCloumns,
-  checkCloumns,
+  adminTableColumns,
+  mainTableColumns,
   validDay,
   getDayName,
   isWrongAccess,

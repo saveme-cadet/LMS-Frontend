@@ -1,4 +1,4 @@
-const adminCloumns = [
+const adminTableColumns = [
   {
     field: 'attendeStatus',
     headerName: '참여 상태',
@@ -55,4 +55,4 @@ const adminCloumns = [
   },
 ];
 
-export default adminCloumns;
+export default adminTableColumns;
