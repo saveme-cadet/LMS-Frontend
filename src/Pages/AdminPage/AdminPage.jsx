@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { adminCloumns } from 'Utils';
-import { UserInfoService, CRUDUserService } from 'Network';
+import { adminTableColumns } from 'Utils';
+import { UserInfoService, CRUDUserService } from 'API';
 
 import { ShowToday, NotValid } from 'Components';
 import SelectedUser from './SelectedUser';
@@ -217,7 +217,7 @@ const AdminPage = () => {
               {selectRowData && (
                 <DataGrid
                   rows={selectRowData}
-                  columns={adminCloumns}
+                  columns={adminTableColumns}
                   onCellClick={handleCellClick}
                   getRowClassName={params => {
                     return params.row.attendeStatus === '불참' && 'out';

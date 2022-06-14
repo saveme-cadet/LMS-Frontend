@@ -1,12 +1,14 @@
 import { instance } from './api';
 
-const AojiUrl = path => {
+const MineUrl = path => {
   return `/aoji/${path}`;
+  // return `/mine/${path}`;
+  // 백엔드 API가 변경되지 않아 일단 aoji로 사용
 };
 
-const AojiService = {
-  putEditAoji: async (userId, body) => {
-    const url = AojiUrl(`aojitime/${userId}`);
+const MineService = {
+  putEditMine: async (userId, body) => {
+    const url = MineUrl(`minetime/${userId}`);
     let response;
     try {
       response = await instance.put(url, body);
@@ -16,8 +18,8 @@ const AojiService = {
     return response;
   },
 
-  postStartAoji: async userId => {
-    const url = AojiUrl(`create/${userId}`);
+  postStartMine: async userId => {
+    const url = MineUrl(`create/${userId}`);
     let response;
     try {
       response = await instance.post(url);
@@ -26,8 +28,8 @@ const AojiService = {
     }
     return response;
   },
-  putEndAoji: async userId => {
-    const url = AojiUrl(`update/${userId}`);
+  putEndMine: async userId => {
+    const url = MineUrl(`update/${userId}`);
     let response;
     try {
       response = await instance.put(url);
@@ -36,8 +38,8 @@ const AojiService = {
     }
     return response;
   },
-  getOtherAoji: async () => {
-    const url = AojiUrl(`studyuser`);
+  getOtherMine: async () => {
+    const url = MineUrl(`studyuser`);
     let response;
     try {
       response = await instance.get(url);
@@ -47,8 +49,8 @@ const AojiService = {
     return response;
   },
 
-  getMyAoji: async userId => {
-    const url = AojiUrl(`read/${userId}`);
+  getMyMine: async userId => {
+    const url = MineUrl(`read/${userId}`);
     let response;
     try {
       response = await instance.get(url);
@@ -59,4 +61,4 @@ const AojiService = {
   },
 };
 
-export default AojiService;
+export default MineService;

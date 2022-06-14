@@ -2,9 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { AuthContext } from 'App';
-import { CRUDUserService } from 'Network';
+import { CRUDUserService } from 'API';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+
+import styled from 'styled-components';
 
 const SideBar = () => {
   const [curPage, setCurPage] = useState(null);
@@ -13,7 +15,6 @@ const SideBar = () => {
   const auth = useContext(AuthContext);
 
   const handleChangePage = (event, value) => {
-    // console.log('login : ', value);
     setCurPage(value);
     navi(`/${value}`);
   };
@@ -31,8 +32,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div
-        className="home"
+      <HomeButton
         onClick={() => {
           navi('/');
           setCurPage('');
@@ -40,7 +40,7 @@ const SideBar = () => {
       >
         <img src="asset/saveme.png" alt="saveme" />
         <span>구해줘 카뎃</span>
-      </div>
+      </HomeButton>
       {curPage !== null && (
         <Tabs
           orientation="vertical"
@@ -64,3 +64,20 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+const HomeButton = styled.div`
+  margin: 10px 0 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  img {
+    width: 35px;
+    height: 35px;
+    margin: 0 5px;
+  }
+  span {
+    white-space: nowrap;
+  }
+`;

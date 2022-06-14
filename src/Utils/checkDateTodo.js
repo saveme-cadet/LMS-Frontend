@@ -4,7 +4,7 @@ const checkDateTodo = day => {
     new Date('2022-04-03').getTime() > day.getTime()
   )
     return -1;
-  else return 0;
+  return 0;
 };
 
 export default checkDateTodo;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from 'App';
-import { AojiService, UserInfoService } from 'Network';
+import { MineService, UserInfoService } from 'API';
 import { differenceInSeconds } from 'date-fns';
 import { ShowToday } from 'Components';
 import Timer from './Timer';
@@ -16,7 +16,7 @@ const MinePage = () => {
   const userId = auth.status.userId;
 
   const getMyMine = async () => {
-    const result = await AojiService.getMyAoji(userId);
+    const result = await MineService.getMyMine(userId);
     const logs = result.data;
 
     if (logs.length && logs[logs.length - 1].endAt === null) {
@@ -32,10 +32,10 @@ const MinePage = () => {
     }
     if (startTime) {
       setStartTime(null);
-      await AojiService.putEndAoji(userId);
+      await MineService.putEndMine(userId);
     } else {
       setStartTime(new Date());
-      await AojiService.postStartAoji(userId);
+      await MineService.postStartMine(userId);
     }
     getMyMine();
     getCurAttendScore();

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { checkCloumns, validDay, isWrongAccess } from 'Utils';
+import { mainTableColumns, validDay, isWrongAccess } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
-import AllTableService from 'Network/AllTableService';
+import AllTableService from 'API/AllTableService';
 
 import { format } from 'date-fns';
 
@@ -80,7 +80,7 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
         <>
           <DataGrid
             rows={selectRowData}
-            columns={checkCloumns}
+            columns={mainTableColumns}
             onCellClick={handleClickCell}
             hideFooterPagination={true} // 페이지 네이션 비활성화
             hideFooterSelectedRowCount={true} // row count 숨기기

@@ -2,7 +2,7 @@ import { GetCheckIcons } from 'Components';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 
-const checkCloumns = [
+const mainTableColumns = [
   {
     field: 'team',
     headerName: '팀',
@@ -76,4 +76,4 @@ const checkCloumns = [
   },
 ];
 
-export default checkCloumns;
+export default mainTableColumns;
