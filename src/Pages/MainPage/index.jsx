@@ -14,6 +14,8 @@ import MainPageTableTabs from './MainPageTableTabs';
 
 import styled from 'styled-components';
 
+const columns = ['팀', '역할', '이름', '출석', '결석', '휴가', '체크', '목표'];
+
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [tab, setTab] = useState(0);
@@ -73,7 +75,11 @@ const MainPage = () => {
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('customData'));
-    setCustomData(localData ? localData : mainTableColumns);
+    setCustomData(localData ? localData : new Array(8).fill(true));
+    // true, false 배열만을 보내줄까?
+    // 아니면 여기에서 소팅이 끝난 칼럼을 보내야 하나?
+    // return mainTableColumns[i].headerName.includes(dst) ? !data : data;
+    // true, false 배열은 8개지만 칼럼 배열은 9개
   }, []);
   return (
     <MainPageContainer>
@@ -96,7 +102,7 @@ const MainPage = () => {
                 selectRowData={selectRowData}
                 getUsers={getUsers}
                 userId={userId}
-                mainTableColumns={customData}
+                mainTableColumns={mainTableColumns}
               />
             </MainPageBody>
           </MainPageTableContainer>

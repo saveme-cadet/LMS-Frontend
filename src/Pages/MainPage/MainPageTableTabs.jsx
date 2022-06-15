@@ -1,3 +1,5 @@
+import { mainTableColumns } from 'Utils';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
@@ -20,13 +22,20 @@ const MainPageTableTabs = ({
     '체크',
     '목표',
   ];
+  // return mainTableColumns[i].headerName.includes(dst) ? !data : data;
 
   const onClickToggleCustom = dst => {
     console.log(customData);
-    const newColumn = customData.filter(i => !i.headerName.includes(dst));
-    console.log(newColumn);
-    setCustomData(newColumn);
-    localStorage.setItem('customData', JSON.stringify(newColumn));
+    const newArray = customData.map((data, i) => {
+      return columns[i].includes(dst) ? !data : data;
+    });
+    setCustomData(newArray);
+    localStorage.setItem('customData', JSON.stringify(newArray));
+    console.log('배열 : ', newArray);
+    // setCustomData(newColumn);
+    // localStorage.setItem('customData', JSON.stringify(newColumn));
+    // localStorage에 mainTableColumns이 저장될 때 renderCell 부분은 json으로 변환되지 않는다. 함수이기 때문?
+    // 배열을 그대로 저장하는 게 아닌 무엇을 껐고 무엇을 켰는지를 확인해야 한다.
   };
   return (
     <>
@@ -39,7 +48,7 @@ const MainPageTableTabs = ({
           return (
             <CustomColumn
               key={i}
-              isShow="true"
+              isShow={customData[i]}
               onClick={() => onClickToggleCustom(column)}
             >
               {column}
