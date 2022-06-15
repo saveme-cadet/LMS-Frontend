@@ -4,7 +4,12 @@ import Divider from '@mui/material/Divider';
 
 import styled from 'styled-components';
 
-const MainPageTableTabs = ({ tab, handleChangeTab }) => {
+const MainPageTableTabs = ({
+  tab,
+  handleChangeTab,
+  customData,
+  setCustomData,
+}) => {
   const columns = [
     '팀',
     '역할',
@@ -15,6 +20,14 @@ const MainPageTableTabs = ({ tab, handleChangeTab }) => {
     '체크',
     '목표',
   ];
+
+  const onClickToggleCustom = dst => {
+    console.log(customData);
+    const newColumn = customData.filter(i => !i.headerName.includes(dst));
+    console.log(newColumn);
+    setCustomData(newColumn);
+    localStorage.setItem('customData', JSON.stringify(newColumn));
+  };
   return (
     <>
       <Tabs value={tab} onChange={handleChangeTab}>
@@ -24,7 +37,11 @@ const MainPageTableTabs = ({ tab, handleChangeTab }) => {
         <Divider orientation="vertical" flexItem />
         {columns.map((column, i) => {
           return (
-            <CustomColumn key={i} isShow="true">
+            <CustomColumn
+              key={i}
+              isShow="true"
+              onClick={() => onClickToggleCustom(column)}
+            >
               {column}
             </CustomColumn>
           );

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-
 import { AuthContext } from 'App';
-import { validDay } from 'Utils';
+
+import { mainTableColumns } from 'Utils';
 import { TEAM, TEAM_ID } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
 
@@ -19,6 +19,7 @@ const MainPage = () => {
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
+  const [customData, setCustomData] = useState(null);
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
@@ -70,6 +71,10 @@ const MainPage = () => {
     getUsers();
   }, [date]);
 
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('customData'));
+    setCustomData(localData ? localData : mainTableColumns);
+  }, []);
   return (
     <MainPageContainer>
       {selectRowData && (
@@ -79,13 +84,19 @@ const MainPage = () => {
 
           <MainPageTableContainer>
             <MainPageBody>
-              <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
+              <MainPageTableTabs
+                tab={tab}
+                handleChangeTab={handleChangeTab}
+                customData={customData}
+                setCustomData={setCustomData}
+              />
               <MainPageTable
                 date={date}
                 rowData={rowData}
                 selectRowData={selectRowData}
                 getUsers={getUsers}
                 userId={userId}
+                mainTableColumns={customData}
               />
             </MainPageBody>
           </MainPageTableContainer>

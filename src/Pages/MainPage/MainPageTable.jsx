@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { mainTableColumns, validDay, isWrongAccess } from 'Utils';
+import { validDay, isWrongAccess } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
 
@@ -12,7 +12,14 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import styled from 'styled-components';
 
-const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
+const MainPageTable = ({
+  date,
+  rowData,
+  selectRowData,
+  getUsers,
+  userId,
+  mainTableColumns,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
 
