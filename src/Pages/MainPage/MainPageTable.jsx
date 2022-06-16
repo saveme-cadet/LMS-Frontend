@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { validDay, isWrongAccess } from 'Utils';
+import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
 
@@ -18,10 +18,11 @@ const MainPageTable = ({
   selectRowData,
   getUsers,
   userId,
-  mainTableColumns,
+  customData,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+  const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
 
   const handleClickCell = (params, event) => {
     const field = params.field;
@@ -87,7 +88,7 @@ const MainPageTable = ({
         <>
           <DataGrid
             rows={selectRowData}
-            columns={mainTableColumns}
+            columns={tableColumns}
             onCellClick={handleClickCell}
             hideFooterPagination={true} // 페이지 네이션 비활성화
             hideFooterSelectedRowCount={true} // row count 숨기기

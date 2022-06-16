@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
-import { mainTableColumns } from 'Utils';
 import { TEAM, TEAM_ID } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
 
@@ -13,8 +12,6 @@ import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
 
 import styled from 'styled-components';
-
-const columns = ['팀', '역할', '이름', '출석', '결석', '휴가', '체크', '목표'];
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
@@ -75,11 +72,8 @@ const MainPage = () => {
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('customData'));
-    setCustomData(localData ? localData : new Array(8).fill(true));
-    // true, false 배열만을 보내줄까?
-    // 아니면 여기에서 소팅이 끝난 칼럼을 보내야 하나?
-    // return mainTableColumns[i].headerName.includes(dst) ? !data : data;
-    // true, false 배열은 8개지만 칼럼 배열은 9개
+    setCustomData(localData ? localData : new Array(9).fill(true));
+    // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
   }, []);
   return (
     <MainPageContainer>
@@ -102,7 +96,7 @@ const MainPage = () => {
                 selectRowData={selectRowData}
                 getUsers={getUsers}
                 userId={userId}
-                mainTableColumns={mainTableColumns}
+                customData={customData}
               />
             </MainPageBody>
           </MainPageTableContainer>

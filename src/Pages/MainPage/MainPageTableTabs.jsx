@@ -12,30 +12,35 @@ const MainPageTableTabs = ({
   customData,
   setCustomData,
 }) => {
-  const columns = [
-    '팀',
-    '역할',
-    '이름',
-    '출석',
-    '결석',
-    '휴가',
-    '체크',
-    '목표',
-  ];
-  // return mainTableColumns[i].headerName.includes(dst) ? !data : data;
+  const columns = ['팀', '역할', '출석', '결석', '휴가', '목표'];
+  const columnsCode = [0, 1, 3, 4, 5, 8];
 
   const onClickToggleCustom = dst => {
-    console.log(customData);
-    const newArray = customData.map((data, i) => {
-      return columns[i].includes(dst) ? !data : data;
-    });
+    switch (dst) {
+      case '팀':
+        customData[0] = !customData[0];
+        break;
+      case '역할':
+        customData[1] = !customData[1];
+        break;
+      case '출석':
+        customData[3] = !customData[3];
+        break;
+      case '결석':
+        customData[4] = !customData[4];
+        break;
+      case '휴가':
+        customData[5] = !customData[5];
+        break;
+      case '목표':
+        customData[8] = !customData[8];
+        break;
+      default:
+    }
+    const newArray = [...customData];
+    // 분해 할당하지 않으면 얕은 복사이기에 state가 변경되지 않음
     setCustomData(newArray);
     localStorage.setItem('customData', JSON.stringify(newArray));
-    console.log('배열 : ', newArray);
-    // setCustomData(newColumn);
-    // localStorage.setItem('customData', JSON.stringify(newColumn));
-    // localStorage에 mainTableColumns이 저장될 때 renderCell 부분은 json으로 변환되지 않는다. 함수이기 때문?
-    // 배열을 그대로 저장하는 게 아닌 무엇을 껐고 무엇을 켰는지를 확인해야 한다.
   };
   return (
     <>
@@ -48,7 +53,7 @@ const MainPageTableTabs = ({
           return (
             <CustomColumn
               key={i}
-              isShow={customData[i]}
+              isShow={customData[columnsCode[i]]}
               onClick={() => onClickToggleCustom(column)}
             >
               {column}
