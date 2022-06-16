@@ -10,8 +10,6 @@ import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { DataGrid } from '@mui/x-data-grid';
 
-import styled from 'styled-components';
-
 const MainPageTable = ({
   date,
   rowData,

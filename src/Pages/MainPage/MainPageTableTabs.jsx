@@ -1,10 +1,17 @@
-import { mainTableColumns } from 'Utils';
-
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 
 import styled from 'styled-components';
+
+const filterArrays = [
+  { label: '팀', index: 0 },
+  { label: '역할', index: 1 },
+  { label: '출석', index: 3 },
+  { label: '결석', index: 4 },
+  { label: '휴가', index: 5 },
+  { label: '목표', index: 8 },
+];
 
 const MainPageTableTabs = ({
   tab,
@@ -12,9 +19,6 @@ const MainPageTableTabs = ({
   customData,
   setCustomData,
 }) => {
-  const columns = ['팀', '역할', '출석', '결석', '휴가', '목표'];
-  const columnsCode = [0, 1, 3, 4, 5, 8];
-
   const onClickToggleCustom = dst => {
     switch (dst) {
       case '팀':
@@ -49,14 +53,14 @@ const MainPageTableTabs = ({
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
         <Divider orientation="vertical" flexItem />
-        {columns.map((column, i) => {
+        {filterArrays.map((array, i) => {
           return (
             <CustomColumn
               key={i}
-              isShow={customData[columnsCode[i]]}
-              onClick={() => onClickToggleCustom(column)}
+              isShow={customData[array.index]}
+              onClick={() => onClickToggleCustom(array.label)}
             >
-              {column}
+              {array.label}
             </CustomColumn>
           );
         })}
