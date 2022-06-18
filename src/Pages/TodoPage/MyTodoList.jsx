@@ -21,6 +21,7 @@ const MyTodoList = ({ userId, date }) => {
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
   const [othersToDo, setOthersToDo] = useState([]);
+  const [isEdit, setIsEdit] = useState();
   const today = new Date();
 
   const onSubmit = async event => {
@@ -150,9 +151,13 @@ const MyTodoList = ({ userId, date }) => {
           />
           <TodoMyList
             toDos={toDos}
+            setTodos={setToDos}
             date={date}
             changeCheck={changeCheck}
             removeToDo={removeToDo}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
+            getTodos={getTodos}
           />
           <TodoProgress total={total} checked={checked} />
         </TodoListContainer>

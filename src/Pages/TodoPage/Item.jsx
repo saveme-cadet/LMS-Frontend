@@ -16,6 +16,7 @@ const ItemNotChecked = {
 
 const Item = ({ item, index, changeCheck, isCheck }) => {
   const style = isCheck ? ItemChecked : ItemNotChecked;
+
   return (
     <span id={item.todoId} onClick={() => changeCheck(index)} style={style}>
       {item.title}
