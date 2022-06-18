@@ -15,6 +15,7 @@ import styled from 'styled-components';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
+
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
@@ -85,6 +86,7 @@ const MainPage = () => {
           <MainPageTableContainer>
             <MainPageBody>
               <MainPageTableTabs
+                date={date}
                 tab={tab}
                 handleChangeTab={handleChangeTab}
                 customData={customData}

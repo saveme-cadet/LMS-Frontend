@@ -1,6 +1,11 @@
+import { useState } from 'react';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+
+import { validDay } from 'Utils';
 
 import styled from 'styled-components';
 
@@ -13,13 +18,35 @@ const filterArrays = [
   { label: '목표', index: 8 },
 ];
 
+const FilterModal = ({ customData, onClickToggleCustom }) => {
+  return (
+    <>
+      <>
+        {filterArrays.map((array, i) => {
+          return (
+            <CustomColumn
+              key={i}
+              isShow={customData[array.index]}
+              onClick={() => onClickToggleCustom(array.label)}
+            >
+              {array.label}
+            </CustomColumn>
+          );
+        })}
+      </>
+    </>
+  );
+};
+
 const MainPageTableTabs = ({
+  date,
   tab,
   handleChangeTab,
   customData,
   setCustomData,
 }) => {
-  const onClickToggleCustom = dst => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClickToggleCustom = dst => {
     switch (dst) {
       case '팀':
         customData[0] = !customData[0];
@@ -46,6 +73,11 @@ const MainPageTableTabs = ({
     setCustomData(newArray);
     localStorage.setItem('customData', JSON.stringify(newArray));
   };
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <Tabs value={tab} onChange={handleChangeTab}>
@@ -53,18 +85,14 @@ const MainPageTableTabs = ({
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
         <Divider orientation="vertical" flexItem />
-        {filterArrays.map((array, i) => {
-          return (
-            <CustomColumn
-              key={i}
-              isShow={customData[array.index]}
-              onClick={() => onClickToggleCustom(array.label)}
-            >
-              {array.label}
-            </CustomColumn>
-          );
-        })}
+        {!validDay(date) && <FilterAltIcon onClick={toggleModal} />}
       </Tabs>
+      {isOpen && (
+        <FilterModal
+          customData={customData}
+          onClickToggleCustom={handleClickToggleCustom}
+        />
+      )}
     </>
   );
 };
