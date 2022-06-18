@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import FilterModal from './FilterModal';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
@@ -8,35 +9,6 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { validDay } from 'Utils';
 
 import styled from 'styled-components';
-
-const filterArrays = [
-  { label: '팀', index: 0 },
-  { label: '역할', index: 1 },
-  { label: '출석', index: 3 },
-  { label: '결석', index: 4 },
-  { label: '휴가', index: 5 },
-  { label: '목표', index: 8 },
-];
-
-const FilterModal = ({ customData, onClickToggleCustom }) => {
-  return (
-    <>
-      <>
-        {filterArrays.map((array, i) => {
-          return (
-            <CustomColumn
-              key={i}
-              isShow={customData[array.index]}
-              onClick={() => onClickToggleCustom(array.label)}
-            >
-              {array.label}
-            </CustomColumn>
-          );
-        })}
-      </>
-    </>
-  );
-};
 
 const MainPageTableTabs = ({
   date,
@@ -85,7 +57,12 @@ const MainPageTableTabs = ({
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
         <Divider orientation="vertical" flexItem />
-        {!validDay(date) && <FilterAltIcon onClick={toggleModal} />}
+        {!validDay(date) && (
+          <FilterIcon>
+            필터링
+            <FilterAltIcon onClick={toggleModal} />
+          </FilterIcon>
+        )}
       </Tabs>
       {isOpen && (
         <FilterModal
@@ -99,16 +76,4 @@ const MainPageTableTabs = ({
 
 export default MainPageTableTabs;
 
-const CustomColumn = styled.span`
-  background-color: ${props => (props.isShow ? 'white' : 'gray')};
-
-  min-width: 80px;
-  height: 40px;
-  margin: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-  text-align: center;
-  line-height: 40px;
-  color: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
-`;
+const FilterIcon = styled.span``;
