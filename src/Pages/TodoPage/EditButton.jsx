@@ -1,21 +1,25 @@
 import { format } from 'date-fns';
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-const DeleteButton = ({ date, removeToDo }) => {
+const EditButton = ({ date, index, setIsEdit }) => {
   const today = new Date();
 
   return (
     <IconButton
-      aria-label="delete"
+      aria-label="edit"
       size="small"
-      onClick={removeToDo}
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
     >
-      <DeleteForeverIcon fontSize="inherit" />
+      <EditIcon
+        fontSize="inherit"
+        onClick={() => {
+          setIsEdit(index);
+        }}
+      />
     </IconButton>
   );
 };
 
-export default DeleteButton;
+export default EditButton;
