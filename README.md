@@ -1,25 +1,50 @@
+<div align="center">
+    
 # 구해줘 카뎃 LMS
+
+![html badge](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=HTML5&logoColor=white)
+![css badge](https://img.shields.io/badge/-CSS-1572B6?style=flat-square&logo=CSS3&logoColor=white)
+![JS badge](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white)
+
+![react badge](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=React&logoColor=white)
+![styled badge](https://img.shields.io/badge/-Styled-DB7093?style=flat-square&logo=styled-components&logoColor=white)
+
+![issue](https://img.shields.io/github/issues/saveme-cadet/LMS-Frontend)
+![issue](https://img.shields.io/github/issues-closed/saveme-cadet/LMS-Frontend)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/saveme-cadet/LMS-Frontend)
+</div>
+    
+# 소개
+
 
 구해줘 카뎃은 체크인과 체크아웃을 진행하며 각자의 학습 시간을 확보하고자 2021년 중순에 만든 동아리입니다.  
 기존에는 Numbers로 출결을 관리하였다가 달이 바뀌거나 팀이 바뀔 때마다 표를 만드는데 드는 리소스를 줄이기 위해
 구해줘 카뎃 내부에서 팀을 조직해 LMS(Learning Management System)용 웹사이트를 개발하였습니다.  
 2022년 4월 배포한 후 현재 유지보수 및 기능 추가를 진행하고 있습니다.  
+[바로가기]( https://www.save9cadet.com/)
+
+# 프로젝트 시작방법
+
+```shell
+npm i && npm start
+```
 
 # 사용 방법
-# 로그인
+
+## 로그인 페이지
 ![가이드-로그인](https://user-images.githubusercontent.com/72376700/169757862-b97555c2-ea63-4df2-b369-a1e270e0ce88.PNG)
 
 - 인트라 아이디와 비밀번호(4242)를 쳐서 로그인 합니다.
 - 가입하지 않은 사용자라면 회원가입을 진행해야 합니다.
 
-# 회원가입
+### 회원가입
 ![가이드-회원가입](https://user-images.githubusercontent.com/72376700/169757887-0977b54c-3fe5-4c75-99be-c344b9fe2fe6.PNG)
 
 - 인트라 아이디와 이메일을 입력합니다.
     - 현재로써는 인트라 아이디와 이메일이 유효한지 검증하지는 않습니다.
 - 비밀번호는 4242로 고정입니다.
 
-# 메인 페이지
+## 메인 페이지
 
 ![가이드-메인화면](https://user-images.githubusercontent.com/72376700/169757933-d55be421-d7d3-485a-a252-3889be7c0593.PNG)
 
@@ -27,14 +52,14 @@
 - 오늘의 출결 상태를 보여줍니다.
 - 날짜 옆의 아이콘을 눌러서 다른 날짜로 이동할 수 있습니다.
 
-## 출결 관리
+### 출결 관리
 
 ![가이드-체크인](https://user-images.githubusercontent.com/72376700/169757934-df418a12-7738-4e7c-a064-fc19de1c8d0f.PNG)
 
 - 체크인, 체크아웃 셀을 클릭해서 출결을 변경할 수 있습니다.
 - 역할이 머슴이라면 자신이 속한 팀을, 카뎃이라면 자신의 출결만 변경할 수 있습니다.
 
-# 할 일 페이지
+## 할 일 페이지
 
 ![가이드-할일](https://user-images.githubusercontent.com/72376700/169757921-1f2372f6-deb1-4a71-98ca-4e8878c68c40.PNG)
 
@@ -43,14 +68,14 @@
 - 완료 처리하거나 삭제할 수 있습니다.
 - 다른 사용자의 할 일을 조회할 수 있습니다.
 
-# 아오지 페이지
+## 아오지 페이지
 ![가이드-아오지](https://user-images.githubusercontent.com/72376700/169758001-9129a176-d380-4a4a-b26b-a7e631ec50f4.PNG)
 
 
 - 평일 체크인 이후, 주말에 보충학습을 진행해서 결석 점수를 감소시킬 수 있습니다.
 - 보충학습 중 창을 닫아도 정보는 저장됩니다.
 
-# 머슴 페이지
+## 머슴 페이지
 
 ![가이드-권한x](https://user-images.githubusercontent.com/72376700/169758015-02954411-efbe-4904-bf39-7c870471bfa3.PNG)
 
