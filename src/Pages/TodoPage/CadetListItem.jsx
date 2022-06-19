@@ -1,18 +1,30 @@
-const CadetListItem = ({ list }) => {
+import { format } from 'date-fns';
+
+const ItemChecked = {
+  textDecorationLine: 'line-through',
+  color: 'gray',
+};
+
+const ItemNotChecked = {};
+
+const ItemNotToday = {
+  color: 'gray',
+};
+
+const CadetListItem = ({ list, date }) => {
+  const today = new Date();
+
+  let style = list.titleCheck ? ItemChecked : ItemNotChecked;
+
+  if (
+    format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') &&
+    style === ItemNotChecked
+  )
+    style = ItemNotToday;
+
   return (
     <span>
-      {list.titleCheck === true ? (
-        <span
-          style={{
-            textDecorationLine: 'line-through',
-            color: 'gray',
-          }}
-        >
-          {list.title}
-        </span>
-      ) : (
-        <span>{list.title}</span>
-      )}
+      <span style={style}>{list.title}</span>
     </span>
   );
 };

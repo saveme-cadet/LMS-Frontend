@@ -68,6 +68,7 @@ const TodoMyList = ({
             />
             <Item
               item={item}
+              date={date}
               index={index}
               changeCheck={changeCheck}
               isCheck={item.titleCheck}

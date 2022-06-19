@@ -4,7 +4,7 @@ import CadetListItem from './CadetListItem';
 
 import styled from 'styled-components';
 
-const TodoCadetList = ({ item }) => {
+const TodoCadetList = ({ item, date }) => {
   return (
     <TodoCadetListBody>
       {item.todoDtoList.length === 0 ? (
@@ -14,7 +14,7 @@ const TodoCadetList = ({ item }) => {
           {item.todoDtoList.map((list, index) => (
             <TodoCadetListEntity key={index}>
               <CadetListCheckbox list={list} />
-              <CadetListItem list={list} />
+              <CadetListItem list={list} date={date} />
             </TodoCadetListEntity>
           ))}
         </TodoCadetListContainer>

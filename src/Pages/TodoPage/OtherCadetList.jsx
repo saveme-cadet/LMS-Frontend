@@ -28,7 +28,7 @@ const OtherCadetList = ({ date }) => {
       {checkDateTodo(date) ? (
         <WarningNotVaildDateText />
       ) : (
-        <TodoOtherList othersToDo={othersToDo} />
+        <TodoOtherList othersToDo={othersToDo} date={date} />
       )}
     </TodoOtherBody>
   );
