@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { TodoService } from 'API';
 
 import Item from './Item';
 import ItemInput from './ItemInput';
@@ -13,31 +14,45 @@ import Checkbox from '@mui/material/Checkbox';
 
 const TodoMyList = ({
   toDos,
-  setToDos,
   date,
   changeCheck,
   removeToDo,
   isEdit,
   setIsEdit,
-  getTodos,
+  getToDos,
+  userId,
 }) => {
   const today = new Date();
 
+  const onSubmit = async event => {
+    const newTitle = event.target[1].value;
+    event.preventDefault();
+    if (newTitle === '') return;
+    toDos[isEdit].title = newTitle;
+    const result = await TodoService.putTodo(toDos[isEdit]);
+    setIsEdit();
+    getToDos(userId);
+  };
+  // TodoListInputForm 새로운 컴포넌트 분리
   return (
     <TodoMyListBody>
       {toDos.map((item, index) =>
-        index === isEdit ? (
+        index === isEdit &&
+        format(today, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd') ? (
           <TodoMyListContainer key={index}>
-            <Checkbox checked={item.titleCheck} disabled size="small" />
-            <ItemInput item={item} />
-            <OkButton
-              date={date}
-              index={index}
-              setIsEdit={setIsEdit}
-              setToDos={setToDos}
-              getTodos={getTodos}
-            />
-            <CancelButton date={date} setIsEdit={setIsEdit} />
+            <InputFormBody onSubmit={onSubmit}>
+              <Checkbox checked={item.titleCheck} disabled size="small" />
+              <ItemInput item={item} />
+              <OkButton
+                date={date}
+                index={index}
+                setIsEdit={setIsEdit}
+                toDos={toDos}
+                userId={userId}
+                getToDos={getToDos}
+              />
+              <CancelButton date={date} setIsEdit={setIsEdit} />
+            </InputFormBody>
           </TodoMyListContainer>
         ) : (
           <TodoMyListContainer key={index}>
@@ -74,5 +89,6 @@ const TodoMyListBody = styled.div`
 const TodoMyListContainer = styled.div`
   display: table;
 `;
+const InputFormBody = styled.form``;
 
 export default TodoMyList;

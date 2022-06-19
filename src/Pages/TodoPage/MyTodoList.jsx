@@ -70,28 +70,16 @@ const MyTodoList = ({ userId, date }) => {
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
     // console.log(result);
-    getTodos(userId);
+    getToDos(userId);
   };
 
   const removeToDo = async event => {
     let toDoNumber;
-    const tagName = event.target.tagName;
+    const id =
+      event.target.closest('button').previousSibling.previousSibling.id;
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
-    if (tagName === 'BUTTON') {
-      const toDoIdButton = parseInt(event.target.previousSibling.id);
-      setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId));
-      toDoNumber = toDoIdButton;
-    } else if (tagName === 'svg') {
-      const toDoIdSvg = parseInt(event.target.parentElement.previousSibling.id);
-      setToDos(toDos.filter(toDo => toDoIdSvg !== toDo.todoId));
-      toDoNumber = toDoIdSvg;
-    } else if (tagName === 'path') {
-      const toDoIdpath = parseInt(
-        event.target.parentElement.parentElement.previousSibling.id,
-      );
-      setToDos(toDos.filter(toDo => toDoIdpath !== toDo.todoId));
-      toDoNumber = toDoIdpath;
-    }
+    setToDos(toDos.filter(toDo => id !== toDo.todoId));
+    toDoNumber = id;
 
     const result = await TodoService.deleteTodo(
       userId,
@@ -99,10 +87,10 @@ const MyTodoList = ({ userId, date }) => {
       format(date, 'yyyy-MM-dd'),
     );
     console.log(result);
-    getTodos(userId);
+    getToDos(userId);
   };
 
-  const getTodos = async userId => {
+  const getToDos = async userId => {
     const result = await TodoService.getTodo(
       userId,
       format(date, 'yyyy-MM-dd'),
@@ -116,7 +104,7 @@ const MyTodoList = ({ userId, date }) => {
   };
 
   useEffect(() => {
-    getTodos(userId);
+    getToDos(userId);
     getOthers();
   }, [number, date]);
 
@@ -151,13 +139,13 @@ const MyTodoList = ({ userId, date }) => {
           />
           <TodoMyList
             toDos={toDos}
-            setTodos={setToDos}
             date={date}
             changeCheck={changeCheck}
             removeToDo={removeToDo}
             isEdit={isEdit}
             setIsEdit={setIsEdit}
-            getTodos={getTodos}
+            getToDos={getToDos}
+            userId={userId}
           />
           <TodoProgress total={total} checked={checked} />
         </TodoListContainer>

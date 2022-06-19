@@ -1,28 +1,20 @@
 import { format } from 'date-fns';
+import { TodoService } from 'API';
 
 import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 
-const OkButton = ({ date, index, setIsEdit, setToDos, getTodos }) => {
+const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
   const today = new Date();
 
-  const editTitle = event => {
-    // toDos[index].title = event.target.parentElement.previousSibling.value;
-    // setToDos(
-    //   toDos.map((item, idx) => {
-    //     console.log(item);
-    //     // index === idx
-    //     //   ? (item.title = event.target.parentElement.previousSibling.value)
-    //     //   : '';
-    //   }),
-    // );
+  const editTitle = async event => {
+    const newTitle = event.target.closest('form')[1].value;
 
-    const toDos = getTodos();
+    toDos[index].title = newTitle;
 
-    toDos.map((item, idx) => {
-      if (idx == index) item.title = 1;
-    });
+    const result = await TodoService.putTodo(toDos[index]);
     setIsEdit();
+    getToDos(userId);
   };
 
   return (

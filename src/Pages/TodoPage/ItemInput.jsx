@@ -7,6 +7,7 @@ const ItemInput = ({ item }) => {
 
   return (
     <TodoEditItemInput
+      autoFocus
       value={title}
       onChange={event => {
         setTitle(event.target.value);

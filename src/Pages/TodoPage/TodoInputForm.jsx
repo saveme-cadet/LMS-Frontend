@@ -6,13 +6,14 @@ const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
   const today = new Date();
 
   return (
-    <form onSubmit={onSubmit}>
-      <InputFormBody>
+    <InputFormBody onSubmit={onSubmit}>
+      <InputFormContainer>
         <InputFormInput
           onChange={onChange}
           value={toDo.content}
           type="text"
           placeholder="오늘 할 일을 입력하세요."
+          autoFocus
         />
         <InputFormButton
           variant="contained"
@@ -21,12 +22,14 @@ const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
         >
           추가
         </InputFormButton>
-      </InputFormBody>
-    </form>
+      </InputFormContainer>
+    </InputFormBody>
   );
 };
 
-const InputFormBody = styled.div`
+const InputFormBody = styled.form``;
+
+const InputFormContainer = styled.div`
   width: 100%;
 `;
 const InputFormInput = styled.input`
