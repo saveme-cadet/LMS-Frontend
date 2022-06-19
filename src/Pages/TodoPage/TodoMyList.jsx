@@ -26,14 +26,16 @@ const TodoMyList = ({
 
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
+
     event.preventDefault();
     if (newTitle === '') return;
     toDos[isEdit].title = newTitle;
+
     const result = await TodoService.putTodo(toDos[isEdit]);
     setIsEdit();
     getToDos(userId);
   };
-  // TodoListInputForm 새로운 컴포넌트 분리
+
   return (
     <TodoMyListBody>
       {toDos.map((item, index) =>

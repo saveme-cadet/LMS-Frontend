@@ -55,6 +55,7 @@ const MyTodoList = ({ userId, date }) => {
       content: '',
       checked: false,
     });
+    getToDos(userId);
   };
 
   const onChange = event => {
@@ -74,19 +75,16 @@ const MyTodoList = ({ userId, date }) => {
   };
 
   const removeToDo = async event => {
-    let toDoNumber;
-    const id =
+    let toDoNumber =
       event.target.closest('button').previousSibling.previousSibling.id;
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
-    setToDos(toDos.filter(toDo => id !== toDo.todoId));
-    toDoNumber = id;
 
     const result = await TodoService.deleteTodo(
       userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
-    console.log(result);
+    // console.log(result);
     getToDos(userId);
   };
 
@@ -106,7 +104,8 @@ const MyTodoList = ({ userId, date }) => {
   useEffect(() => {
     getToDos(userId);
     getOthers();
-  }, [number, date]);
+    setIsEdit();
+  }, [date]);
 
   useEffect(() => {
     const total = toDos.length;

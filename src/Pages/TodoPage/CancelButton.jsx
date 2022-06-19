@@ -11,13 +11,11 @@ const CancelButton = ({ date, setIsEdit }) => {
       aria-label="edit"
       size="small"
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      onClick={() => {
+        setIsEdit();
+      }}
     >
-      <HighlightOffIcon
-        fontSize="inherit"
-        onClick={() => {
-          setIsEdit();
-        }}
-      />
+      <HighlightOffIcon fontSize="inherit" />
     </IconButton>
   );
 };

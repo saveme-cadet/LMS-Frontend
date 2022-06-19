@@ -11,13 +11,11 @@ const EditButton = ({ date, index, setIsEdit }) => {
       aria-label="edit"
       size="small"
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      onClick={() => {
+        setIsEdit(index);
+      }}
     >
-      <EditIcon
-        fontSize="inherit"
-        onClick={() => {
-          setIsEdit(index);
-        }}
-      />
+      <EditIcon fontSize="inherit" />
     </IconButton>
   );
 };

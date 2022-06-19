@@ -10,6 +10,7 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
   const editTitle = async event => {
     const newTitle = event.target.closest('form')[1].value;
 
+    if (newTitle === '') return;
     toDos[index].title = newTitle;
 
     const result = await TodoService.putTodo(toDos[index]);
@@ -22,8 +23,9 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
       aria-label="edit"
       size="small"
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      onClick={editTitle}
     >
-      <CheckIcon fontSize="inherit" onClick={editTitle} />
+      <CheckIcon fontSize="inherit" />
     </IconButton>
   );
 };
