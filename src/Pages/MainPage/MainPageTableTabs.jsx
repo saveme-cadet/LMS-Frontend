@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import FilterModal from './FilterModal';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
@@ -14,40 +13,11 @@ const MainPageTableTabs = ({
   date,
   tab,
   handleChangeTab,
-  customData,
-  setCustomData,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClickToggleCustom = dst => {
-    switch (dst) {
-      case '팀':
-        customData[0] = !customData[0];
-        break;
-      case '역할':
-        customData[1] = !customData[1];
-        break;
-      case '출석':
-        customData[3] = !customData[3];
-        break;
-      case '결석':
-        customData[4] = !customData[4];
-        break;
-      case '휴가':
-        customData[5] = !customData[5];
-        break;
-      case '목표':
-        customData[8] = !customData[8];
-        break;
-      default:
-    }
-    const newArray = [...customData];
-    // 분해 할당하지 않으면 얕은 복사이기에 state가 변경되지 않음
-    setCustomData(newArray);
-    localStorage.setItem('customData', JSON.stringify(newArray));
-  };
 
+  setIsOpen,
+}) => {
   const toggleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(isOpen => !isOpen);
   };
 
   return (
@@ -58,22 +28,21 @@ const MainPageTableTabs = ({
         <Tab label="블루 팀" />
         <Divider orientation="vertical" flexItem />
         {!validDay(date) && (
-          <FilterIcon>
-            필터링
-            <FilterAltIcon onClick={toggleModal} />
+          <FilterIcon onClick={toggleModal}>
+            <span>필터링</span>
+            <FilterAltIcon />
           </FilterIcon>
         )}
       </Tabs>
-      {isOpen && (
-        <FilterModal
-          customData={customData}
-          onClickToggleCustom={handleClickToggleCustom}
-        />
-      )}
     </>
   );
 };
 
 export default MainPageTableTabs;
 
-const FilterIcon = styled.span``;
+const FilterIcon = styled.span`
+  cursor: pointer;
+  display: flex;
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.6);
+`;

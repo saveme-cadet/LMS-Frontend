@@ -9,39 +9,33 @@ const filterArrays = [
   { label: '목표', index: 8 },
 ];
 
-const FilterModal = ({ customData, onClickToggleCustom }) => {
+const FilterModal = ({ customData, onClickToggleCustom, setIsOpen }) => {
+  const onClickClose = () => {
+    setIsOpen(isOpen => !isOpen);
+  };
   return (
     <FilterModalContainer>
-      {filterArrays.map((array, i) => {
-        return (
-          <CustomColumn
-            key={i}
-            isShow={customData[array.index]}
-            onClick={() => onClickToggleCustom(array.label)}
-          >
-            {array.label}
-          </CustomColumn>
-        );
-      })}
+      <FilterModalBody>
+        <h1>출결 테이블 칼럼 필터링</h1>
+
+        {filterArrays.map((array, i) => {
+          return (
+            <CustomColumn
+              key={i}
+              isShow={customData[array.index]}
+              onClick={() => onClickToggleCustom(array.label)}
+            >
+              {array.label}
+            </CustomColumn>
+          );
+        })}
+      </FilterModalBody>
+      <FilterModalFooter onClick={onClickClose}>닫기</FilterModalFooter>
     </FilterModalContainer>
   );
 };
 
 export default FilterModal;
-
-const CustomColumn = styled.span`
-  background-color: ${props => (props.isShow ? 'white' : 'gray')};
-
-  min-width: 80px;
-  height: 40px;
-  margin: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-  text-align: center;
-  line-height: 40px;
-  color: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
-`;
 
 const FilterModalContainer = styled.div`
   position: absolute;
@@ -49,5 +43,46 @@ const FilterModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(216, 216, 216, 0.9);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(216, 216, 216, 0.5);
+`;
+
+const FilterModalBody = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+
+  justify-content: center;
+`;
+
+const FilterModalFooter = styled.div`
+  width: 100px;
+  height: 60px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+
+  font-size: 30px;
+  text-align: center;
+  line-height: 60px;
+
+  cursor: pointer;
+`;
+const CustomColumn = styled.div`
+  background-color: ${props => (props.isShow ? 'white' : 'gray')};
+  width: 100px;
+  height: 100px;
+  margin: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+
+  font-size: 30px;
+  text-align: center;
+  line-height: 100px;
+
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
 `;
