@@ -149,6 +149,29 @@ const ShakeTeam = styled.div`
   }
 `;
 
+const AdminTodo = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 60%;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  span {
+    text-align: center;
+  }
+  ul {
+    margin: 50px;
+  }
+  li {
+    padding: 10px 0;
+    /* list-style: none; */
+  }
+`;
+
 const Styled = {
   AdminBackground,
   AdminFeature,
@@ -156,6 +179,7 @@ const Styled = {
   AdminChange,
   Modal,
   ShakeTeam,
+  AdminTodo,
 };
 
 export default Styled;
