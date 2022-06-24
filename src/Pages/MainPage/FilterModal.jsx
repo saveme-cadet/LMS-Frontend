@@ -29,8 +29,8 @@ const FilterModal = ({ customData, onClickToggleCustom, setIsOpen }) => {
             </CustomColumn>
           );
         })}
+        <FilterModalFooter onClick={onClickClose}>닫기</FilterModalFooter>
       </FilterModalBody>
-      <FilterModalFooter onClick={onClickClose}>닫기</FilterModalFooter>
     </FilterModalContainer>
   );
 };
@@ -55,13 +55,18 @@ const FilterModalBody = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 400px;
-
   justify-content: center;
+
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
 `;
 
 const FilterModalFooter = styled.div`
   width: 100px;
   height: 60px;
+
+  margin: 40px;
   border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 10px;
 
