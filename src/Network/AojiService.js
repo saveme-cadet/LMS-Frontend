@@ -68,6 +68,17 @@ const AojiService = {
     }
     return response;
   },
+
+  getStudyUser: async () => {
+    const url = AojiUrl(`studyuser`);
+    let response;
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default AojiService;

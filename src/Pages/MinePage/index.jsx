@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { AuthContext } from 'App';
 import { AojiService, UserInfoService } from 'Network';
 import { differenceInSeconds } from 'date-fns';
-import { ShowToday } from 'Components';
 import Timer from './Timer';
 import MineButton from './MineButton';
 import MineLog from './MineLog';
 import MineEditModal from './MineEditModal';
+import MonthlyDate from './MonthlyDate';
+import MinePeople from './MinePeople';
 
 const MinePage = () => {
   const [attendScore, setAttendScore] = useState(null);
@@ -58,8 +59,13 @@ const MinePage = () => {
   return (
     <MineBackground>
       <div className="time">
-        <ShowToday date={new Date()} />
+        <MonthlyDate />
+        {/* NOTE: 
+          월별 보기는 구현했으나 API가 없어서 기능은 없음
+          추후 추가한다면 date 상태를 Index(부모)로 빼서 구현해야함
+        */}
       </div>
+      <MinePeople />
       <MineBody>
         <MineTimer>
           <MineTimerWrap>
@@ -97,7 +103,7 @@ const MineBackground = styled.div`
 const MineTimerWrap = styled.div`
   padding: 10px;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb;
   text-align: left;
 `;
@@ -119,6 +125,7 @@ const MineTimer = styled.div`
 const MineHeader = styled.h2`
   font-size: 30px;
   font-weight: bold;
+  margin: 0;
 `;
 
 const MineTimeBody = styled.div`
