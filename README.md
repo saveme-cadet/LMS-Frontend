@@ -7,6 +7,7 @@
 ![JS badge](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white)
 
 ![react badge](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=React&logoColor=white)
+![react badge]( https://img.shields.io/badge/-React%20router%20dom-blue?style=flat-square&logo=React-Router&logoColor=white)
 ![styled badge](https://img.shields.io/badge/-Styled-DB7093?style=flat-square&logo=styled-components&logoColor=white)
 
 ![issue](https://img.shields.io/github/issues/saveme-cadet/LMS-Frontend)
