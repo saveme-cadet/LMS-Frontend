@@ -41,6 +41,9 @@ function MineEditModal({ data, setActiveLog, getMyMine }) {
     } else if (new Date(startAt) > new Date() || new Date(endAt) > new Date()) {
       setErrMsg('시작 시간과 종료 시간은 현재 시간보다 늦지 않아야 합니다.');
       return;
+    } else if (new Date(endAt) - new Date(startAt) > 86400000) {
+      setErrMsg('선택한 시간이 24시간을 초과했습니다.');
+      return;
     }
     setErrMsg('');
     await AojiService.editMineTime(status.userId, {
