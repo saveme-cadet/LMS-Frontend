@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { TodoService } from 'API';
 
-import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from '@mui/material/IconButton';
 
 const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
@@ -25,7 +25,7 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
       onClick={editTitle}
     >
-      <CheckIcon fontSize="inherit" />
+      <CheckCircleIcon fontSize="inherit" />
     </IconButton>
   );
 };

@@ -1,16 +1,9 @@
 import { format } from 'date-fns';
-import { TodoService } from 'API';
 
-import Item from './Item';
-import ItemInput from './ItemInput';
-import EditButton from './EditButton';
-import DeleteButton from './DeleteButton';
-import OkButton from './OkButton';
-import CancelButton from './CancelButton';
+import TodoEditForm from './TodoEditForm';
+import TodoListEach from './TodoListEach';
 
 import styled from 'styled-components';
-
-import Checkbox from '@mui/material/Checkbox';
 
 const TodoMyList = ({
   toDos,
@@ -24,57 +17,33 @@ const TodoMyList = ({
 }) => {
   const today = new Date();
 
-  const onSubmit = async event => {
-    const newTitle = event.target[1].value;
-
-    event.preventDefault();
-    if (newTitle === '') return;
-    toDos[isEdit].title = newTitle;
-
-    const result = await TodoService.putTodo(toDos[isEdit]);
-    setIsEdit();
-    getToDos(userId);
-  };
-
   return (
     <TodoMyListBody>
       {toDos.map((item, index) =>
         index === isEdit &&
         format(today, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd') ? (
           <TodoMyListContainer key={index}>
-            <InputFormBody onSubmit={onSubmit}>
-              <Checkbox checked={item.titleCheck} disabled size="small" />
-              <ItemInput item={item} />
-              <OkButton
-                date={date}
-                index={index}
-                setIsEdit={setIsEdit}
-                toDos={toDos}
-                userId={userId}
-                getToDos={getToDos}
-              />
-              <CancelButton date={date} setIsEdit={setIsEdit} />
-            </InputFormBody>
-          </TodoMyListContainer>
-        ) : (
-          <TodoMyListContainer key={index}>
-            <Checkbox
-              onClick={() => changeCheck(index)}
-              checked={item.titleCheck}
-              disabled={
-                format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-              }
-              size="small"
-            />
-            <Item
+            <TodoEditForm
               item={item}
               date={date}
               index={index}
-              changeCheck={changeCheck}
-              isCheck={item.titleCheck}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+              toDos={toDos}
+              userId={userId}
+              getToDos={getToDos}
             />
-            <EditButton index={index} date={date} setIsEdit={setIsEdit} />
-            <DeleteButton date={date} removeToDo={removeToDo} />
+          </TodoMyListContainer>
+        ) : (
+          <TodoMyListContainer key={index}>
+            <TodoListEach
+              item={item}
+              index={index}
+              changeCheck={changeCheck}
+              date={date}
+              setIsEdit={setIsEdit}
+              removeToDo={removeToDo}
+            />
           </TodoMyListContainer>
         ),
       )}
@@ -92,6 +61,5 @@ const TodoMyListBody = styled.div`
 const TodoMyListContainer = styled.div`
   display: table;
 `;
-const InputFormBody = styled.form``;
 
 export default TodoMyList;

@@ -133,6 +133,7 @@ const MyTodoList = ({ userId, date }) => {
           <TodoInputForm
             onSubmit={onSubmit}
             onChange={onChange}
+            setIsEdit={setIsEdit}
             toDo={toDo}
             date={date}
           />

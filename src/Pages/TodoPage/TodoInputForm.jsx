@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 
 import styled from 'styled-components';
 
-const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
+const TodoInputForm = ({ onSubmit, onChange, setIsEdit, toDo, date }) => {
   const today = new Date();
 
   return (
@@ -13,7 +13,11 @@ const TodoInputForm = ({ onSubmit, onChange, toDo, date }) => {
           value={toDo.content}
           type="text"
           placeholder="오늘 할 일을 입력하세요."
+          autoComplete="off"
           autoFocus
+          onFocus={() => {
+            setIsEdit('');
+          }}
         />
         <InputFormButton
           variant="contained"
@@ -40,6 +44,7 @@ const InputFormInput = styled.input`
   height: 35px;
   width: calc(100% - 80px);
   text-align: center;
+  outline-width: 0;
 `;
 const InputFormButton = styled.button`
   border-radius: 5px;
