@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 import { AuthContext } from 'App';
 import { adminTableColumns } from 'Utils';
@@ -30,6 +30,7 @@ const AdminPage = () => {
   const auth = useContext(AuthContext);
   const userRole = auth.status.role;
   const userId = auth.status.userId;
+  const outsideModal = useRef();
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -166,16 +167,21 @@ const AdminPage = () => {
   };
 
   const pressESC = event => {
-    console.log(event);
+    if (event.key === 'Escape' || event.key === 'Esc') setIsOpen(false);
+  };
+  const handleModalClose = e => {
+    if (outsideModal.current === e.target) {
+      setIsOpen(false);
+      // console.log('outside');
+    } // else console.log('outside not');
   };
 
   useEffect(() => {
     getUser();
-    // console.log('auth', auth);
   }, []);
 
   return (
-    <Styled.AdminBackground>
+    <Styled.AdminBackground onKeyDown={pressESC}>
       <div className="time">
         <ShowToday date={date} />
       </div>
@@ -278,6 +284,7 @@ const AdminPage = () => {
           </Styled.Modal>
           <Styled.Modal>
             {isOpen === 'shake' && (
+              // <Styled.ShakeTeam onClick={handleModalClose} ref={outsideModal}>
               <Styled.ShakeTeam>
                 <ShakeTeam
                   setIsOpen={setIsOpen}
@@ -293,8 +300,8 @@ const AdminPage = () => {
             {isOpen === 'todo' && (
               <div
                 className="modal"
-                onKeyDown={pressESC}
-                onClick={() => setIsOpen(null)}
+                onClick={handleModalClose}
+                ref={outsideModal}
               >
                 <Styled.AdminTodo>
                   <span>

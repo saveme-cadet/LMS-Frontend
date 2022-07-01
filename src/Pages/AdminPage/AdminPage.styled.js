@@ -160,6 +160,10 @@ const AdminTodo = styled.div`
   border-radius: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   padding: 30px;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   span {
     text-align: center;
   }
