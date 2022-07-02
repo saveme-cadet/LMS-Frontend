@@ -20,7 +20,6 @@ const MyTodoList = ({ userId, date }) => {
   const [number, setNumber] = useState(null);
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
-  const [othersToDo, setOthersToDo] = useState([]);
   const [isEdit, setIsEdit] = useState();
   const today = new Date();
 
@@ -48,7 +47,6 @@ const MyTodoList = ({ userId, date }) => {
       todoDay: format(today, 'yyyy-MM-dd'),
     });
 
-    // console.log(result);
     setNumber(nextId);
     setToDo({
       number: 0,
@@ -70,7 +68,6 @@ const MyTodoList = ({ userId, date }) => {
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.putTodo(toDos[index]);
-    // console.log(result);
     getToDos(userId);
   };
 
@@ -84,7 +81,6 @@ const MyTodoList = ({ userId, date }) => {
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
-    // console.log(result);
     getToDos(userId);
   };
 
@@ -96,14 +92,8 @@ const MyTodoList = ({ userId, date }) => {
     setToDos(result.data);
   };
 
-  const getOthers = async () => {
-    const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
-    setOthersToDo(result.data);
-  };
-
   useEffect(() => {
     getToDos(userId);
-    getOthers();
     setIsEdit();
   }, [date]);
 
@@ -119,7 +109,6 @@ const MyTodoList = ({ userId, date }) => {
     for (let i = 0; i < toDos.length; i++) {
       if (toDos[i].titleCheck === true) checked++;
     }
-    // console.log(toDos);
     setTotal(total);
     setChecked(checked);
   }, [toDos]);

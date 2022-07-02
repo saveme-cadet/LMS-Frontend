@@ -12,7 +12,7 @@ const CancelButton = ({ date, setIsEdit }) => {
       size="small"
       disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
       onClick={() => {
-        setIsEdit();
+        setIsEdit('');
       }}
     >
       <HighlightOffIcon fontSize="inherit" />

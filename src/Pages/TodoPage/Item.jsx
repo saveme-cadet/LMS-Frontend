@@ -1,44 +1,45 @@
 import { format } from 'date-fns';
 
-const ItemChecked = {
-  textDecorationLine: 'line-through',
-  color: 'gray',
-  cursor: 'default',
-  fontSize: 15,
-  marginLeft: 10,
-  marginRight: 10,
-};
-
-const ItemNotChecked = {
-  cursor: 'default',
-  fontSize: 15,
-  marginLeft: 10,
-  marginRight: 10,
-};
-
-const ItemNotToday = {
-  color: 'gray',
-  cursor: 'default',
-  fontSize: 15,
-  marginLeft: 10,
-  marginRight: 10,
-};
+import styled from 'styled-components';
 
 const Item = ({ item, date, index, changeCheck, isCheck }) => {
   const today = new Date();
-  let style = isCheck ? ItemChecked : ItemNotChecked;
 
-  if (
-    format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') &&
-    style === ItemNotChecked
-  )
-    style = ItemNotToday;
-
-  return (
-    <span id={item.todoId} onClick={() => changeCheck(index)} style={style}>
+  return isCheck ? (
+    <ItemChecked id={item.todoId} onClick={() => changeCheck(index)}>
       {item.title}
-    </span>
+    </ItemChecked>
+  ) : format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') ? (
+    <ItemNotToday id={item.todoId} onClick={() => changeCheck(index)}>
+      {item.title}
+    </ItemNotToday>
+  ) : (
+    <ItemNotChecked id={item.todoId} onClick={() => changeCheck(index)}>
+      {item.title}
+    </ItemNotChecked>
   );
 };
+
+const ItemNotChecked = styled.span`
+  cursor: default;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+const ItemChecked = styled.span`
+  color: gray;
+  text-decoration-line: line-through;
+  cursor: default;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+const ItemNotToday = styled.span`
+  color: gray;
+  cursor: default;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
 
 export default Item;

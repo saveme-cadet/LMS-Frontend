@@ -26,7 +26,7 @@ const TodoEditForm = ({
     toDos[isEdit].title = newTitle;
 
     const result = await TodoService.putTodo(toDos[isEdit]);
-    setIsEdit();
+    setIsEdit('');
     getToDos(userId);
   };
 
