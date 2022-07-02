@@ -5,22 +5,21 @@ import styled from 'styled-components';
 const CadetListItem = ({ list, date }) => {
   const today = new Date();
 
-  return list.titleCheck ? (
-    <ItemChecked>{list.title}</ItemChecked>
-  ) : format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') ? (
-    <ItemNotToday>{list.title}</ItemNotToday>
-  ) : (
-    <ItemNotChecked>{list.title}</ItemNotChecked>
+  return (
+    <ListItem list={list} today={today} date={date}>
+      {list.title}
+    </ListItem>
   );
 };
 
-const ItemNotChecked = styled.span``;
-const ItemChecked = styled.span`
-  color: gray;
-  text-decoration-line: line-through;
-`;
-const ItemNotToday = styled.span`
-  color: gray;
+const ListItem = styled.span`
+  color: ${props =>
+    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
+    props.list.titleCheck
+      ? 'gray'
+      : ''};
+  text-decoration-line: ${props =>
+    props.list.titleCheck ? 'line-through' : ''};
 `;
 
 export default CadetListItem;
