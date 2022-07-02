@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { TodoService } from 'API';
 
-import ItemInput from './ItemInput';
 import OkButton from './OkButton';
 import CancelButton from './CancelButton';
 
@@ -18,6 +18,8 @@ const TodoEditForm = ({
   userId,
   getToDos,
 }) => {
+  const [title, setTitle] = useState(item.title);
+
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
 
@@ -33,7 +35,15 @@ const TodoEditForm = ({
   return (
     <InputFormBody onSubmit={onSubmit}>
       <Checkbox checked={item.titleCheck} disabled size="small" />
-      <ItemInput item={item} />
+      <ItemInput
+        id="name"
+        autoFocus
+        autoComplete="off"
+        value={title}
+        onChange={event => {
+          setTitle(event.target.value);
+        }}
+      />
       <OkButton
         date={date}
         index={index}
@@ -48,5 +58,12 @@ const TodoEditForm = ({
 };
 
 const InputFormBody = styled.form``;
+const ItemInput = styled.input`
+  width: 300px;
+  height: 20px;
+  margin-left: 10px;
+  outline-width: 0;
+  font-size: 15px;
+`;
 
 export default TodoEditForm;

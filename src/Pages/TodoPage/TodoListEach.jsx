@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 
-import Item from './Item';
 import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 
@@ -26,12 +25,14 @@ const TodoListEach = ({
         size="small"
       />
       <Item
-        item={item}
-        date={date}
-        index={index}
-        changeCheck={changeCheck}
         isCheck={item.titleCheck}
-      />
+        today={today}
+        date={date}
+        id={item.todoId}
+        onClick={() => changeCheck(index)}
+      >
+        {item.title}
+      </Item>
       <EditButton index={index} date={date} setIsEdit={setIsEdit} />
       <DeleteButton date={date} removeToDo={removeToDo} />
     </TodoListEachBody>
@@ -39,5 +40,17 @@ const TodoListEach = ({
 };
 
 const TodoListEachBody = styled.div``;
+const Item = styled.span`
+  color: ${props =>
+    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
+    props.isCheck
+      ? 'gray'
+      : ''};
+  text-decoration-line: ${props => (props.isCheck ? 'line-through' : '')};
+  cursor: default;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
 
 export default TodoListEach;

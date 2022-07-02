@@ -1,5 +1,4 @@
 import TodoCadetList from './TodoCadetList';
-import TodoCadetName from './TodoCadetName';
 
 import styled from 'styled-components';
 
@@ -8,7 +7,7 @@ const TodoOtherList = ({ othersToDo, date }) => {
     <TodoOtherListBody key="index">
       {othersToDo.map((item, index) => (
         <TodoOtherListContainer key={index}>
-          <TodoCadetName index={index} item={item} />
+          <TodoCadetName key={index}>{item.userName}</TodoCadetName>
           <TodoCadetList item={item} date={date} />
         </TodoOtherListContainer>
       ))}
@@ -31,6 +30,10 @@ const TodoOtherListContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
   height: 300px;
+`;
+const TodoCadetName = styled.span`
+  margin-top: -5px;
+  font-size: 20px;
 `;
 
 export default TodoOtherList;

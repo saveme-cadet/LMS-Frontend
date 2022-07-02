@@ -4,8 +4,6 @@ import { format } from 'date-fns';
 import { checkDateTodo } from 'Utils';
 
 import TodoOtherList from './TodoOtherList';
-import WarningNotVaildDateText from './WarningNotValidDateText';
-import OtherTitle from './OtherTitle';
 
 import styled from 'styled-components';
 
@@ -24,9 +22,11 @@ const OtherCadetList = ({ date }) => {
 
   return (
     <TodoOtherBody>
-      <OtherTitle />
+      <OtherTitle>👀 다른 카뎃은 무엇을?</OtherTitle>
       {checkDateTodo(date) ? (
-        <WarningNotVaildDateText />
+        <WarningNotVaildDate>
+          아직 진행하지 않은 날짜입니다!
+        </WarningNotVaildDate>
       ) : (
         <TodoOtherList othersToDo={othersToDo} date={date} />
       )}
@@ -34,6 +34,18 @@ const OtherCadetList = ({ date }) => {
   );
 };
 
+const OtherTitle = styled.h3`
+  font-size: 25px;
+  margin-bottom: 10px;
+`;
+const WarningNotVaildDate = styled.div`
+  justify-content: center;
+  align-item: center;
+  text-align: center;
+  margin-top: 43%;
+  margin-bottom: 40%;
+  color: grey;
+`;
 const TodoOtherBody = styled.div`
   overflow: auto;
   flex-wrap: wrap;
