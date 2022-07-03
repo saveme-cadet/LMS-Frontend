@@ -27,7 +27,7 @@ const CRUDUserService = {
     return response;
   },
   postUser: async body => {
-    const url = CRUDUserAPI(`sign-up`);
+    const url = CRUDUserAPI(`users`);
     let response;
 
     try {

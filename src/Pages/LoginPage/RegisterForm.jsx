@@ -11,15 +11,12 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   const handleChangeId = event => {
     setId(event.target.value);
   };
-
+  const handleChangePassword = event => {
+    setPassword(event.target.value);
+  };
   const handleChangeEmail = event => {
     setEmail(event.target.value);
   };
-
-  // NOTE : change password method
-  // const handleChangePassword = event => {
-  //   setPassword(event.target.value);
-  // };
 
   const handleClick = async () => {
     if (!id || !email) {
@@ -27,10 +24,9 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
       return;
     }
     onClickRegister({
-      name: id,
+      username: id,
+      password: password,
       email: email,
-      password: 4242, // TODO : each user has a unique password
-      birthday: '2022-04-01',
     });
     setId('');
     setEmail('');
@@ -47,31 +43,30 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
             <h2>환영합니다!</h2>
             <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
           </RegisterWelcome>
-          <div className="id">
-            <RegisterIDinput
+          <RegisterInputForm>
+            <RegisterInput
               value={id}
               placeholder="인트라 ID"
               onChange={handleChangeId}
               onKeyPress={handlePressEnter}
             />
-          </div>
-          <div className="email">
-            <RegisterPasswordInput
+            <RegisterInput
+              value={password}
+              placeholder="비밀번호"
+              onChange={handleChangePassword}
+              onKeyPress={handlePressEnter}
+            />
+            <RegisterInput
               value={email}
               placeholder="이메일 ex) example@student.42seoul.kr"
               onChange={handleChangeEmail}
               onKeyPress={handlePressEnter}
             />
-          </div>
+          </RegisterInputForm>
           <LoginButton variant="contained" onClick={handleClick}>
             함께하기!
           </LoginButton>
           <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
-          {/* <input
-        value={password}
-        placeholder="비밀번호"
-        onChange={handleChangePassword}
-      /> */}
         </form>
       </RegisterMain>
     </>
@@ -95,18 +90,11 @@ const RegisterWelcome = styledComp.div`
   font-size: 25px;
 `;
 
-const RegisterIDinput = styledComp.input`
-  border: 2px solid #868a8c;
+const RegisterInputForm = styledComp.div`
   margin-top: 5%;
-  padding-left: 10px;
-  border-radius: 0.3em;
-  height: 50px;
-  width: 490px;
-  font-size: 20px;
-  font-family: 'BMJUA';
 `;
 
-const RegisterPasswordInput = styledComp.input`
+const RegisterInput = styledComp.input`
   border: 2px solid #868a8c;
   margin-top: 2%;
   padding-left: 10px;

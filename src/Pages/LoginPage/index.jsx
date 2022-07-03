@@ -34,7 +34,8 @@ const LoginPage = () => {
     navi('/');
   };
   const handleRegister = async body => {
-    const name = body.name;
+    const name = body.username;
+    const password = body.password;
     const result = await CRUDUserService.postUser(body);
     if (!result) {
       // alert('회원가입 에러! '); // TODO : Change error window in postUser
@@ -42,17 +43,8 @@ const LoginPage = () => {
     }
     handleLogin({
       name: name,
-      password: 4242,
+      password: password,
     });
-    // const login = await CRUDUserService.postLogin({
-    //   name: name,
-    //   password: 4242,
-    // });
-    // if (!result) {
-    //   alert('잘못된 아이디나 비밀번호 입니다!');
-    //   return;
-    // }
-    // navi('/');
   };
   return (
     <LoginBackground>
