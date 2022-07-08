@@ -77,7 +77,7 @@ const FilterModalFooter = styled.div`
   cursor: pointer;
 `;
 const CustomColumn = styled.div`
-  background-color: ${props => (props.isShow ? 'white' : 'gray')};
+  background-color: ${props => (props.isShow ? 'gray' : 'white')};
   width: 100px;
   height: 100px;
   margin: 15px;
