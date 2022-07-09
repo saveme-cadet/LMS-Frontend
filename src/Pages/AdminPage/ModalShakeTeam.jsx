@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import styled from 'styled-components';
+
 import Button from '@mui/material/Button';
 
 const shuffleArray = array => {
@@ -13,7 +15,11 @@ const shuffleArray = array => {
   return array;
 };
 
-const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
+const ModalShakeTeam = ({
+  setIsOpen,
+  attendUser,
+  onClickChangeShuffleTeam,
+}) => {
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
@@ -45,13 +51,13 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
   };
 
   useEffect(() => {
-    const newtralArray = [];
+    const neutralArray = [];
     attendUser.map(user => {
-      if (!teamList.includes(user.team)) newtralArray.push(user);
+      if (!teamList.includes(user.team)) neutralArray.push(user);
     });
     // console.log('attendUser : ', attendUser);
-    // console.log('newtralArray : ', newtralArray);
-    setNeutral(newtralArray);
+    // console.log('neutralArray : ', neutralArray);
+    setNeutral(neutralArray);
     setCurUsers(attendUser);
   }, []);
 
@@ -59,10 +65,10 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
     // console.log('isChanged?');
   }, [curUsers]);
   return (
-    <div className="modal">
+    <ModalShakeTeamBody>
       <h1>현재 팀 현황</h1>
       <h3>참가한 사용자들만 보여줍니다.</h3>
-      <div className="team-list">
+      <TeamList>
         {teamList.map(team => {
           return (
             <div key={team} className={`team ${team}`}>
@@ -76,7 +82,7 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
             </div>
           );
         })}
-        <div className="team newtral">
+        <div className="team neutral">
           <h1>neutral</h1>
           <div className="team-members">
             {neutral.map((user, i) => (
@@ -86,12 +92,44 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
             ))}
           </div>
         </div>
-      </div>
+      </TeamList>
       <Button onClick={handleShakeTeam}>팀 섞기</Button>
       <Button onClick={() => handleCloseModal(true)}>확인</Button>
       <Button onClick={() => handleCloseModal(false)}>취소</Button>
-    </div>
+    </ModalShakeTeamBody>
   );
 };
-
-export default ShakeTeam;
+const ModalShakeTeamBody = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 216, 216, 0.9);
+  .team-members {
+    display: flex;
+    flex-direction: row;
+  }
+  .team-member {
+    border-radius: 10%;
+    margin: 5px;
+    padding: 5px;
+  }
+  .red {
+    .team-member {
+      background-color: #dc143c;
+    }
+  }
+  .blue {
+    .team-member {
+      background-color: #0079f0;
+    }
+  }
+  .neutral {
+    .team-member {
+      background-color: gray;
+    }
+  }
+`;
+const TeamList = styled.div``;
+export default ModalShakeTeam;
