@@ -23,7 +23,7 @@ const ModalShakeTeam = ({
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
-  const teamList = ['red', 'blue'];
+  const teamList = ['red', 'blue', 'white'];
 
   const handleCloseModal = isAccept => {
     // console.log(curUsers);
@@ -38,7 +38,7 @@ const ModalShakeTeam = ({
 
   const handleShakeTeam = () => {
     const shakedUsers = shuffleArray(curUsers);
-    const leastMember = shakedUsers.length / teamList.length;
+    const leastMember = shakedUsers.length / (teamList.length - 1);
     // console.log('least : ', leastMember);
     for (let i = 0; i < shakedUsers.length; i++) {
       let teamIndex = Math.floor(i / leastMember);
@@ -68,35 +68,23 @@ const ModalShakeTeam = ({
     <ModalShakeTeamBody>
       <h1>현재 팀 현황</h1>
       <h3>참가한 사용자들만 보여줍니다.</h3>
-      <TeamList>
-        {teamList.map(team => {
-          return (
-            <Team key={team}>
-              <h1>{team}</h1>
-              <Members>
-                {curUsers.map((user, i) => {
-                  if (user.team === team)
-                    return (
-                      <MemberEach key={i} team={team}>
-                        {user.userName}
-                      </MemberEach>
-                    );
-                })}
-              </Members>
-            </Team>
-          );
-        })}
-        <Team>
-          <h1>neutral</h1>
-          <Members>
-            {neutral.map((user, i) => (
-              <MemberEach team="neutral" key={i}>
-                {user.userName}
-              </MemberEach>
-            ))}
-          </Members>
-        </Team>
-      </TeamList>
+      {teamList.map(team => {
+        return (
+          <Team key={team}>
+            <h1>{team}</h1>
+            <Members>
+              {curUsers.map((user, i) => {
+                if (user.team === team)
+                  return (
+                    <MemberEach key={i} team={team}>
+                      {user.userName}
+                    </MemberEach>
+                  );
+              })}
+            </Members>
+          </Team>
+        );
+      })}
       <Button onClick={handleShakeTeam}>팀 섞기</Button>
       <Button onClick={() => handleCloseModal(true)}>확인</Button>
       <Button onClick={() => handleCloseModal(false)}>취소</Button>
@@ -111,7 +99,6 @@ const ModalShakeTeamBody = styled.div`
   height: 100%;
   background-color: rgba(216, 216, 216, 0.9);
 `;
-const TeamList = styled.div``;
 const Team = styled.div``;
 const Members = styled.div`
   display: flex;
@@ -122,8 +109,8 @@ const MemberEach = styled.div`
   margin: 5px;
   padding: 5px;
   background-color: ${props =>
-    props.team === 'neutral'
-      ? 'gray'
+    props.team === 'white'
+      ? '#e3e3e3'
       : props.team === 'blue'
       ? '#0079f0'
       : '#dc143c'};

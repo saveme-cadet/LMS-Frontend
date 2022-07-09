@@ -6,8 +6,6 @@ import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
 
-import styled from 'styled-components';
-
 const AdminContainer = ({ auth, userId }) => {
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
