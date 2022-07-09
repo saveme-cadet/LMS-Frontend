@@ -71,27 +71,31 @@ const ModalShakeTeam = ({
       <TeamList>
         {teamList.map(team => {
           return (
-            <div key={team} className={`team ${team}`}>
+            <Team key={team}>
               <h1>{team}</h1>
-              <div className="team-members">
-                {curUsers.map(user => {
+              <Members>
+                {curUsers.map((user, i) => {
                   if (user.team === team)
-                    return <div className="team-member">{user.userName}</div>;
+                    return (
+                      <MemberEach key={i} team={team}>
+                        {user.userName}
+                      </MemberEach>
+                    );
                 })}
-              </div>
-            </div>
+              </Members>
+            </Team>
           );
         })}
-        <div className="team neutral">
+        <Team>
           <h1>neutral</h1>
-          <div className="team-members">
+          <Members>
             {neutral.map((user, i) => (
-              <div className="team-member" key={i}>
+              <MemberEach team="neutral" key={i}>
                 {user.userName}
-              </div>
+              </MemberEach>
             ))}
-          </div>
-        </div>
+          </Members>
+        </Team>
       </TeamList>
       <Button onClick={handleShakeTeam}>팀 섞기</Button>
       <Button onClick={() => handleCloseModal(true)}>확인</Button>
@@ -106,30 +110,22 @@ const ModalShakeTeamBody = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(216, 216, 216, 0.9);
-  .team-members {
-    display: flex;
-    flex-direction: row;
-  }
-  .team-member {
-    border-radius: 10%;
-    margin: 5px;
-    padding: 5px;
-  }
-  .red {
-    .team-member {
-      background-color: #dc143c;
-    }
-  }
-  .blue {
-    .team-member {
-      background-color: #0079f0;
-    }
-  }
-  .neutral {
-    .team-member {
-      background-color: gray;
-    }
-  }
 `;
 const TeamList = styled.div``;
+const Team = styled.div``;
+const Members = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const MemberEach = styled.div`
+  border-radius: 10%;
+  margin: 5px;
+  padding: 5px;
+  background-color: ${props =>
+    props.team === 'neutral'
+      ? 'gray'
+      : props.team === 'blue'
+      ? '#0079f0'
+      : '#dc143c'};
+`;
 export default ModalShakeTeam;
