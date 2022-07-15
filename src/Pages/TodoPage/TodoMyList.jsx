@@ -1,36 +1,52 @@
 import { format } from 'date-fns';
 
-import Item from './Item';
-import DeleteButton from './DeleteButton';
+import TodoEditForm from './TodoEditForm';
+import TodoListEach from './TodoListEach';
 
 import styled from 'styled-components';
 
-import Checkbox from '@mui/material/Checkbox';
-
-const TodoMyList = ({ toDos, date, changeCheck, removeToDo }) => {
+const TodoMyList = ({
+  toDos,
+  date,
+  changeCheck,
+  removeToDo,
+  isEdit,
+  setIsEdit,
+  getToDos,
+  userId,
+}) => {
   const today = new Date();
 
   return (
     <TodoMyListBody>
-      {toDos.map((item, index) => (
-        <TodoMyListContainer key={index}>
-          <Checkbox
-            onClick={() => changeCheck(index)}
-            checked={item.titleCheck}
-            disabled={
-              format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-            }
-            size="small"
-          />
-          <Item
-            item={item}
-            index={index}
-            changeCheck={changeCheck}
-            isCheck={item.titleCheck}
-          />
-          <DeleteButton today={today} date={date} removeToDo={removeToDo} />
-        </TodoMyListContainer>
-      ))}
+      {toDos.map((item, index) =>
+        index === isEdit &&
+        format(today, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd') ? (
+          <TodoMyListContainer key={index}>
+            <TodoEditForm
+              item={item}
+              date={date}
+              index={index}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+              toDos={toDos}
+              userId={userId}
+              getToDos={getToDos}
+            />
+          </TodoMyListContainer>
+        ) : (
+          <TodoMyListContainer key={index}>
+            <TodoListEach
+              item={item}
+              index={index}
+              changeCheck={changeCheck}
+              date={date}
+              setIsEdit={setIsEdit}
+              removeToDo={removeToDo}
+            />
+          </TodoMyListContainer>
+        ),
+      )}
     </TodoMyListBody>
   );
 };
