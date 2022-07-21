@@ -6,14 +6,13 @@ import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
 
-const AdminContainer = ({ auth, userId }) => {
+const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
 
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];

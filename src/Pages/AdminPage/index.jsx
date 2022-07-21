@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { AuthContext } from 'App';
 import { ShowToday, NotValid } from 'Components';
 
@@ -9,18 +9,31 @@ import styled from 'styled-components';
 
 const AdminPage = () => {
   const [date, setDate] = useState(new Date());
+  const [isOpen, setIsOpen] = useState('false');
   const auth = useContext(AuthContext);
   const userRole = auth.status.role;
   const userId = auth.status.userId;
 
+  const pressESC = event => {
+    console.log(event);
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      setIsOpen(false);
+    }
+  };
+
   return (
-    <AdminBackground>
+    <AdminBackground onKeyDown={pressESC}>
       <AdminHeader>
         <ShowToday date={date} />
       </AdminHeader>
       <AdminBody>
         {userRole === '머슴' ? (
-          <AdminContainer auth={auth} userId={userId} />
+          <AdminContainer
+            auth={auth}
+            userId={userId}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
         ) : (
           <NotValid code={0} />
         )}

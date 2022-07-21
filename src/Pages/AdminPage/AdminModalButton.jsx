@@ -31,7 +31,13 @@ const AdminModalButton = ({ setIsOpen }) => {
         </Button>
       </FeatureModalButton>
       <ManualModalButton>
-        <Button>머슴이 할 일</Button>
+        <Button
+          onClick={() => {
+            setIsOpen('todo');
+          }}
+        >
+          머슴이 할 일
+        </Button>
       </ManualModalButton>
     </ModalButton>
   );

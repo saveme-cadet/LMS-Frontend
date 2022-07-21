@@ -1,6 +1,7 @@
 import ModalAddVacationAll from './ModalAddVacationAll';
 import ModalAttendLeaderboard from './ModalAttendLeaderboard';
 import ModalShakeTeam from './ModalShakeTeam';
+import ModalAdminGuide from './ModalAdminGuide';
 
 const AdminModal = ({
   setIsOpen,
@@ -33,7 +34,12 @@ const AdminModal = ({
           onClickChangeShuffleTeam={handleChangeShuffleTeam}
         />
       )}
+      {isOpen === 'todo' && (
+        // TODO: 모달 클릭 후 onKeyDown이 안먹힘(ESC)
+        <ModalAdminGuide setIsOpen={setIsOpen} />
+      )}
     </>
   );
 };
+
 export default AdminModal;
