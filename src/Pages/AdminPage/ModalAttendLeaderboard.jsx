@@ -1,6 +1,8 @@
+import styled from 'styled-components';
+
 import Button from '@mui/material/Button';
 
-const AttendLeaderboard = ({ setIsOpen, attendUser }) => {
+const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
   const sortArray = attendUser.sort((a, b) => {
     if (a.participateScore === b.participateScore) {
       if (a.attendScore < b.attendScore) return -1;
@@ -18,7 +20,7 @@ const AttendLeaderboard = ({ setIsOpen, attendUser }) => {
   //   return 0;
   // };
   return (
-    <div className="modal">
+    <ModalAttendLeaderboardBody>
       <h1>월렛 보상 대상</h1>
       <h3>
         생존자에게 5월렛, 출석 우수자 3인에게 추가 월렛이 차등 지급(3, 2,
@@ -46,8 +48,15 @@ const AttendLeaderboard = ({ setIsOpen, attendUser }) => {
       </h1>
       <Button onClick={() => setIsOpen(false)}>확인</Button>
       <Button onClick={() => setIsOpen(false)}>취소</Button>
-    </div>
+    </ModalAttendLeaderboardBody>
   );
 };
-
-export default AttendLeaderboard;
+const ModalAttendLeaderboardBody = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 216, 216, 0.9);
+`;
+export default ModalAttendLeaderboard;
