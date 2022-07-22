@@ -15,14 +15,13 @@ const AdminPage = () => {
   const userId = auth.status.userId;
 
   const pressESC = event => {
-    console.log(event);
     if (event.key === 'Escape' || event.key === 'Esc') {
       setIsOpen(false);
     }
   };
 
   return (
-    <AdminBackground onKeyDown={pressESC}>
+    <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
         <ShowToday date={date} />
       </AdminHeader>
