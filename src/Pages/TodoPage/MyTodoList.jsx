@@ -67,7 +67,7 @@ const MyTodoList = ({ userId, date }) => {
   const changeCheck = async index => {
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
     toDos[index].titleCheck = !toDos[index].titleCheck;
-    const result = await TodoService.putTodo(toDos[index]);
+    const result = await TodoService.patchTodo(toDos[index]);
     // console.log(result);
     getTodos(userId);
   };

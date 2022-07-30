@@ -20,7 +20,7 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
       return;
     }
     onClickLogin({
-      name: id,
+      username: id,
       password: password,
     });
     setId('');

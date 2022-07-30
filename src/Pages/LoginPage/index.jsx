@@ -42,7 +42,7 @@ const LoginPage = () => {
       return;
     }
     handleLogin({
-      name: name,
+      username: name,
       password: password,
     });
   };

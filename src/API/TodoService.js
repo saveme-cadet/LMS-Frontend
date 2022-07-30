@@ -1,22 +1,12 @@
 import { instance } from './api';
 
 const TodoUrl = path => {
-  return `/todo/${path}`;
+  return `/users/${path}`;
 };
 
 const TodoService = {
-  putTodo: async body => {
-    const url = TodoUrl(`todo`);
-    let response;
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  postTodo: async body => {
-    const url = TodoUrl(`usertodo`);
+  postTodo: async (userId, body) => {
+    const url = TodoUrl(`${userId}/todos`);
     let response;
     try {
       response = await instance.post(url, body);
@@ -25,8 +15,29 @@ const TodoService = {
     }
     return response;
   },
+
+  deleteTodo: async (userId, todoId) => {
+    const url = TodoUrl(`${userId}/todos/${todoId}`);
+    let response;
+    try {
+      response = await instance.delete(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  patchTodo: async (todoId, userId, body) => {
+    const url = TodoUrl(`${userId}/todos/${todoId}`);
+    let response;
+    try {
+      response = await instance.patch(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
   getTodo: async (userId, date) => {
-    const url = TodoUrl(`day/${userId}?date=${date}`);
+    const url = TodoUrl(`${userId}/todos?date=${date}`);
     let response;
     try {
       response = await instance.get(url);
@@ -36,31 +47,10 @@ const TodoService = {
     return response;
   },
   getOthers: async date => {
-    const url = TodoUrl(`day/?date=${date}`);
+    const url = TodoUrl(`todos?date=${date}`);
     let response;
     try {
       response = await instance.get(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  // deleteTodo: async body => {
-  //   const url = TodoUrl(`delete`);
-  //   // console.log(body);
-  //   let response;
-  //   try {
-  //     response = await instance.delete(url, body);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
-  deleteTodo: async (userId, todoId, date) => {
-    const url = TodoUrl(`delete/${userId}/${todoId}?date=${date}`);
-    let response;
-    try {
-      response = await instance.delete(url);
     } catch (e) {
       alert(e);
     }

@@ -1,14 +1,14 @@
 import { instance } from './api';
 
 const MineUrl = path => {
-  return `/aoji/${path}`;
+  return `/study_times/${path}`;
   // return `/mine/${path}`;
   // 백엔드 API가 변경되지 않아 일단 aoji로 사용
 };
 
 const MineService = {
-  putEditMine: async (userId, body) => {
-    const url = MineUrl(`minetime/${userId}`);
+  putEditMine: async (studyTimeId, body) => {
+    const url = MineUrl(`${studyTimeId}`);
     let response;
     try {
       response = await instance.put(url, body);
@@ -18,8 +18,8 @@ const MineService = {
     return response;
   },
 
-  postStartMine: async userId => {
-    const url = MineUrl(`create/${userId}`);
+  postStartMine: async () => {
+    const url = MineUrl(``);
     let response;
     try {
       response = await instance.post(url);
@@ -28,8 +28,8 @@ const MineService = {
     }
     return response;
   },
-  putEndMine: async userId => {
-    const url = MineUrl(`update/${userId}`);
+  putEndMine: async () => {
+    const url = MineUrl(``);
     let response;
     try {
       response = await instance.put(url);
@@ -38,8 +38,8 @@ const MineService = {
     }
     return response;
   },
-  getOtherMine: async () => {
-    const url = MineUrl(`studyuser`);
+  getAllMine: async () => {
+    const url = MineUrl(`study-user`);
     let response;
     try {
       response = await instance.get(url);
@@ -48,17 +48,17 @@ const MineService = {
     }
     return response;
   },
-
-  getMyMine: async userId => {
-    const url = MineUrl(`read/${userId}`);
-    let response;
-    try {
-      response = await instance.get(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
+  // API 존재하지 않음
+  // getMyMine: async userId => {
+  //   const url = MineUrl(`read/${userId}`);
+  //   let response;
+  //   try {
+  //     response = await instance.get(url);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
 };
 
 export default MineService;
