@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
-
 import { AuthContext } from 'App';
-import { validDay } from 'Utils';
+
 import { TEAM, TEAM_ID } from 'Utils/constants';
 import { UserInfoService } from 'API';
 
@@ -11,14 +10,18 @@ import ShowDate from './ShowDate';
 import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
+import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
+
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
+  const [customData, setCustomData] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
@@ -42,6 +45,34 @@ const MainPage = () => {
   const handleChangeTab = (event, dstTab) => {
     setTab(dstTab);
     updateSelectData(dstTab);
+  };
+
+  const handleClickToggleCustom = dst => {
+    switch (dst) {
+      case '팀':
+        customData[0] = !customData[0];
+        break;
+      case '역할':
+        customData[1] = !customData[1];
+        break;
+      case '출석':
+        customData[3] = !customData[3];
+        break;
+      case '결석':
+        customData[4] = !customData[4];
+        break;
+      case '휴가':
+        customData[5] = !customData[5];
+        break;
+      case '목표':
+        customData[8] = !customData[8];
+        break;
+      default:
+    }
+    const newArray = [...customData];
+    // 분해 할당하지 않으면 얕은 복사이기에 state가 변경되지 않음
+    setCustomData(newArray);
+    localStorage.setItem('customData', JSON.stringify(newArray));
   };
 
   const getUsers = async () => {
@@ -70,6 +101,11 @@ const MainPage = () => {
     getUsers();
   }, [date]);
 
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('customData'));
+    setCustomData(localData ? localData : new Array(9).fill(true));
+    // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
+  }, []);
   return (
     <MainPageContainer>
       {selectRowData && (
@@ -79,17 +115,30 @@ const MainPage = () => {
 
           <MainPageTableContainer>
             <MainPageBody>
-              <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
+              <MainPageTableTabs
+                date={date}
+                tab={tab}
+                handleChangeTab={handleChangeTab}
+                setIsOpen={setIsOpen}
+              />
               <MainPageTable
                 date={date}
                 rowData={rowData}
                 selectRowData={selectRowData}
                 getUsers={getUsers}
                 userId={userId}
+                customData={customData}
               />
             </MainPageBody>
           </MainPageTableContainer>
         </>
+      )}
+      {isOpen && (
+        <FilterModal
+          customData={customData}
+          onClickToggleCustom={handleClickToggleCustom}
+          setIsOpen={setIsOpen}
+        />
       )}
     </MainPageContainer>
   );
@@ -98,7 +147,6 @@ const MainPage = () => {
 export default MainPage;
 
 const MainPageContainer = styled.div`
-  position: relative;
   box-sizing: border-box;
   padding: 50px;
 
