@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
   useEffect(() => {
-    const userId = localStorage.getItem('id');
+    const userId = localStorage.getItem('userId');
 
     setStatus({ userId });
     setIsLoading(false);

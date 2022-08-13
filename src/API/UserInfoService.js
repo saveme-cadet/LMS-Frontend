@@ -22,8 +22,8 @@ const UserInfoService = {
   //   "team": "RED, BLUE, NONE",
   //   "reason": "team 변경사유 입력"
   // }
-  patchTeam: async (id, body) => {
-    const url = UserInfoUrl(`${id}/team`);
+  patchTeam: async (userId, body) => {
+    const url = UserInfoUrl(`${userId}/team`);
     let response;
 
     try {
@@ -34,8 +34,8 @@ const UserInfoService = {
     return response;
   },
 
-  patchRole: async (id, body) => {
-    const url = UserInfoUrl(`${id}/role`);
+  patchRole: async (userId, body) => {
+    const url = UserInfoUrl(`${userId}/role`);
     let response;
 
     try {
@@ -49,8 +49,8 @@ const UserInfoService = {
   // {
   //   "attendStatus": "PARTICIPATED, NOT_PARTICIPATED"
   // }
-  patchAttend: async (id, body) => {
-    const url = UserInfoUrl(`${id}/attendStatus`);
+  patchAttend: async (userId, body) => {
+    const url = UserInfoUrl(`${userId}/attendStatus`);
     let response;
 
     try {

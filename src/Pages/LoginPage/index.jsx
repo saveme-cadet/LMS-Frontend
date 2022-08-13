@@ -24,7 +24,7 @@ const LoginPage = () => {
     alert(`환영합니다, ${body.username}!`); // TODO : change window type + timer
     console.log(result);
     auth.setIsLoading(true);
-    localStorage.setItem('id', result.data.id);
+    localStorage.setItem('userId', result.data.id);
     auth.setStatus(status);
 
     auth.setIsLoading(false);
@@ -38,8 +38,6 @@ const LoginPage = () => {
       alert('회원가입 에러! '); // TODO : Change error window in postUser
       return;
     }
-    console.log(result);
-    // localStorage.setItem('id', result);
     handleLogin({
       username: name,
       password: password,

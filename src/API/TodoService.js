@@ -5,6 +5,9 @@ const TodoUrl = path => {
 };
 
 const TodoService = {
+  // 자신의 할일 가져오기
+  // date=2022-02-11
+
   getTodo: async (userId, date) => {
     const url = TodoUrl(`${userId}/todos?date=${date}`);
     let response;
