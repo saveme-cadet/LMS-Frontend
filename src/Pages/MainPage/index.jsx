@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 import { validDay } from 'Utils';
 import { TEAM, TEAM_ID } from 'Utils/constants';
-import AllTableService from 'API/AllTableService';
+import { UserInfoService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -46,7 +46,7 @@ const MainPage = () => {
 
   const getUsers = async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await AllTableService.getAllTable(dateFormat, userId);
+    const result = await UserInfoService.getAllUser(0, 100);
 
     const newArray = result.data.map(array => ({
       ...array,

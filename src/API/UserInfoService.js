@@ -11,7 +11,7 @@ const UserInfoService = {
     let response;
 
     try {
-      response = await instance.post(url);
+      response = await instance.get(url);
     } catch (e) {
       alert(e);
     }

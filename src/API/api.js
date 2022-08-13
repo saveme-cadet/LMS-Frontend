@@ -4,6 +4,7 @@ const apiUrl = 'https://www.savvemecadet.click/api';
 
 export const instance = axios.create({
   baseURL: apiUrl,
+  withCredentials: true,
 
   // headers: {
   // 'content-type': 'application/json',
