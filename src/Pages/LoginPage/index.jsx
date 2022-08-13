@@ -6,7 +6,6 @@ import { CRUDUserService } from 'API';
 
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import Button from '@mui/material/Button';
 
 import styled from 'styled-components';
 
@@ -22,14 +21,12 @@ const LoginPage = () => {
       alert('잘못된 아이디나 비밀번호 입니다!'); // TODO : change window type + Timer
       return;
     }
-    alert(`환영합니다, ${body.name}!`); // TODO : change window type + timer
+    alert(`환영합니다, ${body.username}!`); // TODO : change window type + timer
+    console.log(result);
     auth.setIsLoading(true);
-    const status = result.data[0];
+    localStorage.setItem('id', result.data.id);
     auth.setStatus(status);
-    localStorage.setItem('userId', status.userId);
-    localStorage.setItem('userName', status.userName);
-    localStorage.setItem('role', status.role);
-    localStorage.setItem('team', status.team);
+
     auth.setIsLoading(false);
     navi('/');
   };
@@ -38,9 +35,11 @@ const LoginPage = () => {
     const password = body.password;
     const result = await CRUDUserService.postUser(body);
     if (!result) {
-      // alert('회원가입 에러! '); // TODO : Change error window in postUser
+      alert('회원가입 에러! '); // TODO : Change error window in postUser
       return;
     }
+    console.log(result);
+    // localStorage.setItem('id', result);
     handleLogin({
       username: name,
       password: password,

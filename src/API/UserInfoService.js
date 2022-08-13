@@ -43,7 +43,7 @@ const UserInfoService = {
   },
 
   getAllUser: async () => {
-    const url = UserInfoUrl(``);
+    const url = UserInfoUrl(`?offset=0&size=100`); // 쿼리 임의 추가
     let response;
 
     try {

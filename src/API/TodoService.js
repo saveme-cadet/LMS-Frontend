@@ -5,6 +5,16 @@ const TodoUrl = path => {
 };
 
 const TodoService = {
+  getTodo: async (userId, date) => {
+    const url = TodoUrl(`${userId}/todos?date=${date}`);
+    let response;
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
   postTodo: async (userId, body) => {
     const url = TodoUrl(`${userId}/todos`);
     let response;
@@ -36,16 +46,7 @@ const TodoService = {
     }
     return response;
   },
-  getTodo: async (userId, date) => {
-    const url = TodoUrl(`${userId}/todos?date=${date}`);
-    let response;
-    try {
-      response = await instance.get(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
+
   getOthers: async date => {
     const url = TodoUrl(`todos?date=${date}`);
     let response;

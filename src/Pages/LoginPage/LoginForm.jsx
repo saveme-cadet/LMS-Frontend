@@ -29,6 +29,7 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   const handlePressEnter = e => {
     if (e.key === 'Enter') handleClick();
   };
+
   return (
     <>
       <LoginFormID>

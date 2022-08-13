@@ -19,14 +19,14 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   };
 
   const handleClick = async () => {
-    if (!id || !email) {
+    if (!id || !password) {
       alert('전부 입력해주세요!');
       return;
     }
     onClickRegister({
       username: id,
       password: password,
-      email: email,
+      email: `${id}@student.42seoul.kr`,
     });
     setId('');
     setEmail('');
@@ -38,36 +38,34 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   return (
     <>
       <RegisterMain>
-        <form>
-          <RegisterWelcome>
-            <h2>환영합니다!</h2>
-            <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
-          </RegisterWelcome>
-          <RegisterInputForm>
-            <RegisterInput
-              value={id}
-              placeholder="인트라 ID"
-              onChange={handleChangeId}
-              onKeyPress={handlePressEnter}
-            />
-            <RegisterInput
-              value={password}
-              placeholder="비밀번호"
-              onChange={handleChangePassword}
-              onKeyPress={handlePressEnter}
-            />
-            <RegisterInput
-              value={email}
-              placeholder="이메일 ex) example@student.42seoul.kr"
-              onChange={handleChangeEmail}
-              onKeyPress={handlePressEnter}
-            />
-          </RegisterInputForm>
-          <LoginButton variant="contained" onClick={handleClick}>
-            함께하기!
-          </LoginButton>
-          <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
-        </form>
+        <RegisterWelcome>
+          <h2>환영합니다!</h2>
+          <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
+        </RegisterWelcome>
+        <RegisterInputForm>
+          <RegisterInput
+            value={id}
+            placeholder="인트라 ID"
+            onChange={handleChangeId}
+            onKeyPress={handlePressEnter}
+          />
+          <RegisterInput
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+            onKeyPress={handlePressEnter}
+          />
+          {/* <RegisterInput
+            value={email}
+            placeholder="이메일 ex) example@student.42seoul.kr"
+            onChange={handleChangeEmail}
+            onKeyPress={handlePressEnter}
+          /> */}
+        </RegisterInputForm>
+        <LoginButton variant="contained" onClick={handleClick}>
+          함께하기!
+        </LoginButton>
+        <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
       </RegisterMain>
     </>
   );
@@ -121,6 +119,6 @@ const BackButton = styled(Button)({
   fontFamily: 'BMJUA',
   fontSize: '20px',
   textDecoration: 'underline',
-  color: '#000000',
+  color: 'black',
   width: '150px',
 });

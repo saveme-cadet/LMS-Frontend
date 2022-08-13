@@ -1,21 +1,10 @@
-import { instance } from './api';
+import { instance, loginInstance } from './api';
 
 const CRUDUserAPI = path => {
   return `/${path}`;
 };
 
 const CRUDUserService = {
-  // deleteUser: async body => {
-  //   // 미사용
-  //   const url = CRUDUserAPI(`user/delete`);
-  //   let response;
-  //   try {
-  //     response = await instance.delete(url, body);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
   postUser: async body => {
     const url = CRUDUserAPI(`users`);
     let response;
@@ -29,12 +18,14 @@ const CRUDUserService = {
   },
   postLogin: async body => {
     const url = CRUDUserAPI('auth/login');
-    // const formData = new FormData();
-    // formData.set('username', body.username);
-    // formData.set('password', body.password);
+    const formData = new FormData();
+    for (let k in body) {
+      formData.append(k, body[k]);
+    }
     let response;
+
     try {
-      response = await instance.post(url, body);
+      response = await instance.post(url, formData);
     } catch (e) {
       alert(e);
     }
