@@ -5,54 +5,62 @@ const UserInfoUrl = path => {
 };
 
 const UserInfoService = {
-  putAttend: async (id, status) => {
-    const url = UserInfoUrl(`${id}/attendstatus`);
-    const body = { attendStatus: status };
+  // 모든 유저 가져오기
+  getAllUser: async (offset, size) => {
+    const url = UserInfoUrl(`?offset=${offset}&size=${size}`);
     let response;
 
     try {
-      response = await instance.put(url, body);
+      response = await instance.post(url);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-  putTeam: async (id, team) => {
+  // 팀 변경
+  // {
+  //   "team": "RED, BLUE, NONE",
+  //   "reason": "team 변경사유 입력"
+  // }
+  patchTeam: async (id, body) => {
     const url = UserInfoUrl(`${id}/team`);
-    const body = { team: team };
     let response;
 
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-  putRole: async (id, role) => {
+
+  patchRole: async (id, body) => {
     const url = UserInfoUrl(`${id}/role`);
-    const body = { role: role };
     let response;
 
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-
-  getAllUser: async () => {
-    const url = UserInfoUrl(`?offset=0&size=100`); // 쿼리 임의 추가
+  // 참여 유무 변경
+  // {
+  //   "attendStatus": "PARTICIPATED, NOT_PARTICIPATED"
+  // }
+  patchAttend: async (id, body) => {
+    const url = UserInfoUrl(`${id}/attendStatus`);
     let response;
 
     try {
-      response = await instance.get(url);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
+  // 이번 달 참여 중인 사용자 얻기
   getParticipateUser: async () => {
     const url = UserInfoUrl(`participating-this-month`);
     let response;

@@ -68,7 +68,6 @@ const MyTodoList = ({ userId, date }) => {
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
     toDos[index].titleCheck = !toDos[index].titleCheck;
     const result = await TodoService.patchTodo(toDos[index]);
-    // console.log(result);
     getTodos(userId);
   };
 
@@ -116,7 +115,7 @@ const MyTodoList = ({ userId, date }) => {
 
   useEffect(() => {
     getTodos(userId);
-    getOthers();
+    // getOthers();
   }, [number, date]);
 
   useEffect(() => {

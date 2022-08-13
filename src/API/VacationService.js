@@ -4,10 +4,32 @@ const VacationUrl = path => {
   return `/${path}`;
 };
 
+// 자신의 휴가 사용
+/*
+{
+  "usedDays": int,
+  "reason": "string"
+}
+  */
 const VacationService = {
-  patchVacation: async (id, addDay) => {
+  postVacation: async body => {
+    const url = VacationUrl(`vacations`);
+    let response;
+    try {
+      response = await instance.patch(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  // 휴가 추가
+  /* 
+  {
+  "addedDays": 0  
+  }
+*/
+  patchVacation: async (id, body) => {
     const url = VacationUrl(`vacations/${id}`);
-    const body = { addedDays: addDay };
     let response;
     try {
       response = await instance.patch(url, body);
@@ -20,7 +42,7 @@ const VacationService = {
     const url = VacationUrl(`used-vacations`);
     let response;
     try {
-      response = await instance.patch(url);
+      response = await instance.get(url);
     } catch (e) {
       alert(e);
     }
