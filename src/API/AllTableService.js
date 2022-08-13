@@ -5,6 +5,10 @@ const AllTableUrl = path => {
 };
 
 const AllTableService = {
+  // 출석 체크인
+  // {
+  //   "status": "NONE"
+  // }
   putAllTableCheckIn: async (attendanceId, body) => {
     const url = AllTableUrl(`attendance/${attendanceId}/checkin`);
     let response;
@@ -15,9 +19,12 @@ const AllTableService = {
     }
     return response;
   },
-
+  //  출석 체크아웃
+  // {
+  //   "status": "NONE"
+  // }
   putAllTableCheckOut: async (attendanceId, body) => {
-    const url = AllTableUrl(`attendance/${attendanceId}/checkin`);
+    const url = AllTableUrl(`attendance/${attendanceId}/checkout`);
     let response;
     try {
       response = await instance.put(url, body);
