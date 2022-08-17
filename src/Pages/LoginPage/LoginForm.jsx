@@ -3,7 +3,7 @@ import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const LoginForm = ({ onClickLogin, setStatus }) => {
+const LoginForm = ({ onClickLogin, setPageStatus }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -53,7 +53,7 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
       <LoginButton onClick={handleClick} variant="contained">
         로그인
       </LoginButton>
-      <RegisterButton onClick={() => setStatus('register')}>
+      <RegisterButton onClick={() => setPageStatus('register')}>
         아직 회원이 아니신가요?
       </RegisterButton>
     </>

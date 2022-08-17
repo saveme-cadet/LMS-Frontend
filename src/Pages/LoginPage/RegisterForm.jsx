@@ -3,7 +3,7 @@ import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const RegisterForm = ({ onClickRegister, setStatus }) => {
+const RegisterForm = ({ onClickRegister, setPageStatus }) => {
   const [id, setId] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,7 +65,9 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
         <LoginButton variant="contained" onClick={handleClick}>
           함께하기!
         </LoginButton>
-        <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
+        <BackButton onClick={() => setPageStatus('login')}>
+          되돌아가기
+        </BackButton>
       </RegisterMain>
     </>
   );

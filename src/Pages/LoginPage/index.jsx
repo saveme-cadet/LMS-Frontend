@@ -13,7 +13,7 @@ const LoginPage = () => {
   const navi = useNavigate();
   const auth = useContext(AuthContext);
 
-  const [status, setStatus] = useState('login');
+  const [pageStatus, setPageStatus] = useState('login');
 
   const handleLogin = async body => {
     const result = await CRUDUserService.postLogin(body);
@@ -25,7 +25,7 @@ const LoginPage = () => {
     console.log(result);
     auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
-    auth.setStatus(status);
+    auth.setStatus({ userId: result.data.id });
 
     auth.setIsLoading(false);
     navi('/');
@@ -49,15 +49,15 @@ const LoginPage = () => {
         <img src="/asset/saveme.png" alt="logo" />
         <LoginMainTitle>구해줘 카뎃</LoginMainTitle>
       </LoginMain>
-      {status === 'login' ? (
+      {pageStatus === 'login' ? (
         <>
-          <LoginForm onClickLogin={handleLogin} setStatus={setStatus} />
+          <LoginForm onClickLogin={handleLogin} setPageStatus={setPageStatus} />
         </>
       ) : (
         <>
           <RegisterForm
             onClickRegister={handleRegister}
-            setStatus={setStatus}
+            setPageStatus={setPageStatus}
           />
         </>
       )}

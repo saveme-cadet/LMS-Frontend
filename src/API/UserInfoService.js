@@ -1,7 +1,7 @@
 import { instance } from './api';
 
 const UserInfoUrl = path => {
-  return `/users/${path}`;
+  return `/users${path}`;
 };
 
 const UserInfoService = {
@@ -23,7 +23,7 @@ const UserInfoService = {
   //   "reason": "team 변경사유 입력"
   // }
   patchTeam: async (userId, body) => {
-    const url = UserInfoUrl(`${userId}/team`);
+    const url = UserInfoUrl(`/${userId}/team`);
     let response;
 
     try {
@@ -35,7 +35,7 @@ const UserInfoService = {
   },
 
   patchRole: async (userId, body) => {
-    const url = UserInfoUrl(`${userId}/role`);
+    const url = UserInfoUrl(`/${userId}/role`);
     let response;
 
     try {
@@ -50,7 +50,7 @@ const UserInfoService = {
   //   "attendStatus": "PARTICIPATED, NOT_PARTICIPATED"
   // }
   patchAttend: async (userId, body) => {
-    const url = UserInfoUrl(`${userId}/attendStatus`);
+    const url = UserInfoUrl(`/${userId}/attendStatus`);
     let response;
 
     try {
@@ -62,7 +62,7 @@ const UserInfoService = {
   },
   // 이번 달 참여 중인 사용자 얻기
   getParticipateUser: async () => {
-    const url = UserInfoUrl(`participating-this-month`);
+    const url = UserInfoUrl(`/participating-this-month`);
     let response;
 
     try {
