@@ -54,6 +54,7 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             placeholder="비밀번호"
             onChange={handleChangePassword}
             onKeyPress={handlePressEnter}
+            type="password"
           />
           {/* <RegisterInput
             value={email}

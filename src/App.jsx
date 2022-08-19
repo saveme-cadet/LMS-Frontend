@@ -72,7 +72,6 @@ const App = () => {
               }
             />
 
-            {/* <Route path="/oauth/kakao/callback" element={<OAuthPage />} /> */}
             <Route
               path="/*"
               element={

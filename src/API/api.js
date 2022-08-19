@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { API_URL } from 'Utils/constants';
 
-const apiUrl = 'https://www.savvemecadet.click/api';
+const apiUrl = API_URL;
 
 export const instance = axios.create({
   baseURL: apiUrl,
   withCredentials: true,
 
   // headers: {
-  // 'content-type': 'application/json',
-  // 'Content-Type': 'multipart/form-data',
-  // 'Content-Type': 'application/x-www-form-urlencoded',
+  //   'Content-Type': 'application/json',
+  //   'Content-Type': 'multipart/form-data',
+  //   'Content-Type': 'application/x-www-form-urlencoded',
   // },
 });

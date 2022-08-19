@@ -12,4 +12,11 @@ const TEAM = {
   BLUE: 'blue',
 };
 
-export { CHECK_IN, CHECK_OUT, TEAM, TEAM_ID };
+const API_URL = 'https://www.savvemecadet.click/api';
+
+const API_PARAMS = {
+  GET_USERS_OFFSET: 0,
+  GET_USERS_SIZE: 10,
+};
+
+export { CHECK_IN, CHECK_OUT, TEAM, TEAM_ID, API_URL, API_PARAMS };

@@ -30,18 +30,13 @@ const LoginPage = () => {
     auth.setIsLoading(false);
     navi('/');
   };
-  const handleRegister = async body => {
-    const name = body.username;
-    const password = body.password;
-    const result = await CRUDUserService.postUser(body);
+  const handleRegister = async userLoginInfo => {
+    const result = await CRUDUserService.postUser(userLoginInfo);
     if (!result) {
       alert('회원가입 에러! '); // TODO : Change error window in postUser
       return;
     }
-    handleLogin({
-      username: name,
-      password: password,
-    });
+    handleLogin(userLoginInfo);
   };
   return (
     <LoginBackground>
