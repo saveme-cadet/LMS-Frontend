@@ -1,84 +1,13 @@
 import { instance } from './api';
 
 const UserInfoUrl = path => {
-  return `/userinfo/${path}`;
+  return `/users${path}`;
 };
 
 const UserInfoService = {
-  putAttend: async (id, status) => {
-    const url = UserInfoUrl(`attendstatus`);
-    const body = { userId: id, attendStatus: status };
-    let response;
-
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  putTeam: async (id, team) => {
-    const url = UserInfoUrl(`team`);
-    const body = { userId: id, team: team };
-    let response;
-
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  putRole: async (id, role) => {
-    const url = UserInfoUrl(`role`);
-    const body = { userId: id, role: role };
-    let response;
-
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  putVacationPlus: async id => {
-    const url = UserInfoUrl(`vacationplus`);
-    const body = { userId: id };
-    let response;
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  putVacationMinus: async id => {
-    const url = UserInfoUrl(`vacationminus`);
-    const body = { userId: id };
-    let response;
-    try {
-      response = await instance.put(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-
-  postUserInfo: async (id, body) => {
-    // 미사용
-    const url = UserInfoUrl(`info?userId=${id}`);
-    let response;
-    try {
-      response = await instance.post(url, body);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-
-  getAllUserInfo: async id => {
-    // 미사용
-    const url = UserInfoUrl(`allinfo?userId=${id}`);
+  // 모든 유저 가져오기
+  getAllUser: async (offset, size) => {
+    const url = UserInfoUrl(`?offset=${offset}&size=${size}`);
     let response;
 
     try {
@@ -88,19 +17,52 @@ const UserInfoService = {
     }
     return response;
   },
-  getAllUser: async id => {
-    const url = UserInfoUrl(`all?userId=${id}`);
+  // 팀 변경
+  // {
+  //   "team": "RED, BLUE, NONE",
+  //   "reason": "team 변경사유 입력"
+  // }
+  patchTeam: async (userId, body) => {
+    const url = UserInfoUrl(`/${userId}/team`);
     let response;
 
     try {
-      response = await instance.get(url);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-  getUserData: async id => {
-    const url = UserInfoUrl(`allinfo?userId=${id}`);
+
+  patchRole: async (userId, body) => {
+    const url = UserInfoUrl(`/${userId}/role`);
+    let response;
+
+    try {
+      response = await instance.patch(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  // 참여 유무 변경
+  // {
+  //   "attendStatus": "PARTICIPATED, NOT_PARTICIPATED"
+  // }
+  patchAttend: async (userId, body) => {
+    const url = UserInfoUrl(`/${userId}/attendStatus`);
+    let response;
+
+    try {
+      response = await instance.patch(url, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  // 이번 달 참여 중인 사용자 얻기
+  getParticipateUser: async () => {
+    const url = UserInfoUrl(`/participating-this-month`);
     let response;
 
     try {

@@ -1,8 +1,15 @@
 import axios from 'axios';
+import { API_URL } from 'Utils/constants';
 
-const apiUrl = 'https://www.savemecadet.click/api';
+const apiUrl = API_URL;
 
 export const instance = axios.create({
   baseURL: apiUrl,
-  // withCredentials: true, // 백에서 CORS를 전부 열어두었기 때문에 없어도 된다
+  withCredentials: true,
+
+  // headers: {
+  //   'Content-Type': 'application/json',
+  //   'Content-Type': 'multipart/form-data',
+  //   'Content-Type': 'application/x-www-form-urlencoded',
+  // },
 });

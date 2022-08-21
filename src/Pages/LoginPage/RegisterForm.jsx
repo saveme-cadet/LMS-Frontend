@@ -3,37 +3,28 @@ import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const RegisterForm = ({ onClickRegister, setStatus }) => {
+const RegisterForm = ({ onClickRegister, setPageStatus }) => {
   const [id, setId] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleChangeId = event => {
     setId(event.target.value);
   };
-
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
+  const handleChangePassword = event => {
+    setPassword(event.target.value);
   };
 
-  // NOTE : change password method
-  // const handleChangePassword = event => {
-  //   setPassword(event.target.value);
-  // };
-
   const handleClick = async () => {
-    if (!id || !email) {
+    if (!id || !password) {
       alert('전부 입력해주세요!');
       return;
     }
     onClickRegister({
-      name: id,
-      email: email,
-      password: 4242, // TODO : each user has a unique password
-      birthday: '2022-04-01',
+      username: id,
+      password: password,
+      // email: `${id}@student.42seoul.kr`,
     });
     setId('');
-    setEmail('');
     setPassword('');
   };
   const handlePressEnter = e => {
@@ -42,37 +33,37 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   return (
     <>
       <RegisterMain>
-        <form>
-          <RegisterWelcome>
-            <h2>환영합니다!</h2>
-            <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
-          </RegisterWelcome>
-          <div className="id">
-            <RegisterIDinput
-              value={id}
-              placeholder="인트라 ID"
-              onChange={handleChangeId}
-              onKeyPress={handlePressEnter}
-            />
-          </div>
-          <div className="email">
-            <RegisterPasswordInput
-              value={email}
-              placeholder="이메일 ex) example@student.42seoul.kr"
-              onChange={handleChangeEmail}
-              onKeyPress={handlePressEnter}
-            />
-          </div>
-          <LoginButton variant="contained" onClick={handleClick}>
-            함께하기!
-          </LoginButton>
-          <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
-          {/* <input
-        value={password}
-        placeholder="비밀번호"
-        onChange={handleChangePassword}
-      /> */}
-        </form>
+        <RegisterWelcome>
+          <h2>환영합니다!</h2>
+          <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
+        </RegisterWelcome>
+        <RegisterInputForm>
+          <RegisterInput
+            value={id}
+            placeholder="인트라 ID"
+            onChange={handleChangeId}
+            onKeyPress={handlePressEnter}
+          />
+          <RegisterInput
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+            onKeyPress={handlePressEnter}
+            type="password"
+          />
+          {/* <RegisterInput
+            value={email}
+            placeholder="이메일 ex) example@student.42seoul.kr"
+            onChange={handleChangeEmail}
+            onKeyPress={handlePressEnter}
+          /> */}
+        </RegisterInputForm>
+        <LoginButton variant="contained" onClick={handleClick}>
+          함께하기!
+        </LoginButton>
+        <BackButton onClick={() => setPageStatus('login')}>
+          되돌아가기
+        </BackButton>
       </RegisterMain>
     </>
   );
@@ -95,18 +86,11 @@ const RegisterWelcome = styledComp.div`
   font-size: 25px;
 `;
 
-const RegisterIDinput = styledComp.input`
-  border: 2px solid #868a8c;
+const RegisterInputForm = styledComp.div`
   margin-top: 5%;
-  padding-left: 10px;
-  border-radius: 0.3em;
-  height: 50px;
-  width: 490px;
-  font-size: 20px;
-  font-family: 'BMJUA';
 `;
 
-const RegisterPasswordInput = styledComp.input`
+const RegisterInput = styledComp.input`
   border: 2px solid #868a8c;
   margin-top: 2%;
   padding-left: 10px;
@@ -133,6 +117,6 @@ const BackButton = styled(Button)({
   fontFamily: 'BMJUA',
   fontSize: '20px',
   textDecoration: 'underline',
-  color: '#000000',
+  color: 'black',
   width: '150px',
 });

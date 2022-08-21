@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
-import { TEAM, TEAM_ID } from 'Utils/constants';
-import AllTableService from 'API/AllTableService';
+import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
+import { UserInfoService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -77,7 +77,10 @@ const MainPage = () => {
 
   const getUsers = async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await AllTableService.getAllTable(dateFormat, userId);
+    const result = await UserInfoService.getAllUser(
+      API_PARAMS.GET_USERS_OFFSET,
+      API_PARAMS.GET_USERS_SIZE,
+    );
 
     const newArray = result.data.map(array => ({
       ...array,
