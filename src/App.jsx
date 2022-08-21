@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const userId = localStorage.getItem('userId');
 
-    setStatus({ userId });
+    setStatus({ userId: userId });
     setIsLoading(false);
   }, [isLoading]);
 
@@ -72,7 +72,6 @@ const App = () => {
               }
             />
 
-            {/* <Route path="/oauth/kakao/callback" element={<OAuthPage />} /> */}
             <Route
               path="/*"
               element={
