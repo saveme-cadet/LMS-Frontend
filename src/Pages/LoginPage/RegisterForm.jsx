@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 
 const RegisterForm = ({ onClickRegister, setStatus }) => {
   const [id, setId] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleChangeId = event => {
@@ -13,9 +12,6 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   };
   const handleChangePassword = event => {
     setPassword(event.target.value);
-  };
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
   };
 
   const handleClick = async () => {
@@ -26,10 +22,9 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
     onClickRegister({
       username: id,
       password: password,
-      email: `${id}@student.42seoul.kr`,
+      // email: `${id}@student.42seoul.kr`,
     });
     setId('');
-    setEmail('');
     setPassword('');
   };
   const handlePressEnter = e => {

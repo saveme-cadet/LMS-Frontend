@@ -1,4 +1,4 @@
-import { instance, loginInstance } from './api';
+import { instance } from './api';
 
 const CRUDUserAPI = path => {
   return `/${path}`;
