@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { UserInfoService } from 'API';
+import { UserInfoService, VacationService } from 'API';
+import { API_PARAMS } from 'Utils/constants';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
@@ -30,18 +31,22 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     getUser();
   };
 
-  const handleAddVacation = async select => {
-    const result = await UserInfoService.putVacationPlus(select);
+  const handleAddVacation = async (select, addedDays) => {
+    const body = {
+      addedDays: addedDays,
+    };
+    const result = await VacationService.patchVacation(select, body);
     getUser();
     setSelectUserId(null);
   };
-  const handleMinusVacation = async select => {
+  const handleMinusVacation = async (select, usedDays) => {
+    const body = { usedDays: usedDays, reason: 'Applied to all users.' };
     const selectUser = rowData.filter(user => user.id === select);
     if (selectUser[0].vacation === 0) {
       // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
-    const result = await UserInfoService.putVacationMinus(select);
+    const result = await VacationService.postVacation(body);
     getUser();
     setSelectUserId(null);
   };

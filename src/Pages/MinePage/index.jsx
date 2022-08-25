@@ -16,7 +16,7 @@ const MinePage = () => {
   const userId = auth.status.userId;
 
   const getMyMine = async () => {
-    const result = await MineService.getMyMine(userId);
+    const result = await MineService.getTodayMine();
     const logs = result.data;
 
     if (logs.length && logs[logs.length - 1].endAt === null) {
@@ -32,10 +32,10 @@ const MinePage = () => {
     }
     if (startTime) {
       setStartTime(null);
-      await MineService.putEndMine(userId);
+      await MineService.putEndMine();
     } else {
       setStartTime(new Date());
-      await MineService.postStartMine(userId);
+      await MineService.postStartMine();
     }
     getMyMine();
     getCurAttendScore();

@@ -1,4 +1,4 @@
-import { UserInfoService, CRUDUserService } from 'API';
+import { UserInfoService, CRUDUserService, VacationService } from 'API';
 
 import SelectedUser from './SelectedUser';
 
@@ -68,8 +68,18 @@ const AdminChangeTable = ({
 
   const handleChangeVacation = async value => {
     let result;
-    if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
-    else result = await UserInfoService.putVacationMinus(selectUserId);
+    if (value > 0) {
+      const body = {
+        addedDays: value,
+      };
+      result = await VacationService.patchVacation(selectUserId, body);
+    } else {
+      const body = {
+        usedDays: value,
+        reason: '',
+      };
+      result = await VacationService.postVacation(body);
+    }
     getUser();
     setSelectUserId(null);
   };

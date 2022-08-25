@@ -19,13 +19,13 @@ const ModalAddVacationAll = ({
       let i = 0;
       while (i < value) {
         attendUser.map(user => {
-          addVacation(user.id);
+          addVacation(user.id, value);
         });
         i += 0.5;
       }
       while (i > value) {
         attendUser.map(user => {
-          minusVacation(user.id);
+          minusVacation(user.id, value);
         });
         i -= 0.5;
       }
