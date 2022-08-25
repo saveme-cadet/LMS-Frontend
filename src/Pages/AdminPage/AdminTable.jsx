@@ -37,7 +37,7 @@ const AdminTable = ({
             columns={adminTableColumns}
             onCellClick={handleCellClick}
             getRowClassName={params => {
-              return params.row.attendeStatus === '불참' && 'out';
+              return params.row.attendStatus === 'NOT_PARTICIPATED' && 'out';
             }}
             hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
             hideFooterSelectedRowCount={true} // row count 숨기기

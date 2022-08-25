@@ -8,8 +8,8 @@ const TEAM_ID = {
 };
 
 const TEAM = {
-  RED: 'red',
-  BLUE: 'blue',
+  RED: 'RED',
+  BLUE: 'BLUE',
 };
 
 const API_URL = 'https://www.savvemecadet.click/api';
