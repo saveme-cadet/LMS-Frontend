@@ -26,8 +26,7 @@ const MainPageTableTabs = ({
         <Tab label="전체 보기" />
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
-        <Divider orientation="vertical" flexItem />
-        {!validDay(date) && (
+        {validDay(date) === 0 && (
           <FilterIcon onClick={toggleModal}>
             <span>필터링</span>
             <FilterAltIcon />
