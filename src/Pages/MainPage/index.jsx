@@ -82,18 +82,21 @@ const MainPage = () => {
       API_PARAMS.GET_USERS_SIZE,
     );
 
-    const newArray = result.data.map(array => ({
-      ...array,
-      id: array.writer_id,
-      name: array.userName,
-      todoRate: array.dayObjectiveAchievementRate,
+    const newArray = result.data.content.map(array => ({
+      id: array.id,
+      userName: array.nickname,
+      attendStatus: array.attendStatus,
+      role: array.role,
+      team: array.team,
+      vacation: array.vacation,
+      // todoRate: array.dayObjectiveAchievementRate,
     }));
     setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
       const team = tab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
       setSelectRowData(
-        rowData.filter(data => {
+        newArray.filter(data => {
           return data.team === team;
         }),
       );

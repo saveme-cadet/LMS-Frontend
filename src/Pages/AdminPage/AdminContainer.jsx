@@ -17,16 +17,16 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
     let filter = '';
-    if (curTab === 1) filter = '불참';
-    else if (curTab === 2) filter = '참가';
+    if (curTab === 1) filter = 'NOT_PARTICIPATED';
+    else if (curTab === 2) filter = 'PARTICIPATED';
     curArrays.map(array => {
-      if (array.attendeStatus !== filter) filterArray.push(array);
+      if (array.attendStatus !== filter) filterArray.push(array);
     });
     setSelectRowData(filterArray);
   };
 
   const handleChangeShuffleTeam = async (userId, team) => {
-    const result = await UserInfoService.putTeam(userId, team);
+    const result = await UserInfoService.patchTeam(userId, team);
     getUser();
   };
 
@@ -58,18 +58,18 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(5);
-    setUsers(result.data);
+    const result = await UserInfoService.getAllUser(0, 5);
+    setUsers(result.data.content);
     const newArray = [];
 
-    result.data.map(array => {
+    result.data.content.map(array => {
       const newData = {
-        id: array.userId,
-        userName: array.userName,
-        attendeStatus: array.attendeStatus ? '참가' : '불참',
+        id: array.id,
+        userName: array.nickname,
+        attendStatus: array.attendStatus,
         team: array.team,
-        attendScore: array.attendScore,
-        participateScore: array.participateScore,
+        // attendScore: array.attendScore,
+        // participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
       };
