@@ -26,7 +26,7 @@ const AdminPage = () => {
         <ShowToday date={date} />
       </AdminHeader>
       <AdminBody>
-        {userRole === '머슴' ? (
+        {userRole !== '머슴' ? (
           <AdminContainer
             auth={auth}
             userId={userId}

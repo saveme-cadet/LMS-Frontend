@@ -6,6 +6,7 @@ import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
+import { addDays } from 'date-fns';
 
 const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const [users, setUsers] = useState([]);
@@ -35,7 +36,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     const body = {
       addedDays: addedDays,
     };
-    const result = await VacationService.patchVacation(select, body);
+    const result = await VacationService.addVacation(select, body);
     getUser();
     setSelectUserId(null);
   };
@@ -46,7 +47,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
       // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
-    const result = await VacationService.postVacation(body);
+    const result = await VacationService.useVacation(select, body);
     getUser();
     setSelectUserId(null);
   };
@@ -63,15 +64,16 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(5);
+    const result = await UserInfoService.getAllUser(0, 10);
+    console.log(result.data.content);
     setUsers(result.data);
     const newArray = [];
 
-    result.data.map(array => {
+    result.data.content.map(array => {
       const newData = {
-        id: array.userId,
-        userName: array.userName,
-        attendeStatus: array.attendeStatus ? '참가' : '불참',
+        id: array.id,
+        userName: array.nickname,
+        attendeStatus: !array.attendeStatus ? '참가' : '불참',
         team: array.team,
         attendScore: array.attendScore,
         participateScore: array.participateScore,

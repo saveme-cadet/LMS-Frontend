@@ -72,13 +72,13 @@ const AdminChangeTable = ({
       const body = {
         addedDays: value,
       };
-      result = await VacationService.patchVacation(selectUserId, body);
+      result = await VacationService.addVacation(selectUserId, body);
     } else {
       const body = {
         usedDays: value,
         reason: '',
       };
-      result = await VacationService.postVacation(body);
+      result = await VacationService.useVacation(selectUserId, body);
     }
     getUser();
     setSelectUserId(null);
