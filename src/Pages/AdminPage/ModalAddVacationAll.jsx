@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { VACATION } from 'Utils/constants';
 
 import styled from 'styled-components';
 
@@ -17,25 +18,12 @@ const ModalAddVacationAll = ({
   const handleCloseModal = isAccept => {
     if (isAccept && value) {
       let i = 0;
-      while (i < value) {
-        console.log('plus');
-        attendUser.map(user => {
-          // user.vacation 자료형 물어보기
-          console.log(user.id, user.vacation);
-          // value를 더하면 value만큼 계속해서 더해짐 => interval이 0.5니까 0.5로 고정
-          // 상수화하기
-          addVacation(user.id, 0.5);
-        });
-        i += 0.5;
-      }
-      while (i > value) {
-        console.log('minus');
-        attendUser.map(user => {
-          console.log(user.id, user.vacation);
-          minusVacation(user.id, -0.5);
-        });
-        i -= 0.5;
-      }
+      attendUser.map(user => {
+        // user.vacation 자료형 물어보기
+        // 짧은 시간에 API 반복 요청 => 처리가 안되는 이슈
+        if (value > VACATION.ZERO) addVacation(user.id, value);
+        else if (value < VACATION.ZERO) minusVacation(user.id, -value);
+      });
     }
     setIsOpen(false);
   };

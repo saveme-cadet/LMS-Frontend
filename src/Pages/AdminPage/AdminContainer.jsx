@@ -65,7 +65,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
 
   const getUser = async () => {
     const result = await UserInfoService.getAllUser(0, 10);
-    console.log(result.data.content);
     setUsers(result.data);
     const newArray = [];
 

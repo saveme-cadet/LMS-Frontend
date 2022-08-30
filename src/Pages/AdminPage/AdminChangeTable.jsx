@@ -1,4 +1,5 @@
 import { UserInfoService, CRUDUserService, VacationService } from 'API';
+import { VACATION } from 'Utils/constants';
 
 import SelectedUser from './SelectedUser';
 
@@ -68,14 +69,23 @@ const AdminChangeTable = ({
 
   const handleChangeVacation = async value => {
     let result;
-    if (value > 0) {
+    for (let i = 0; i < rowData.length; i++) {
+      if (rowData[i].id === selectUserId) {
+        if (rowData[i].vacation === 0 && value === VACATION.MINUS_HALF) {
+          getUser();
+          setSelectUserId(null);
+          return;
+        }
+      }
+    }
+    if (value === VACATION.PLUS_HALF) {
       const body = {
         addedDays: value,
       };
       result = await VacationService.addVacation(selectUserId, body);
-    } else {
+    } else if (value === VACATION.MINUS_HALF) {
       const body = {
-        usedDays: value,
+        usedDays: -value,
         reason: '',
       };
       result = await VacationService.useVacation(selectUserId, body);

@@ -1,3 +1,4 @@
+import { VACATION } from 'Utils/constants';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
@@ -65,13 +66,13 @@ const SelectedUser = ({
             </Select>
             <Button
               variant="contained"
-              onClick={() => onClickChangeVacation(1)}
+              onClick={() => onClickChangeVacation(VACATION.PLUS_HALF)}
             >
               휴가 + 0.5
             </Button>
             <Button
               variant="contained"
-              onClick={() => onClickChangeVacation(-1)}
+              onClick={() => onClickChangeVacation(VACATION.MINUS_HALF)}
             >
               휴가 - 0.5
             </Button>
