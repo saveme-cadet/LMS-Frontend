@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
 import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
-import { UserInfoService } from 'API';
+import { TodoService, UserInfoService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -81,10 +81,12 @@ const MainPage = () => {
       API_PARAMS.GET_USERS_OFFSET,
       API_PARAMS.GET_USERS_SIZE,
     );
+    const todayProgress = await TodoService.getOthersProgress(dateFormat);
 
+    // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
     const newArray = result.data.content.map(array => ({
       id: array.id,
-      userName: array.nickname,
+      name: array.nickname,
       attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,

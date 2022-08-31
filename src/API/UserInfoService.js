@@ -33,7 +33,9 @@ const UserInfoService = {
     }
     return response;
   },
-
+  // 역할 변경
+  // "role": "ROLE_UNAUTHORIZED, ROLE_USER, ROLE_MANAGER, ROLE_ADMIN",
+  // "reason": "role변경 사유 입력"
   patchRole: async (userId, body) => {
     const url = UserInfoUrl(`/${userId}/role`);
     let response;
