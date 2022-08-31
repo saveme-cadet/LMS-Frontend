@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
 import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
-import { UserInfoService } from 'API';
+import { UserInfoService, AllTableService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -75,13 +75,19 @@ const MainPage = () => {
     localStorage.setItem('customData', JSON.stringify(newArray));
   };
 
-  const getUsers = async () => {
+  const getTable = async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
+
+    const result = await AllTableService.getTable(dateFormat);
+    console.log(result);
+  };
+
+  const getUsers = async () => {
     const result = await UserInfoService.getAllUser(
       API_PARAMS.GET_USERS_OFFSET,
       API_PARAMS.GET_USERS_SIZE,
     );
-
+    console.log(result.data);
     const newArray = result.data.map(array => ({
       ...array,
       id: array.writer_id,
@@ -101,7 +107,8 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    getTable();
+    // getUsers();
   }, [date]);
 
   useEffect(() => {

@@ -34,18 +34,17 @@ const AllTableService = {
     return response;
   },
 
-  // API 없음
-  // getAllTable: async (date, userId) => {
-  //   const url = AllTableUrl(`day?date=${date}&userId=${userId}`);
-  //   let response;
+  getTable: async date => {
+    const url = AllTableUrl(`attendance?date=${date}`);
+    let response;
 
-  //   try {
-  //     response = await instance.get(url);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default AllTableService;
