@@ -8,7 +8,7 @@ const CRUDUserService = {
   // 회원가입
   // {
   //   "username": "intraId로 무조건 입력해야함. 이메일인증에 활용. 입력하지 않으면 42 이메일 인증 불가",
-  //   "password": "string"
+  //   "password": "영어 대문자 + 영어 소문자 + 특수문자 + 길이 8~30"
   // }
   postUser: async body => {
     const url = CRUDUserAPI(`users`);
@@ -17,7 +17,7 @@ const CRUDUserService = {
     try {
       response = await instance.post(url, body);
     } catch (e) {
-      alert(e);
+      return e.response;
     }
     return response;
   },
@@ -34,7 +34,7 @@ const CRUDUserService = {
     try {
       response = await instance.post(url, formData);
     } catch (e) {
-      alert(e);
+      return e.response;
     }
     return response;
   },
