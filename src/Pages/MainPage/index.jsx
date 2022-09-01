@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
 import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
-import { UserInfoService, AllTableService } from 'API';
+import { TodoService, UserInfoService, AllTableService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -83,23 +83,30 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
+    const dateFormat = format(date, 'yyyy-MM-dd');
+
     const result = await UserInfoService.getAllUser(
       API_PARAMS.GET_USERS_OFFSET,
       API_PARAMS.GET_USERS_SIZE,
     );
-    console.log(result.data);
-    const newArray = result.data.map(array => ({
-      ...array,
-      id: array.writer_id,
-      name: array.userName,
-      todoRate: array.dayObjectiveAchievementRate,
+    const todayProgress = await TodoService.getOthersProgress(dateFormat);
+
+    // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
+    const newArray = result.data.content.map(array => ({
+      id: array.id,
+      name: array.nickname,
+      attendStatus: array.attendStatus,
+      role: array.role,
+      team: array.team,
+      vacation: array.vacation,
+      // todoRate: array.dayObjectiveAchievementRate,
     }));
     setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
       const team = tab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
       setSelectRowData(
-        rowData.filter(data => {
+        newArray.filter(data => {
           return data.team === team;
         }),
       );

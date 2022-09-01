@@ -84,14 +84,18 @@ const MainPageTable = ({
         <WrongDay wrongType={validDay(date)} />
       ) : (
         <>
-          <DataGrid
-            rows={selectRowData}
-            columns={tableColumns}
-            onCellClick={handleClickCell}
-            hideFooterPagination={true} // 페이지 네이션 비활성화
-            hideFooterSelectedRowCount={true} // row count 숨기기
-            getRowClassName="cell"
-          />
+          {selectRowData && (
+            <DataGrid
+              rows={selectRowData}
+              columns={tableColumns}
+              onCellClick={handleClickCell}
+              hideFooterPagination={true} // 페이지 네이션 비활성화
+              hideFooterSelectedRowCount={true} // row count 숨기기
+              getRowClassName={() => {
+                return 'cell';
+              }}
+            />
+          )}
           <CheckAttend
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}

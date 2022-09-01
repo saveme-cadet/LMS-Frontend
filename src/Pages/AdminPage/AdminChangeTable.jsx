@@ -20,7 +20,7 @@ const AdminChangeTable = ({
 
   const validChangeRole = () => {
     if (selectUserId === +userId) {
-      if (rowData.filter(data => data.role === '머슴').length === 1) {
+      if (rowData.filter(data => data.role === 'ROLE_MANAGER').length === 1) {
         alert('머슴이 한 명 뿐입니다!');
         return -1;
       }
@@ -34,11 +34,11 @@ const AdminChangeTable = ({
   };
 
   const handleChangeAttend = async event => {
-    const value = event.target.value === '참가' ? 1 : 0;
+    const value = event.target.value === 'PARTICIPATED' ? 1 : 0;
     if (value === 0) {
       if (validChangeRole()) return;
-      let temp = await UserInfoService.putRole(selectUserId, '카뎃');
-      // temp = await UserInfoService.putTeam(selectUserId, 'white');
+      let temp = await UserInfoService.patchRole(selectUserId, 'ROLE_USER');
+      // temp = await UserInfoService.patchTeam(selectUserId, 'NONE');
     }
     const result = await UserInfoService.putAttend(selectUserId, value);
     getUser();
@@ -46,7 +46,7 @@ const AdminChangeTable = ({
   };
 
   const handleChangeTeam = async event => {
-    const result = await UserInfoService.putTeam(
+    const result = await UserInfoService.patchTeam(
       selectUserId,
       event.target.value,
     );
@@ -58,7 +58,7 @@ const AdminChangeTable = ({
     // console.log(selectUserId, userId);
     if (validChangeRole()) return;
 
-    const result = await UserInfoService.putRole(
+    const result = await UserInfoService.patchRole(
       selectUserId,
       event.target.value,
     );
@@ -68,8 +68,9 @@ const AdminChangeTable = ({
 
   const handleChangeVacation = async value => {
     let result;
-    if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
-    else result = await UserInfoService.putVacationMinus(selectUserId);
+    // TODO: vacation API 수정중 백엔드
+    // if (value > 0) result = await UserInfoService.putVacationPlus(selectUserId);
+    // else result = await UserInfoService.putVacationMinus(selectUserId);
     getUser();
     setSelectUserId(null);
   };

@@ -71,8 +71,9 @@ const TodoService = {
     }
     return response;
   },
+  // 오늘 할일 모든 유저 진척률
   getOthersProgress: async date => {
-    const url = TodoUrl(`todos/progress/${date}`);
+    const url = TodoUrl(`todos/progress?date=${date}`);
     let response;
     try {
       response = await instance.get(url);

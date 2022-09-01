@@ -29,7 +29,7 @@ const VacationService = {
   }
 */
   patchVacation: async (userId, body) => {
-    const url = VacationUrl(`vacations/${userId}`);
+    const url = VacationUrl(`vacations?userId=${userId}`);
     let response;
     try {
       response = await instance.patch(url, body);

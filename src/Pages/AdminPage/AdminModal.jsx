@@ -16,7 +16,9 @@ const AdminModal = ({
       {isOpen === 'add' && (
         <ModalAddVacationAll
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+          attendUser={rowData.filter(
+            user => user.attendStatus === 'PARTICIPATED',
+          )}
           addVacation={handleAddVacation}
           minusVacation={handleMinusVacation}
         />
@@ -24,13 +26,17 @@ const AdminModal = ({
       {isOpen === 'find' && (
         <ModalAttendLeaderboard
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+          attendUser={rowData.filter(
+            user => user.attendStatus === 'PARTICIPATED',
+          )}
         />
       )}
       {isOpen === 'shake' && (
         <ModalShakeTeam
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(user => user.attendeStatus === '참가')}
+          attendUser={rowData.filter(
+            user => user.attendStatus === 'PARTICIPATED',
+          )}
           onClickChangeShuffleTeam={handleChangeShuffleTeam}
         />
       )}
