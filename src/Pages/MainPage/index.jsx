@@ -108,7 +108,7 @@ const MainPage = () => {
 
   useEffect(() => {
     getTable();
-    // getUsers();
+    getUsers();
   }, [date]);
 
   useEffect(() => {
