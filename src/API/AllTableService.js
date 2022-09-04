@@ -13,7 +13,7 @@ const AllTableService = {
     const url = AllTableUrl(`attendance/${attendanceId}/checkin`);
     let response;
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
@@ -27,7 +27,7 @@ const AllTableService = {
     const url = AllTableUrl(`attendance/${attendanceId}/checkout`);
     let response;
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }

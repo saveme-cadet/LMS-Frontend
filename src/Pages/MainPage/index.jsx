@@ -79,7 +79,7 @@ const MainPage = () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat);
-    console.log(result);
+    console.log('table', result);
   };
 
   const getUsers = async () => {
@@ -90,7 +90,6 @@ const MainPage = () => {
       API_PARAMS.GET_USERS_SIZE,
     );
     const todayProgress = await TodoService.getOthersProgress(dateFormat);
-
     // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
     const newArray = result.data.content.map(array => ({
       id: array.id,
@@ -101,6 +100,7 @@ const MainPage = () => {
       vacation: array.vacation,
       // todoRate: array.dayObjectiveAchievementRate,
     }));
+    console.log(newArray);
     setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
@@ -191,10 +191,10 @@ const MainPageBody = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-  .red {
+  .RED {
     background-color: #dc143c;
   }
-  .blue {
+  .BLUE {
     background-color: #0079f0;
   }
   .머슴 {

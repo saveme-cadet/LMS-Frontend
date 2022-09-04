@@ -26,17 +26,17 @@ const MainPageTable = ({
     const field = params.field;
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
-    const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    const myInfo = rowData.find(array => array.id === +userId);
-    if (myInfo === undefined) {
-      alert('이번 달에 참가하고 있지 않습니다!');
-      return;
-    }
+    // const selectUserInfo = selectRowData.find(array => array.id === params.id);
+    // const myInfo = rowData.find(array => array.id === +userId);
+    // if (myInfo === undefined) {
+    //   alert('이번 달에 참가하고 있지 않습니다!');
+    //   return;
+    // }
 
-    if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
-      alert('수정할 수 없습니다!');
-      return;
-    }
+    // if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
+    //   alert('수정할 수 없습니다!');
+    //   return;
+    // }
     setAnchorEl(event.currentTarget);
     setCurFocus({ id: params.id, select: field });
   };
@@ -62,16 +62,12 @@ const MainPageTable = ({
       return;
     }
     if (select === CHECK_IN) {
-      result = await AllTableService.putAllTableCheckIn({
-        userId: id,
-        checkIn: value,
-        tableDay: format(date, 'yyyy-MM-dd'),
+      result = await AllTableService.putAllTableCheckIn(id, {
+        status: '' + value,
       });
     } else {
-      result = await AllTableService.putAllTableCheckOut({
-        userId: id,
-        checkOut: value,
-        tableDay: format(date, 'yyyy-MM-dd'),
+      result = await AllTableService.putAllTableCheckOut(id, {
+        status: '' + value,
       });
     }
     setAnchorEl(null);
