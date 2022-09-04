@@ -16,7 +16,7 @@ const MinePage = () => {
   const userId = auth.status.userId;
 
   const getMyMine = async () => {
-    const result = await MineService.getTodayMine();
+    const result = await MineService.getTodayMine(userId);
     const logs = result.data;
 
     if (logs.length && logs[logs.length - 1].endAt === null) {
@@ -32,24 +32,24 @@ const MinePage = () => {
     }
     if (startTime) {
       setStartTime(null);
-      await MineService.putEndMine();
+      await MineService.putEndMine(userId);
     } else {
       setStartTime(new Date());
-      await MineService.postStartMine();
+      await MineService.postStartMine(userId);
     }
     getMyMine();
-    getCurAttendScore();
+    // getCurAttendScore();
   };
 
-  const getCurAttendScore = async () => {
-    const result = await UserInfoService.getUserData(userId);
-    if (result.data) setAttendScore(result.data[0].attendScore.toFixed(2));
-  };
+  // const getCurAttendScore = async () => {
+  //   const result = await UserInfoService.getUserData(userId);
+  //   if (result.data) setAttendScore(result.data[0].attendScore.toFixed(2));
+  // };
 
   useEffect(() => {
     if (userId) {
       getMyMine();
-      getCurAttendScore();
+      // getCurAttendScore();
     }
   }, [userId]);
 

@@ -1,13 +1,13 @@
 import { instance } from './api';
 
 const MineUrl = path => {
-  return `/study_times/${path}`;
+  return `/users/${path}`;
 };
 
 const MineService = {
   // 전체 날짜 조회
-  getAllMine: async () => {
-    const url = MineUrl(``);
+  getAllMine: async userId => {
+    const url = MineUrl(`${userId}/study_times`);
     let response;
     try {
       response = await instance.get(url);
@@ -17,8 +17,8 @@ const MineService = {
     return response;
   },
   // 공부 시작
-  postStartMine: async () => {
-    const url = MineUrl(``);
+  postStartMine: async userId => {
+    const url = MineUrl(`${userId}/study_times`);
     let response;
     try {
       response = await instance.post(url);
@@ -28,8 +28,8 @@ const MineService = {
     return response;
   },
   // 공부 종료
-  putEndMine: async () => {
-    const url = MineUrl(``);
+  putEndMine: async userId => {
+    const url = MineUrl(`${userId}/study_times`);
     let response;
     try {
       response = await instance.put(url);
@@ -40,7 +40,7 @@ const MineService = {
   },
   // index에 해당하는 공부 기록 삭제
   putDeleteMine: async index => {
-    const url = MineUrl(`${index}`);
+    const url = MineUrl(`study_times/${index}`);
     let response;
     try {
       response = await instance.delete(url);
@@ -57,7 +57,7 @@ const MineService = {
   }
 */
   patchEditMine: async (index, body) => {
-    const url = MineUrl(`${index}`);
+    const url = MineUrl(`study_times/${index}`);
     let response;
     try {
       response = await instance.patch(url, body);
@@ -68,8 +68,8 @@ const MineService = {
   },
   // 자신의 특정 날짜 기록 조회
   // date는 yyyy-mm-dd 형태로
-  getFindMine: async date => {
-    const url = MineUrl(`${date}`);
+  getFindMine: async (userId, date) => {
+    const url = MineUrl(`${userId}/study_times/${date}`);
     let response;
     try {
       response = await instance.get(url);
@@ -79,8 +79,8 @@ const MineService = {
     return response;
   },
   // 당일 자신의 공부 기록 조회
-  getTodayMine: async () => {
-    const url = MineUrl(`today`);
+  getTodayMine: async userId => {
+    const url = MineUrl(`${userId}/study_times/today`);
     let response;
     try {
       response = await instance.get(url);
@@ -91,7 +91,7 @@ const MineService = {
   },
   // 현재 공부 중인 회원 조회
   getOtherMine: async () => {
-    const url = MineUrl(`study-user`);
+    const url = MineUrl(`study_times/studying-user`);
     let response;
     try {
       response = await instance.get(url);
