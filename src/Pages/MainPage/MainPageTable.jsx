@@ -38,15 +38,17 @@ const MainPageTable = ({
     //   return;
     // }
     setAnchorEl(event.currentTarget);
-    setCurFocus({ id: params.id, select: field });
+    setCurFocus({ attendanceId: params.attendanceId, select: field });
   };
 
   const handleChangeCheck = async value => {
-    const id = curFocus.id;
+    const attendanceId = curFocus.attendanceId;
     const select = curFocus.select;
     const today = new Date();
     let result;
-    const selectUserInfo = selectRowData.find(array => array.id === id);
+    const selectUserInfo = selectRowData.find(
+      array => array.attendanceId === attendanceId,
+    );
 
     if (value === 6 && selectUserInfo.vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
@@ -61,12 +63,13 @@ const MainPageTable = ({
       setAnchorEl(null);
       return;
     }
+    const userId = localStorage.getItem('userId');
     if (select === CHECK_IN) {
-      result = await AllTableService.putAllTableCheckIn(id, {
+      result = await AllTableService.putAllTableCheckIn(userId, attendanceId, {
         status: '' + value,
       });
     } else {
-      result = await AllTableService.putAllTableCheckOut(id, {
+      result = await AllTableService.putAllTableCheckOut(userId, attendanceId, {
         status: '' + value,
       });
     }
