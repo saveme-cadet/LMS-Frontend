@@ -28,13 +28,15 @@ const mainTableColumns = [
     width: 120,
   },
   {
-    field: 'participateScore',
+    // field: 'participateScore',
+    field: 'attendanceScore',
     headerName: '출석 횟수',
     type: 'number',
     width: 120,
   },
   {
-    field: 'attendScore',
+    // field: 'attendScore',
+    field: 'absentScore',
     headerName: '결석 점수',
     type: 'number',
     width: 120,
@@ -63,7 +65,8 @@ const mainTableColumns = [
     },
   },
   {
-    field: 'todoRate',
+    // field: 'todoRate',
+    field: 'todoSuccessRate',
     headerName: '목표 진척도',
     width: 200,
     renderCell: params => {

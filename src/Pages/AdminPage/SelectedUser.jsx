@@ -1,3 +1,4 @@
+import { VACATION } from 'Utils/constants';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,11 +21,8 @@ const SelectedUser = ({
       <span className="title">현재 선택 : {userInfo.userName}</span>
 
       <span className="user-status">
-        <Chip
-          label={userInfo.attendeStatus}
-          className={userInfo.attendeStatus}
-        />
-        {userInfo.attendeStatus === '참가' && (
+        <Chip label={userInfo.attendStatus} className={userInfo.attendStatus} />
+        {userInfo.attendStatus === 'PARTICIPATED' && (
           <>
             <Chip label={userInfo.team} className={userInfo.team} />
             <Chip label={userInfo.role} className={userInfo.role} />
@@ -34,16 +32,16 @@ const SelectedUser = ({
 
       <div className="action">
         <Select
-          value={userInfo.attendeStatus}
+          value={userInfo.attendStatus}
           onChange={onClickChangeAttend}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value={'참가'}>참가</MenuItem>
-          <MenuItem value={'불참'}>불참</MenuItem>
+          <MenuItem value={'PARTICIPATED'}>참가</MenuItem>
+          <MenuItem value={'NOT_PARTICIPATED'}>불참</MenuItem>
         </Select>
 
-        {userInfo.attendeStatus === '참가' && (
+        {userInfo.attendStatus === 'PARTICIPATED' && (
           <>
             <Select
               value={userInfo.team}
@@ -51,8 +49,8 @@ const SelectedUser = ({
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem value={'red'}>RED</MenuItem>
-              <MenuItem value={'blue'}>BLUE</MenuItem>
+              <MenuItem value={'RED'}>RED</MenuItem>
+              <MenuItem value={'BLUE'}>BLUE</MenuItem>
             </Select>
             <Select
               value={userInfo.role}
@@ -60,18 +58,18 @@ const SelectedUser = ({
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem value={'머슴'}>머슴</MenuItem>
-              <MenuItem value={'카뎃'}>카뎃</MenuItem>
+              <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
+              <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
             </Select>
             <Button
               variant="contained"
-              onClick={() => onClickChangeVacation(1)}
+              onClick={() => onClickChangeVacation(VACATION.PLUS_HALF)}
             >
               휴가 + 0.5
             </Button>
             <Button
               variant="contained"
-              onClick={() => onClickChangeVacation(-1)}
+              onClick={() => onClickChangeVacation(VACATION.MINUS_HALF)}
             >
               휴가 - 0.5
             </Button>

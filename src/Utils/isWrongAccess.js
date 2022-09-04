@@ -1,6 +1,6 @@
 const isWrongAccess = (selectUserInfo, myId, myRole, myTeam) => {
-  if (myRole !== '머슴' && selectUserInfo.id !== myId) return -1;
-  if (myRole === '머슴' && selectUserInfo.team !== myTeam) return -2;
+  if (myRole !== 'ROLE_MANAGER' && selectUserInfo.id !== myId) return -1;
+  if (myRole === 'ROLE_MANAGER' && selectUserInfo.team !== myTeam) return -2;
   return 0;
 };
 

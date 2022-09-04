@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 const TodoPage = () => {
   const auth = useContext(AuthContext);
-  const userId = auth.status.userId;
+  const userId = localStorage.getItem('userId');
   const [date, setDate] = useState(new Date());
 
   return (

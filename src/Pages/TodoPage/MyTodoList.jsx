@@ -20,7 +20,7 @@ const MyTodoList = ({ userId, date }) => {
   const [number, setNumber] = useState(null);
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
-  const [othersToDo, setOthersToDo] = useState([]);
+  const [isEdit, setIsEdit] = useState();
   const today = new Date();
 
   const onSubmit = async event => {
@@ -47,13 +47,13 @@ const MyTodoList = ({ userId, date }) => {
       todoDay: format(today, 'yyyy-MM-dd'),
     });
 
-    // console.log(result);
     setNumber(nextId);
     setToDo({
       number: 0,
       content: '',
       checked: false,
     });
+    getToDos(userId);
   };
 
   const onChange = event => {
@@ -67,41 +67,25 @@ const MyTodoList = ({ userId, date }) => {
   const changeCheck = async index => {
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
     toDos[index].titleCheck = !toDos[index].titleCheck;
-    const result = await TodoService.patchTodo(toDos[index]);
-    // console.log(result);
-    getTodos(userId);
+
+    const result = await TodoService.putTodo(toDos[index]);
+    getToDos(userId);
   };
 
   const removeToDo = async event => {
-    let toDoNumber;
-    const tagName = event.target.tagName;
+    let toDoNumber =
+      event.target.closest('button').previousSibling.previousSibling.id;
     if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
-    if (tagName === 'BUTTON') {
-      const toDoIdButton = parseInt(event.target.previousSibling.id);
-      setToDos(toDos.filter(toDo => toDoIdButton !== toDo.todoId));
-      toDoNumber = toDoIdButton;
-    } else if (tagName === 'svg') {
-      const toDoIdSvg = parseInt(event.target.parentElement.previousSibling.id);
-      setToDos(toDos.filter(toDo => toDoIdSvg !== toDo.todoId));
-      toDoNumber = toDoIdSvg;
-    } else if (tagName === 'path') {
-      const toDoIdpath = parseInt(
-        event.target.parentElement.parentElement.previousSibling.id,
-      );
-      setToDos(toDos.filter(toDo => toDoIdpath !== toDo.todoId));
-      toDoNumber = toDoIdpath;
-    }
 
     const result = await TodoService.deleteTodo(
       userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
     );
-    console.log(result);
-    getTodos(userId);
+    getToDos(userId);
   };
 
-  const getTodos = async userId => {
+  const getToDos = async userId => {
     const result = await TodoService.getTodo(
       userId,
       format(date, 'yyyy-MM-dd'),
@@ -109,15 +93,10 @@ const MyTodoList = ({ userId, date }) => {
     setToDos(result.data);
   };
 
-  const getOthers = async () => {
-    const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
-    setOthersToDo(result.data);
-  };
-
   useEffect(() => {
-    getTodos(userId);
-    getOthers();
-  }, [number, date]);
+    getToDos(userId);
+    setIsEdit();
+  }, [date]);
 
   useEffect(() => {
     const total = toDos.length;
@@ -131,7 +110,6 @@ const MyTodoList = ({ userId, date }) => {
     for (let i = 0; i < toDos.length; i++) {
       if (toDos[i].titleCheck === true) checked++;
     }
-    // console.log(toDos);
     setTotal(total);
     setChecked(checked);
   }, [toDos]);
@@ -145,6 +123,7 @@ const MyTodoList = ({ userId, date }) => {
           <TodoInputForm
             onSubmit={onSubmit}
             onChange={onChange}
+            setIsEdit={setIsEdit}
             toDo={toDo}
             date={date}
           />
@@ -153,6 +132,10 @@ const MyTodoList = ({ userId, date }) => {
             date={date}
             changeCheck={changeCheck}
             removeToDo={removeToDo}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
+            getToDos={getToDos}
+            userId={userId}
           />
           <TodoProgress total={total} checked={checked} />
         </TodoListContainer>

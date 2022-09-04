@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { mainTableColumns, validDay, isWrongAccess } from 'Utils';
+import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
 
@@ -10,27 +10,33 @@ import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { DataGrid } from '@mui/x-data-grid';
 
-import styled from 'styled-components';
-
-const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
+const MainPageTable = ({
+  date,
+  rowData,
+  selectRowData,
+  getUsers,
+  userId,
+  customData,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+  const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
 
   const handleClickCell = (params, event) => {
     const field = params.field;
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
-    const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    const myInfo = rowData.find(array => array.id === +userId);
-    if (myInfo === undefined) {
-      alert('이번 달에 참가하고 있지 않습니다!');
-      return;
-    }
+    // const selectUserInfo = selectRowData.find(array => array.id === params.id);
+    // const myInfo = rowData.find(array => array.id === +userId);
+    // if (myInfo === undefined) {
+    //   alert('이번 달에 참가하고 있지 않습니다!');
+    //   return;
+    // }
 
-    if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
-      alert('수정할 수 없습니다!');
-      return;
-    }
+    // if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
+    //   alert('수정할 수 없습니다!');
+    //   return;
+    // }
     setAnchorEl(event.currentTarget);
     setCurFocus({ id: params.id, select: field });
   };
@@ -56,16 +62,12 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
       return;
     }
     if (select === CHECK_IN) {
-      result = await AllTableService.putAllTableCheckIn({
-        userId: id,
-        checkIn: value,
-        tableDay: format(date, 'yyyy-MM-dd'),
+      result = await AllTableService.putAllTableCheckIn(id, {
+        status: '' + value,
       });
     } else {
-      result = await AllTableService.putAllTableCheckOut({
-        userId: id,
-        checkOut: value,
-        tableDay: format(date, 'yyyy-MM-dd'),
+      result = await AllTableService.putAllTableCheckOut(id, {
+        status: '' + value,
       });
     }
     setAnchorEl(null);
@@ -78,14 +80,18 @@ const MainPageTable = ({ date, rowData, selectRowData, getUsers, userId }) => {
         <WrongDay wrongType={validDay(date)} />
       ) : (
         <>
-          <DataGrid
-            rows={selectRowData}
-            columns={mainTableColumns}
-            onCellClick={handleClickCell}
-            hideFooterPagination={true} // 페이지 네이션 비활성화
-            hideFooterSelectedRowCount={true} // row count 숨기기
-            getRowClassName="cell"
-          />
+          {selectRowData && (
+            <DataGrid
+              rows={selectRowData}
+              columns={tableColumns}
+              onCellClick={handleClickCell}
+              hideFooterPagination={true} // 페이지 네이션 비활성화
+              hideFooterSelectedRowCount={true} // row count 숨기기
+              getRowClassName={() => {
+                return 'cell';
+              }}
+            />
+          )}
           <CheckAttend
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}

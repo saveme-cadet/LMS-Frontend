@@ -17,7 +17,7 @@ const UserGuide = ({ rowData, userId }) => {
             팀입니다!
           </Alert>
           <Alert severity="info" className={myInfo.role}>
-            {myInfo.role === '머슴' ? (
+            {myInfo.role === 'ROLE_MANAGER' ? (
               <>
                 <AlertTitle>
                   <strong>당신은 이번 주 머슴입니다!</strong>

@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-
 import { AuthContext } from 'App';
-import { validDay } from 'Utils';
-import { TEAM, TEAM_ID } from 'Utils/constants';
-import AllTableService from 'API/AllTableService';
+
+import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
+import { TodoService, UserInfoService, AllTableService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -11,14 +10,18 @@ import ShowDate from './ShowDate';
 import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
+import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
+
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
+  const [customData, setCustomData] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
@@ -44,22 +47,76 @@ const MainPage = () => {
     updateSelectData(dstTab);
   };
 
-  const getUsers = async () => {
-    const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await AllTableService.getAllTable(dateFormat, userId);
+  const handleClickToggleCustom = dst => {
+    switch (dst) {
+      case '팀':
+        customData[0] = !customData[0];
+        break;
+      case '역할':
+        customData[1] = !customData[1];
+        break;
+      case '출석':
+        customData[3] = !customData[3];
+        break;
+      case '결석':
+        customData[4] = !customData[4];
+        break;
+      case '휴가':
+        customData[5] = !customData[5];
+        break;
+      case '목표':
+        customData[8] = !customData[8];
+        break;
+      default:
+    }
+    const newArray = [...customData];
+    // 분해 할당하지 않으면 얕은 복사이기에 state가 변경되지 않음
+    setCustomData(newArray);
+    localStorage.setItem('customData', JSON.stringify(newArray));
+  };
 
+  const getTable = async () => {
+    const dateFormat = format(date, 'yyyy-MM-dd');
+
+    const result = await AllTableService.getTable(dateFormat);
+    console.log('table', result);
+  };
+
+  const getUsers = async () => {
+    // const dateFormat = format(date, 'yyyy-MM-dd');
+
+    // const result = await UserInfoService.getAllUser(
+    //   API_PARAMS.GET_USERS_OFFSET,
+    //   API_PARAMS.GET_USERS_SIZE,
+    // );
+    // const todayProgress = await TodoService.getOthersProgress(dateFormat);
+
+    const dateFormat = format(date, 'yyyy-MM-dd');
+
+    const result = await AllTableService.getTable(dateFormat);
+    console.log('table', result.data);
+    // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
     const newArray = result.data.map(array => ({
-      ...array,
-      id: array.writer_id,
-      name: array.userName,
-      todoRate: array.dayObjectiveAchievementRate,
+      id: array.attendanceId,
+      name: array.username,
+      attendStatus: array.attendStatus,
+      role: array.role,
+      team: array.team,
+      vacation: array.vacation,
+      absentScore: array.absentScore,
+      attendanceScore: array.attendanceScore,
+      todoSuccessRate: array.todoSuccessRate,
+      checkIn: array.checkIn,
+      checkOut: array.checkOut,
+      // todoRate: array.dayObjectiveAchievementRate,
     }));
+    console.log('new Array', newArray);
     setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
       const team = tab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
       setSelectRowData(
-        rowData.filter(data => {
+        newArray.filter(data => {
           return data.team === team;
         }),
       );
@@ -67,9 +124,15 @@ const MainPage = () => {
   };
 
   useEffect(() => {
+    getTable();
     getUsers();
   }, [date]);
 
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('customData'));
+    setCustomData(localData ? localData : new Array(9).fill(true));
+    // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
+  }, []);
   return (
     <MainPageContainer>
       {selectRowData && (
@@ -79,17 +142,30 @@ const MainPage = () => {
 
           <MainPageTableContainer>
             <MainPageBody>
-              <MainPageTableTabs tab={tab} handleChangeTab={handleChangeTab} />
+              <MainPageTableTabs
+                date={date}
+                tab={tab}
+                handleChangeTab={handleChangeTab}
+                setIsOpen={setIsOpen}
+              />
               <MainPageTable
                 date={date}
                 rowData={rowData}
                 selectRowData={selectRowData}
                 getUsers={getUsers}
                 userId={userId}
+                customData={customData}
               />
             </MainPageBody>
           </MainPageTableContainer>
         </>
+      )}
+      {isOpen && (
+        <FilterModal
+          customData={customData}
+          onClickToggleCustom={handleClickToggleCustom}
+          setIsOpen={setIsOpen}
+        />
       )}
     </MainPageContainer>
   );
@@ -98,7 +174,6 @@ const MainPage = () => {
 export default MainPage;
 
 const MainPageContainer = styled.div`
-  position: relative;
   box-sizing: border-box;
   padding: 50px;
 
@@ -126,10 +201,10 @@ const MainPageBody = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-  .red {
+  .RED {
     background-color: #dc143c;
   }
-  .blue {
+  .BLUE {
     background-color: #0079f0;
   }
   .머슴 {

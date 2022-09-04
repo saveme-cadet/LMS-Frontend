@@ -13,10 +13,8 @@ const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState(null);
   useEffect(() => {
     const userId = localStorage.getItem('userId');
-    const userName = localStorage.getItem('userName');
-    const role = localStorage.getItem('role');
-    const team = localStorage.getItem('team');
-    setStatus({ userId, userName, role, team });
+
+    setStatus({ userId: userId });
     setIsLoading(false);
   }, [isLoading]);
 
@@ -33,8 +31,8 @@ const Loading = () => {
   return <div>로딩중!!!</div>;
 };
 
-const validStatus = ({ userId, userName, role, team }) => {
-  return userId && userName && role && team;
+const validStatus = ({ userId }) => {
+  return userId;
 };
 
 const OAuthCheckRoute = ({ children }) => {
@@ -74,7 +72,6 @@ const App = () => {
               }
             />
 
-            {/* <Route path="/oauth/kakao/callback" element={<OAuthPage />} /> */}
             <Route
               path="/*"
               element={

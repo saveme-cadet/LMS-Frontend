@@ -1,33 +1,55 @@
 import { instance } from './api';
 
-const VacationUrl = path => {
-  return `/${path}`;
+const VacationUrl = (userId, path) => {
+  return `/users/${userId}/vacations/${path}`;
 };
 
+// 자신의 휴가 사용
+/*
+{
+  "usedDays": int,
+  "reason": "string"
+}
+  */
 const VacationService = {
-  patchVacation: async (id, addDay) => {
-    const url = VacationUrl(`vacations/${id}`);
-    const body = { addedDays: addDay };
+  useVacation: async (userId, body) => {
+    const url = VacationUrl(userId, `used-days`);
     let response;
     try {
-      response = await instance.patch(url, body);
+      response = await instance.post(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-  getUsedVaction: async () => {
-    const url = VacationUrl(`used-vacations`);
+  // 휴가 추가
+  /* 
+  {
+  "addedDays": 0  
+  }
+*/
+  addVacation: async (userId, body) => {
+    const url = VacationUrl(userId, `added-days`);
     let response;
     try {
-      response = await instance.patch(url);
+      response = await instance.post(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
-  getRemainingVaction: async () => {
-    const url = VacationUrl(`remaining-vacations`);
+  getUsedVaction: async userId => {
+    const url = VacationUrl(userId, `used-vacations`);
+    let response;
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  getRemainingVaction: async userId => {
+    const url = VacationUrl(userId, `remaining-vacations`);
     let response;
     try {
       response = await instance.get(url);

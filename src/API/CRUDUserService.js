@@ -5,17 +5,11 @@ const CRUDUserAPI = path => {
 };
 
 const CRUDUserService = {
-  // deleteUser: async body => {
-  //   // 미사용
-  //   const url = CRUDUserAPI(`user/delete`);
-  //   let response;
-  //   try {
-  //     response = await instance.delete(url, body);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
+  // 회원가입
+  // {
+  //   "username": "intraId로 무조건 입력해야함. 이메일인증에 활용. 입력하지 않으면 42 이메일 인증 불가",
+  //   "password": "영어 대문자 + 영어 소문자 + 특수문자 + 길이 8~30"
+  // }
   postUser: async body => {
     const url = CRUDUserAPI(`users`);
     let response;
@@ -23,20 +17,24 @@ const CRUDUserService = {
     try {
       response = await instance.post(url, body);
     } catch (e) {
-      alert(e);
+      return e.response;
     }
     return response;
   },
+  // 로그인
+  // 로그인에 한해서만 FormData로 전달해야함.
   postLogin: async body => {
     const url = CRUDUserAPI('auth/login');
-    // const formData = new FormData();
-    // formData.set('username', body.username);
-    // formData.set('password', body.password);
+    const formData = new FormData();
+    for (let k in body) {
+      formData.append(k, body[k]);
+    }
     let response;
+
     try {
-      response = await instance.post(url, body);
+      response = await instance.post(url, formData);
     } catch (e) {
-      alert(e);
+      return e.response;
     }
     return response;
   },

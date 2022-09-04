@@ -3,9 +3,8 @@ import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const RegisterForm = ({ onClickRegister, setStatus }) => {
+const RegisterForm = ({ onClickRegister, setPageStatus }) => {
   const [id, setId] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleChangeId = event => {
@@ -14,22 +13,22 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   const handleChangePassword = event => {
     setPassword(event.target.value);
   };
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
 
   const handleClick = async () => {
-    if (!id || !email) {
+    if (!id || !password) {
       alert('전부 입력해주세요!');
+      return;
+    }
+    if (password.length < 8) {
+      alert('비밀번호는 8자 이상이어야 합니다!');
       return;
     }
     onClickRegister({
       username: id,
       password: password,
-      email: email,
+      // email: `${id}@student.42seoul.kr`,
     });
     setId('');
-    setEmail('');
     setPassword('');
   };
   const handlePressEnter = e => {
@@ -38,36 +37,43 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   return (
     <>
       <RegisterMain>
-        <form>
-          <RegisterWelcome>
-            <h2>환영합니다!</h2>
-            <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
-          </RegisterWelcome>
-          <RegisterInputForm>
-            <RegisterInput
-              value={id}
-              placeholder="인트라 ID"
-              onChange={handleChangeId}
-              onKeyPress={handlePressEnter}
-            />
-            <RegisterInput
-              value={password}
-              placeholder="비밀번호"
-              onChange={handleChangePassword}
-              onKeyPress={handlePressEnter}
-            />
-            <RegisterInput
-              value={email}
-              placeholder="이메일 ex) example@student.42seoul.kr"
-              onChange={handleChangeEmail}
-              onKeyPress={handlePressEnter}
-            />
-          </RegisterInputForm>
-          <LoginButton variant="contained" onClick={handleClick}>
-            함께하기!
-          </LoginButton>
-          <BackButton onClick={() => setStatus('login')}>되돌아가기</BackButton>
-        </form>
+        <RegisterWelcome>
+          <h2>환영합니다!</h2>
+          <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
+        </RegisterWelcome>
+        <RegisterInputForm>
+          <RegisterInput
+            value={id}
+            placeholder="인트라 ID"
+            onChange={handleChangeId}
+            onKeyPress={handlePressEnter}
+          />
+          <RegisterInput
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+            onKeyPress={handlePressEnter}
+            type="password"
+            maxLength={30}
+          />
+
+          {/* <RegisterInput
+            value={email}
+            placeholder="이메일 ex) example@student.42seoul.kr"
+            onChange={handleChangeEmail}
+            onKeyPress={handlePressEnter}
+          /> */}
+        </RegisterInputForm>
+        <h5>
+          비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
+          포함해야 합니다.
+        </h5>
+        <LoginButton variant="contained" onClick={handleClick}>
+          함께하기!
+        </LoginButton>
+        <BackButton onClick={() => setPageStatus('login')}>
+          되돌아가기
+        </BackButton>
       </RegisterMain>
     </>
   );
@@ -81,6 +87,7 @@ const RegisterMain = styledComp.div`
   height: 70%;
   background-color: #ffffff;
   border-radius: 1em;
+
 `;
 
 const RegisterWelcome = styledComp.div`
@@ -121,6 +128,6 @@ const BackButton = styled(Button)({
   fontFamily: 'BMJUA',
   fontSize: '20px',
   textDecoration: 'underline',
-  color: '#000000',
+  color: 'black',
   width: '150px',
 });

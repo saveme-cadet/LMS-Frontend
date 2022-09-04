@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import styled from 'styled-components';
+
 import Button from '@mui/material/Button';
 
 const shuffleArray = array => {
@@ -13,11 +15,15 @@ const shuffleArray = array => {
   return array;
 };
 
-const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
+const ModalShakeTeam = ({
+  setIsOpen,
+  attendUser,
+  onClickChangeShuffleTeam,
+}) => {
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
-  const teamList = ['red', 'blue'];
+  const teamList = ['RED', 'BLUE', 'NONE'];
 
   const handleCloseModal = isAccept => {
     // console.log(curUsers);
@@ -32,7 +38,7 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
 
   const handleShakeTeam = () => {
     const shakedUsers = shuffleArray(curUsers);
-    const leastMember = shakedUsers.length / teamList.length;
+    const leastMember = shakedUsers.length / (teamList.length - 1);
     // console.log('least : ', leastMember);
     for (let i = 0; i < shakedUsers.length; i++) {
       let teamIndex = Math.floor(i / leastMember);
@@ -45,13 +51,13 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
   };
 
   useEffect(() => {
-    const newtralArray = [];
+    const neutralArray = [];
     attendUser.map(user => {
-      if (!teamList.includes(user.team)) newtralArray.push(user);
+      if (!teamList.includes(user.team)) neutralArray.push(user);
     });
     // console.log('attendUser : ', attendUser);
-    // console.log('newtralArray : ', newtralArray);
-    setNeutral(newtralArray);
+    // console.log('neutralArray : ', neutralArray);
+    setNeutral(neutralArray);
     setCurUsers(attendUser);
   }, []);
 
@@ -59,39 +65,54 @@ const ShakeTeam = ({ setIsOpen, attendUser, onClickChangeShuffleTeam }) => {
     // console.log('isChanged?');
   }, [curUsers]);
   return (
-    <div className="modal">
+    <ModalShakeTeamBody>
       <h1>현재 팀 현황</h1>
       <h3>참가한 사용자들만 보여줍니다.</h3>
-      <div className="team-list">
-        {teamList.map(team => {
-          return (
-            <div key={team} className={`team ${team}`}>
-              <h1>{team}</h1>
-              <div className="team-members">
-                {curUsers.map(user => {
-                  if (user.team === team)
-                    return <div className="team-member">{user.userName}</div>;
-                })}
-              </div>
-            </div>
-          );
-        })}
-        <div className="team newtral">
-          <h1>neutral</h1>
-          <div className="team-members">
-            {neutral.map((user, i) => (
-              <div className="team-member" key={i}>
-                {user.userName}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {teamList.map(team => {
+        return (
+          <Team key={team}>
+            <h1>{team}</h1>
+            <Members>
+              {curUsers.map((user, i) => {
+                if (user.team === team)
+                  return (
+                    <MemberEach key={i} team={team}>
+                      {user.userName}
+                    </MemberEach>
+                  );
+              })}
+            </Members>
+          </Team>
+        );
+      })}
       <Button onClick={handleShakeTeam}>팀 섞기</Button>
       <Button onClick={() => handleCloseModal(true)}>확인</Button>
       <Button onClick={() => handleCloseModal(false)}>취소</Button>
-    </div>
+    </ModalShakeTeamBody>
   );
 };
-
-export default ShakeTeam;
+const ModalShakeTeamBody = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 216, 216, 0.9);
+`;
+const Team = styled.div``;
+const Members = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const MemberEach = styled.div`
+  border-radius: 10%;
+  margin: 5px;
+  padding: 5px;
+  background-color: ${props =>
+    props.team === 'NONE'
+      ? '#e3e3e3'
+      : props.team === 'BLUE'
+      ? '#0079f0'
+      : '#dc143c'};
+`;
+export default ModalShakeTeam;

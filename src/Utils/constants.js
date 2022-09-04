@@ -8,8 +8,21 @@ const TEAM_ID = {
 };
 
 const TEAM = {
-  RED: 'red',
-  BLUE: 'blue',
+  RED: 'RED',
+  BLUE: 'BLUE',
 };
 
-export { CHECK_IN, CHECK_OUT, TEAM, TEAM_ID };
+const API_URL = 'https://www.savvemecadet.click/api';
+
+const API_PARAMS = {
+  GET_USERS_OFFSET: 0,
+  GET_USERS_SIZE: 10,
+};
+
+const VACATION = {
+  PLUS_HALF: 0.5,
+  ZERO: 0,
+  MINUS_HALF: -0.5,
+};
+
+export { CHECK_IN, CHECK_OUT, TEAM, TEAM_ID, API_URL, API_PARAMS, VACATION };
