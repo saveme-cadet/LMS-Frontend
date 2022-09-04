@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NoData } from 'Components';
+import { ERROR_MESSAGES } from 'Utils/constants';
 
 import MineLogData from './MineLogData';
 
@@ -22,7 +23,7 @@ function MineLog({ mineLogs, attendScore }) {
             return <MineLogData data={log} key={index} />;
           })
         ) : (
-          <NoData code={1} />
+          <NoData code={ERROR_MESSAGES.NO_DATA} />
         )}
       </MineLogRow>
       <MineScore>현재 출결 점수 : {attendScore}</MineScore>

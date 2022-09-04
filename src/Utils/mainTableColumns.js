@@ -22,7 +22,7 @@ const mainTableColumns = [
     },
   },
   {
-    field: 'name',
+    field: 'username',
     headerName: '이름',
     type: 'string',
     width: 120,
