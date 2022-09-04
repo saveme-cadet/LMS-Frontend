@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from 'App';
-import { MineService, UserInfoService } from 'API';
-import { differenceInSeconds } from 'date-fns';
+import { MineService, AllTableService } from 'API';
+import { differenceInSeconds, format } from 'date-fns';
 import { ShowToday } from 'Components';
 import Timer from './Timer';
 import MineButton from './MineButton';
@@ -10,46 +10,51 @@ import MineLog from './MineLog';
 
 const MinePage = () => {
   const [attendScore, setAttendScore] = useState(null);
-  const [startTime, setStartTime] = useState(null);
+  const [beginTime, setBeginTime] = useState(null);
   const [mineLogs, setMineLogs] = useState(null);
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const getMyMine = async () => {
     const result = await MineService.getTodayMine(userId);
     const logs = result.data;
 
-    if (logs.length && logs[logs.length - 1].endAt === null) {
-      setStartTime(new Date(logs[logs.length - 1].startAt));
+    if (logs.length && logs[logs.length - 1].endTime === '00:00:00') {
+      setBeginTime(new Date(today + ' ' + logs[logs.length - 1].beginTime));
     }
     setMineLogs(logs);
   };
 
   const onClickMine = async () => {
-    if (startTime && differenceInSeconds(new Date(), startTime) < 1) {
+    if (beginTime && differenceInSeconds(new Date(), beginTime) < 1) {
       alert('측정하지 못했습니다!');
       return;
     }
-    if (startTime) {
-      setStartTime(null);
+    if (beginTime) {
+      setBeginTime(null);
       await MineService.putEndMine(userId);
     } else {
-      setStartTime(new Date());
+      setBeginTime(new Date());
       await MineService.postStartMine(userId);
     }
     getMyMine();
-    // getCurAttendScore();
+    getCurAttendScore();
   };
 
-  // const getCurAttendScore = async () => {
-  //   const result = await UserInfoService.getUserData(userId);
-  //   if (result.data) setAttendScore(result.data[0].attendScore.toFixed(2));
-  // };
+  const getCurAttendScore = async () => {
+    const result = await AllTableService.getTable(today);
+    for (let i = 0; i < result.data.length; i++) {
+      if (userId === result.data[i].userId) {
+        setAttendScore(result.data[i].attendanceScore.toFixed(2));
+      }
+    }
+  };
 
   useEffect(() => {
     if (userId) {
       getMyMine();
-      // getCurAttendScore();
+      getCurAttendScore();
     }
   }, [userId]);
 
@@ -63,10 +68,10 @@ const MinePage = () => {
           <MineTimerWrap>
             <MineHeader>⛏️ 보충학습 시작</MineHeader>
             <MineTimeBody>
-              <Timer startTime={startTime} />
+              <Timer beginTime={beginTime} />
               <MineButton
                 onClickMine={onClickMine}
-                state={startTime === null ? false : true}
+                state={beginTime === null ? false : true}
               />
             </MineTimeBody>
           </MineTimerWrap>
