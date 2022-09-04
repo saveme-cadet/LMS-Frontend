@@ -75,22 +75,7 @@ const MainPage = () => {
     localStorage.setItem('customData', JSON.stringify(newArray));
   };
 
-  const getTable = async () => {
-    const dateFormat = format(date, 'yyyy-MM-dd');
-
-    const result = await AllTableService.getTable(dateFormat);
-    console.log('table', result);
-  };
-
   const getUsers = async () => {
-    // const dateFormat = format(date, 'yyyy-MM-dd');
-
-    // const result = await UserInfoService.getAllUser(
-    //   API_PARAMS.GET_USERS_OFFSET,
-    //   API_PARAMS.GET_USERS_SIZE,
-    // );
-    // const todayProgress = await TodoService.getOthersProgress(dateFormat);
-
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat);
@@ -108,7 +93,6 @@ const MainPage = () => {
       todoSuccessRate: array.todoSuccessRate,
       checkIn: array.checkIn,
       checkOut: array.checkOut,
-      // todoRate: array.dayObjectiveAchievementRate,
     }));
     console.log('new Array', newArray);
     setRowData(newArray);
@@ -124,7 +108,6 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getTable();
     getUsers();
   }, [date]);
 
