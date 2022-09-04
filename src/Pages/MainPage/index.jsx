@@ -103,6 +103,11 @@ const MainPage = () => {
       role: array.role,
       team: array.team,
       vacation: array.vacation,
+      absentScore: array.absentScore,
+      attendanceScore: array.attendanceScore,
+      todoSuccessRate: array.todoSuccessRate,
+      checkIn: array.checkIn,
+      checkOut: array.checkOut,
       // todoRate: array.dayObjectiveAchievementRate,
     }));
     console.log('new Array', newArray);
