@@ -19,7 +19,7 @@ const MainPageTable = ({
   customData,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [curFocus, setCurFocus] = useState({ id: '', select: '' });
+  const [curFocus, setCurFocus] = useState({ attendanceId: '', select: '' });
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
 
   const handleClickCell = (params, event) => {
@@ -38,7 +38,7 @@ const MainPageTable = ({
     //   return;
     // }
     setAnchorEl(event.currentTarget);
-    setCurFocus({ attendanceId: params.attendanceId, select: field });
+    setCurFocus({ attendanceId: params.id, select: field });
   };
 
   const handleChangeCheck = async value => {
@@ -47,7 +47,7 @@ const MainPageTable = ({
     const today = new Date();
     let result;
     const selectUserInfo = selectRowData.find(
-      array => array.attendanceId === attendanceId,
+      array => array.id === attendanceId,
     );
 
     if (value === 6 && selectUserInfo.vacation === 0) {

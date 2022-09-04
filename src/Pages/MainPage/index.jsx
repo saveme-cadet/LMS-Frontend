@@ -82,7 +82,7 @@ const MainPage = () => {
     console.log('table', result.data);
     // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
     const newArray = result.data.map(array => ({
-      attendanceId: array.attendanceId,
+      id: array.attendanceId,
       username: array.username,
       attendStatus: array.attendStatus,
       role: array.role,
