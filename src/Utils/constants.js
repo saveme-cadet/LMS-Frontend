@@ -1,3 +1,5 @@
+const API_URL = 'https://www.savvemecadet.click/api';
+
 const CHECK_IN = 'checkIn';
 const CHECK_OUT = 'checkOut';
 
@@ -7,12 +9,17 @@ const TEAM_ID = {
   BLUE: 2,
 };
 
-const TEAM = {
+const TEAM_NAME = {
   RED: 'RED',
   BLUE: 'BLUE',
 };
 
-const API_URL = 'https://www.savvemecadet.click/api';
+const ROLE_NAME = {
+  ROLE_ADMIN: '관리자',
+  ROLE_MANAGER: '머슴',
+  ROLE_USER: '일반',
+  ROLE_UNAUTHORIZED: '게스트',
+};
 
 const API_PARAMS = {
   GET_USERS_OFFSET: 0,
@@ -34,10 +41,11 @@ const ERROR_MESSAGES = {
 export {
   CHECK_IN,
   CHECK_OUT,
-  TEAM,
+  TEAM_NAME,
   TEAM_ID,
   API_URL,
   API_PARAMS,
   VACATION,
   ERROR_MESSAGES,
+  ROLE_NAME,
 };

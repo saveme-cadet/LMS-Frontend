@@ -22,16 +22,17 @@ const LoginPage = () => {
       return;
     }
     alert(`환영합니다, ${body.username}!`); // TODO : change window type + timer
-    console.log(result);
+    // console.log(result);
     auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
     auth.setStatus({ userId: result.data.id, role: result.data.role_user }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
     navi('/');
   };
+
   const handleRegister = async userLoginInfo => {
     const result = await CRUDUserService.postUser(userLoginInfo);
-    console.log('result : ', result);
+    // console.log('result : ', result);
     if (result.status !== 201) {
       if (result.status === 400) {
         alert('비밀번호가 포맷에 맞지 않습니다!'); // TODO : Change error window in postUser

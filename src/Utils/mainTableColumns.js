@@ -1,6 +1,7 @@
 import { GetCheckIcons } from 'Components';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import { ROLE_NAME } from 'Utils/constants';
 
 const mainTableColumns = [
   {
@@ -18,7 +19,9 @@ const mainTableColumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <div className={`${params.value} info`}>{params.value}</div>;
+      return (
+        <div className={`${params.value} info`}>{ROLE_NAME[params.value]}</div>
+      );
     },
   },
   {
