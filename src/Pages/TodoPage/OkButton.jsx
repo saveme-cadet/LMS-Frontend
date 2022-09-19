@@ -11,9 +11,11 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
     const newTitle = event.target.closest('form')[1].value;
 
     if (newTitle === '') return;
-    toDos[index].title = newTitle;
 
-    const result = await TodoService.putTodo(toDos[index]);
+    const result = await TodoService.patchTodo(userId, toDos[index].todoId, {
+      title: newTitle,
+      titleCheck: toDos[index].titleCheck,
+    });
     setIsEdit();
     getToDos(userId);
   };

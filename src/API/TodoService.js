@@ -49,7 +49,7 @@ const TodoService = {
   //   "title": "공부하기",
   //   "titleCheck": false
   // }
-  patchTodo: async (todoId, userId, body) => {
+  patchTodo: async (userId, todoId, body) => {
     const url = TodoUrl(`${userId}/todos/${todoId}`);
     let response;
     try {

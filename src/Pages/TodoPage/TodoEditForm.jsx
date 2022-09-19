@@ -27,7 +27,10 @@ const TodoEditForm = ({
     if (newTitle === '') return;
     toDos[isEdit].title = newTitle;
 
-    const result = await TodoService.putTodo(toDos[isEdit]);
+    const result = await TodoService.patchTodo(userId, toDos[index].todoId, {
+      title: newTitle,
+      titleCheck: toDos[index].titleCheck,
+    });
     setIsEdit('');
     getToDos(userId);
   };
