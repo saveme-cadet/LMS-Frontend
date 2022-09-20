@@ -13,7 +13,7 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
     if (newTitle === '') return;
 
     const result = await TodoService.patchTodo(userId, toDos[index].todoId, {
-      title: newTitle,
+      title: newTitle.trim(),
       titleCheck: toDos[index].titleCheck,
     });
     setIsEdit();

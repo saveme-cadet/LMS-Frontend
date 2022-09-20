@@ -12,12 +12,18 @@ const OtherCadetList = ({ date }) => {
 
   const getOthers = async () => {
     const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
-    // console.log(result.data);
-    setOthersToDo(result.data);
+    setOthersToDo(result.data.content);
+  };
+
+  const getOthersProgress = async () => {
+    const result = await TodoService.getOthersProgress(
+      format(date, 'yyyy-MM-dd'),
+    );
   };
 
   useEffect(() => {
     getOthers();
+    getOthersProgress();
   }, [date]);
 
   return (

@@ -35,7 +35,7 @@ const AdminPage = () => {
             setIsOpen={setIsOpen}
           />
         ) : (
-          <NotValid code={ERROR_MESSAGES.WEEKEND} />
+          <NotValid code={ERROR_MESSAGES.NO_AUTH} />
         )}
       </AdminBody>
     </AdminBackground>
