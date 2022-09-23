@@ -77,14 +77,16 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
+    // const anoResult = await TodoService.getOthersProgress('2022-09-01');
+    // getOthersProgress 가져오지 않고 getTable 하나로 가져오기?
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat);
-    // TODO: todayProgress 값을 해당 유저에게 맞춰서(하단의 todoRate에) 넣어줘야함
     const newArray = result.data.map(array => ({
       id: array.attendanceId,
+      userId: array.userId,
       username: array.username,
-      attendStatus: array.attendStatus,
+      // attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,
       vacation: array.vacation,
@@ -130,7 +132,6 @@ const MainPage = () => {
           />
           <MainPageTable
             date={date}
-            rowData={rowData}
             selectRowData={selectRowData}
             getUsers={getUsers}
             userId={userId}

@@ -12,7 +12,6 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const MainPageTable = ({
   date,
-  rowData,
   selectRowData,
   getUsers,
   userId,
@@ -49,8 +48,12 @@ const MainPageTable = ({
     const selectUserInfo = selectRowData.find(
       array => array.id === attendanceId,
     );
+    const originValue =
+      select === CHECK_IN ? selectUserInfo.checkIn : selectUserInfo.checkOut;
 
-    if (value === 6 && selectUserInfo.vacation === 0) {
+    if (originValue === value) return;
+    // 이전 선택과 동일할 경우 return
+    if (value === 'VACATION' && selectUserInfo.vacation === 0) {
       alert('사용할 수 있는 휴가가 없습니다!');
       setAnchorEl(null);
       return;
