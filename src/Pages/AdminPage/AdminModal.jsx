@@ -10,7 +10,10 @@ const AdminModal = ({
   handleChangeShuffleTeam,
   handleAddVacation,
   handleMinusVacation,
+  usersAttendence,
 }) => {
+  console.log(rowData);
+  console.log(usersAttendence);
   return (
     <>
       {isOpen === 'add' && (
@@ -26,9 +29,7 @@ const AdminModal = ({
       {isOpen === 'find' && (
         <ModalAttendLeaderboard
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(
-            user => user.attendStatus === 'PARTICIPATED',
-          )}
+          attendUser={usersAttendence}
         />
       )}
       {isOpen === 'shake' && (

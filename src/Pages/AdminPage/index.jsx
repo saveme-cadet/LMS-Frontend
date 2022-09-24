@@ -21,13 +21,17 @@ const AdminPage = () => {
     }
   };
 
+  // 차이?
+  // console.log(rowData);
+  // console.log(usersAttendence);
+
   return (
     <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
         <ShowToday date={date} />
       </AdminHeader>
       <AdminBody>
-        {userRole === 'ROLE_MANAGER' ? (
+        {userRole !== 'ROLE_MANAGER' ? (
           <AdminContainer
             auth={auth}
             userId={userId}

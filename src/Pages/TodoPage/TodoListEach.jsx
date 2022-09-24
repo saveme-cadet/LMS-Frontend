@@ -31,7 +31,7 @@ const TodoListEach = ({
         id={item.todoId}
         onClick={() => changeCheck(index)}
       >
-        {item.title}
+        {item.title.replace(/ /g, '\u00a0')}
       </Item>
       <EditButton index={index} date={date} setIsEdit={setIsEdit} />
       <DeleteButton date={date} removeToDo={removeToDo} />

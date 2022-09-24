@@ -17,7 +17,9 @@ const TodoPage = () => {
   // 3. 다른 카뎃 정보 불러오기 API 수정o
   // 4. 파일 줄이기
   // 5. 수정 esc 키 추가하기o
-  // 6. div string을 보여줄 떄 space가 출력되지 않는 문제
+  // 6. div string을 보여줄 떄 space가 출력되지 않는 문제o
+  // 7. todo delete할 떄 연속으로 누르면 404 => 어디서 처리?
+  // 리액트 쿼리를 이용하면 해결할 수 있음
 
   return (
     <TodoMainBackground>
