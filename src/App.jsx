@@ -13,8 +13,9 @@ const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState(null);
   useEffect(() => {
     const userId = localStorage.getItem('userId');
+    const role = localStorage.getItem('role');
 
-    setStatus({ userId: userId });
+    setStatus({ userId: userId, role: role });
     setIsLoading(false);
   }, [isLoading]);
 
@@ -31,17 +32,13 @@ const Loading = () => {
   return <div>로딩중!!!</div>;
 };
 
-const validStatus = ({ userId }) => {
-  return userId;
-};
-
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
 
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (auth.status && validStatus(auth.status)) return children;
+    if (auth.status?.userId) return children;
     else return <Navigate to="/login" />;
   }
 };
@@ -52,7 +49,7 @@ const LoginCheckRoute = ({ children }) => {
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (!auth.status || !validStatus(auth.status)) return children;
+    if (!auth.status?.userId) return children;
     else return <Navigate to="/" />;
   }
 };

@@ -18,11 +18,10 @@ const LoginPage = () => {
   const handleLogin = async body => {
     const result = await CRUDUserService.postLogin(body);
     if (result.status !== 200) {
-      alert('잘못된 아이디나 비밀번호 입니다!'); // TODO : change window type + Timer
+      alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
-    alert(`환영합니다, ${body.username}!`); // TODO : change window type + timer
-    // console.log(result);
+    alert(`환영합니다, ${body.username}!`);
     auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
     localStorage.setItem('role', result.data.role);
