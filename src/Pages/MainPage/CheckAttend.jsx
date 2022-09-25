@@ -14,6 +14,15 @@ const CheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
     '병결',
     '휴가',
   ];
+  const ListItemValues = [
+    'NONE',
+    'PRESENT',
+    'TARDY',
+    'ABSENT',
+    'OFFICIAL_ABSENT',
+    'ILLNESS',
+    'VACATION',
+  ];
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -33,7 +42,9 @@ const CheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
         {ListItemTexts.map((text, index) => {
           return (
             <ListItem disablePadding key={index}>
-              <ListItemButton onClick={() => onChangeCheck(index)}>
+              <ListItemButton
+                onClick={() => onChangeCheck(ListItemValues[index])}
+              >
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>

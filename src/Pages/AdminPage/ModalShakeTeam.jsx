@@ -23,7 +23,7 @@ const ModalShakeTeam = ({
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
-  const teamList = ['red', 'blue', 'white'];
+  const teamList = ['RED', 'BLUE', 'NONE'];
 
   const handleCloseModal = isAccept => {
     // console.log(curUsers);
@@ -109,9 +109,9 @@ const MemberEach = styled.div`
   margin: 5px;
   padding: 5px;
   background-color: ${props =>
-    props.team === 'white'
+    props.team === 'NONE'
       ? '#e3e3e3'
-      : props.team === 'blue'
+      : props.team === 'BLUE'
       ? '#0079f0'
       : '#dc143c'};
 `;

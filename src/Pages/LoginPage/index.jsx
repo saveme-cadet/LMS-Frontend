@@ -17,23 +17,27 @@ const LoginPage = () => {
 
   const handleLogin = async body => {
     const result = await CRUDUserService.postLogin(body);
-    if (!result) {
+    if (result.status !== 200) {
       alert('잘못된 아이디나 비밀번호 입니다!'); // TODO : change window type + Timer
       return;
     }
     alert(`환영합니다, ${body.username}!`); // TODO : change window type + timer
-    console.log(result);
+    // console.log(result);
     auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
-    auth.setStatus({ userId: result.data.id });
-
+    auth.setStatus({ userId: result.data.id, role: result.data.role_user }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
     navi('/');
   };
+
   const handleRegister = async userLoginInfo => {
     const result = await CRUDUserService.postUser(userLoginInfo);
-    if (!result) {
-      alert('회원가입 에러! '); // TODO : Change error window in postUser
+    // console.log('result : ', result);
+    if (result.status !== 201) {
+      if (result.status === 400) {
+        alert('비밀번호가 포맷에 맞지 않습니다!'); // TODO : Change error window in postUser
+      } else if (result.status === 409) alert('이미 존재하는 유저입니다!');
+      else alert('서버 에러!');
       return;
     }
     handleLogin(userLoginInfo);
@@ -69,7 +73,6 @@ flex-direction: column;
 align-items: center;
 
 text-align: center;
-color: white;
 background-image: url('/asset/login.jpg'); no-repeat;
 background-size: cover;
 // background-color: #220646;
@@ -93,4 +96,5 @@ const LoginMainTitle = styled.span`
   font-size: 70px;
   margin: 20px;
   font-family: 'BMJUA';
+  color: white;
 `;

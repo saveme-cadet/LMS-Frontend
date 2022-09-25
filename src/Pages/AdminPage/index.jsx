@@ -1,6 +1,7 @@
 import { useState, useContext, useRef, useEffect } from 'react';
 import { AuthContext } from 'App';
 import { ShowToday, NotValid } from 'Components';
+import { ERROR_MESSAGES } from 'Utils/constants';
 
 import AdminContainer from './AdminContainer';
 // import NewUserForm from './NewUserForm';
@@ -26,7 +27,7 @@ const AdminPage = () => {
         <ShowToday date={date} />
       </AdminHeader>
       <AdminBody>
-        {userRole === '머슴' ? (
+        {userRole === 'ROLE_MANAGER' ? (
           <AdminContainer
             auth={auth}
             userId={userId}
@@ -34,7 +35,7 @@ const AdminPage = () => {
             setIsOpen={setIsOpen}
           />
         ) : (
-          <NotValid code={0} />
+          <NotValid code={ERROR_MESSAGES.NO_AUTH} />
         )}
       </AdminBody>
     </AdminBackground>

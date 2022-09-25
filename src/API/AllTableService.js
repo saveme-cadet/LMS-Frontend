@@ -9,11 +9,11 @@ const AllTableService = {
   // {
   //   "status": "NONE"
   // }
-  putAllTableCheckIn: async (attendanceId, body) => {
-    const url = AllTableUrl(`attendance/${attendanceId}/checkin`);
+  putAllTableCheckIn: async (userId, attendanceId, body) => {
+    const url = AllTableUrl(`attendance/${userId}/${attendanceId}/checkin`);
     let response;
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
@@ -23,29 +23,39 @@ const AllTableService = {
   // {
   //   "status": "NONE"
   // }
-  putAllTableCheckOut: async (attendanceId, body) => {
-    const url = AllTableUrl(`attendance/${attendanceId}/checkout`);
+  putAllTableCheckOut: async (userId, attendanceId, body) => {
+    const url = AllTableUrl(`attendance/${userId}/${attendanceId}/checkout`);
     let response;
     try {
-      response = await instance.put(url, body);
+      response = await instance.patch(url, body);
     } catch (e) {
       alert(e);
     }
     return response;
   },
 
-  // API 없음
-  // getAllTable: async (date, userId) => {
-  //   const url = AllTableUrl(`day?date=${date}&userId=${userId}`);
-  //   let response;
+  getTable: async date => {
+    const url = AllTableUrl(`day-logs?date=${date}`);
+    let response;
 
-  //   try {
-  //     response = await instance.get(url);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  //   return response;
-  // },
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+  getAttendance: async date => {
+    const url = AllTableUrl(`attendance?date=${date}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
 };
 
 export default AllTableService;

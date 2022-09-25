@@ -3,24 +3,17 @@ import styled from 'styled-components';
 import { differenceInSeconds, parseISO, format } from 'date-fns';
 
 const formatDate = date => {
-  if (!date) return '공부 중!';
-  date = new Date(date);
-
-  return format(date, 'HH:mm:ss');
+  return date === '00:00:00' ? '공부 중!' : date;
 };
 
-const formatRecord = record => {
-  if (record === 'doing study') return '00:00:00';
-  const arr = record.split(':');
-  const newRecord = arr.map(i => {
-    return parseInt(i) < 10 ? '0' + i : i;
-  });
-
-  return newRecord.join(':');
+const secondsConverter = timeStamp => {
+  const list = timeStamp.split(':');
+  return +list[0] * 60 * 60 + +list[1] * 60 + +list[2];
 };
+
 const MineLogData = ({ data }) => {
   const earnedPoint = (
-    differenceInSeconds(parseISO(data.endAt), parseISO(data.startAt)) /
+    secondsConverter(data.finalStudyTime) /
     60 /
     60 /
     8.0
@@ -32,12 +25,12 @@ const MineLogData = ({ data }) => {
 
   return (
     <LogData>
-      <div>{formatDate(data.startAt)}</div>
-      <div>{formatDate(data.endAt)}</div>
-      <div>{formatRecord(data.recodeTime)}</div>
+      <div>{data.beginTime}</div>
+      <div>{formatDate(data.endTime)}</div>
+      <div>{formatDate(data.finalStudyTime)}</div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
       <div>
-        {data.endAt ? (
+        {data.endTime !== '00:00:00' ? (
           <EditButton onClick={handleEditLog}>수정</EditButton>
         ) : (
           <EditButton onClick={handleEditLog} disabled={true}>

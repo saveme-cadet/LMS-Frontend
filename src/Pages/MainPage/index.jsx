@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
-import { TEAM, TEAM_ID, API_PARAMS } from 'Utils/constants';
-import { UserInfoService } from 'API';
+import { TEAM_NAME, TEAM_ID } from 'Utils/constants';
+import { TodoService, UserInfoService, AllTableService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -33,7 +33,8 @@ const MainPage = () => {
     // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
     if (curTab === TEAM_ID.ALL) setSelectRowData(rowData);
     else {
-      const team = curTab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
+      const team = curTab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
+
       setSelectRowData(
         rowData.filter(data => {
           return data.team === team;
@@ -76,24 +77,31 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
+    // const anoResult = await TodoService.getOthersProgress('2022-09-01');
+    // getOthersProgress 가져오지 않고 getTable 하나로 가져오기?
     const dateFormat = format(date, 'yyyy-MM-dd');
-    const result = await UserInfoService.getAllUser(
-      API_PARAMS.GET_USERS_OFFSET,
-      API_PARAMS.GET_USERS_SIZE,
-    );
 
+    const result = await AllTableService.getTable(dateFormat);
     const newArray = result.data.map(array => ({
-      ...array,
-      id: array.writer_id,
-      name: array.userName,
-      todoRate: array.dayObjectiveAchievementRate,
+      id: array.attendanceId,
+      userId: array.userId,
+      username: array.username,
+      // attendStatus: array.attendStatus,
+      role: array.role,
+      team: array.team,
+      vacation: array.vacation,
+      absentScore: array.absentScore,
+      attendanceScore: array.attendanceScore,
+      todoSuccessRate: array.todoSuccessRate,
+      checkIn: array.checkIn,
+      checkOut: array.checkOut,
     }));
     setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
-      const team = tab === TEAM_ID.BLUE ? TEAM.BLUE : TEAM.RED;
+      const team = tab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
       setSelectRowData(
-        rowData.filter(data => {
+        newArray.filter(data => {
           return data.team === team;
         }),
       );
@@ -116,24 +124,19 @@ const MainPage = () => {
           <UserGuide rowData={rowData} userId={userId} />
           <ShowDate date={date} setDate={setDate} />
 
-          <MainPageTableContainer>
-            <MainPageBody>
-              <MainPageTableTabs
-                date={date}
-                tab={tab}
-                handleChangeTab={handleChangeTab}
-                setIsOpen={setIsOpen}
-              />
-              <MainPageTable
-                date={date}
-                rowData={rowData}
-                selectRowData={selectRowData}
-                getUsers={getUsers}
-                userId={userId}
-                customData={customData}
-              />
-            </MainPageBody>
-          </MainPageTableContainer>
+          <MainPageTableTabs
+            date={date}
+            tab={tab}
+            handleChangeTab={handleChangeTab}
+            setIsOpen={setIsOpen}
+          />
+          <MainPageTable
+            date={date}
+            selectRowData={selectRowData}
+            getUsers={getUsers}
+            userId={userId}
+            customData={customData}
+          />
         </>
       )}
       {isOpen && (
@@ -156,69 +159,4 @@ const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-`;
-
-const MainPageTableContainer = styled.div`
-  border: 1px solid #c0c0c0;
-  padding: 1em;
-  border-radius: 1em;
-  height: 550px;
-  position: relative;
-`;
-
-const MainPageBody = styled.div`
-  height: calc(100% - 50px);
-  .MuiDataGrid-footerContainer {
-    display: none;
-  }
-  .info {
-    width: 8em;
-    padding: 0.2em;
-    border-radius: 10em;
-    text-align: center;
-  }
-  .red {
-    background-color: #dc143c;
-  }
-  .blue {
-    background-color: #0079f0;
-  }
-  .머슴 {
-    background-color: yellow;
-  }
-  .카뎃 {
-    background-color: #cccccc;
-  }
-  .admin {
-    background-color: yellow;
-  }
-  .cadet {
-    background-color: #cccccc;
-  }
-
-  .type {
-    color: #ffffff;
-    width: 8em;
-    padding: 0.2em;
-    border-radius: 10em;
-    text-align: center;
-  }
-  .check {
-    background-color: #2ce054;
-  }
-  .late {
-    background-color: #ffcb46;
-  }
-  .not {
-    background-color: #ff4646;
-  }
-  .vacancy {
-    background-color: #a477ee;
-  }
-  .illness {
-    background-color: #a477ee;
-  }
-  .vacation {
-    background-color: #2891f1;
-  }
 `;

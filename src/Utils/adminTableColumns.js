@@ -1,6 +1,6 @@
 const adminTableColumns = [
   {
-    field: 'attendeStatus',
+    field: 'attendStatus',
     headerName: '참여 상태',
     type: 'string',
     width: 120,

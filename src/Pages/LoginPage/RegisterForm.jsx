@@ -19,6 +19,10 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
       alert('전부 입력해주세요!');
       return;
     }
+    if (password.length < 8) {
+      alert('비밀번호는 8자 이상이어야 합니다!');
+      return;
+    }
     onClickRegister({
       username: id,
       password: password,
@@ -50,7 +54,9 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             onChange={handleChangePassword}
             onKeyPress={handlePressEnter}
             type="password"
+            maxLength={30}
           />
+
           {/* <RegisterInput
             value={email}
             placeholder="이메일 ex) example@student.42seoul.kr"
@@ -58,6 +64,10 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             onKeyPress={handlePressEnter}
           /> */}
         </RegisterInputForm>
+        <h5>
+          비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
+          포함해야 합니다.
+        </h5>
         <LoginButton variant="contained" onClick={handleClick}>
           함께하기!
         </LoginButton>
@@ -77,6 +87,7 @@ const RegisterMain = styledComp.div`
   height: 70%;
   background-color: #ffffff;
   border-radius: 1em;
+
 `;
 
 const RegisterWelcome = styledComp.div`

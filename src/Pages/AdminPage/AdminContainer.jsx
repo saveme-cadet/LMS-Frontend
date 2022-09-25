@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { UserInfoService } from 'API';
+import { UserInfoService, VacationService } from 'API';
+import { API_PARAMS } from 'Utils/constants';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
+import { addDays } from 'date-fns';
 
 const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const [users, setUsers] = useState([]);
@@ -17,31 +19,35 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
     let filter = '';
-    if (curTab === 1) filter = '불참';
-    else if (curTab === 2) filter = '참가';
+    if (curTab === 1) filter = 'NOT_PARTICIPATED';
+    else if (curTab === 2) filter = 'PARTICIPATED';
     curArrays.map(array => {
-      if (array.attendeStatus !== filter) filterArray.push(array);
+      if (array.attendStatus !== filter) filterArray.push(array);
     });
     setSelectRowData(filterArray);
   };
 
   const handleChangeShuffleTeam = async (userId, team) => {
-    const result = await UserInfoService.putTeam(userId, team);
+    const result = await UserInfoService.patchTeam(userId, team);
     getUser();
   };
 
-  const handleAddVacation = async select => {
-    const result = await UserInfoService.putVacationPlus(select);
+  const handleAddVacation = async (select, addedDays) => {
+    const body = {
+      addedDays: addedDays,
+    };
+    const result = await VacationService.addVacation(select, body);
     getUser();
     setSelectUserId(null);
   };
-  const handleMinusVacation = async select => {
+  const handleMinusVacation = async (select, usedDays) => {
+    const body = { usedDays: usedDays, reason: 'Applied to all users.' };
     const selectUser = rowData.filter(user => user.id === select);
     if (selectUser[0].vacation === 0) {
       // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
-    const result = await UserInfoService.putVacationMinus(select);
+    const result = await VacationService.useVacation(select, body);
     getUser();
     setSelectUserId(null);
   };
@@ -58,18 +64,18 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(5);
-    setUsers(result.data);
+    const result = await UserInfoService.getAllUser(0, 5);
+    setUsers(result.data.content);
     const newArray = [];
 
-    result.data.map(array => {
+    result.data.content.map(array => {
       const newData = {
-        id: array.userId,
-        userName: array.userName,
-        attendeStatus: array.attendeStatus ? '참가' : '불참',
+        id: array.id,
+        userName: array.nickname,
+        attendStatus: array.attendStatus,
         team: array.team,
-        attendScore: array.attendScore,
-        participateScore: array.participateScore,
+        // attendScore: array.attendScore,
+        // participateScore: array.participateScore,
         role: array.role,
         vacation: array.vacation,
       };
