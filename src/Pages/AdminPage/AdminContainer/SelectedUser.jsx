@@ -54,18 +54,17 @@ const SelectedUser = ({
               <MenuItem value={'RED'}>RED</MenuItem>
               <MenuItem value={'BLUE'}>BLUE</MenuItem>
             </Select>
-            {userInfo.role !== 'ROLE_ADMIN' &&
-              userInfo.role !== 'ROLE_UNAUTHORIZED' && (
-                <Select
-                  value={userInfo.role}
-                  onChange={onClickChangeRole}
-                  displayEmpty
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
-                  <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
-                </Select>
-              )}
+            {userInfo.role !== 'ROLE_ADMIN' && (
+              <Select
+                value={userInfo.role}
+                onChange={onClickChangeRole}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+              >
+                <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
+                <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
+              </Select>
+            )}
 
             <Button
               variant="contained"

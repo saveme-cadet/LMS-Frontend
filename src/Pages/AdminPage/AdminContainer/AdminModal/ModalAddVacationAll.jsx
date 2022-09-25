@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { VACATION } from 'Utils/constants';
+import { VacationService } from 'API';
 
 import styled from 'styled-components';
 
@@ -9,11 +10,32 @@ import Slider from '@mui/material/Slider';
 const ModalAddVacationAll = ({
   setIsOpen,
   attendUser,
-  addVacation,
-  minusVacation,
+  getUser,
+  setSelectUserId,
+  rowData,
 }) => {
   const [value, setValue] = useState(0);
-  // console.log('attend', attendUser);
+
+  const addVacation = async (select, addedDays) => {
+    const body = {
+      addedDays: addedDays,
+    };
+    const result = await VacationService.addVacation(select, body);
+    getUser();
+    setSelectUserId(null);
+  };
+
+  const minusVacation = async (select, usedDays) => {
+    const body = { usedDays: usedDays, reason: 'Applied to all users.' };
+    const selectUser = rowData.filter(user => user.id === select);
+    if (selectUser[0].vacation === 0) {
+      // console.log('감소시킬 휴가가 없습니다!');
+      return;
+    }
+    const result = await VacationService.useVacation(select, body);
+    getUser();
+    setSelectUserId(null);
+  };
 
   const handleCloseModal = isAccept => {
     if (isAccept && value) {

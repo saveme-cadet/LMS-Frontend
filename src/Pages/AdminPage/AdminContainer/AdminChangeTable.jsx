@@ -1,6 +1,5 @@
 import { UserInfoService, CRUDUserService, VacationService } from 'API';
 import { VACATION } from 'Utils/constants';
-
 import SelectedUser from './SelectedUser';
 
 import styled from 'styled-components';

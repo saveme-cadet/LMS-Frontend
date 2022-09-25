@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { UserInfoService } from 'API';
 
 import styled from 'styled-components';
 
@@ -15,15 +16,17 @@ const shuffleArray = array => {
   return array;
 };
 
-const ModalShakeTeam = ({
-  setIsOpen,
-  attendUser,
-  onClickChangeShuffleTeam,
-}) => {
+const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
   const teamList = ['RED', 'BLUE', 'NONE'];
+
+  // getUser를 받아 내부에서 사용하도록 수정
+  const onClickChangeShuffleTeam = async (userId, team) => {
+    const result = await UserInfoService.patchTeam(userId, { team: team });
+    getUser();
+  };
 
   const handleCloseModal = isAccept => {
     // console.log(curUsers);
