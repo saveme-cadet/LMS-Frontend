@@ -16,13 +16,15 @@ const LoginPage = () => {
   const [pageStatus, setPageStatus] = useState('login');
 
   const handleLogin = async body => {
+    if (auth.isLoading) return;
+
+    auth.setIsLoading(true);
     const result = await CRUDUserService.postLogin(body);
     if (result.status !== 200) {
       alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
     alert(`환영합니다, ${body.username}!`);
-    auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
     localStorage.setItem('role', result.data.role);
     auth.setStatus({ userId: result.data.id, role: result.data.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
@@ -31,6 +33,8 @@ const LoginPage = () => {
   };
 
   const handleRegister = async userLoginInfo => {
+    if (auth.isLoading) return;
+    auth.setIsLoading(true);
     const result = await CRUDUserService.postUser(userLoginInfo);
     // console.log('result : ', result);
     if (result.status !== 201) {
@@ -41,6 +45,7 @@ const LoginPage = () => {
       return;
     }
     handleLogin(userLoginInfo);
+    auth.setIsLoading(false);
   };
   return (
     <LoginBackground>

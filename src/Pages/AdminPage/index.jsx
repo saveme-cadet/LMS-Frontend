@@ -21,13 +21,19 @@ const AdminPage = () => {
     }
   };
 
+  const isAuth = () => {
+    if (userRole === 'ROLE_MANAGER') return true;
+    if (userRole === 'ROLE_ADMIN') return true;
+    return false;
+  };
+
   return (
     <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
         <ShowToday date={date} />
       </AdminHeader>
       <AdminBody>
-        {userRole !== 'ROLE_MANAGER' ? (
+        {isAuth() ? (
           <AdminContainer
             auth={auth}
             userId={userId}

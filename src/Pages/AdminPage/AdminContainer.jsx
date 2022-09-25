@@ -66,8 +66,9 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(0, 10000);
+    const result = await UserInfoService.getAllUser(0, 1000);
     setUsers(result.data.content);
+    console.log('result : ', result.data.content);
     const newArray = [];
 
     result.data.content.map(array => {
@@ -76,14 +77,15 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         userName: array.nickname,
         attendStatus: array.attendStatus,
         team: array.team,
-        // attendScore: array.attendScore,
-        // participateScore: array.participateScore,
+        absentScore: array.absentScore,
+        attendanceScore: array.attendanceScore,
+
         role: array.role,
         vacation: array.vacation,
       };
       newArray.push(newData);
     });
-    // console.log(newArray);
+    console.log(newArray);
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };

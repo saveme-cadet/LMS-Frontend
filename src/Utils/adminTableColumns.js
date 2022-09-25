@@ -34,14 +34,14 @@ const adminTableColumns = [
   },
 
   {
-    field: 'participateScore',
+    field: 'attendanceScore',
     headerName: '출석 횟수',
     type: 'number',
     width: 120,
   },
 
   {
-    field: 'attendScore',
+    field: 'absentScore',
     headerName: '결석 점수',
     type: 'number',
     width: 120,
