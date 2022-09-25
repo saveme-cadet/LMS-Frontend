@@ -134,7 +134,6 @@ const MainPage = () => {
             date={date}
             selectRowData={selectRowData}
             getUsers={getUsers}
-            userId={userId}
             customData={customData}
           />
         </>

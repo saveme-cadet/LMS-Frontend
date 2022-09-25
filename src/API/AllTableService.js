@@ -10,7 +10,9 @@ const AllTableService = {
   //   "status": "NONE"
   // }
   putAllTableCheckIn: async (userId, attendanceId, body) => {
-    const url = AllTableUrl(`attendance/${userId}/${attendanceId}/checkin`);
+    const url = AllTableUrl(
+      `attendance/users/${userId}/${attendanceId}/checkin`,
+    );
     let response;
     try {
       response = await instance.patch(url, body);
@@ -24,7 +26,9 @@ const AllTableService = {
   //   "status": "NONE"
   // }
   putAllTableCheckOut: async (userId, attendanceId, body) => {
-    const url = AllTableUrl(`attendance/${userId}/${attendanceId}/checkout`);
+    const url = AllTableUrl(
+      `attendance/users/${userId}/${attendanceId}/checkout`,
+    );
     let response;
     try {
       response = await instance.patch(url, body);

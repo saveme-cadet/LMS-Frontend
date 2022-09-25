@@ -10,19 +10,14 @@ import WrongDay from './WrongDay';
 import styled from 'styled-components';
 import { DataGrid } from '@mui/x-data-grid';
 
-const MainPageTable = ({
-  date,
-  selectRowData,
-  getUsers,
-  userId,
-  customData,
-}) => {
+const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ attendanceId: '', select: '' });
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
 
   const handleClickCell = (params, event) => {
     const field = params.field;
+    console.log('params: ', params);
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
     // const selectUserInfo = selectRowData.find(array => array.id === params.id);
@@ -37,11 +32,16 @@ const MainPageTable = ({
     //   return;
     // }
     setAnchorEl(event.currentTarget);
-    setCurFocus({ attendanceId: params.id, select: field });
+    setCurFocus({
+      attendanceId: params.id,
+      userId: params.row.userId,
+      select: field,
+    });
   };
 
   const handleChangeCheck = async value => {
     const attendanceId = curFocus.attendanceId;
+    const userId = curFocus.userId;
     const select = curFocus.select;
     const today = new Date();
     let result;
@@ -66,7 +66,6 @@ const MainPageTable = ({
       setAnchorEl(null);
       return;
     }
-    const userId = localStorage.getItem('userId');
     if (select === CHECK_IN) {
       result = await AllTableService.putAllTableCheckIn(userId, attendanceId, {
         status: '' + value,
