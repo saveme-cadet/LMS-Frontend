@@ -35,22 +35,23 @@ const AdminChangeTable = ({
   };
 
   const handleChangeAttend = async event => {
-    const value = event.target.value === 'PARTICIPATED' ? 1 : 0;
-    if (value === 0) {
+    if (event.target.value === 'NOT_PARTICIPATED') {
       if (validChangeRole()) return;
-      let temp = await UserInfoService.patchRole(selectUserId, 'ROLE_USER');
-      // temp = await UserInfoService.patchTeam(selectUserId, 'NONE');
+      let temp = await UserInfoService.patchRole(selectUserId, {
+        role: 'ROLE_USER',
+      });
     }
-    const result = await UserInfoService.putAttend(selectUserId, value);
+    const result = await UserInfoService.patchAttend(selectUserId, {
+      attendStatus: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
 
   const handleChangeTeam = async event => {
-    const result = await UserInfoService.patchTeam(
-      selectUserId,
-      event.target.value,
-    );
+    const result = await UserInfoService.patchTeam(selectUserId, {
+      team: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
@@ -59,10 +60,9 @@ const AdminChangeTable = ({
     // console.log(selectUserId, userId);
     if (validChangeRole()) return;
 
-    const result = await UserInfoService.patchRole(
-      selectUserId,
-      event.target.value,
-    );
+    const result = await UserInfoService.patchRole(selectUserId, {
+      role: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
