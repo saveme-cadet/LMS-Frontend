@@ -1,9 +1,21 @@
+import { AllTableService } from 'API';
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+
 import styled from 'styled-components';
 
 import Button from '@mui/material/Button';
 
-const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
-  const sortArray = attendUser.sort((a, b) => {
+const ModalAttendLeaderboard = ({ setIsOpen }) => {
+  const [usersAttendance, setUsersAttendance] = useState([]);
+  const today = format(new Date(), 'yyyy-MM-dd');
+
+  const getUserAttendance = async () => {
+    const result = await AllTableService.getTable(today);
+    setUsersAttendance(result.data);
+  };
+
+  const sortArray = usersAttendance.sort((a, b) => {
     if (a.attendanceScore === b.attendanceScore) {
       if (a.absentScore < b.absentScore) return -1;
       else if (a.absentScore > b.absentScore) return 1;
@@ -19,6 +31,11 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
   //   if (sortArray[index].attendanceScore === 0) return -1;
   //   return 0;
   // };
+
+  useEffect(() => {
+    getUserAttendance();
+  }, []);
+
   return (
     <ModalAttendLeaderboardBody>
       <h1>월렛 보상 대상</h1>
@@ -34,7 +51,7 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
           </h1>
         );
       })} */}
-      {attendUser.length === 0 ? (
+      {usersAttendance.length === 0 ? (
         ''
       ) : (
         <h1>
@@ -42,7 +59,7 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
           점 - 결석점수 {sortArray[0].absentScore}점
         </h1>
       )}
-      {attendUser.length <= 1 ? (
+      {usersAttendance.length <= 1 ? (
         ''
       ) : (
         <h1>
@@ -50,7 +67,7 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
           점 - 결석점수 {sortArray[1].absentScore}점
         </h1>
       )}
-      {attendUser.length <= 2 ? (
+      {usersAttendance.length <= 2 ? (
         ''
       ) : (
         <h1>

@@ -15,8 +15,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
-  const [usersAttendence, setUsersAttendence] = useState([]);
-  const today = format(new Date(), 'yyyy-MM-dd');
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -68,7 +66,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const getUser = async () => {
     const result = await UserInfoService.getAllUser(0, 1000);
     setUsers(result.data.content);
-    console.log('result : ', result.data.content);
     const newArray = [];
 
     result.data.content.map(array => {
@@ -79,25 +76,17 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         team: array.team,
         absentScore: array.absentScore,
         attendanceScore: array.attendanceScore,
-
         role: array.role,
         vacation: array.vacation,
       };
       newArray.push(newData);
     });
-    console.log(newArray);
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };
 
-  const getUserAttendance = async () => {
-    const result = await AllTableService.getTable(today);
-    setUsersAttendence(result.data);
-  };
-
   useEffect(() => {
     getUser();
-    getUserAttendance();
   }, []);
 
   return (
@@ -123,7 +112,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         rowData={rowData}
-        usersAttendence={usersAttendence}
         handleChangeShuffleTeam={handleChangeShuffleTeam}
         handleAddVacation={handleAddVacation}
         handleMinusVacation={handleMinusVacation}

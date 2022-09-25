@@ -22,7 +22,7 @@ const AdminPage = () => {
   };
 
   const isAuth = () => {
-    if (userRole === 'ROLE_MANAGER') return true;
+    if (userRole !== 'ROLE_MANAGER') return true;
     if (userRole === 'ROLE_ADMIN') return true;
     return false;
   };

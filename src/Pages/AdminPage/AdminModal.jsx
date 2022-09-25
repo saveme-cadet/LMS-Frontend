@@ -10,7 +10,6 @@ const AdminModal = ({
   handleChangeShuffleTeam,
   handleAddVacation,
   handleMinusVacation,
-  usersAttendence,
 }) => {
   return (
     <>
@@ -24,12 +23,7 @@ const AdminModal = ({
           minusVacation={handleMinusVacation}
         />
       )}
-      {isOpen === 'find' && (
-        <ModalAttendLeaderboard
-          setIsOpen={setIsOpen}
-          attendUser={usersAttendence}
-        />
-      )}
+      {isOpen === 'find' && <ModalAttendLeaderboard setIsOpen={setIsOpen} />}
       {isOpen === 'shake' && (
         <ModalShakeTeam
           setIsOpen={setIsOpen}
