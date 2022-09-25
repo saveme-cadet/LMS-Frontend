@@ -3,8 +3,7 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
 
 const SelectedUser = ({
   userInfo,
@@ -21,11 +20,14 @@ const SelectedUser = ({
       <span className="title">현재 선택 : {userInfo.userName}</span>
 
       <span className="user-status">
-        <Chip label={userInfo.attendStatus} className={userInfo.attendStatus} />
+        <Chip
+          label={PARTICIPATE_NAME[userInfo.attendStatus]}
+          className={userInfo.attendStatus}
+        />
         {userInfo.attendStatus === 'PARTICIPATED' && (
           <>
             <Chip label={userInfo.team} className={userInfo.team} />
-            <Chip label={userInfo.role} className={userInfo.role} />
+            <Chip label={ROLE_NAME[userInfo.role]} className={userInfo.role} />
           </>
         )}
       </span>
@@ -52,15 +54,19 @@ const SelectedUser = ({
               <MenuItem value={'RED'}>RED</MenuItem>
               <MenuItem value={'BLUE'}>BLUE</MenuItem>
             </Select>
-            <Select
-              value={userInfo.role}
-              onChange={onClickChangeRole}
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
-            >
-              <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
-              <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
-            </Select>
+            {userInfo.role !== 'ROLE_ADMIN' &&
+              userInfo.role !== 'ROLE_UNAUTHORIZED' && (
+                <Select
+                  value={userInfo.role}
+                  onChange={onClickChangeRole}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+                  <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
+                  <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
+                </Select>
+              )}
+
             <Button
               variant="contained"
               onClick={() => onClickChangeVacation(VACATION.PLUS_HALF)}

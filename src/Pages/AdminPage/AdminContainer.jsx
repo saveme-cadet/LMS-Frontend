@@ -79,7 +79,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         team: array.team,
         absentScore: array.absentScore,
         attendanceScore: array.attendanceScore,
-
         role: array.role,
         vacation: array.vacation,
       };
