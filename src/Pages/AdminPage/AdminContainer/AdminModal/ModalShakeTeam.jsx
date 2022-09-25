@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 const shuffleArray = array => {
   for (let i = 0; i < array.length; i++) {
     let j = Math.floor(Math.random() * (i + 1));
-    // [array[i], array[j]] = [array[j], array[i]];
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
@@ -29,10 +28,8 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   };
 
   const handleCloseModal = isAccept => {
-    // console.log(curUsers);
     if (isAccept) {
       curUsers.map(user => {
-        // console.log(user.id, user.team);
         onClickChangeShuffleTeam(user.id, user.team);
       });
     }
@@ -42,13 +39,10 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const handleShakeTeam = () => {
     const shakedUsers = shuffleArray(curUsers);
     const leastMember = shakedUsers.length / (teamList.length - 1);
-    // console.log('least : ', leastMember);
     for (let i = 0; i < shakedUsers.length; i++) {
       let teamIndex = Math.floor(i / leastMember);
-      // console.log(teamIndex);
       shakedUsers[i].team = teamList[teamIndex];
     }
-    // console.log(shakedUsers);
     setNeutral([]);
     setCurUsers(shakedUsers);
   };
@@ -58,15 +52,10 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
     attendUser.map(user => {
       if (!teamList.includes(user.team)) neutralArray.push(user);
     });
-    // console.log('attendUser : ', attendUser);
-    // console.log('neutralArray : ', neutralArray);
     setNeutral(neutralArray);
     setCurUsers(attendUser);
   }, []);
 
-  useEffect(() => {
-    // console.log('isChanged?');
-  }, [curUsers]);
   return (
     <ModalShakeTeamBody>
       <h1>현재 팀 현황</h1>
