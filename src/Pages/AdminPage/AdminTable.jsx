@@ -23,6 +23,7 @@ const AdminTable = ({
     setSelectUserId(e.id);
   };
 
+  console.log('selectRowData : ', selectRowData);
   return (
     <AdminTableBody>
       <AdminTableContainer>
@@ -71,26 +72,36 @@ const AdminTableContainer = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-  .불참 {
-    color: white;
-    background-color: black;
-  }
-  .참가 {
+
+  .PARTICIPATED {
     color: black;
     border: 1px solid black;
     background-color: white;
   }
-  .red {
+
+  .NOT_PARTICIPATED {
+    color: white;
+    background-color: black;
+  }
+  .RED {
     background-color: #dc143c;
   }
-  .blue {
+  .BLUE {
     background-color: #0079f0;
   }
-  .머슴 {
-    background-color: yellow;
+  .ROLE_ADMIN {
+    background-color: #ff8c00;
   }
-  .카뎃 {
-    background-color: #cccccc;
+
+  .ROLE_MANAGER {
+    background-color: #ffff00;
+  }
+
+  .ROLE_USER {
+    background-color: #aeb7ba;
+  }
+  .ROLE_UNAUTHORIZED {
+    background-color: #575b5d;
   }
 `;
 

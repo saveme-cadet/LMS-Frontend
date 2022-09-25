@@ -26,6 +26,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     curArrays.map(array => {
       if (array.attendStatus !== filter) filterArray.push(array);
     });
+
     setSelectRowData(filterArray);
   };
 
@@ -68,7 +69,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const getUser = async () => {
     const result = await UserInfoService.getAllUser(0, 1000);
     setUsers(result.data.content);
-    console.log('result : ', result.data.content);
     const newArray = [];
 
     result.data.content.map(array => {
