@@ -22,14 +22,29 @@ const TodoEditForm = ({
 
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
+    const selected = toDos[index];
 
     event.preventDefault();
-    if (newTitle === '') return;
-    toDos[isEdit].title = newTitle;
+    if (newTitle.trim() === '') return;
 
-    const result = await TodoService.putTodo(toDos[isEdit]);
+    const result = await TodoService.patchTodo(userId, selected.todoId, {
+      title: newTitle.trim(),
+      titleCheck: selected.titleCheck,
+    });
     setIsEdit('');
     getToDos(userId);
+  };
+
+  const pressKey = event => {
+    const total = toDos.length - 1;
+
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      setIsEdit(false);
+    } else if (event.key === 'ArrowDown') {
+      setIsEdit(isEdit === total ? total : isEdit + 1);
+    } else if (event.key == 'ArrowUp') {
+      setIsEdit(isEdit === 0 ? 0 : isEdit - 1);
+    }
   };
 
   return (
@@ -43,6 +58,7 @@ const TodoEditForm = ({
         onChange={event => {
           setTitle(event.target.value);
         }}
+        onKeyDown={pressKey}
       />
       <OkButton
         date={date}

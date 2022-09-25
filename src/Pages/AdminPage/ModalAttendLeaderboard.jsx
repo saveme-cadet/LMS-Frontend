@@ -4,19 +4,19 @@ import Button from '@mui/material/Button';
 
 const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
   const sortArray = attendUser.sort((a, b) => {
-    if (a.participateScore === b.participateScore) {
-      if (a.attendScore < b.attendScore) return -1;
-      else if (a.attendScore > b.attendScore) return 1;
+    if (a.attendanceScore === b.attendanceScore) {
+      if (a.absentScore < b.absentScore) return -1;
+      else if (a.absentScore > b.absentScore) return 1;
       // 아오지 업데이트 되면 교체
       else return 0;
     }
-    if (a.participateScore > b.participateScore) return -1;
-    if (a.participateScore < b.participateScore) return 1;
+    if (a.attendanceScore > b.attendanceScore) return -1;
+    if (a.attendanceScore < b.attendanceScore) return 1;
     return 0;
   });
   // const isVaildLeaderboard = index => {
   //   if (sortArray.length <= index) return -1;
-  //   if (sortArray[index].participateScore === 0) return -1;
+  //   if (sortArray[index].attendanceScore === 0) return -1;
   //   return 0;
   // };
   return (
@@ -30,22 +30,34 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
       {/* {sortArray.map((e, i) => {
         return (
           <h1 key={i}>
-            {i + 1}등 - {e.userName} {e.participateScore}
+            {i + 1}등 - {e.username} {e.attendanceScore}
           </h1>
         );
       })} */}
-      <h1>
-        🥇{sortArray[0].userName}🥇 - 출석점수 {sortArray[0].participateScore}점
-        - 결석점수 {sortArray[0].attendScore.toFixed(2)}점
-      </h1>
-      <h1>
-        🥈{sortArray[1].userName}🥈 - 출석점수 {sortArray[1].participateScore}점
-        - 결석점수 {sortArray[1].attendScore.toFixed(2)}점
-      </h1>
-      <h1>
-        🥉{sortArray[2].userName}🥉 - 출석점수 {sortArray[2].participateScore}점
-        - 결석점수 {sortArray[2].attendScore.toFixed(2)}점
-      </h1>
+      {attendUser.length === 0 ? (
+        ''
+      ) : (
+        <h1>
+          🥇{sortArray[0].username}🥇 - 출석점수 {sortArray[0].attendanceScore}
+          점 - 결석점수 {sortArray[0].absentScore}점
+        </h1>
+      )}
+      {attendUser.length <= 1 ? (
+        ''
+      ) : (
+        <h1>
+          🥈{sortArray[1].username}🥈 - 출석점수 {sortArray[1].attendanceScore}
+          점 - 결석점수 {sortArray[1].absentScore}점
+        </h1>
+      )}
+      {attendUser.length <= 2 ? (
+        ''
+      ) : (
+        <h1>
+          🥉{sortArray[2].username}🥉 - 출석점수 {sortArray[2].attendanceScore}
+          점 - 결석점수 {sortArray[2].absentScore}점
+        </h1>
+      )}
       <Button onClick={() => setIsOpen(false)}>확인</Button>
       <Button onClick={() => setIsOpen(false)}>취소</Button>
     </ModalAttendLeaderboardBody>

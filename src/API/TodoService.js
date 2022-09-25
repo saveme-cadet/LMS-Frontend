@@ -39,7 +39,7 @@ const TodoService = {
     try {
       response = await instance.delete(url);
     } catch (e) {
-      alert(e);
+      alert('이미 삭제되었습니다.');
     }
     return response;
   },
@@ -49,7 +49,7 @@ const TodoService = {
   //   "title": "공부하기",
   //   "titleCheck": false
   // }
-  patchTodo: async (todoId, userId, body) => {
+  patchTodo: async (userId, todoId, body) => {
     const url = TodoUrl(`${userId}/todos/${todoId}`);
     let response;
     try {
@@ -72,16 +72,16 @@ const TodoService = {
     return response;
   },
   // 오늘 할일 모든 유저 진척률
-  getOthersProgress: async date => {
-    const url = TodoUrl(`todos/progress?date=${date}`);
-    let response;
-    try {
-      response = await instance.get(url);
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
+  // getOthersProgress: async date => {
+  //   const url = TodoUrl(`todos/progress?date=${date}`);
+  //   let response;
+  //   try {
+  //     response = await instance.get(url);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
 };
 
 export default TodoService;

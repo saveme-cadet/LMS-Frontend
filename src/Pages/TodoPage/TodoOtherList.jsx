@@ -7,7 +7,7 @@ const TodoOtherList = ({ othersToDo, date }) => {
     <TodoOtherListBody key="index">
       {othersToDo.map((item, index) => (
         <TodoOtherListContainer key={index}>
-          <TodoCadetName key={index}>{item.userName}</TodoCadetName>
+          <TodoCadetName key={index}>{item.username}</TodoCadetName>
           <TodoCadetList item={item} date={date} />
         </TodoOtherListContainer>
       ))}

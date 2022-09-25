@@ -12,12 +12,10 @@ import styled from 'styled-components';
 
 const MyTodoList = ({ userId, date }) => {
   const [toDo, setToDo] = useState({
-    number: 0,
     content: '',
     checked: false,
   });
   const [toDos, setToDos] = useState([]);
-  const [number, setNumber] = useState(null);
   const [checked, setChecked] = useState(0);
   const [total, setTotal] = useState(0);
   const [isEdit, setIsEdit] = useState();
@@ -26,30 +24,18 @@ const MyTodoList = ({ userId, date }) => {
   const onSubmit = async event => {
     event.preventDefault();
     if (
-      toDo.content === '' ||
+      toDo.content.trim() === '' ||
       format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
     ) {
       return;
     }
 
-    let nextId = 0;
-    if (toDos.length === 0) {
-      nextId = 0;
-    } else {
-      nextId = toDos[toDos.length - 1].todoId;
-    }
-
-    const result = await TodoService.postTodo({
-      writerId: userId,
-      todoId: nextId + 1,
-      title: toDo.content,
-      titleCheck: false,
+    const result = await TodoService.postTodo(userId, {
+      title: toDo.content.trim(),
       todoDay: format(today, 'yyyy-MM-dd'),
     });
 
-    setNumber(nextId);
     setToDo({
-      number: 0,
       content: '',
       checked: false,
     });
@@ -58,17 +44,23 @@ const MyTodoList = ({ userId, date }) => {
 
   const onChange = event => {
     setToDo({
-      number: number,
       content: event.target.value,
       checked: false,
     });
   };
 
   const changeCheck = async index => {
-    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
-    toDos[index].titleCheck = !toDos[index].titleCheck;
+    const selected = toDos[index];
 
-    const result = await TodoService.putTodo(toDos[index]);
+    if (
+      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') ||
+      selected.title == ''
+    )
+      return;
+    const result = await TodoService.patchTodo(userId, selected.todoId, {
+      title: selected.title,
+      titleCheck: !selected.titleCheck,
+    });
     getToDos(userId);
   };
 
@@ -90,7 +82,7 @@ const MyTodoList = ({ userId, date }) => {
       userId,
       format(date, 'yyyy-MM-dd'),
     );
-    setToDos(result.data);
+    setToDos(result.data.content);
   };
 
   useEffect(() => {

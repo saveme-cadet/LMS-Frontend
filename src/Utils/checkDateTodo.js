@@ -6,7 +6,7 @@ const checkDateTodo = day => {
     new Date('2022-04-03').getTime() > day.getTime()
   )
     return ERROR_MESSAGES.NOT_YET;
-  return ERROR_MESSAGES.NO_AUTH;
+  // return ERROR_MESSAGES.NO_AUTH;
 };
 
 export default checkDateTodo;

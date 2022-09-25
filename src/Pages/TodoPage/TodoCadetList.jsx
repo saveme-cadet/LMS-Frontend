@@ -16,7 +16,7 @@ const TodoCadetList = ({ item, date }) => {
             <TodoCadetListEntity key={index}>
               <CadetListCheckbox list={list} />
               <CadetListItem list={list} today={today} date={date}>
-                {list.title}
+                {list.title.replace(/ /g, '\u00a0')}
               </CadetListItem>
             </TodoCadetListEntity>
           ))}
