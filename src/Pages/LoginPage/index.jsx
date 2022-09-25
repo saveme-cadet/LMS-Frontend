@@ -25,7 +25,8 @@ const LoginPage = () => {
     // console.log(result);
     auth.setIsLoading(true);
     localStorage.setItem('userId', result.data.id);
-    auth.setStatus({ userId: result.data.id, role: result.data.role_user }); // TODO: postLogin res에 role 담겨서 오는지 확인
+    localStorage.setItem('role', result.data.role);
+    auth.setStatus({ userId: result.data.id, role: result.data.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
     navi('/');
   };

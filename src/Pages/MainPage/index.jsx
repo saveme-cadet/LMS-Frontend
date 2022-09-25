@@ -92,7 +92,7 @@ const MainPage = () => {
       vacation: array.vacation,
       absentScore: array.absentScore,
       attendanceScore: array.attendanceScore,
-      todoSuccessRate: array.todoSuccessRate,
+      todoSuccessRate: array.todoSuccessRate * 100,
       checkIn: array.checkIn,
       checkOut: array.checkOut,
     }));
