@@ -12,8 +12,6 @@ const AdminModal = ({
   handleMinusVacation,
   usersAttendence,
 }) => {
-  console.log(rowData);
-  console.log(usersAttendence);
   return (
     <>
       {isOpen === 'add' && (

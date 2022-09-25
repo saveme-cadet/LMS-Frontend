@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 
 const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
-  console.log(attendUser);
   const sortArray = attendUser.sort((a, b) => {
     if (a.attendanceScore === b.attendanceScore) {
       if (a.absentScore < b.absentScore) return -1;
@@ -35,18 +34,30 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
           </h1>
         );
       })} */}
-      <h1>
-        🥇{sortArray[0].username}🥇 - 출석점수 {sortArray[0].attendanceScore}점
-        - 결석점수 {sortArray[0].absentScore}점
-      </h1>
-      <h1>
-        🥈{sortArray[1].username}🥈 - 출석점수 {sortArray[1].attendanceScore}점
-        - 결석점수 {sortArray[1].absentScore}점
-      </h1>
-      <h1>
-        🥉{sortArray[2].username}🥉 - 출석점수 {sortArray[2].attendanceScore}점
-        - 결석점수 {sortArray[2].absentScore}점
-      </h1>
+      {attendUser.length === 0 ? (
+        ''
+      ) : (
+        <h1>
+          🥇{sortArray[0].username}🥇 - 출석점수 {sortArray[0].attendanceScore}
+          점 - 결석점수 {sortArray[0].absentScore}점
+        </h1>
+      )}
+      {attendUser.length <= 1 ? (
+        ''
+      ) : (
+        <h1>
+          🥈{sortArray[1].username}🥈 - 출석점수 {sortArray[1].attendanceScore}
+          점 - 결석점수 {sortArray[1].absentScore}점
+        </h1>
+      )}
+      {attendUser.length <= 2 ? (
+        ''
+      ) : (
+        <h1>
+          🥉{sortArray[2].username}🥉 - 출석점수 {sortArray[2].attendanceScore}
+          점 - 결석점수 {sortArray[2].absentScore}점
+        </h1>
+      )}
       <Button onClick={() => setIsOpen(false)}>확인</Button>
       <Button onClick={() => setIsOpen(false)}>취소</Button>
     </ModalAttendLeaderboardBody>

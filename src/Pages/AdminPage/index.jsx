@@ -21,10 +21,6 @@ const AdminPage = () => {
     }
   };
 
-  // 차이?
-  // console.log(rowData);
-  // console.log(usersAttendence);
-
   return (
     <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
