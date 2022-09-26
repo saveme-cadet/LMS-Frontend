@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { differenceInSeconds, parseISO, format } from 'date-fns';
+import { AuthContext } from 'App';
 
 const formatDate = date => {
-  return date === '00:00:00' ? '공부 중!' : date;
+  date = format(new Date(date), 'HH:mm:ss');
+  if (date === '00:00:00') return '공부 중!';
+  else return date;
 };
 
 const secondsConverter = timeStamp => {
@@ -11,7 +14,9 @@ const secondsConverter = timeStamp => {
   return +list[0] * 60 * 60 + +list[1] * 60 + +list[2];
 };
 
-const MineLogData = ({ data }) => {
+const MineLogData = ({ data, index, setActiveLogIndex }) => {
+  const { isModal, setIsModal } = useContext(AuthContext);
+
   const earnedPoint = (
     secondsConverter(data.finalStudyTime) /
     60 /
@@ -20,17 +25,20 @@ const MineLogData = ({ data }) => {
   ).toFixed(2);
 
   const handleEditLog = () => {
-    alert('준비중입니다!');
+    setIsModal(!isModal);
+    setActiveLogIndex(index);
   };
 
   return (
     <LogData>
-      <div>{data.beginTime}</div>
+      <div>{formatDate(data.beginTime)}</div>
       <div>{formatDate(data.endTime)}</div>
-      <div>{formatDate(data.finalStudyTime)}</div>
+      <div>
+        {data.finalStudyTime === '00:00:00' ? '공부 중!' : data.finalStudyTime}
+      </div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
       <div>
-        {data.endTime !== '00:00:00' ? (
+        {data.finalStudyTime !== '00:00:00' ? (
           <EditButton onClick={handleEditLog}>수정</EditButton>
         ) : (
           <EditButton onClick={handleEditLog} disabled={true}>
