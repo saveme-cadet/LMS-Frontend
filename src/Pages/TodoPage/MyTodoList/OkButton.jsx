@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 import { TodoService } from 'API';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -24,7 +24,7 @@ const OkButton = ({ date, index, setIsEdit, toDos, userId, getToDos }) => {
     <IconButton
       aria-label="edit"
       size="small"
-      disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      disabled={!isToday(today, date)}
       onClick={editTitle}
     >
       <CheckCircleIcon fontSize="inherit" />

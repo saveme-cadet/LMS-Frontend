@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +10,7 @@ const EditButton = ({ date, index, setIsEdit }) => {
     <IconButton
       aria-label="edit"
       size="small"
-      disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      disabled={!isToday(today, date)}
       onClick={() => {
         setIsEdit(index);
       }}

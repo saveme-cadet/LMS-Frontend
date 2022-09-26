@@ -1,11 +1,11 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 
 import TodoEditForm from './TodoEditForm';
 import TodoListEach from './TodoListEach';
 
 import styled from 'styled-components';
 
-const TodoMyList = ({
+const TodoList = ({
   toDos,
   date,
   changeCheck,
@@ -16,13 +16,11 @@ const TodoMyList = ({
   userId,
 }) => {
   const today = new Date();
-
   return (
-    <TodoMyListBody>
+    <TodoListBody>
       {toDos.map((item, index) =>
-        index === isEdit &&
-        format(today, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd') ? (
-          <TodoMyListContainer key={index}>
+        index === isEdit && isToday(today, date) ? (
+          <TodoListContainer key={index}>
             <TodoEditForm
               item={item}
               date={date}
@@ -33,9 +31,9 @@ const TodoMyList = ({
               userId={userId}
               getToDos={getToDos}
             />
-          </TodoMyListContainer>
+          </TodoListContainer>
         ) : (
-          <TodoMyListContainer key={index}>
+          <TodoListContainer key={index}>
             <TodoListEach
               item={item}
               index={index}
@@ -44,22 +42,22 @@ const TodoMyList = ({
               setIsEdit={setIsEdit}
               removeToDo={removeToDo}
             />
-          </TodoMyListContainer>
+          </TodoListContainer>
         ),
       )}
-    </TodoMyListBody>
+    </TodoListBody>
   );
 };
 
-const TodoMyListBody = styled.div`
+const TodoListBody = styled.div`
   height: 80%;
   margin-top: 2%;
   padding: 1% 3%;
   font-size: 15px;
   overflow: auto;
 `;
-const TodoMyListContainer = styled.div`
+const TodoListContainer = styled.div`
   display: table;
 `;
 
-export default TodoMyList;
+export default TodoList;

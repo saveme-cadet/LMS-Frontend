@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
@@ -11,7 +11,7 @@ const DeleteButton = ({ date, removeToDo }) => {
       aria-label="delete"
       size="small"
       onClick={removeToDo}
-      disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+      disabled={!isToday(today, date)}
     >
       <DeleteForeverIcon fontSize="inherit" />
     </IconButton>

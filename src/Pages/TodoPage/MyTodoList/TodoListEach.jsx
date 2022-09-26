@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 
+import isToday from 'Utils/isToday';
 import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 
@@ -21,7 +22,7 @@ const TodoListEach = ({
       <Checkbox
         onClick={() => changeCheck(index)}
         checked={item.titleCheck}
-        disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+        disabled={!isToday(today, date)}
         size="small"
       />
       <Item
@@ -42,10 +43,7 @@ const TodoListEach = ({
 const TodoListEachBody = styled.div``;
 const Item = styled.span`
   color: ${props =>
-    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
-    props.isCheck
-      ? 'gray'
-      : ''};
+    !isToday(props.today, props.date) || props.isCheck ? 'gray' : ''};
   text-decoration-line: ${props => (props.isCheck ? 'line-through' : '')};
   cursor: default;
   font-size: 15px;

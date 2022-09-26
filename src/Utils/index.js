@@ -5,6 +5,7 @@ import getDayName from './getDayName';
 import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import checkDateTodo from './checkDateTodo';
+import isToday from './isToday';
 
 export {
   adminTableColumns,
@@ -14,4 +15,5 @@ export {
   isWrongAccess,
   getMessage,
   checkDateTodo,
+  isToday,
 };

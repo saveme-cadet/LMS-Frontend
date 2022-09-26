@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { CusDatePicker, ShowToday } from 'Components';
 import { AuthContext } from 'App';
 
-import MyTodoList from './MyTodoList';
-import OtherCadetList from './OtherCadetList';
+import MyTodoList from './MyTodoList/MyTodoList';
+import OtherCadetList from './OtherCadetList/OtherCadetList';
 import styled from 'styled-components';
 
 const TodoPage = () => {
@@ -11,15 +11,14 @@ const TodoPage = () => {
   const userId = localStorage.getItem('userId');
   const [date, setDate] = useState(new Date());
 
-  // TODO
-  // 1. 요일 별 Warning 수정o
-  // 2. 입력이 "   " 일 때 예외 처리o
-  // 3. 다른 카뎃 정보 불러오기 API 수정o
-  // 4. 파일 줄이기
-  // 5. 수정 esc 키 추가하기o
-  // 6. div string을 보여줄 떄 space가 출력되지 않는 문제o
-  // 7. todo delete할 떄 연속으로 누르면 404 => 어디서 처리?
-  // 리액트 쿼리를 이용하면 해결할 수 있음
+  // 1. 버튼 통합하기 => <EditButton></Edit>를 리턴하는 객체를 만들기
+  // 2. styled component에서도 로직 처리하는 부분은 함수로 만들어 처리하기o
+  // 3. 로직이 있는 것만 컴포넌트로 만들기 => 단순히 보여주는 것은 굳이 컴포넌트로 만들 필요가 없음?
+  // 4. format(date, 'yyyy-) => Utils에서 관리o
+  // 5. list, othercadet을 디렉토리로 구조화하기o
+  // 6. 2, 3 뎁스 이상 내려가는 것은 redux를 사용해 전역화하기
+  // 7. !==, === 도 일관성
+  // 8. progress => 하위 컴포넌트에 스타일 옮기기
 
   return (
     <TodoMainBackground>

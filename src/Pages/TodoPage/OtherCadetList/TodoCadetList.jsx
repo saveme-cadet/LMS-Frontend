@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 
 import CadetListCheckbox from './CadetListCheckbox';
 
@@ -45,10 +45,7 @@ const TodoCadetListEntity = styled.div`
 `;
 const CadetListItem = styled.span`
   color: ${props =>
-    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
-    props.list.titleCheck
-      ? 'gray'
-      : ''};
+    !isToday(props.today, props.date) || props.list.titleCheck ? 'gray' : ''};
   text-decoration-line: ${props =>
     props.list.titleCheck ? 'line-through' : ''};
 `;
