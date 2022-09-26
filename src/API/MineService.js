@@ -56,8 +56,8 @@ const MineService = {
   "endTime": "string"
   }
 */
-  patchEditMine: async (index, body) => {
-    const url = MineUrl(`study_times/${index}`);
+  patchEditMine: async (userId, studyTimeId, body) => {
+    const url = MineUrl(`${userId}/study_times/${studyTimeId}`);
     let response;
     try {
       response = await instance.patch(url, body);
