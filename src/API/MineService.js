@@ -90,8 +90,8 @@ const MineService = {
     return response;
   },
   // 현재 공부 중인 회원 조회
-  getOtherMine: async () => {
-    const url = MineUrl(`study_times/studying-user`);
+  getOtherMine: async userId => {
+    const url = MineUrl(`${userId}/study_times/studying-user`);
     let response;
     try {
       response = await instance.get(url);
