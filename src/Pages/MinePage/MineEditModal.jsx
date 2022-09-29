@@ -41,7 +41,6 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
       return;
     } else if (new Date(startAt) > new Date() || new Date(endAt) > new Date()) {
       setErrMsg('시작 시간과 종료 시간은 현재 시간보다 늦지 않아야 합니다.');
-      console.log(new Date(startAt));
       return;
     } else if (new Date(endAt) - new Date(startAt) > 86400000) {
       setErrMsg('선택한 시간이 24시간을 초과했습니다.');
@@ -52,11 +51,12 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
     }
     setErrMsg('');
 
+    // TODO : 날짜가 걸쳐져 있는 로그인 경우 Date로 보내는걸 협의중
     const convertStartAt = format(new Date(startAt), 'HH:mm:ss').toString();
     const convertEndAt = format(new Date(endAt), 'HH:mm:ss').toString();
     await MineService.patchEditMine(status.userId, data.studyTimeId, {
-      convertStartAt,
-      convertEndAt,
+      beginTime: convertStartAt,
+      endTime: convertEndAt,
     });
     handleClose();
     getMyMine();
