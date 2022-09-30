@@ -38,10 +38,9 @@ const AllTableService = {
     return response;
   },
 
-  getTable: async date => {
-    const url = AllTableUrl(
-      `day-logs?date=${date}&attendStatus=NOT_PARTICIPATED`,
-    );
+  getTable: async (date, isAttend) => {
+    const query = isAttend ? `PARTICIPATED` : 'NOT_PARTICIPATED';
+    const url = AllTableUrl(`day-logs?date=${date}&attendStatus=${query}`);
     let response;
 
     try {

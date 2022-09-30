@@ -81,7 +81,7 @@ const MainPage = () => {
     // getOthersProgress 가져오지 않고 getTable 하나로 가져오기?
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable(dateFormat);
+    const result = await AllTableService.getTable(dateFormat, true);
     const newArray = result.data.map(array => ({
       id: array.attendanceId,
       userId: array.userId,
