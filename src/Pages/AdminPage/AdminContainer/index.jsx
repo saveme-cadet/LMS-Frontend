@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { UserInfoService } from 'API';
+import { UserInfoService, AllTableService } from 'API';
+
+import { format } from 'date-fns';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
@@ -7,7 +9,6 @@ import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
 
 const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
-  const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
 
   const [tab, setTab] = useState(0);
@@ -26,11 +27,6 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     setSelectRowData(filterArray);
   };
 
-  // const handleGetUser = async () => {
-  //   const result = await CRUDUserService.getUser();
-  //   // console.log(result.data);
-  // };
-
   // const handleDeleteUser = async data => {
   //   const result = await CRUDUserService.deleteUser(data);
   //   getUser();
@@ -38,24 +34,23 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(0, 1000);
-    setUsers(result.data.content);
-    const newArray = [];
+    const date = new Date();
+    const dateFormat = format(date, 'yyyy-MM-dd');
 
-    result.data.content.map(array => {
-      const newData = {
-        id: array.id,
-        userName: array.nickname,
-        attendStatus: array.attendStatus,
-        team: array.team,
-        absentScore: array.absentScore,
-        attendanceScore: array.attendanceScore,
-        role: array.role,
-        vacation: array.vacation,
-      };
-      newArray.push(newData);
-    });
-    console.log(newArray);
+    const result = await AllTableService.getTable('2022-09-01', true);
+    const newArray = result.data.map(array => ({
+      id: array.attendanceId,
+      userId: array.userId,
+      username: array.username,
+      attendStatus: array.attendStatus,
+      role: array.role,
+      team: array.team,
+      vacation: array.vacation,
+      attendanceScore: array.attendanceScore,
+      absentScore: array.totalAbsentScore,
+      weekAbsentScore: array.weekAbsentScore,
+    }));
+
     setRowData(newArray);
     updateSelectRowData(newArray, tab);
   };

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from 'App';
 
 import { TEAM_NAME, TEAM_ID } from 'Utils/constants';
-import { TodoService, UserInfoService, AllTableService } from 'API';
+import { AllTableService } from 'API';
 
 import { format } from 'date-fns';
 
@@ -77,8 +77,6 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
-    // const anoResult = await TodoService.getOthersProgress('2022-09-01');
-    // getOthersProgress 가져오지 않고 getTable 하나로 가져오기?
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat, true);
@@ -86,11 +84,11 @@ const MainPage = () => {
       id: array.attendanceId,
       userId: array.userId,
       username: array.username,
-      // attendStatus: array.attendStatus,
+      attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,
       vacation: array.vacation,
-      absentScore: array.absentScore,
+      absentScore: array.totalAbsentScore,
       attendanceScore: array.attendanceScore,
       todoSuccessRate: array.todoSuccessRate * 100,
       checkIn: array.checkIn,
