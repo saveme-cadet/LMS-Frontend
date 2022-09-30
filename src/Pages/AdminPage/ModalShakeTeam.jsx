@@ -77,7 +77,7 @@ const ModalShakeTeam = ({
                 if (user.team === team)
                   return (
                     <MemberEach key={i} team={team}>
-                      {user.userName}
+                      {user.username}
                     </MemberEach>
                   );
               })}

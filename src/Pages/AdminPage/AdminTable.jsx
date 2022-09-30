@@ -71,26 +71,43 @@ const AdminTableContainer = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-  .불참 {
+  .NOT_PARTICIPATED {
     color: white;
     background-color: black;
   }
-  .참가 {
+  .PARTICIPATED {
     color: black;
     border: 1px solid black;
     background-color: white;
   }
-  .red {
+  .RED {
     background-color: #dc143c;
   }
-  .blue {
+  .BLUE {
     background-color: #0079f0;
   }
-  .머슴 {
+  .ROLE_MANAGER {
     background-color: yellow;
   }
-  .카뎃 {
+  .ROLE_USER {
     background-color: #cccccc;
+  }
+  .REPORT {
+    width: 1.5em;
+    padding: 0.2em;
+    border-radius: 5em;
+    background-color: red;
+    color: transparent;
+  }
+  .WARNING {
+    width: 1.5em;
+    padding: 0.2em;
+    border-radius: 5em;
+    background-color: yellow;
+    color: transparent;
+  }
+  .GOOD {
+    color: transparent;
   }
 `;
 

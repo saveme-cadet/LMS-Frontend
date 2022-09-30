@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { UserInfoService, VacationService, AllTableService } from 'API';
-import { API_PARAMS } from 'Utils/constants';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
@@ -15,6 +14,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
@@ -64,24 +64,26 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(0, 1000);
-    setUsers(result.data.content);
+    const result = await AllTableService.getTable(today, 'PARTICIPATED');
+    setUsers(result.data);
     const newArray = [];
 
-    result.data.content.map(array => {
+    result.data.map(array => {
       const newData = {
-        id: array.id,
-        userName: array.nickname,
+        id: array.userId,
+        username: array.username,
         attendStatus: array.attendStatus,
         team: array.team,
-        absentScore: array.absentScore,
+        totalAbsentScore: array.totalAbsentScore,
         attendanceScore: array.attendanceScore,
         role: array.role,
         vacation: array.vacation,
+        weekAbsentScore: array.weekAbsentScore,
       };
       newArray.push(newData);
     });
     setRowData(newArray);
+    // console.log(newArray);
     updateSelectRowData(newArray, tab);
   };
 
