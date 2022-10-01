@@ -20,6 +20,7 @@ const AdminTable = ({
   };
 
   const handleCellClick = e => {
+    // alert(e.id);
     setSelectUserId(e.id);
   };
 

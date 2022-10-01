@@ -35,7 +35,7 @@ const adminTableColumns = [
     },
   },
   {
-    field: 'userName',
+    field: 'username',
     headerName: '이름',
     type: 'string',
     width: 120,
