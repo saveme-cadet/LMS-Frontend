@@ -24,7 +24,6 @@ const AdminTable = ({
     setSelectUserId(e.id);
   };
 
-  console.log('selectRowData : ', selectRowData);
   return (
     <AdminTableBody>
       <AdminTableContainer>

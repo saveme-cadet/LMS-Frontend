@@ -39,7 +39,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
 
     const result = await AllTableService.getTable('2022-09-01', true);
     const newArray = result.data.map(array => ({
-      id: array.attendanceId,
+      id: array.userId,
       userId: array.userId,
       username: array.username,
       attendStatus: array.attendStatus,
@@ -59,6 +59,18 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     getUser();
   }, []);
 
+  useEffect(() => {
+    if (rowData === null) return;
+    console.log('selecteUserId', selectUserId);
+    rowData.filter(data => {
+      console.log(data);
+      if (data.id === selectUserId && data.role === 'ROLE_ADMIN') {
+        alert('admin의 정보는 변경할 수 없습니다!');
+        setSelectUserId(null);
+      }
+    });
+  }, [selectUserId]);
+
   return (
     <>
       <AdminModalButton setIsOpen={setIsOpen} />
@@ -70,6 +82,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         selectRowData={selectRowData}
         setSelectUserId={setSelectUserId}
       />
+
       <AdminChangeTable
         rowData={rowData}
         selectUserId={selectUserId}
