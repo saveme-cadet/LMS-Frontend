@@ -10,26 +10,27 @@ const AdminModal = ({
   getUser,
   setSelectUserId,
 }) => {
+  const attendUser = rowData?.filter(
+    user => user.attendStatus === 'PARTICIPATED',
+  );
   return (
     <>
       {isOpen === 'add' && (
         <ModalAddVacationAll
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(
-            user => user.attendStatus === 'PARTICIPATED',
-          )}
+          attendUser={attendUser}
           getUser={getUser}
           setSelectUserId={setSelectUserId}
           rowData={rowData}
         />
       )}
-      {isOpen === 'find' && <ModalAttendLeaderboard setIsOpen={setIsOpen} />}
+      {isOpen === 'find' && (
+        <ModalAttendLeaderboard setIsOpen={setIsOpen} attendUser={attendUser} />
+      )}
       {isOpen === 'shake' && (
         <ModalShakeTeam
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(
-            user => user.attendStatus === 'PARTICIPATED',
-          )}
+          attendUser={attendUser}
           getUser={getUser}
         />
       )}

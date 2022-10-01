@@ -17,7 +17,7 @@ const SelectedUser = ({
 
   return (
     <div className="box">
-      <span className="title">현재 선택 : {userInfo.userName}</span>
+      <span className="title">현재 선택 : {userInfo.username}</span>
 
       <span className="user-status">
         <Chip
@@ -80,7 +80,7 @@ const SelectedUser = ({
             {/* <Button
             onClick={() =>
               onClickDeleteUser({
-                userName: userInfo.userName,
+                username: userInfo.username,
                 userId: userInfo.id,
               })
             }

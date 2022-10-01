@@ -1,21 +1,14 @@
-import { useState, useEffect } from 'react';
-import { UserInfoService, AllTableService } from 'API';
+import { useEffect } from 'react';
 
 import styled from 'styled-components';
 import { format } from 'date-fns';
 
 import Button from '@mui/material/Button';
 
-const ModalAttendLeaderboard = ({ setIsOpen }) => {
-  const [usersAttendence, setUsersAttendence] = useState([]);
+const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
   const today = format(new Date(), 'yyyy-MM-dd');
 
-  const getUserAttendance = async () => {
-    const result = await AllTableService.getTable(today);
-    setUsersAttendence(result.data);
-  };
-
-  const sortArray = usersAttendence.sort((a, b) => {
+  const sortArray = attendUser.sort((a, b) => {
     if (a.attendanceScore === b.attendanceScore) {
       if (a.absentScore < b.absentScore) return -1;
       else if (a.absentScore > b.absentScore) return 1;
@@ -27,19 +20,10 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
     return 0;
   });
 
-  // const isVaildLeaderboard = index => {
-  //   if (sortArray.length <= index) return -1;
-  //   if (sortArray[index].attendanceScore === 0) return -1;
-  //   return 0;
-  // };
-
-  useEffect(() => {
-    getUserAttendance();
-  }, []);
   return (
     <>
       {' '}
-      {usersAttendence && (
+      {attendUser && (
         <ModalAttendLeaderboardBody>
           <h1>월렛 보상 대상</h1>
           <h3>
@@ -48,7 +32,7 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
           </h3>
           <h3>출석 점수가 동일할 경우, 결석 시간을 비교합니다.</h3>
 
-          {usersAttendence.length === 0 ? (
+          {attendUser.length === 0 ? (
             ''
           ) : (
             <h1>
@@ -57,7 +41,7 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
               {sortArray[0].absentScore}점
             </h1>
           )}
-          {usersAttendence.length <= 1 ? (
+          {attendUser.length <= 1 ? (
             ''
           ) : (
             <h1>
@@ -66,7 +50,7 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
               {sortArray[1].absentScore}점
             </h1>
           )}
-          {usersAttendence.length <= 2 ? (
+          {attendUser.length <= 2 ? (
             ''
           ) : (
             <h1>
