@@ -31,7 +31,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     const date = new Date();
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable(dateFormat, true);
+    const result = await AllTableService.getAllTable(dateFormat);
     const newArray = result.data.map(array => ({
       id: array.userId,
       userId: array.userId,
