@@ -61,7 +61,7 @@ const SelectedUser = ({
               inputProps={{ 'aria-label': 'Without label' }}
             >
               <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
-              <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
+              <MenuItem value={'ROLE_USER'}>일반</MenuItem>
               <MenuItem value={'ROLE_UNAUTHORIZED'}>게스트</MenuItem>
             </Select>
 
