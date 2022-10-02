@@ -50,10 +50,13 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
       return;
     }
     setErrMsg('');
-
-    // TODO : 날짜가 걸쳐져 있는 로그인 경우 Date로 보내는걸 협의중
-    const convertStartAt = format(new Date(startAt), 'HH:mm:ss').toString();
-    const convertEndAt = format(new Date(endAt), 'HH:mm:ss').toString();
+    const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+    const convertStartAt = new Date(
+      new Date(startAt) - timezoneOffset,
+    ).toISOString(); // UTC -> KST
+    const convertEndAt = new Date(
+      new Date(endAt) - timezoneOffset,
+    ).toISOString(); // UTC -> KST
     await MineService.patchEditMine(status.userId, data.studyTimeId, {
       beginTime: convertStartAt,
       endTime: convertEndAt,
