@@ -27,17 +27,11 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     setSelectRowData(filterArray);
   };
 
-  // const handleDeleteUser = async data => {
-  //   const result = await CRUDUserService.deleteUser(data);
-  //   getUser();
-  //   setSelectUserId(null);
-  // };
-
   const getUser = async () => {
     const date = new Date();
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable('2022-09-01', true);
+    const result = await AllTableService.getTable(dateFormat, true);
     const newArray = result.data.map(array => ({
       id: array.userId,
       userId: array.userId,
