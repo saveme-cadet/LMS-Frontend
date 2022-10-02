@@ -36,9 +36,10 @@ const AdminChangeTable = ({
   const handleChangeAttend = async event => {
     if (event.target.value === 'NOT_PARTICIPATED') {
       if (validChangeRole()) return;
-      let temp = await UserInfoService.patchRole(selectUserId, {
-        role: 'ROLE_USER',
-      });
+
+      // let temp = await UserInfoService.patchRole(selectUserId, {
+      //   role: 'ROLE_USER',
+      // });
     }
     const result = await UserInfoService.patchAttend(selectUserId, {
       attendStatus: event.target.value,
