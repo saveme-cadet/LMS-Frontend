@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(async () => {
     // 로그인 확인용
-    const result = await UserInfoService.getAllUser(0, 1000);
+    const result = await UserInfoService.getAllUser(0, 100);
     if (!result) {
       // alert('세션 만료!');
       localStorage.clear();

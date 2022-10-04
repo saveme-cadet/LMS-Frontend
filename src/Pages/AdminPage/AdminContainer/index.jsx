@@ -31,17 +31,19 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     const date = new Date();
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getAllTable(dateFormat);
-    const newArray = result.data.map(array => ({
-      id: array.userId,
-      userId: array.userId,
-      username: array.username,
+    // const result = await AllTableService.getAllTable(dateFormat);
+    const result = await UserInfoService.getAllUser(0, 100);
+    const newArray = result.data.content.map((array, index) => ({
+      // id: array.userId,
+      id: array.id,
+      userId: array.id,
+      username: array.nickname,
       attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,
       vacation: array.vacation,
       attendanceScore: array.attendanceScore,
-      absentScore: array.totalAbsentScore,
+      absentScore: array.totalScore,
       weekAbsentScore: array.weekAbsentScore,
     }));
 

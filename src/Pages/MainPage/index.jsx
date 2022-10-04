@@ -79,7 +79,7 @@ const MainPage = () => {
   const getUsers = async () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable(dateFormat, true);
+    const result = await AllTableService.getAllTable(dateFormat, true);
     const newArray = result.data.map(array => ({
       id: array.attendanceId,
       userId: array.userId,
