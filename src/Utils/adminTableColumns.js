@@ -16,7 +16,7 @@ const whichRole = value => {
 
 const attendStatus = value => {
   if (value >= 3) return '🔴';
-  else if (value >= 0) return '🟡';
+  else if (value >= 2) return '🟡';
   else return '';
 };
 
