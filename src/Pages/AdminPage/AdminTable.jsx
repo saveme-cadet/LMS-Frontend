@@ -92,23 +92,6 @@ const AdminTableContainer = styled.div`
   .ROLE_USER {
     background-color: #cccccc;
   }
-  .REPORT {
-    width: 1.5em;
-    padding: 0.2em;
-    border-radius: 5em;
-    background-color: red;
-    color: transparent;
-  }
-  .WARNING {
-    width: 1.5em;
-    padding: 0.2em;
-    border-radius: 5em;
-    background-color: yellow;
-    color: transparent;
-  }
-  .GOOD {
-    color: transparent;
-  }
 `;
 
 export default AdminTable;

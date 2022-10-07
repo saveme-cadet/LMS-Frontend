@@ -15,9 +15,9 @@ const whichRole = value => {
 };
 
 const attendStatus = value => {
-  if (value >= 3) return 'REPORT';
-  else if (value >= 2) return 'WARNING';
-  else return 'GOOD';
+  if (value >= 3) return '🔴';
+  else if (value >= 0) return '🟡';
+  else return '';
 };
 
 const adminTableColumns = [
@@ -90,9 +90,7 @@ const adminTableColumns = [
     type: 'number',
     width: 120,
     renderCell: params => {
-      return (
-        <div className={`${attendStatus(params.value)}`}>{params.value}</div>
-      );
+      return <div>{attendStatus(params.value)}</div>;
     },
   },
 ];
