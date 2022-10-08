@@ -57,6 +57,15 @@ const adminTableColumns = [
     },
   },
   {
+    field: 'weekAbsentScore',
+    headerName: '상태',
+    type: 'number',
+    width: 60,
+    renderCell: params => {
+      return <div>{attendStatus(params.value)}</div>;
+    },
+  },
+  {
     field: 'username',
     headerName: '이름',
     type: 'string',
@@ -82,16 +91,6 @@ const adminTableColumns = [
     headerName: '휴가',
     type: 'number',
     width: 120,
-  },
-
-  {
-    field: 'weekAbsentScore',
-    headerName: '출석 상태',
-    type: 'number',
-    width: 120,
-    renderCell: params => {
-      return <div>{attendStatus(params.value)}</div>;
-    },
   },
 ];
 
