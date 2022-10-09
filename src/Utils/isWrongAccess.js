@@ -1,7 +1,8 @@
 const isWrongAccess = (selectUserInfo, myId, myRole, myTeam) => {
-  if (myRole !== 'ROLE_MANAGER' && selectUserInfo.id !== myId) return -1;
-  if (myRole === 'ROLE_MANAGER' && selectUserInfo.team !== myTeam) return -2;
-  return 0;
+  if (myRole === 'ROLE_MANAGER' || myRole === 'ROLE_ADMIN') {
+    return 0;
+  }
+  return -1;
 };
 
 export default isWrongAccess;

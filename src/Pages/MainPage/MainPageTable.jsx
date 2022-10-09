@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
+import { AuthContext } from 'App';
 import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 import AllTableService from 'API/AllTableService';
@@ -8,6 +9,7 @@ import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 
 import styled from 'styled-components';
+import { differenceInDays } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
 const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
@@ -15,22 +17,23 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
   const [curFocus, setCurFocus] = useState({ attendanceId: '', select: '' });
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
 
+  const auth = useContext(AuthContext);
+  const role = auth.status.role;
+
   const handleClickCell = (params, event) => {
+    const today = new Date();
+
     const field = params.field;
-    console.log('params: ', params);
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
+    if (differenceInDays(today, date)) {
+      alert('지난 날짜는 수정할 수 없습니다.');
+      return;
+    }
+    if (isWrongAccess(role)) {
+      alert('수정 권한이 없습니다.');
+      return;
+    }
 
-    // const selectUserInfo = selectRowData.find(array => array.id === params.id);
-    // const myInfo = rowData.find(array => array.id === +userId);
-    // if (myInfo === undefined) {
-    //   alert('이번 달에 참가하고 있지 않습니다!');
-    //   return;
-    // }
-
-    // if (isWrongAccess(selectUserInfo, myInfo.id, myInfo.role, myInfo.team)) {
-    //   alert('수정할 수 없습니다!');
-    //   return;
-    // }
     setAnchorEl(event.currentTarget);
     setCurFocus({
       attendanceId: params.id,
@@ -58,14 +61,7 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
       setAnchorEl(null);
       return;
     }
-    if (
-      today.getFullYear() !== date.getFullYear() ||
-      today.getMonth() !== date.getMonth()
-    ) {
-      alert('지난 달 기록은 수정할 수 없습니다!');
-      setAnchorEl(null);
-      return;
-    }
+
     if (select === CHECK_IN) {
       result = await AllTableService.putAllTableCheckIn(userId, attendanceId, {
         status: '' + value,
