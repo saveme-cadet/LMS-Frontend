@@ -2,6 +2,7 @@ const API_URL = 'https://www.savvemecadet.click/api';
 
 const CHECK_IN = 'checkIn';
 const CHECK_OUT = 'checkOut';
+const TIMEZONE_OFFSET = new Date().getTimezoneOffset() * 60000;
 
 const TEAM_ID = {
   ALL: 0,
@@ -38,7 +39,14 @@ const ERROR_MESSAGES = {
   NOT_YET: 'NOT_YET',
   WEEKEND: 'WEEKEND',
 };
+
+const MODAL_TYPE = {
+  EDIT: 'EDIT',
+  DELETE: 'DELETE',
+};
+
 export {
+  TIMEZONE_OFFSET,
   CHECK_IN,
   CHECK_OUT,
   TEAM_NAME,
@@ -48,4 +56,5 @@ export {
   VACATION,
   ERROR_MESSAGES,
   ROLE_NAME,
+  MODAL_TYPE,
 };
