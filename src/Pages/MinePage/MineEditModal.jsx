@@ -5,15 +5,16 @@ import styled from 'styled-components';
 import { AuthContext } from 'App';
 import { MineService } from 'API';
 import { format } from 'date-fns';
+import { MODAL_TYPE, TIMEZONE_OFFSET } from 'Utils/constants';
 
 function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
-  const { isModal, setIsModal, status } = useContext(AuthContext);
+  const { modalType, setModalType, status } = useContext(AuthContext);
   const [startAt, setStartAt] = useState(data.beginTime);
   const [endAt, setEndAt] = useState(data.endTime);
   const [errMsg, setErrMsg] = useState('');
 
   const handleClose = () => {
-    setIsModal(false);
+    setModalType(null);
     setActiveLogIndex(-1);
   };
 
@@ -50,12 +51,11 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
       return;
     }
     setErrMsg('');
-    const timezoneOffset = new Date().getTimezoneOffset() * 60000;
     const convertStartAt = new Date(
-      new Date(startAt) - timezoneOffset,
+      new Date(startAt) - TIMEZONE_OFFSET,
     ).toISOString(); // UTC -> KST
     const convertEndAt = new Date(
-      new Date(endAt) - timezoneOffset,
+      new Date(endAt) - TIMEZONE_OFFSET,
     ).toISOString(); // UTC -> KST
     await MineService.patchEditMine(status.userId, data.studyTimeId, {
       beginTime: convertStartAt,
@@ -68,11 +68,13 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
   useEffect(() => {
     console.log(data);
     console.log(startAt);
-    getMyMine();
+    return () => {
+      getMyMine();
+    };
   }, []);
 
   return (
-    <Modal open={isModal} onClose={handleClose}>
+    <Modal open={modalType === MODAL_TYPE.EDIT} onClose={handleClose}>
       <ModalBox>
         <ModalTitle>공부시간 수정</ModalTitle>
         <ModalContent>
