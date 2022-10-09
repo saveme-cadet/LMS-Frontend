@@ -15,6 +15,7 @@ function MineLog({ mineLogs, setActiveLogIndex }) {
         <div>공부 시간</div>
         <div>차감 점수</div>
         <div>수정</div>
+        <div>삭제</div>
       </MineLogColumn>
 
       <MineLogRow>

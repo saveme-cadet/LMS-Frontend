@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { differenceInSeconds, parseISO, format } from 'date-fns';
 import { AuthContext } from 'App';
+import { MODAL_TYPE } from 'Utils/constants';
 
-const formatDate = date => {
+const formatDate = (date, finalStudyTime) => {
   date = format(new Date(date), 'HH:mm:ss');
-  if (date === '00:00:00') return '공부 중!';
+  if (finalStudyTime && finalStudyTime === '00:00:00') return '공부 중!';
   else return date;
 };
 
@@ -15,7 +16,7 @@ const secondsConverter = timeStamp => {
 };
 
 const MineLogData = ({ data, index, setActiveLogIndex }) => {
-  const { isModal, setIsModal } = useContext(AuthContext);
+  const { modalType, setModalType } = useContext(AuthContext);
 
   const earnedPoint = (
     secondsConverter(data.finalStudyTime) /
@@ -25,14 +26,19 @@ const MineLogData = ({ data, index, setActiveLogIndex }) => {
   ).toFixed(2);
 
   const handleEditLog = () => {
-    setIsModal(!isModal);
+    setModalType(MODAL_TYPE.EDIT);
+    setActiveLogIndex(index);
+  };
+
+  const handleDelete = e => {
+    setModalType(MODAL_TYPE.DELETE);
     setActiveLogIndex(index);
   };
 
   return (
     <LogData>
       <div>{formatDate(data.beginTime)}</div>
-      <div>{formatDate(data.endTime)}</div>
+      <div>{formatDate(data.endTime, data.finalStudyTime)}</div>
       <div>
         {data.finalStudyTime === '00:00:00' ? '공부 중!' : data.finalStudyTime}
       </div>
@@ -44,6 +50,15 @@ const MineLogData = ({ data, index, setActiveLogIndex }) => {
           <EditButton onClick={handleEditLog} disabled={true}>
             수정
           </EditButton>
+        )}
+      </div>
+      <div>
+        {data.finalStudyTime !== '00:00:00' ? (
+          <DeleteButton onClick={handleDelete}>삭제</DeleteButton>
+        ) : (
+          <DeleteButton onClick={handleDelete} disabled={true}>
+            삭제
+          </DeleteButton>
         )}
       </div>
     </LogData>
@@ -74,6 +89,24 @@ const EditButton = styled.button`
   &:disabled {
     border: 1px solid #a7a7a7;
     color: #a7a7a7;
+    pointer-events: none;
+  }
+`;
+
+const DeleteButton = styled.button`
+  background-color: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: 60px;
+  text-align: center;
+  margin: 0 auto;
+  border: 1px solid #ff4646;
+  color: #ff4646;
+  cursor: pointer;
+  &:disabled {
+    border: 1px solid #a7a7a7;
+    color: #a7a7a7;
+    pointer-events: none;
   }
 `;
 

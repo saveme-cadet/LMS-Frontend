@@ -10,8 +10,12 @@ import MineLog from './MineLog';
 import MineEditModal from './MineEditModal';
 import DailyDate from './DailyDate';
 import MinePeople from './MinePeople';
+import { MODAL_TYPE } from 'Utils/constants';
+import { Modal } from '@mui/material';
+import MineDeleteModal from './MineDeleteModal';
 
 const MinePage = () => {
+  const { modalType } = useContext(AuthContext);
   const [attendScore, setAttendScore] = useState(null);
   const [beginTime, setBeginTime] = useState(null);
   const [mineLogs, setMineLogs] = useState(null);
@@ -81,8 +85,15 @@ const MinePage = () => {
           setActiveLogIndex={setActiveLogIndex}
         />
       </MineBody>
-      {activeLogIndex !== -1 && (
+      {modalType === MODAL_TYPE.EDIT && (
         <MineEditModal
+          data={mineLogs[activeLogIndex]}
+          setActiveLogIndex={setActiveLogIndex}
+          getMyMine={getMyMine}
+        />
+      )}
+      {modalType === MODAL_TYPE.DELETE && (
+        <MineDeleteModal
           data={mineLogs[activeLogIndex]}
           setActiveLogIndex={setActiveLogIndex}
           getMyMine={getMyMine}
