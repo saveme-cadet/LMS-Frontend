@@ -34,6 +34,18 @@ const AllTableService = {
     return response;
   },
 
+  getAllTable: async date => {
+    const url = AllTableUrl(`day-logs?date=${date}`);
+    let response;
+
+    try {
+      response = await instance.get(url);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
   getTable: async (date, status) => {
     const url = AllTableUrl(`day-logs?date=${date}&attendStatus=${status}`);
     let response;
@@ -45,6 +57,7 @@ const AllTableService = {
     }
     return response;
   },
+
   getAttendance: async date => {
     const url = AllTableUrl(`attendance?date=${date}`);
     let response;

@@ -8,7 +8,6 @@ import AdminModal from './AdminModal';
 import { addDays, format } from 'date-fns';
 
 const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
-  const [users, setUsers] = useState([]);
   const [selectUserId, setSelectUserId] = useState(null);
 
   const [tab, setTab] = useState(0);
@@ -64,9 +63,8 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   // };
 
   const getUser = async () => {
-    const result = await AllTableService.getTable(today, 'PARTICIPATED');
-    setUsers(result.data);
-    const newArray = [];
+    const result = await AllTableService.getAllTable(today);
+    const allUserArray = [];
 
     result.data.map(array => {
       const newData = {
@@ -80,11 +78,11 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         vacation: array.vacation,
         weekAbsentScore: array.weekAbsentScore,
       };
-      newArray.push(newData);
+      allUserArray.push(newData);
     });
-    setRowData(newArray);
-    // console.log(newArray);
-    updateSelectRowData(newArray, tab);
+
+    setRowData(allUserArray);
+    updateSelectRowData(allUserArray, tab);
   };
 
   useEffect(() => {
