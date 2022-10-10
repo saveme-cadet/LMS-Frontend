@@ -44,8 +44,8 @@ const MinePage = () => {
       return;
     }
     if (beginTime) {
-      setBeginTime(null);
       await MineService.putEndMine(userId);
+      setBeginTime(null);
     } else {
       // setBeginTime(new Date()); // TODO: twice init beginTime
       await MineService.postStartMine(userId);
