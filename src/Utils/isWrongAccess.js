@@ -1,4 +1,4 @@
-const isWrongAccess = (selectUserInfo, myId, myRole, myTeam) => {
+const isWrongAccess = myRole => {
   if (myRole === 'ROLE_MANAGER' || myRole === 'ROLE_ADMIN') {
     return 0;
   }
