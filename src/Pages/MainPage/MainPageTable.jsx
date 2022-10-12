@@ -36,7 +36,7 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
 
     setAnchorEl(event.currentTarget);
     setCurFocus({
-      attendanceId: params.id,
+      attendanceId: params.row.attendanceId,
       userId: params.row.userId,
       select: field,
     });
@@ -48,8 +48,9 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     const select = curFocus.select;
     const today = new Date();
     let result;
+
     const selectUserInfo = selectRowData.find(
-      array => array.id === attendanceId,
+      array => array.attendanceId === attendanceId,
     );
     const originValue =
       select === CHECK_IN ? selectUserInfo.checkIn : selectUserInfo.checkOut;

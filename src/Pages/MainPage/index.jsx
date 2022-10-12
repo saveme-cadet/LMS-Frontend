@@ -86,8 +86,9 @@ const MainPage = () => {
       return;
     }
 
-    const newArray = result.data.map(array => ({
-      id: array.attendanceId,
+    const newArray = result.data.map((array, i) => ({
+      id: i,
+      attendanceId: array.attendanceId,
       userId: array.userId,
       username: array.username,
       attendStatus: array.attendStatus,
