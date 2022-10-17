@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 const RegisterForm = ({ onClickRegister, setPageStatus }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const [isAlert, setIsAlert] = useState(false);
 
   const handleChangeId = event => {
     setId(event.target.value);
@@ -25,6 +26,7 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
     const errorMessage = isRegexPassword(password);
     if (errorMessage) {
       alert(errorMessage);
+      setIsAlert(true);
       return;
     }
     alert('성공!');
@@ -70,10 +72,15 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             onKeyPress={handlePressEnter}
           /> */}
         </RegisterInputForm>
-        <h5>
-          비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
-          포함해야 합니다.
-        </h5>
+        <LoginAlert>
+          {isAlert && (
+            <>
+              비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
+              포함해야 합니다.
+            </>
+          )}
+        </LoginAlert>
+
         <LoginButton variant="contained" onClick={handleClick}>
           함께하기!
         </LoginButton>
@@ -116,6 +123,11 @@ const RegisterInput = styledComp.input`
   width: 490px;
   font-size: 20px;
   font-family: 'BMJUA';
+`;
+
+const LoginAlert = styledComp.div`
+  height: 100px;
+
 `;
 
 const LoginButton = styled(Button)({
