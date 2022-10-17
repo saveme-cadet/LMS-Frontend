@@ -1,3 +1,5 @@
+import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
+
 const adminTableColumns = [
   {
     field: 'attendStatus',
@@ -5,7 +7,11 @@ const adminTableColumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <div className={`${params.value} info`}>{params.value}</div>;
+      return (
+        <div className={`${params.value} info`}>
+          {PARTICIPATE_NAME[params.value]}
+        </div>
+      );
     },
   },
   {
@@ -23,11 +29,13 @@ const adminTableColumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <div className={`${params.value} info`}>{params.value}</div>;
+      return (
+        <div className={`${params.value} info`}>{ROLE_NAME[params.value]}</div>
+      );
     },
   },
   {
-    field: 'userName',
+    field: 'username',
     headerName: '이름',
     type: 'string',
     width: 120,

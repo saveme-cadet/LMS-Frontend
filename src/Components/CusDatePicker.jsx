@@ -30,13 +30,15 @@ const CusDatePicker = ({ date, setDate, isWeekend }) => {
   const handleChangeDate = type => {
     let newDate = add(date, type);
     let dayOf = newDate.getDay();
-    // if (dayOf === 0 || dayOf === 6) {
-    //   const abs = Object.values(type)[0];
-    //   while (dayOf === 0 || dayOf === 6) {
-    //     newDate = add(newDate, { days: abs });
-    //     dayOf = newDate.getDay();
-    //   }
-    // }
+    if (!isWeekend) {
+      if (dayOf === 0 || dayOf === 6) {
+        const abs = Object.values(type)[0];
+        while (dayOf === 0 || dayOf === 6) {
+          newDate = add(newDate, { days: abs });
+          dayOf = newDate.getDay();
+        }
+      }
+    }
     setDate(newDate);
   };
 

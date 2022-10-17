@@ -7,36 +7,31 @@ const AdminModal = ({
   setIsOpen,
   isOpen,
   rowData,
-  handleChangeShuffleTeam,
-  handleAddVacation,
-  handleMinusVacation,
-  usersAttendence,
+  getUser,
+  setSelectUserId,
 }) => {
+  const attendUser = rowData?.filter(
+    user => user.attendStatus === 'PARTICIPATED',
+  );
   return (
     <>
       {isOpen === 'add' && (
         <ModalAddVacationAll
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(
-            user => user.attendStatus === 'PARTICIPATED',
-          )}
-          addVacation={handleAddVacation}
-          minusVacation={handleMinusVacation}
+          attendUser={attendUser}
+          getUser={getUser}
+          setSelectUserId={setSelectUserId}
+          rowData={rowData}
         />
       )}
       {isOpen === 'find' && (
-        <ModalAttendLeaderboard
-          setIsOpen={setIsOpen}
-          attendUser={usersAttendence}
-        />
+        <ModalAttendLeaderboard setIsOpen={setIsOpen} attendUser={attendUser} />
       )}
       {isOpen === 'shake' && (
         <ModalShakeTeam
           setIsOpen={setIsOpen}
-          attendUser={rowData.filter(
-            user => user.attendStatus === 'PARTICIPATED',
-          )}
-          onClickChangeShuffleTeam={handleChangeShuffleTeam}
+          attendUser={attendUser}
+          getUser={getUser}
         />
       )}
       {isOpen === 'todo' && (
