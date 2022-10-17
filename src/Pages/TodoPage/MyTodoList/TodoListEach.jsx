@@ -1,8 +1,6 @@
-import { format } from 'date-fns';
-
+import Buttons from './Buttons';
 import isToday from 'Utils/isToday';
-import EditButton from './EditButton';
-import DeleteButton from './DeleteButton';
+import { color, lineThrough } from 'Utils/TodoCss';
 
 import styled from 'styled-components';
 
@@ -34,17 +32,22 @@ const TodoListEach = ({
       >
         {item.title.replace(/ /g, '\u00a0')}
       </Item>
-      <EditButton index={index} date={date} setIsEdit={setIsEdit} />
-      <DeleteButton date={date} removeToDo={removeToDo} />
+      <Buttons
+        type={'Edit'}
+        date={date}
+        callback={() => {
+          setIsEdit(index);
+        }}
+      />
+      <Buttons type={'Delete'} date={date} callback={removeToDo} />
     </TodoListEachBody>
   );
 };
 
 const TodoListEachBody = styled.div``;
 const Item = styled.span`
-  color: ${props =>
-    !isToday(props.today, props.date) || props.isCheck ? 'gray' : ''};
-  text-decoration-line: ${props => (props.isCheck ? 'line-through' : '')};
+  color: ${props => color(props, props.isCheck)};
+  text-decoration-line: ${props => lineThrough(props.isCheck)};
   cursor: default;
   font-size: 15px;
   margin-left: 10px;

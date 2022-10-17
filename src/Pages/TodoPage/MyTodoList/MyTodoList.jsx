@@ -78,12 +78,7 @@ const MyTodoList = ({ userId, date }) => {
     setToDos(result.data.content);
   };
 
-  useEffect(() => {
-    getToDos(userId);
-    setIsEdit();
-  }, [date]);
-
-  useEffect(() => {
+  const showProgress = () => {
     const total = toDos.length;
 
     if (total === 0) {
@@ -97,6 +92,15 @@ const MyTodoList = ({ userId, date }) => {
     }
     setTotal(total);
     setChecked(checked);
+  };
+
+  useEffect(() => {
+    getToDos(userId);
+    setIsEdit();
+  }, [date]);
+
+  useEffect(() => {
+    showProgress();
   }, [toDos]);
 
   return (

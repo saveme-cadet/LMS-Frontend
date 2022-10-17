@@ -11,14 +11,14 @@ const TodoPage = () => {
   const userId = localStorage.getItem('userId');
   const [date, setDate] = useState(new Date());
 
-  // 1. 버튼 통합하기 => <EditButton></Edit>를 리턴하는 객체를 만들기
+  // 1. 버튼 통합하기 => <EditButton></Edit>를 리턴하는 객체를 만들기o
   // 2. styled component에서도 로직 처리하는 부분은 함수로 만들어 처리하기o
-  // 3. 로직이 있는 것만 컴포넌트로 만들기 => 단순히 보여주는 것은 굳이 컴포넌트로 만들 필요가 없음?
+  // 3. 로직이 있는 것만 컴포넌트로 만들기 => 단순히 보여주는 것은 굳이 컴포넌트로 만들 필요가 없음o
   // 4. format(date, 'yyyy-) => Utils에서 관리o
   // 5. list, othercadet을 디렉토리로 구조화하기o
   // 6. 2, 3 뎁스 이상 내려가는 것은 redux를 사용해 전역화하기
-  // 7. !==, === 도 일관성
-  // 8. progress => 하위 컴포넌트에 스타일 옮기기
+  // 7. !==, === 도 일관성o
+  // 8. progress => 하위 컴포넌트에 스타일 옮기기o
 
   return (
     <TodoMainBackground>

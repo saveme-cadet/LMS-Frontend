@@ -6,7 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import IconButton from '@mui/material/IconButton';
 
-const Buttons = ({ type, date, clickCallback }) => {
+const Buttons = ({ type, date, callback }) => {
   const today = new Date();
 
   const iconType = type => {
@@ -27,11 +27,9 @@ const Buttons = ({ type, date, clickCallback }) => {
       aria-label="edit"
       size="small"
       disabled={!isToday(today, date)}
-      onClick={() => {
-        clickCallback();
-      }}
+      onClick={callback}
     >
-      {iconType()}
+      {iconType(type)}
     </IconButton>
   );
 };
