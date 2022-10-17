@@ -19,6 +19,7 @@ const ModalAddVacationAll = ({
   const addVacation = async (select, addedDays) => {
     const body = {
       addedDays: addedDays,
+      reason: '단체 휴가 증가',
     };
     const result = await VacationService.addVacation(select, body);
     getUser();
@@ -26,7 +27,7 @@ const ModalAddVacationAll = ({
   };
 
   const minusVacation = async (select, usedDays) => {
-    const body = { usedDays: usedDays, reason: 'Applied to all users.' };
+    const body = { usedDays: usedDays, reason: '단체 휴가 감소' };
     const selectUser = rowData.filter(user => user.id === select);
     if (selectUser[0].vacation === 0) {
       // console.log('감소시킬 휴가가 없습니다!');

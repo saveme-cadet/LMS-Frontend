@@ -72,7 +72,8 @@ const AdminChangeTable = ({
     for (let i = 0; i < rowData.length; i++) {
       if (rowData[i].id === selectUserId) {
         if (rowData[i].vacation === 0 && value === VACATION.MINUS_HALF) {
-          getUser();
+          alert('휴가가 없습니다.');
+
           setSelectUserId(null);
           return;
         }
@@ -81,12 +82,13 @@ const AdminChangeTable = ({
     if (value === VACATION.PLUS_HALF) {
       const body = {
         addedDays: value,
+        reason: '단일 휴가 증가',
       };
       result = await VacationService.addVacation(selectUserId, body);
     } else if (value === VACATION.MINUS_HALF) {
       const body = {
         usedDays: -value,
-        reason: '',
+        reason: '단일 휴가 감소',
       };
       result = await VacationService.useVacation(selectUserId, body);
     }
