@@ -5,6 +5,7 @@ import ShowDay from './ShowDay';
 import GetCheckIcons from './GetCheckIcons';
 import NotValid from './NotValid';
 import NoData from './NoData';
+import UpdatePasswordModal from './UpdatePasswordModal';
 export {
   SideBar,
   CusDatePicker,
@@ -13,4 +14,5 @@ export {
   NotValid,
   NoData,
   ShowDay,
+  UpdatePasswordModal,
 };

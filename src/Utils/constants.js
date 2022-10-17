@@ -43,6 +43,8 @@ const ERROR_MESSAGES = {
 const MODAL_TYPE = {
   EDIT: 'EDIT',
   DELETE: 'DELETE',
+  ISSUE_PW: 'ISSUE_PW',
+  UPDATE_PW: 'UPDATE_PW',
 };
 
 export {
