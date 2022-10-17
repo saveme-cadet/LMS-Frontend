@@ -39,8 +39,8 @@ const MineService = {
     return response;
   },
   // index에 해당하는 공부 기록 삭제
-  putDeleteMine: async index => {
-    const url = MineUrl(`study_times/${index}`);
+  putDeleteMine: async (userId, studyTimeId) => {
+    const url = MineUrl(`${userId}/study_times/${studyTimeId}`);
     let response;
     try {
       response = await instance.delete(url);
@@ -62,7 +62,10 @@ const MineService = {
     try {
       response = await instance.patch(url, body);
     } catch (e) {
-      alert(e);
+      if (e.response.data.code === 'S5002' || e.response.data.code === 'S5004')
+        // TODO: check error codes
+        alert(e.response.data.message);
+      else alert(e);
     }
     return response;
   },
