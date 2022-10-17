@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styledComp from 'styled-components';
+import { isRegexPassword } from 'Utils';
+
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
@@ -19,10 +21,14 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
       alert('전부 입력해주세요!');
       return;
     }
-    if (password.length < 8) {
-      alert('비밀번호는 8자 이상이어야 합니다!');
+
+    const errorMessage = isRegexPassword(password);
+    if (errorMessage) {
+      alert(errorMessage);
       return;
     }
+    alert('성공!');
+
     onClickRegister({
       username: id,
       password: password,

@@ -1,5 +1,5 @@
 import { Modal } from '@mui/material';
-import { CRUDUserService } from 'API';
+import { isRegexPassword } from 'Utils';
 import { AuthContext } from 'App';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -27,6 +27,13 @@ const UpdatePasswordModal = () => {
   };
   const updatePassword = async () => {
     console.log(oldPassword);
+    const errorMessage = isRegexPassword(newPassword);
+    if (errorMessage) {
+      alert(errorMessage);
+      return;
+    }
+    alert('성공!');
+
     // const res = await CRUDUserService.updatePassword(
     //   oldPassword,
     //   newPassword,
