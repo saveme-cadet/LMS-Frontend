@@ -72,7 +72,6 @@ const AdminTableContainer = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-
   .PARTICIPATED {
     color: black;
     border: 1px solid black;

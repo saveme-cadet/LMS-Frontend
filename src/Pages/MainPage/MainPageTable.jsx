@@ -25,10 +25,12 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
 
     const field = params.field;
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
+
     if (differenceInDays(today, date)) {
       alert('지난 날짜는 수정할 수 없습니다.');
       return;
     }
+
     if (isWrongAccess(role)) {
       alert('수정 권한이 없습니다.');
       return;

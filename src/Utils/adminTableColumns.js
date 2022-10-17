@@ -1,3 +1,8 @@
+const attendStatus = value => {
+  if (value >= 3) return '🔴';
+  else if (value >= 2) return '🟡';
+  else return '';
+};
 import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
 
 const adminTableColumns = [
@@ -32,6 +37,15 @@ const adminTableColumns = [
       return (
         <div className={`${params.value} info`}>{ROLE_NAME[params.value]}</div>
       );
+    },
+  },
+  {
+    field: 'weekAbsentScore',
+    headerName: '상태',
+    type: 'number',
+    width: 60,
+    renderCell: params => {
+      return <div>{attendStatus(params.value)}</div>;
     },
   },
   {

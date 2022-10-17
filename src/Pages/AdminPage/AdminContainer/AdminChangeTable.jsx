@@ -19,7 +19,7 @@ const AdminChangeTable = ({
   };
 
   const validChangeRole = () => {
-    if (selectUserId === +userId) {
+    if (selectUserId === userId) {
       if (rowData.filter(data => data.role === 'ROLE_MANAGER').length === 1) {
         alert('머슴이 한 명 뿐입니다!');
         return -1;
