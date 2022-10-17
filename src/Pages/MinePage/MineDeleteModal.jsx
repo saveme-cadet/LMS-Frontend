@@ -7,13 +7,14 @@ import { MODAL_TYPE } from 'Utils/constants';
 
 function MineDeleteModal({ data, setActiveLogIndex, getMyMine }) {
   const { modalType, setModalType } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   const handleClose = () => {
     setModalType(null);
     setActiveLogIndex(-1);
   };
   const handleDelete = async () => {
-    await MineService.putDeleteMine(data.studyTimeId);
+    await MineService.putDeleteMine(userId, data.studyTimeId);
     handleClose();
   };
 

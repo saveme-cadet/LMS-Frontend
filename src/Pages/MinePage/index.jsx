@@ -80,6 +80,7 @@ const MinePage = () => {
           </MineTimerWrap>
         </MineTimer>
         <MineLog
+          today={today}
           mineLogs={mineLogs}
           attendScore={attendScore}
           setActiveLogIndex={setActiveLogIndex}

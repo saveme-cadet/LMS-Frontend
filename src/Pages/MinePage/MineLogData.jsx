@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { differenceInSeconds, parseISO, format } from 'date-fns';
 import { AuthContext } from 'App';
-import { MODAL_TYPE } from 'Utils/constants';
+import { MODAL_TYPE, TIMEZONE_OFFSET } from 'Utils/constants';
 
 const formatDate = (date, finalStudyTime) => {
   date = format(new Date(date), 'HH:mm:ss');
@@ -15,7 +15,7 @@ const secondsConverter = timeStamp => {
   return +list[0] * 60 * 60 + +list[1] * 60 + +list[2];
 };
 
-const MineLogData = ({ data, index, setActiveLogIndex }) => {
+const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
   const { modalType, setModalType } = useContext(AuthContext);
 
   const earnedPoint = (
@@ -35,6 +35,17 @@ const MineLogData = ({ data, index, setActiveLogIndex }) => {
     setActiveLogIndex(index);
   };
 
+  const isModifiableLog = data => {
+    if (data.finalStudyTime === '00:00:00') return false;
+    /// 오늘 날짜와 비교했을 때 현재 날짜가 수정 가능 일을 오버했을 경우
+    const convertToday = new Date(today - TIMEZONE_OFFSET);
+    const convertDate = new Date(
+      convertToday.setDate(convertToday.getDate() - 2),
+    ).toISOString();
+    console.log(convertDate);
+    return true;
+  };
+
   return (
     <LogData>
       <div>{formatDate(data.beginTime)}</div>
@@ -44,7 +55,7 @@ const MineLogData = ({ data, index, setActiveLogIndex }) => {
       </div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
       <div>
-        {data.finalStudyTime !== '00:00:00' ? (
+        {isModifiableLog(data) ? (
           <EditButton onClick={handleEditLog}>수정</EditButton>
         ) : (
           <EditButton onClick={handleEditLog} disabled={true}>
@@ -53,7 +64,7 @@ const MineLogData = ({ data, index, setActiveLogIndex }) => {
         )}
       </div>
       <div>
-        {data.finalStudyTime !== '00:00:00' ? (
+        {isModifiableLog(data) ? (
           <DeleteButton onClick={handleDelete}>삭제</DeleteButton>
         ) : (
           <DeleteButton onClick={handleDelete} disabled={true}>

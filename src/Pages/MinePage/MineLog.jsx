@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from 'Utils/constants';
 
 import MineLogData from './MineLogData';
 
-function MineLog({ mineLogs, setActiveLogIndex }) {
+function MineLog({ today, mineLogs, setActiveLogIndex }) {
   return (
     <MineLogContainer>
       <MineHeader>⛏️ 보충학습 기록</MineHeader>
@@ -26,6 +26,7 @@ function MineLog({ mineLogs, setActiveLogIndex }) {
                 data={log}
                 index={index}
                 key={index}
+                today={today}
                 setActiveLogIndex={setActiveLogIndex}
               />
             );
