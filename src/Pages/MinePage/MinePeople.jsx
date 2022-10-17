@@ -11,7 +11,7 @@ function MinePeople({ beginTime }) {
   useEffect(() => {
     const getUsers = async () => {
       const res = await MineService.getOtherMine(userId);
-      setUsers(res.data.map(el => el.name).join(', '));
+      if (res) setUsers(res.data.map(el => el.name).join(', '));
     };
     getUsers();
     // NOTE: 아직 API 요청이 안됨
