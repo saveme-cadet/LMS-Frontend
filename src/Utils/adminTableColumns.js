@@ -1,24 +1,9 @@
-const isParticipated = value => {
-  return value === 'PARTICIPATED' ? '참가' : '불참';
-};
-
-const whichTeam = value => {
-  if (value === 'RED') return '레드';
-  else if (value === 'BLUE') return '블루';
-  else return '팀 없음';
-};
-
-const whichRole = value => {
-  if (value === 'ROLE_ADMIN') return '관리자';
-  else if (value === 'ROLE_MANAGER') return '머슴';
-  else return '평민';
-};
-
 const attendStatus = value => {
   if (value >= 3) return '🔴';
   else if (value >= 2) return '🟡';
   else return '';
 };
+import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
 
 const adminTableColumns = [
   {
@@ -29,7 +14,7 @@ const adminTableColumns = [
     renderCell: params => {
       return (
         <div className={`${params.value} info`}>
-          {isParticipated(params.value)}
+          {PARTICIPATE_NAME[params.value]}
         </div>
       );
     },
@@ -40,9 +25,7 @@ const adminTableColumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return (
-        <div className={`${params.value} info`}>{whichTeam(params.value)}</div>
-      );
+      return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
@@ -52,7 +35,7 @@ const adminTableColumns = [
     width: 120,
     renderCell: params => {
       return (
-        <div className={`${params.value} info`}>{whichRole(params.value)}</div>
+        <div className={`${params.value} info`}>{ROLE_NAME[params.value]}</div>
       );
     },
   },
@@ -80,7 +63,7 @@ const adminTableColumns = [
   },
 
   {
-    field: 'totalAbsentScore',
+    field: 'absentScore',
     headerName: '결석 점수',
     type: 'number',
     width: 120,

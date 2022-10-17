@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { UserInfoService } from 'API';
 
 import styled from 'styled-components';
 
@@ -7,7 +8,6 @@ import Button from '@mui/material/Button';
 const shuffleArray = array => {
   for (let i = 0; i < array.length; i++) {
     let j = Math.floor(Math.random() * (i + 1));
-    // [array[i], array[j]] = [array[j], array[i]];
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
@@ -15,21 +15,21 @@ const shuffleArray = array => {
   return array;
 };
 
-const ModalShakeTeam = ({
-  setIsOpen,
-  attendUser,
-  onClickChangeShuffleTeam,
-}) => {
+const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
 
   const teamList = ['RED', 'BLUE', 'NONE'];
 
+  // getUser를 받아 내부에서 사용하도록 수정
+  const onClickChangeShuffleTeam = async (userId, team) => {
+    const result = await UserInfoService.patchTeam(userId, { team: team });
+    getUser();
+  };
+
   const handleCloseModal = isAccept => {
-    // console.log(curUsers);
     if (isAccept) {
       curUsers.map(user => {
-        // console.log(user.id, user.team);
         onClickChangeShuffleTeam(user.id, user.team);
       });
     }
@@ -39,13 +39,10 @@ const ModalShakeTeam = ({
   const handleShakeTeam = () => {
     const shakedUsers = shuffleArray(curUsers);
     const leastMember = shakedUsers.length / (teamList.length - 1);
-    // console.log('least : ', leastMember);
     for (let i = 0; i < shakedUsers.length; i++) {
       let teamIndex = Math.floor(i / leastMember);
-      // console.log(teamIndex);
       shakedUsers[i].team = teamList[teamIndex];
     }
-    // console.log(shakedUsers);
     setNeutral([]);
     setCurUsers(shakedUsers);
   };
@@ -55,15 +52,10 @@ const ModalShakeTeam = ({
     attendUser.map(user => {
       if (!teamList.includes(user.team)) neutralArray.push(user);
     });
-    // console.log('attendUser : ', attendUser);
-    // console.log('neutralArray : ', neutralArray);
     setNeutral(neutralArray);
     setCurUsers(attendUser);
   }, []);
 
-  useEffect(() => {
-    // console.log('isChanged?');
-  }, [curUsers]);
   return (
     <ModalShakeTeamBody>
       <h1>현재 팀 현황</h1>

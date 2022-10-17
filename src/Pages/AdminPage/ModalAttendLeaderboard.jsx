@@ -1,24 +1,12 @@
-import { AllTableService } from 'API';
-import { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-
 import styled from 'styled-components';
 
 import Button from '@mui/material/Button';
 
-const ModalAttendLeaderboard = ({ setIsOpen }) => {
-  const [usersLog, setUsersLog] = useState([]);
-  const today = format(new Date(), 'yyyy-MM-dd');
-
-  const getUserLog = async () => {
-    const result = await AllTableService.getTable(today, 'PARTICIPATED');
-    setUsersLog(result.data);
-  };
-
-  const sortArray = usersLog.sort((a, b) => {
+const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
+  const sortArray = attendUser.sort((a, b) => {
     if (a.attendanceScore === b.attendanceScore) {
-      if (a.totalAbsentScore < b.totalAbsentScore) return -1;
-      else if (a.totalAbsentScore > b.totalAbsentScore) return 1;
+      if (a.absentScore < b.absentScore) return -1;
+      else if (a.absentScore > b.absentScore) return 1;
       // 아오지 업데이트 되면 교체
       else return 0;
     }
@@ -31,11 +19,6 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
   //   if (sortArray[index].attendanceScore === 0) return -1;
   //   return 0;
   // };
-
-  useEffect(() => {
-    getUserLog();
-  }, []);
-
   return (
     <ModalAttendLeaderboardBody>
       <h1>월렛 보상 대상</h1>
@@ -51,28 +34,28 @@ const ModalAttendLeaderboard = ({ setIsOpen }) => {
           </h1>
         );
       })} */}
-      {usersLog.length === 0 ? (
+      {attendUser.length === 0 ? (
         ''
       ) : (
         <h1>
           🥇{sortArray[0].username}🥇 - 출석점수 {sortArray[0].attendanceScore}
-          점 - 결석점수 {sortArray[0].totalAbsentScore}점
+          점 - 결석점수 {sortArray[0].absentScore}점
         </h1>
       )}
-      {usersLog.length <= 1 ? (
+      {attendUser.length <= 1 ? (
         ''
       ) : (
         <h1>
           🥈{sortArray[1].username}🥈 - 출석점수 {sortArray[1].attendanceScore}
-          점 - 결석점수 {sortArray[1].totalAbsentScore}점
+          점 - 결석점수 {sortArray[1].absentScore}점
         </h1>
       )}
-      {usersLog.length <= 2 ? (
+      {attendUser.length <= 2 ? (
         ''
       ) : (
         <h1>
           🥉{sortArray[2].username}🥉 - 출석점수 {sortArray[2].attendanceScore}
-          점 - 결석점수 {sortArray[2].totalAbsentScore}점
+          점 - 결석점수 {sortArray[2].absentScore}점
         </h1>
       )}
       <Button onClick={() => setIsOpen(false)}>확인</Button>

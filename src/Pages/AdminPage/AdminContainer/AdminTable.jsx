@@ -20,6 +20,7 @@ const AdminTable = ({
   };
 
   const handleCellClick = e => {
+    // alert(e.id);
     setSelectUserId(e.id);
   };
 
@@ -71,14 +72,15 @@ const AdminTableContainer = styled.div`
     border-radius: 10em;
     text-align: center;
   }
-  .NOT_PARTICIPATED {
-    color: white;
-    background-color: black;
-  }
   .PARTICIPATED {
     color: black;
     border: 1px solid black;
     background-color: white;
+  }
+
+  .NOT_PARTICIPATED {
+    color: white;
+    background-color: black;
   }
   .RED {
     background-color: #dc143c;
@@ -86,11 +88,19 @@ const AdminTableContainer = styled.div`
   .BLUE {
     background-color: #0079f0;
   }
-  .ROLE_MANAGER {
-    background-color: yellow;
+  .ROLE_ADMIN {
+    background-color: #ff8c00;
   }
+
+  .ROLE_MANAGER {
+    background-color: #ffff00;
+  }
+
   .ROLE_USER {
-    background-color: #cccccc;
+    background-color: #aeb7ba;
+  }
+  .ROLE_UNAUTHORIZED {
+    background-color: #575b5d;
   }
 `;
 

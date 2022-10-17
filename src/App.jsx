@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { LoginPage } from 'Pages';
 import MainRoute from './Route';
-
+import { UserInfoService } from 'API';
 import styled from 'styled-components';
 
 export const AuthContext = createContext();
@@ -18,6 +18,16 @@ const AuthProvider = ({ children }) => {
     setStatus({ userId: userId, role: role });
     setIsLoading(false);
   }, [isLoading]);
+
+  useEffect(async () => {
+    // 로그인 확인용
+    const result = await UserInfoService.getAllUser(0, 100);
+    if (!result) {
+      // alert('세션 만료!');
+      localStorage.clear();
+      setStatus(null);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

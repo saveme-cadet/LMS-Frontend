@@ -1,6 +1,5 @@
 import { UserInfoService, CRUDUserService, VacationService } from 'API';
 import { VACATION } from 'Utils/constants';
-
 import SelectedUser from './SelectedUser';
 
 import styled from 'styled-components';
@@ -35,22 +34,24 @@ const AdminChangeTable = ({
   };
 
   const handleChangeAttend = async event => {
-    const value = event.target.value === 'PARTICIPATED' ? 1 : 0;
-    if (value === 0) {
+    if (event.target.value === 'NOT_PARTICIPATED') {
       if (validChangeRole()) return;
-      let temp = await UserInfoService.patchRole(selectUserId, 'ROLE_USER');
-      // temp = await UserInfoService.patchTeam(selectUserId, 'NONE');
+
+      // let temp = await UserInfoService.patchRole(selectUserId, {
+      //   role: 'ROLE_USER',
+      // });
     }
-    const result = await UserInfoService.putAttend(selectUserId, value);
+    const result = await UserInfoService.patchAttend(selectUserId, {
+      attendStatus: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
 
   const handleChangeTeam = async event => {
-    const result = await UserInfoService.patchTeam(
-      selectUserId,
-      event.target.value,
-    );
+    const result = await UserInfoService.patchTeam(selectUserId, {
+      team: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
@@ -59,10 +60,9 @@ const AdminChangeTable = ({
     // console.log(selectUserId, userId);
     if (validChangeRole()) return;
 
-    const result = await UserInfoService.patchRole(
-      selectUserId,
-      event.target.value,
-    );
+    const result = await UserInfoService.patchRole(selectUserId, {
+      role: event.target.value,
+    });
     getUser();
     setSelectUserId(null);
   };
@@ -72,7 +72,8 @@ const AdminChangeTable = ({
     for (let i = 0; i < rowData.length; i++) {
       if (rowData[i].id === selectUserId) {
         if (rowData[i].vacation === 0 && value === VACATION.MINUS_HALF) {
-          getUser();
+          alert('휴가가 없습니다.');
+
           setSelectUserId(null);
           return;
         }
@@ -81,12 +82,13 @@ const AdminChangeTable = ({
     if (value === VACATION.PLUS_HALF) {
       const body = {
         addedDays: value,
+        reason: '단일 휴가 증가',
       };
       result = await VacationService.addVacation(selectUserId, body);
     } else if (value === VACATION.MINUS_HALF) {
       const body = {
         usedDays: -value,
-        reason: '',
+        reason: '단일 휴가 감소',
       };
       result = await VacationService.useVacation(selectUserId, body);
     }
@@ -128,26 +130,36 @@ const AdminChangeTableBody = styled.div`
   .user-status > * {
     margin: 0.4em;
   }
-  .불참 {
-    color: white;
-    background-color: black;
-  }
-  .참가 {
+
+  .PARTICIPATED {
     color: black;
     border: 1px solid black;
     background-color: white;
   }
-  .red {
+
+  .NOT_PARTICIPATED {
+    color: white;
+    background-color: black;
+  }
+  .RED {
     background-color: #dc143c;
   }
-  .blue {
+  .BLUE {
     background-color: #0079f0;
   }
-  .머슴 {
-    background-color: yellow;
+  .ROLE_ADMIN {
+    background-color: #ff8c00;
   }
-  .카뎃 {
-    background-color: #cccccc;
+
+  .ROLE_MANAGER {
+    background-color: #ffff00;
+  }
+
+  .ROLE_USER {
+    background-color: #aeb7ba;
+  }
+  .ROLE_UNAUTHORIZED {
+    background-color: #575b5d;
   }
 `;
 const AdminChangeTableContainer = styled.div`
