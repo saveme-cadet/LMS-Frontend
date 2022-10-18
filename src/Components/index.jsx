@@ -1,20 +1,18 @@
 import SideBar from './SideBar';
 import CusDatePicker from './CusDatePicker';
 import ShowToday from './ShowToday';
-import Clock from './Clock';
-import Today from './Today';
+import ShowDay from './ShowDay';
 import GetCheckIcons from './GetCheckIcons';
 import NotValid from './NotValid';
 import NoData from './NoData';
-import NotValidTodoPage from './NotValidTodoPage';
+import UpdatePasswordModal from './UpdatePasswordModal';
 export {
   SideBar,
   CusDatePicker,
   ShowToday,
-  Clock,
-  Today,
   GetCheckIcons,
   NotValid,
   NoData,
-  NotValidTodoPage,
+  ShowDay,
+  UpdatePasswordModal,
 };

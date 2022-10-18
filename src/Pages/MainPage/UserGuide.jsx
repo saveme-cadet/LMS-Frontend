@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const UserGuide = ({ rowData, userId }) => {
   const myInfo = rowData.find(array => array.id === +userId);
-  // console.log('status : ', myInfo);
 
   return (
     <>
@@ -18,7 +17,7 @@ const UserGuide = ({ rowData, userId }) => {
             팀입니다!
           </Alert>
           <Alert severity="info" className={myInfo.role}>
-            {myInfo.role === '머슴' ? (
+            {myInfo.role === 'ROLE_MANAGER' ? (
               <>
                 <AlertTitle>
                   <strong>당신은 이번 주 머슴입니다!</strong>
@@ -54,7 +53,7 @@ const StyledUserGuide = styled.div`
   .머슴 {
     background-color: yellow;
   }
-  .카뎃 {
+  .일반 {
     background-color: #cccccc;
   }
 `;

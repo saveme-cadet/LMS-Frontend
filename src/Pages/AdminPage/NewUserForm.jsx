@@ -18,7 +18,7 @@ const NewUserForm = ({ onClickLogin }) => {
       return;
     }
     onClickLogin({
-      name: name,
+      username: name,
       email: email, // 중복되면 안됨.
       password: '4242',
       birthday: '2022-02-18',

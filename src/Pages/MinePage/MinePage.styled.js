@@ -1,13 +1,7 @@
 import styled from 'styled-components';
 
-const AojiBackground = styled.div`
-  // position
-  position: absolute;
-  top: 5em;
-
-  // size
-  width: 80%;
-  height: 100%;
+const MineBackground = styled.div`
+  padding: 0 30px;
 
   .box {
     padding: 10px;
@@ -15,10 +9,9 @@ const AojiBackground = styled.div`
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     text-align: left;
-    height: 800px;
   }
   .header {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
   }
   .body {
@@ -27,14 +20,18 @@ const AojiBackground = styled.div`
   }
 `;
 
-const AojiBody = styled.div`
+const MineBody = styled.div`
   display: flex;
   flex-direction: row;
+  @media (max-width: 1200px) {
+    flex-direction: column;
+  }
 `;
-const AojiTimer = styled.div`
-  flex: 2;
-  font-size: 40px;
+const MineTimer = styled.div`
+  flex: 1;
+  font-size: 30px;
   font-weight: bold;
+  height: 400px;
   button {
     width: 170px;
     height: 50px;
@@ -48,7 +45,7 @@ const AojiTimer = styled.div`
   .body {
     align-items: center;
     justify-content: center;
-    height: 600px;
+    height: 400px;
   }
   .start {
     background-color: #4870fd;
@@ -58,14 +55,16 @@ const AojiTimer = styled.div`
   }
 `;
 
-const AojiLog = styled.div`
-  flex: 5;
+const MineLog = styled.div`
+  flex: 1;
 
   .body {
     overflow: auto;
     align-items: center;
-    justify-content: center;
-    height: 600px;
+    max-height: 400px;
+    @media (min-width: 1200px) {
+      height: 400px;
+    }
   }
   .row {
     display: flex;
@@ -93,13 +92,12 @@ const AojiLog = styled.div`
     }
   }
   .temp {
-    width: 98%;
   }
   .score {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     margin: 10px;
   }
 `;
-const Styled = { AojiBackground, AojiBody, AojiTimer, AojiLog };
+const Styled = { MineBackground, MineBody, MineTimer, MineLog };
 export default Styled;

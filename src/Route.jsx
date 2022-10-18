@@ -1,16 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
-import { SideBar } from 'Components';
+import { SideBar, UpdatePasswordModal } from 'Components';
 
-import Styled from 'Styled/Global.styled';
+import styled from 'styled-components';
 
 const MainRoute = () => {
   return (
     <>
-      <Styled.SideBar>
-        <SideBar />
-      </Styled.SideBar>
-      <Styled.Body>
+      <SideBar />
+      <BodyContainer>
         <Routes>
           <Route path="/" element={<MainPage />} />
 
@@ -20,9 +18,16 @@ const MainRoute = () => {
 
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
-      </Styled.Body>
+      </BodyContainer>
+      <UpdatePasswordModal />
     </>
   );
 };
 
 export default MainRoute;
+
+const BodyContainer = styled.div`
+  margin-left: 150px;
+  width: calc(100% - 150px);
+  overflow-y: scroll;
+`;

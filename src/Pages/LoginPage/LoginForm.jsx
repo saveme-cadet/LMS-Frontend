@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useContext, useState } from 'react';
+import styledComp from 'styled-components';
+import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import { AuthContext } from 'App';
+import { MODAL_TYPE } from 'Utils/constants';
 
-const LoginForm = ({ onClickLogin, setStatus }) => {
-  const navi = useNavigate();
+const LoginForm = ({ onClickLogin, setPageStatus }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const { setModalType } = useContext(AuthContext);
 
   const handleChangeId = event => {
     setId(event.target.value);
@@ -21,7 +23,7 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
       return;
     }
     onClickLogin({
-      name: id,
+      username: id,
       password: password,
     });
     setId('');
@@ -30,37 +32,103 @@ const LoginForm = ({ onClickLogin, setStatus }) => {
   const handlePressEnter = e => {
     if (e.key === 'Enter') handleClick();
   };
+
   return (
     <>
-      <div className="id">
-        <input
+      <LoginFormID>
+        <LoginFormIDInput
           value={id}
           placeholder="인트라 ID"
           onChange={handleChangeId}
           onKeyPress={handlePressEnter}
-          className="idinput"
         />
-      </div>
-      <div>
-        <input
+      </LoginFormID>
+      <LoginFormPassword>
+        <LoginFormPasswordInput
           type="password"
           value={password}
           placeholder="비밀번호"
           onChange={handleChangePassword}
           onKeyPress={handlePressEnter}
-          className="passwordinput"
           // required
         />
-      </div>
+      </LoginFormPassword>
 
-      <Button onClick={handleClick} className="loginbutton" variant="contained">
+      <LoginButton onClick={handleClick} variant="contained">
         로그인
-      </Button>
-      <Button onClick={() => setStatus('register')} className="registerbutton">
-        아직 회원이 아니신가요?
-      </Button>
+      </LoginButton>
+      <RegisterWrap>
+        <RegisterButton onClick={() => setPageStatus('register')}>
+          아직 회원이 아니신가요?
+        </RegisterButton>
+        <IssueTempPasswordButton
+          onClick={() => {
+            setModalType(MODAL_TYPE.ISSUE_PW);
+          }}
+        >
+          임시 비밀번호 발급
+        </IssueTempPasswordButton>
+      </RegisterWrap>
     </>
   );
 };
 
 export default LoginForm;
+
+const LoginFormID = styledComp.div`
+  margin-top: 5%;
+`;
+
+const LoginFormIDInput = styledComp.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginFormPassword = styledComp.div``;
+const LoginFormPasswordInput = styledComp.input`
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 0.3em;
+  margin-top: 1%;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  color: 'white',
+  width: '510px',
+  height: '2.5em',
+  margin: '1em',
+  backgroundColor: '#00aaff',
+});
+
+const RegisterButton = styled(Button)({
+  marginRop: '5%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'white',
+  width: '250px',
+});
+
+const IssueTempPasswordButton = styled(Button)({
+  marginRop: '5%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'white',
+  width: '250px',
+});
+
+const RegisterWrap = styledComp.div`
+`;

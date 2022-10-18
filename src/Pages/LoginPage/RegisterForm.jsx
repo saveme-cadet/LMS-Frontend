@@ -1,39 +1,40 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import styledComp from 'styled-components';
+import { isRegexPassword } from 'Utils';
 
+import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const RegisterForm = ({ onClickRegister, setStatus }) => {
-  const navi = useNavigate();
+const RegisterForm = ({ onClickRegister, setPageStatus }) => {
   const [id, setId] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAlert, setIsAlert] = useState(false);
 
   const handleChangeId = event => {
     setId(event.target.value);
   };
-
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
-
   const handleChangePassword = event => {
     setPassword(event.target.value);
   };
 
   const handleClick = async () => {
-    if (!id || !email) {
+    if (!id || !password) {
       alert('전부 입력해주세요!');
       return;
     }
+
+    const errorMessage = isRegexPassword(password);
+    if (errorMessage) {
+      setIsAlert(true);
+      return;
+    }
+
     onClickRegister({
-      name: id,
-      email: email,
-      password: 4242, // 비밀번호는 4242로 통일
-      birthday: '2022-04-01',
+      username: id,
+      password: password,
+      // email: `${id}@student.42seoul.kr`,
     });
     setId('');
-    setEmail('');
     setPassword('');
   };
   const handlePressEnter = e => {
@@ -41,49 +42,108 @@ const RegisterForm = ({ onClickRegister, setStatus }) => {
   };
   return (
     <>
-      <div className="registerform">
-        <form onKeyPress={handlePressEnter}>
-          <div className="welcome">
-            <h2>환영합니다!</h2>
-            <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
-          </div>
-          <div className="id">
-            <input
-              value={id}
-              placeholder="인트라 ID"
-              onChange={handleChangeId}
-              onKeyPress={handlePressEnter}
-              className="registeridinput"
-            />
-          </div>
-          <div className="email">
-            <input
-              value={email}
-              placeholder="이메일 ex) example@student.42seoul.kr"
-              onChange={handleChangeEmail}
-              onKeyPress={handlePressEnter}
-              className="registerpasswordinput"
-            />
-          </div>
-          <Button
-            variant="contained"
-            onClick={handleClick}
-            className="loginbutton"
-          >
-            함께하기!
-          </Button>
-          <Button onClick={() => setStatus('login')} className="backbutton">
-            되돌아가기
-          </Button>
-          {/* <input
-        value={password}
-        placeholder="비밀번호"
-        onChange={handleChangePassword}
-      /> */}
-        </form>
-      </div>
+      <RegisterMain>
+        <RegisterWelcome>
+          <h2>환영합니다!</h2>
+          <h3>새로운 회원이 되어 카뎃을 구해주세요!</h3>
+        </RegisterWelcome>
+        <RegisterInputForm>
+          <RegisterInput
+            value={id}
+            placeholder="인트라 ID"
+            onChange={handleChangeId}
+            onKeyPress={handlePressEnter}
+          />
+          <RegisterInput
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+            onKeyPress={handlePressEnter}
+            type="password"
+            maxLength={30}
+          />
+
+          {/* <RegisterInput
+            value={email}
+            placeholder="이메일 ex) example@student.42seoul.kr"
+            onChange={handleChangeEmail}
+            onKeyPress={handlePressEnter}
+          /> */}
+        </RegisterInputForm>
+        <LoginAlert>
+          {isAlert && (
+            <>
+              비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
+              포함해야 합니다.
+            </>
+          )}
+        </LoginAlert>
+
+        <LoginButton variant="contained" onClick={handleClick}>
+          함께하기!
+        </LoginButton>
+        <BackButton onClick={() => setPageStatus('login')}>
+          되돌아가기
+        </BackButton>
+      </RegisterMain>
     </>
   );
 };
 
 export default RegisterForm;
+
+const RegisterMain = styledComp.div`
+  margin-top: 3%;
+  width: 600px;
+  height: 70%;
+  background-color: #ffffff;
+  border-radius: 1em;
+
+`;
+
+const RegisterWelcome = styledComp.div`
+  margin-top: 5%;
+  color: black;
+  font-family: 'BMJUA';
+  font-size: 25px;
+`;
+
+const RegisterInputForm = styledComp.div`
+  margin-top: 5%;
+`;
+
+const RegisterInput = styledComp.input`
+  border: 2px solid #868a8c;
+  margin-top: 2%;
+  padding-left: 10px;
+  border-radius: 0.3em;
+  height: 50px;
+  width: 490px;
+  font-size: 20px;
+  font-family: 'BMJUA';
+`;
+
+const LoginAlert = styledComp.div`
+  height: 100px;
+
+`;
+
+const LoginButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  color: 'white',
+  width: '510px',
+  height: '2.5em',
+  margin: '1em',
+  backgroundColor: '#00aaff',
+});
+
+const BackButton = styled(Button)({
+  marginTop: '15%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'black',
+  width: '150px',
+});

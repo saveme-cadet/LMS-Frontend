@@ -1,29 +1,45 @@
 import { useState, createContext, useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { LoginPage, OAuthPage } from 'Pages';
+import { LoginPage } from 'Pages';
 import MainRoute from './Route';
-
-import Styled from 'Styled/Global.styled';
+import { UserInfoService } from 'API';
+import styled from 'styled-components';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  // const [state, setState] = useState(200);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
+  const [modalType, setModalType] = useState(null); // default : null, 'EDIT', 'DELETE'
   useEffect(() => {
     const userId = localStorage.getItem('userId');
-    const userName = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
-    const team = localStorage.getItem('team');
-    setStatus({ userId, userName, role, team });
+
+    setStatus({ userId: userId, role: role });
     setIsLoading(false);
   }, [isLoading]);
 
+  useEffect(async () => {
+    // 로그인 확인용
+    const result = await UserInfoService.getAllUser(0, 100);
+    if (!result) {
+      // alert('세션 만료!');
+      localStorage.clear();
+      setStatus(null);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{ isLoading, setIsLoading, status, setStatus }}
+      value={{
+        isLoading,
+        setIsLoading,
+        status,
+        setStatus,
+        modalType,
+        setModalType,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -34,21 +50,14 @@ const Loading = () => {
   return <div>로딩중!!!</div>;
 };
 
-const validStatus = ({ userId, userName, role, team }) => {
-  return userId && userName && role && team;
-};
-
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
-  // console.log('cur auth : ', auth);
-  // console.log('cur status : ', auth.status);
 
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (auth.status && validStatus(auth.status)) return children;
+    if (auth.status?.userId) return children;
     else return <Navigate to="/login" />;
-    // return children;
   }
 };
 
@@ -58,9 +67,8 @@ const LoginCheckRoute = ({ children }) => {
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (!auth.status || !validStatus(auth.status)) return children;
+    if (!auth.status?.userId) return children;
     else return <Navigate to="/" />;
-    // return children;
   }
 };
 
@@ -68,7 +76,7 @@ const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Styled.Golbal>
+        <RootContainer>
           <Routes>
             <Route
               path="/login"
@@ -79,7 +87,6 @@ const App = () => {
               }
             />
 
-            {/* <Route path="/oauth/kakao/callback" element={<OAuthPage />} /> */}
             <Route
               path="/*"
               element={
@@ -89,10 +96,28 @@ const App = () => {
               }
             />
           </Routes>
-        </Styled.Golbal>
+        </RootContainer>
       </BrowserRouter>
     </AuthProvider>
   );
 };
 
 export default App;
+
+const RootContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+
+  .time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 10px;
+  }
+`;
