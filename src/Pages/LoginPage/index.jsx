@@ -8,11 +8,13 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
 import styled from 'styled-components';
+import { MODAL_TYPE } from 'Utils/constants';
+import IssueTempPassword from './IssuePasswordModal';
 
 const LoginPage = () => {
   const navi = useNavigate();
   const auth = useContext(AuthContext);
-
+  const { modalType } = useContext(AuthContext);
   const [pageStatus, setPageStatus] = useState('login');
 
   const handleLogin = async body => {
@@ -48,51 +50,58 @@ const LoginPage = () => {
     auth.setIsLoading(false);
   };
   return (
-    <LoginBackground>
-      <LoginMain>
-        <img src="/asset/saveme.png" alt="logo" />
-        <LoginMainTitle>구해줘 카뎃</LoginMainTitle>
-      </LoginMain>
-      {pageStatus === 'login' ? (
-        <>
-          <LoginForm onClickLogin={handleLogin} setPageStatus={setPageStatus} />
-        </>
-      ) : (
-        <>
-          <RegisterForm
-            onClickRegister={handleRegister}
-            setPageStatus={setPageStatus}
-          />
-        </>
-      )}
-    </LoginBackground>
+    <>
+      <LoginBackground>
+        <LoginMain>
+          <img src="/asset/saveme.png" alt="logo" />
+          <LoginMainTitle>구해줘 카뎃</LoginMainTitle>
+        </LoginMain>
+        {pageStatus === 'login' ? (
+          <>
+            <LoginForm
+              onClickLogin={handleLogin}
+              setPageStatus={setPageStatus}
+            />
+          </>
+        ) : (
+          <>
+            <RegisterForm
+              onClickRegister={handleRegister}
+              setPageStatus={setPageStatus}
+            />
+          </>
+        )}
+        <IssueTempPassword />
+      </LoginBackground>
+    </>
   );
 };
 
 export default LoginPage;
 
 const LoginBackground = styled.div`
-// layout
-display: flex;
-flex-direction: column;
-align-items: center;
+  // layout
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-text-align: center;
-background-image: url('/asset/login.jpg'); no-repeat;
-background-size: cover;
-// background-color: #220646;
+  text-align: center;
+  background-image: url('/asset/login.jpg');
+  background-size: cover;
+  // background-color: #220646;
 
-// size
-width: 100%;
-height: 100%;
+  // size
+  width: 100%;
+  height: 100%;
 
-@font-face {
-  font-family: 'BMJUA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff')
-    format('woff');
-  font-weight: normal;
-  font-style: normal;
-}`;
+  @font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff')
+      format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
 
 const LoginMain = styled.div`
   margin-top: 5%;

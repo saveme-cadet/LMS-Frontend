@@ -10,4 +10,5 @@ export default NoData;
 
 const NoDataContainer = styled.div`
   color: #c0c0c0;
+  text-align: center;
 `;

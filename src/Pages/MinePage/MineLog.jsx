@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from 'Utils/constants';
 
 import MineLogData from './MineLogData';
 
-function MineLog({ mineLogs, attendScore }) {
+function MineLog({ today, mineLogs, setActiveLogIndex }) {
   return (
     <MineLogContainer>
       <MineHeader>⛏️ 보충학습 기록</MineHeader>
@@ -15,18 +15,26 @@ function MineLog({ mineLogs, attendScore }) {
         <div>공부 시간</div>
         <div>차감 점수</div>
         <div>수정</div>
+        <div>삭제</div>
       </MineLogColumn>
 
       <MineLogRow>
         {mineLogs && mineLogs.length ? (
           mineLogs.map((log, index) => {
-            return <MineLogData data={log} key={index} />;
+            return (
+              <MineLogData
+                data={log}
+                index={index}
+                key={index}
+                today={today}
+                setActiveLogIndex={setActiveLogIndex}
+              />
+            );
           })
         ) : (
           <NoData code={ERROR_MESSAGES.NO_DATA} />
         )}
       </MineLogRow>
-      <MineScore>현재 출결 점수 : {attendScore}</MineScore>
     </MineLogContainer>
   );
 }
@@ -35,7 +43,7 @@ const MineLogContainer = styled.div`
   flex: 1;
   padding: 10px;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb;
   text-align: left;
 `;

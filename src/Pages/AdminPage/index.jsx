@@ -1,9 +1,6 @@
-import { useState, useContext, useRef, useEffect } from 'react';
-import { AuthContext } from 'App';
-import { ShowToday, NotValid } from 'Components';
-import { ERROR_MESSAGES } from 'Utils/constants';
-
-import AdminContainer from './AdminContainer';
+import { useState } from 'react';
+import { ShowToday } from 'Components';
+import AdminBody from './AdminBody';
 // import NewUserForm from './NewUserForm';
 
 import styled from 'styled-components';
@@ -11,9 +8,6 @@ import styled from 'styled-components';
 const AdminPage = () => {
   const [date, setDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState('false');
-  const auth = useContext(AuthContext);
-  const userRole = auth.status.role;
-  const userId = auth.status.userId;
 
   const pressESC = event => {
     if (event.key === 'Escape' || event.key === 'Esc') {
@@ -21,29 +15,13 @@ const AdminPage = () => {
     }
   };
 
-  const isAuth = () => {
-    if (userRole === 'ROLE_MANAGER') return true;
-    if (userRole === 'ROLE_ADMIN') return true;
-    return false;
-  };
-
   return (
     <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
         <ShowToday date={date} />
       </AdminHeader>
-      <AdminBody>
-        {isAuth() ? (
-          <AdminContainer
-            auth={auth}
-            userId={userId}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
-        ) : (
-          <NotValid code={ERROR_MESSAGES.NO_AUTH} />
-        )}
-      </AdminBody>
+
+      <AdminBody isOpen={isOpen} setIsOpen={setIsOpen} />
     </AdminBackground>
   );
 };
@@ -62,5 +40,4 @@ const AdminHeader = styled.div`
   font-weight: bold;
   margin: 10px;
 `;
-const AdminBody = styled.div``;
 export default AdminPage;

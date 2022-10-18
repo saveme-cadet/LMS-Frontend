@@ -3,8 +3,7 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
 
 const SelectedUser = ({
   userInfo,
@@ -18,14 +17,17 @@ const SelectedUser = ({
 
   return (
     <div className="box">
-      <span className="title">현재 선택 : {userInfo.userName}</span>
+      <span className="title">현재 선택 : {userInfo.username}</span>
 
       <span className="user-status">
-        <Chip label={userInfo.attendStatus} className={userInfo.attendStatus} />
+        <Chip
+          label={PARTICIPATE_NAME[userInfo.attendStatus]}
+          className={userInfo.attendStatus}
+        />
         {userInfo.attendStatus === 'PARTICIPATED' && (
           <>
             <Chip label={userInfo.team} className={userInfo.team} />
-            <Chip label={userInfo.role} className={userInfo.role} />
+            <Chip label={ROLE_NAME[userInfo.role]} className={userInfo.role} />
           </>
         )}
       </span>
@@ -59,8 +61,10 @@ const SelectedUser = ({
               inputProps={{ 'aria-label': 'Without label' }}
             >
               <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
-              <MenuItem value={'ROLE_USER'}>카뎃</MenuItem>
+              <MenuItem value={'ROLE_USER'}>일반</MenuItem>
+              <MenuItem value={'ROLE_UNAUTHORIZED'}>게스트</MenuItem>
             </Select>
+
             <Button
               variant="contained"
               onClick={() => onClickChangeVacation(VACATION.PLUS_HALF)}
@@ -76,7 +80,7 @@ const SelectedUser = ({
             {/* <Button
             onClick={() =>
               onClickDeleteUser({
-                userName: userInfo.userName,
+                username: userInfo.username,
                 userId: userInfo.id,
               })
             }

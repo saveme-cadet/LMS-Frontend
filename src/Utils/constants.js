@@ -2,11 +2,17 @@ const API_URL = 'https://www.savvemecadet.click/api';
 
 const CHECK_IN = 'checkIn';
 const CHECK_OUT = 'checkOut';
+const TIMEZONE_OFFSET = new Date().getTimezoneOffset() * 60000;
 
 const TEAM_ID = {
   ALL: 0,
   RED: 1,
   BLUE: 2,
+};
+
+const PARTICIPATE_NAME = {
+  PARTICIPATED: '참가',
+  NOT_PARTICIPATED: '불참',
 };
 
 const TEAM_NAME = {
@@ -38,14 +44,28 @@ const ERROR_MESSAGES = {
   NOT_YET: 'NOT_YET',
   WEEKEND: 'WEEKEND',
 };
+
+const MODAL_TYPE = {
+  EDIT: 'EDIT',
+  DELETE: 'DELETE',
+  ISSUE_PW: 'ISSUE_PW',
+  UPDATE_PW: 'UPDATE_PW',
+};
+
+const CUSTOM_ERR_CODE = ['S5001', 'S5002', 'S5003', 'S5004', 'S5005', 'S5002'];
+
 export {
+  TIMEZONE_OFFSET,
   CHECK_IN,
   CHECK_OUT,
+  PARTICIPATE_NAME,
   TEAM_NAME,
+  ROLE_NAME,
   TEAM_ID,
   API_URL,
   API_PARAMS,
   VACATION,
   ERROR_MESSAGES,
-  ROLE_NAME,
+  MODAL_TYPE,
+  CUSTOM_ERR_CODE,
 };

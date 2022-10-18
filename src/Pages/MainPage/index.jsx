@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from 'App';
+import { useState, useEffect } from 'react';
 
-import { TEAM_NAME, TEAM_ID } from 'Utils/constants';
-import { TodoService, UserInfoService, AllTableService } from 'API';
+import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES } from 'Utils/constants';
+import { AllTableService } from 'API';
+import WrongDay from './WrongDay';
 
 import { format } from 'date-fns';
 
 import ShowDate from './ShowDate';
-import UserGuide from './UserGuide';
+// import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
 import FilterModal from './FilterModal';
@@ -22,9 +22,6 @@ const MainPage = () => {
   const [selectRowData, setSelectRowData] = useState(null);
   const [customData, setCustomData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const auth = useContext(AuthContext);
-  const userId = auth.status.userId;
 
   const updateSelectData = curTab => {
     // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
@@ -77,20 +74,28 @@ const MainPage = () => {
   };
 
   const getUsers = async () => {
-    // const anoResult = await TodoService.getOthersProgress('2022-09-01');
-    // getOthersProgress 가져오지 않고 getTable 하나로 가져오기?
     const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable(dateFormat);
-    const newArray = result.data.map(array => ({
-      id: array.attendanceId,
+    const result = await AllTableService.getTable(dateFormat, true);
+    console.log(result);
+
+    // 백엔드 장애 데이터 임시 조치
+    if (!result || !result.data[0].attendanceId) {
+      setRowData(null);
+      setSelectRowData(null);
+      return;
+    }
+
+    const newArray = result.data.map((array, i) => ({
+      id: i,
+      attendanceId: array.attendanceId,
       userId: array.userId,
       username: array.username,
-      // attendStatus: array.attendStatus,
+      attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,
       vacation: array.vacation,
-      absentScore: array.absentScore,
+      absentScore: array.totalAbsentScore,
       attendanceScore: array.attendanceScore,
       todoSuccessRate: array.todoSuccessRate * 100,
       checkIn: array.checkIn,
@@ -117,11 +122,12 @@ const MainPage = () => {
     setCustomData(localData ? localData : new Array(9).fill(true));
     // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
   }, []);
+
   return (
     <MainPageContainer>
-      {selectRowData && (
+      {selectRowData ? (
         <>
-          <UserGuide rowData={rowData} userId={userId} />
+          {/* <UserGuide rowData={rowData} userId={userId} /> */}
           <ShowDate date={date} setDate={setDate} />
 
           <MainPageTableTabs
@@ -134,9 +140,13 @@ const MainPage = () => {
             date={date}
             selectRowData={selectRowData}
             getUsers={getUsers}
-            userId={userId}
             customData={customData}
           />
+        </>
+      ) : (
+        <>
+          <ShowDate date={date} setDate={setDate} />
+          <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
         </>
       )}
       {isOpen && (

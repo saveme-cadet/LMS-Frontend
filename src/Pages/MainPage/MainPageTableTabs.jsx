@@ -9,13 +9,7 @@ import { validDay } from 'Utils';
 
 import styled from 'styled-components';
 
-const MainPageTableTabs = ({
-  date,
-  tab,
-  handleChangeTab,
-
-  setIsOpen,
-}) => {
+const MainPageTableTabs = ({ date, tab, handleChangeTab, setIsOpen }) => {
   const toggleModal = () => {
     setIsOpen(isOpen => !isOpen);
   };

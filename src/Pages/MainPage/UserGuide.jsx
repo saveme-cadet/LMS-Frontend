@@ -53,7 +53,7 @@ const StyledUserGuide = styled.div`
   .머슴 {
     background-color: yellow;
   }
-  .카뎃 {
+  .일반 {
     background-color: #cccccc;
   }
 `;
