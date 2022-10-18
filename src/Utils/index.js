@@ -6,6 +6,7 @@ import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import checkDateTodo from './checkDateTodo';
 import isToday from './isToday';
+import todoCss from './todoCss';
 
 export {
   adminTableColumns,
@@ -16,4 +17,5 @@ export {
   getMessage,
   checkDateTodo,
   isToday,
+  todoCss,
 };

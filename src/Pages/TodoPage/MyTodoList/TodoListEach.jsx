@@ -1,6 +1,6 @@
 import Buttons from './Buttons';
 import isToday from 'Utils/isToday';
-import { color, lineThrough } from 'Utils/todoCss';
+import { todoCss } from 'Utils';
 
 import styled from 'styled-components';
 
@@ -46,8 +46,8 @@ const TodoListEach = ({
 
 const TodoListEachBody = styled.div``;
 const Item = styled.span`
-  color: ${props => color(props, props.isCheck)};
-  text-decoration-line: ${props => lineThrough(props.isCheck)};
+  color: ${props => todoCss.color(props, props.isCheck)};
+  text-decoration-line: ${props => todoCss.lineThrough(props.isCheck)};
   cursor: default;
   font-size: 15px;
   margin-left: 10px;

@@ -1,4 +1,4 @@
-import { color, lineThrough } from 'Utils/todoCss';
+import { todoCss } from 'Utils';
 import Checkbox from '@mui/material/Checkbox';
 
 import styled from 'styled-components';
@@ -55,8 +55,8 @@ const TodoCadetListEntity = styled.div`
   }
 `;
 const CadetListItem = styled.span`
-  color: ${props => color(props, props.list.titleCheck)};
-  text-decoration-line: ${props => lineThrough(props.list.titleCheck)};
+  color: ${props => todoCss.color(props, props.list.titleCheck)};
+  text-decoration-line: ${props => todoCss.lineThrough(props.list.titleCheck)};
 `;
 
 export default TodoCadetList;
