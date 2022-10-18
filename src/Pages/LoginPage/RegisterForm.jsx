@@ -25,11 +25,9 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
 
     const errorMessage = isRegexPassword(password);
     if (errorMessage) {
-      alert(errorMessage);
       setIsAlert(true);
       return;
     }
-    alert('성공!');
 
     onClickRegister({
       username: id,
