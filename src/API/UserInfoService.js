@@ -13,7 +13,7 @@ const UserInfoService = {
     try {
       response = await instance.get(url);
     } catch (e) {
-      alert(e);
+      // alert(e);
     }
     return response;
   },
