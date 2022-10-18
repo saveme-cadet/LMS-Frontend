@@ -1,6 +1,7 @@
 import { Modal } from '@mui/material';
 import { isRegexPassword } from 'Utils';
 import { AuthContext } from 'App';
+import { CRUDUserService } from 'API';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MODAL_TYPE } from 'Utils/constants';
@@ -26,24 +27,25 @@ const UpdatePasswordModal = () => {
     checkPassword.current = e.target.value;
   };
   const updatePassword = async () => {
-    console.log(oldPassword);
-    const errorMessage = isRegexPassword(newPassword);
-    if (errorMessage) {
-      alert(errorMessage);
+    if (newPassword.current !== checkPassword.current) {
+      setNotiMessage('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
       return;
     }
-    alert('성공!');
-
-    // const res = await CRUDUserService.updatePassword(
-    //   oldPassword,
-    //   newPassword,
-    //   checkPassword,
-    // );
-    // if (res) setNotiMessage('정상처리 됐습니다'); // setState is not function(api, async 적용전)
-    // const timer = setTimeout(() => {
-    //   clearTimeout(timer);
-    //   handleClose();
-    // }, 2000);
+    const errorMessage = isRegexPassword(newPassword.current);
+    if (errorMessage) {
+      setNotiMessage(errorMessage);
+      return;
+    }
+    const res = await CRUDUserService.updatePassword(
+      oldPassword.current,
+      newPassword.current,
+      checkPassword.current,
+    );
+    if (res) setNotiMessage('정상처리 됐습니다'); // setState is not function(api, async 적용전)
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      handleClose();
+    }, 2000);
     // API 부분에 따른 결과값 보여주기
     // TODO: 정규식 붙이고 api요청 보내기
   };
