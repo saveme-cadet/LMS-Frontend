@@ -1,4 +1,4 @@
-import { color, lineThrough } from 'Utils/TodoCss';
+import { color, lineThrough } from 'Utils/todoCss';
 import Checkbox from '@mui/material/Checkbox';
 
 import styled from 'styled-components';

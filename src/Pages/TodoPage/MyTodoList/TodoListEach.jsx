@@ -1,6 +1,6 @@
 import Buttons from './Buttons';
 import isToday from 'Utils/isToday';
-import { color, lineThrough } from 'Utils/TodoCss';
+import { color, lineThrough } from 'Utils/todoCss';
 
 import styled from 'styled-components';
 
