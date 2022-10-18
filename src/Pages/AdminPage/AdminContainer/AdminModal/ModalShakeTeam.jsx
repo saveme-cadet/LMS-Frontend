@@ -18,6 +18,7 @@ const shuffleArray = array => {
 const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const [curUsers, setCurUsers] = useState([]);
   const [neutral, setNeutral] = useState([]);
+  const [isChanged, setIsChanged] = useState(false);
 
   const teamList = ['RED', 'BLUE', 'NONE'];
 
@@ -28,7 +29,7 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   };
 
   const handleCloseModal = isAccept => {
-    if (isAccept) {
+    if (isAccept && isChanged) {
       curUsers.map(user => {
         onClickChangeShuffleTeam(user.id, user.team);
       });
@@ -37,6 +38,7 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   };
 
   const handleShakeTeam = () => {
+    setIsChanged(true);
     const shakedUsers = shuffleArray(curUsers);
     const leastMember = shakedUsers.length / (teamList.length - 1);
     for (let i = 0; i < shakedUsers.length; i++) {

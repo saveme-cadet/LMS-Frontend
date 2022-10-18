@@ -22,7 +22,6 @@ const ModalAddVacationAll = ({
       reason: '단체 휴가 증가',
     };
     const result = await VacationService.addVacation(select, body);
-    getUser();
     setSelectUserId(null);
   };
 
@@ -34,7 +33,6 @@ const ModalAddVacationAll = ({
       return;
     }
     const result = await VacationService.useVacation(select, body);
-    getUser();
     setSelectUserId(null);
   };
 
@@ -48,6 +46,8 @@ const ModalAddVacationAll = ({
         else if (value < VACATION.ZERO) minusVacation(user.id, -value);
       });
     }
+    getUser();
+
     setIsOpen(false);
   };
 

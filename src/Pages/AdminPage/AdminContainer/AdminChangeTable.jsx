@@ -45,7 +45,7 @@ const AdminChangeTable = ({
       attendStatus: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeTeam = async event => {
@@ -53,7 +53,7 @@ const AdminChangeTable = ({
       team: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeRole = async event => {
@@ -64,7 +64,7 @@ const AdminChangeTable = ({
       role: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeVacation = async value => {
@@ -74,7 +74,7 @@ const AdminChangeTable = ({
         if (rowData[i].vacation === 0 && value === VACATION.MINUS_HALF) {
           alert('휴가가 없습니다.');
 
-          setSelectUserId(null);
+          // setSelectUserId(null);
           return;
         }
       }
@@ -93,7 +93,7 @@ const AdminChangeTable = ({
       result = await VacationService.useVacation(selectUserId, body);
     }
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   return (
