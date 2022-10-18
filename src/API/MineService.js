@@ -1,4 +1,3 @@
-import { CUSTOM_ERR_CODE } from 'Utils/constants';
 import { instance } from './api';
 
 const MineUrl = path => {
@@ -40,8 +39,8 @@ const MineService = {
     return response;
   },
   // index에 해당하는 공부 기록 삭제
-  putDeleteMine: async (userId, studyTimeId) => {
-    const url = MineUrl(`${userId}/study_times/${studyTimeId}`);
+  putDeleteMine: async index => {
+    const url = MineUrl(`study_times/${index}`);
     let response;
     try {
       response = await instance.delete(url);
@@ -57,14 +56,13 @@ const MineService = {
   "endTime": "string"
   }
 */
-  patchEditMine: async (userId, studyTimeId, body) => {
-    const url = MineUrl(`${userId}/study_times/${studyTimeId}`);
+  patchEditMine: async (index, body) => {
+    const url = MineUrl(`study_times/${index}`);
     let response;
     try {
       response = await instance.patch(url, body);
     } catch (e) {
-      if (CUSTOM_ERR_CODE[e.response.data.code]) alert(e.response.data.message);
-      else alert(e);
+      alert(e);
     }
     return response;
   },
@@ -92,8 +90,8 @@ const MineService = {
     return response;
   },
   // 현재 공부 중인 회원 조회
-  getOtherMine: async userId => {
-    const url = MineUrl(`${userId}/study_times/studying-user`);
+  getOtherMine: async () => {
+    const url = MineUrl(`study_times/studying-user`);
     let response;
     try {
       response = await instance.get(url);

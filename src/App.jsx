@@ -11,7 +11,6 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
-  const [modalType, setModalType] = useState(null); // default : null, 'EDIT', 'DELETE'
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
@@ -32,14 +31,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        isLoading,
-        setIsLoading,
-        status,
-        setStatus,
-        modalType,
-        setModalType,
-      }}
+      value={{ isLoading, setIsLoading, status, setStatus }}
     >
       {children}
     </AuthContext.Provider>

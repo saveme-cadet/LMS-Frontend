@@ -5,7 +5,6 @@ import getDayName from './getDayName';
 import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import checkDateTodo from './checkDateTodo';
-import isRegexPassword from './isRegexPassword';
 
 export {
   adminTableColumns,
@@ -15,5 +14,4 @@ export {
   isWrongAccess,
   getMessage,
   checkDateTodo,
-  isRegexPassword,
 };

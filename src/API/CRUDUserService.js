@@ -48,32 +48,6 @@ const CRUDUserService = {
     }
     return response;
   },
-  // 임시 비밀번호 발급
-  issueTempPassword: async userName => {
-    const url = CRUDUserAPI('auth/password-inquery');
-    let response;
-    try {
-      response = await instance.post(url, { username: userName });
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
-  // 비밀번호 변경
-  updatePassword: async (oldPassword, newPassword, checkPassword) => {
-    const url = CRUDUserAPI('auth/password');
-    let response;
-    try {
-      response = await instance.patch(url, {
-        oldPassword,
-        password: newPassword,
-        checkPassword,
-      });
-    } catch (e) {
-      alert(e);
-    }
-    return response;
-  },
 };
 
 export default CRUDUserService;

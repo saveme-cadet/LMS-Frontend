@@ -7,7 +7,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import styled from 'styled-components';
-import { MODAL_TYPE } from 'Utils/constants';
 
 const gatherTownLink = 'https://app.gather.town/app/Zq3peLuvz5isVQ0f/42seoul';
 
@@ -56,14 +55,6 @@ const SideBar = () => {
           <Tab className="button" label="아오지 탄광" value="mine" />
           <Tab className="button" label="머슴" value="admin" />
           <div
-            className="button setup-pw"
-            onClick={() => {
-              auth.setModalType(MODAL_TYPE.UPDATE_PW);
-            }}
-          >
-            비밀번호 변경
-          </div>
-          <div
             className="button link"
             onClick={() => window.open(gatherTownLink, '_blank')}
           >
@@ -105,14 +96,6 @@ const SideBarContainer = styled.div`
   .button {
     color: #ffffff;
     max-width: 13em;
-  }
-  .setup-pw {
-    position: absolute;
-    bottom: 10rem;
-    width: 100%;
-    text-align: center;
-
-    cursor: pointer;
   }
   .link {
     position: absolute;

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
-import { SideBar, UpdatePasswordModal } from 'Components';
+import { SideBar } from 'Components';
 
 import styled from 'styled-components';
 
@@ -19,7 +19,6 @@ const MainRoute = () => {
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </BodyContainer>
-      <UpdatePasswordModal />
     </>
   );
 };
