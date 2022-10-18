@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import { AuthContext } from 'App';
+import { MODAL_TYPE } from 'Utils/constants';
 
 const LoginForm = ({ onClickLogin, setPageStatus }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const { setModalType } = useContext(AuthContext);
 
   const handleChangeId = event => {
     setId(event.target.value);
@@ -50,12 +53,22 @@ const LoginForm = ({ onClickLogin, setPageStatus }) => {
           // required
         />
       </LoginFormPassword>
+
       <LoginButton onClick={handleClick} variant="contained">
         로그인
       </LoginButton>
-      <RegisterButton onClick={() => setPageStatus('register')}>
-        아직 회원이 아니신가요?
-      </RegisterButton>
+      <RegisterWrap>
+        <RegisterButton onClick={() => setPageStatus('register')}>
+          아직 회원이 아니신가요?
+        </RegisterButton>
+        <IssueTempPasswordButton
+          onClick={() => {
+            setModalType(MODAL_TYPE.ISSUE_PW);
+          }}
+        >
+          임시 비밀번호 발급
+        </IssueTempPasswordButton>
+      </RegisterWrap>
     </>
   );
 };
@@ -107,3 +120,15 @@ const RegisterButton = styled(Button)({
   color: 'white',
   width: '250px',
 });
+
+const IssueTempPasswordButton = styled(Button)({
+  marginRop: '5%',
+  fontFamily: 'BMJUA',
+  fontSize: '20px',
+  textDecoration: 'underline',
+  color: 'white',
+  width: '250px',
+});
+
+const RegisterWrap = styledComp.div`
+`;

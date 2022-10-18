@@ -1,15 +1,32 @@
-import React from 'react';
+import { format } from 'date-fns';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const MineButton = ({ onClickMine, state }) => {
+const MineButton = ({ onClickMine, date, state }) => {
+  const [today, setToday] = useState(format(new Date(), 'yyyy-MM-dd'));
+
   return (
     <>
       {!state ? (
-        <MineBtn onClick={onClickMine} className="start">
-          시작!
+        today === format(date, 'yyyy-MM-dd') ? (
+          <MineBtn onClick={onClickMine} className="start">
+            시작!
+          </MineBtn>
+        ) : (
+          <MineBtn
+            onClick={onClickMine}
+            className="start disabled"
+            disabled={true}
+          >
+            시작!
+          </MineBtn>
+        )
+      ) : today === format(date, 'yyyy-MM-dd') ? (
+        <MineBtn onClick={onClickMine} className="end">
+          종료!
         </MineBtn>
       ) : (
-        <MineBtn onClick={onClickMine} className="end">
+        <MineBtn onClick={onClickMine} className="end disabled" disabled={true}>
           종료!
         </MineBtn>
       )}
@@ -29,9 +46,15 @@ const MineBtn = styled.button`
 
   &.start {
     background-color: #4870fd;
+    &.disabled {
+      opacity: 0.5;
+    }
   }
   &.end {
     background-color: #ff4646;
+    &.disabled {
+      opacity: 0.5;
+    }
   }
 `;
 

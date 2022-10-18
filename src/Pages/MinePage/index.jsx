@@ -7,62 +7,64 @@ import { ShowToday } from 'Components';
 import Timer from './Timer';
 import MineButton from './MineButton';
 import MineLog from './MineLog';
+import MineEditModal from './MineEditModal';
+import DailyDate from './DailyDate';
+import MinePeople from './MinePeople';
+import { MODAL_TYPE } from 'Utils/constants';
+import { Modal } from '@mui/material';
+import MineDeleteModal from './MineDeleteModal';
 
 const MinePage = () => {
+  const { modalType } = useContext(AuthContext);
   const [attendScore, setAttendScore] = useState(null);
   const [beginTime, setBeginTime] = useState(null);
   const [mineLogs, setMineLogs] = useState(null);
+  const [activeLogIndex, setActiveLogIndex] = useState(-1);
+  const [date, setDate] = useState(new Date());
+  const [today, setToday] = useState(new Date());
+
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
-  const today = format(new Date(), 'yyyy-MM-dd');
 
   const getMyMine = async () => {
-    const result = await MineService.getTodayMine(userId);
+    const result = await MineService.getFindMine(
+      userId,
+      format(date, 'yyyy-MM-dd'),
+    );
     const logs = result.data;
-
-    if (logs.length && logs[logs.length - 1].endTime === '00:00:00') {
-      setBeginTime(new Date(today + ' ' + logs[logs.length - 1].beginTime));
+    if (logs.length && logs[logs.length - 1].finalStudyTime === '00:00:00') {
+      setBeginTime(logs[logs.length - 1].beginTime);
     }
     setMineLogs(logs);
   };
 
   const onClickMine = async () => {
-    if (beginTime && differenceInSeconds(new Date(), beginTime) < 1) {
+    if (beginTime && differenceInSeconds(new Date(), new Date(beginTime)) < 1) {
       alert('측정하지 못했습니다!');
       return;
     }
     if (beginTime) {
-      setBeginTime(null);
       await MineService.putEndMine(userId);
+      setBeginTime(null);
     } else {
-      setBeginTime(new Date());
+      // setBeginTime(new Date()); // TODO: twice init beginTime
       await MineService.postStartMine(userId);
     }
     getMyMine();
-    getCurAttendScore();
-  };
-
-  const getCurAttendScore = async () => {
-    const result = await AllTableService.getTable(today);
-    for (let i = 0; i < result.data.length; i++) {
-      if (userId === result.data[i].userId) {
-        setAttendScore(result.data[i].attendanceScore.toFixed(2));
-      }
-    }
   };
 
   useEffect(() => {
     if (userId) {
       getMyMine();
-      getCurAttendScore();
     }
-  }, [userId]);
+  }, [userId, date]);
 
   return (
     <MineBackground>
       <div className="time">
-        <ShowToday date={new Date()} />
+        <DailyDate date={date} setDate={setDate} />
       </div>
+      <MinePeople beginTime={beginTime} />
       <MineBody>
         <MineTimer>
           <MineTimerWrap>
@@ -72,12 +74,32 @@ const MinePage = () => {
               <MineButton
                 onClickMine={onClickMine}
                 state={beginTime === null ? false : true}
+                date={date}
               />
             </MineTimeBody>
           </MineTimerWrap>
         </MineTimer>
-        <MineLog mineLogs={mineLogs} attendScore={attendScore} />
+        <MineLog
+          today={today}
+          mineLogs={mineLogs}
+          attendScore={attendScore}
+          setActiveLogIndex={setActiveLogIndex}
+        />
       </MineBody>
+      {modalType === MODAL_TYPE.EDIT && (
+        <MineEditModal
+          data={mineLogs[activeLogIndex]}
+          setActiveLogIndex={setActiveLogIndex}
+          getMyMine={getMyMine}
+        />
+      )}
+      {modalType === MODAL_TYPE.DELETE && (
+        <MineDeleteModal
+          data={mineLogs[activeLogIndex]}
+          setActiveLogIndex={setActiveLogIndex}
+          getMyMine={getMyMine}
+        />
+      )}
     </MineBackground>
   );
 };
@@ -89,7 +111,7 @@ const MineBackground = styled.div`
 const MineTimerWrap = styled.div`
   padding: 10px;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb;
   text-align: left;
 `;
