@@ -1,8 +1,9 @@
-import { Modal } from '@mui/material';
+import { Button, Modal } from '@mui/material';
 import { CRUDUserService } from 'API';
 import { AuthContext } from 'App';
 import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styledComp from 'styled-components';
+import { styled } from '@mui/material/styles';
 import { MODAL_TYPE } from 'Utils/constants';
 
 function IssueTempPassword() {
@@ -11,6 +12,7 @@ function IssueTempPassword() {
   const [notiMessage, setNotiMessage] = useState('');
   const handleClose = () => {
     setModalType(null);
+    setNotiMessage('');
   };
   const onUpdateUserId = e => {
     setUserId(e.target.value);
@@ -18,11 +20,17 @@ function IssueTempPassword() {
 
   const onSubmit = async () => {
     const res = await CRUDUserService.issueTempPassword(userId);
-    if (res) setNotiMessage('42 이메일로 링크를 발송했습니다.');
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      handleClose();
-    }, 2000);
+    if (res) {
+      setNotiMessage('42 이메일로 링크를 발송했습니다.');
+      const timer = setTimeout(() => {
+        clearTimeout(timer);
+        handleClose();
+      }, 2000);
+    } else setNotiMessage('발급 신청 중 오류가 발생했습니다.');
+  };
+  const handlePressEnter = e => {
+    if (e.key === 'Enter') onSubmit();
+    else if (notiMessage) setNotiMessage('');
   };
 
   return (
@@ -35,15 +43,14 @@ function IssueTempPassword() {
               placeholder="아이디"
               type="text"
               onChange={onUpdateUserId}
+              onKeyDown={handlePressEnter}
               spellCheck={false}
               required
             />
-            <div>
-              <p>{notiMessage}</p>
-            </div>
-            <div>
-              <button onClick={onSubmit}>발급</button>
-            </div>
+            <NotificationMessage>{notiMessage}</NotificationMessage>
+            <IssueButton onClick={onSubmit} variant="contained">
+              발급
+            </IssueButton>
           </div>
         </ModalBox>
       </Modal>
@@ -51,21 +58,28 @@ function IssueTempPassword() {
   );
 }
 
-const ModalBox = styled.div`
+const ModalBox = styledComp.div`
   background-color: #fff;
   padding: 40px 40px;
   border-radius: 5px;
-  width: 570px;
-  height: 350px;
+  width: 510px;
+  height: 250px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
+  text-align: center;
+  font-family: 'BMJUA';
+  font-size: 20px;
 `;
-const IdInputForm = styled.input`
+const NotificationMessage = styledComp.p`
+  font-size: 15px;
+  height: 10px;
+`;
+const IdInputForm = styledComp.input`
   border: 2px solid #868a8c;
-  margin-top: 2%;
+  margin-top: 30px;
   padding-left: 10px;
   border-radius: 0.3em;
   height: 40px;
@@ -73,5 +87,16 @@ const IdInputForm = styled.input`
   font-size: 15px;
   font-family: 'BMJUA';
 `;
+
+const IssueButton = styled(Button)({
+  borderRadius: '0.3em',
+  fontFamily: 'BMJUA',
+  fontSize: '15px',
+  color: 'white',
+  width: '100px',
+  height: '2.5em',
+  // margin: '1em',
+  backgroundColor: '#00aaff',
+});
 
 export default IssueTempPassword;
