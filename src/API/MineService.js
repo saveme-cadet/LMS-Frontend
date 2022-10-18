@@ -1,3 +1,4 @@
+import { CUSTOM_ERR_CODE } from 'Utils/constants';
 import { instance } from './api';
 
 const MineUrl = path => {
@@ -62,9 +63,7 @@ const MineService = {
     try {
       response = await instance.patch(url, body);
     } catch (e) {
-      if (e.response.data.code === 'S5002' || e.response.data.code === 'S5004')
-        // TODO: check error codes
-        alert(e.response.data.message);
+      if (CUSTOM_ERR_CODE[e.response.data.code]) alert(e.response.data.message);
       else alert(e);
     }
     return response;

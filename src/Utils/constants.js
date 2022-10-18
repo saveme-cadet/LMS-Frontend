@@ -47,6 +47,8 @@ const MODAL_TYPE = {
   UPDATE_PW: 'UPDATE_PW',
 };
 
+const CUSTOM_ERR_CODE = ['S5001', 'S5002', 'S5003', 'S5004', 'S5005', 'S5002'];
+
 export {
   TIMEZONE_OFFSET,
   CHECK_IN,
@@ -59,4 +61,5 @@ export {
   ERROR_MESSAGES,
   ROLE_NAME,
   MODAL_TYPE,
+  CUSTOM_ERR_CODE,
 };
