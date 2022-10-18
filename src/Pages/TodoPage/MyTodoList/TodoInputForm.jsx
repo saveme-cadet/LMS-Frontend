@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import isToday from 'Utils/isToday';
 
 import styled from 'styled-components';
 
@@ -22,7 +22,7 @@ const TodoInputForm = ({ onSubmit, onChange, setIsEdit, toDo, date }) => {
         <InputFormButton
           variant="contained"
           onClick={onSubmit}
-          disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+          disabled={!isToday(today, date)}
         >
           추가
         </InputFormButton>

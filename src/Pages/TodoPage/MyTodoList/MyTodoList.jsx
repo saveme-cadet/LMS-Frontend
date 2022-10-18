@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { TodoService } from 'API';
 import { format } from 'date-fns';
-import { checkDateTodo } from 'Utils';
+import { checkDateTodo, isToday } from 'Utils';
 
-import WarningNotVaildDate from './WarningNotValidDate';
+import WarningNotVaildDate from '../WarningNotValidDate';
 import TodoInputForm from './TodoInputForm';
-import TodoMyList from './TodoMyList';
+import TodoList from './TodoList';
 import TodoProgress from './TodoProgress';
 
 import styled from 'styled-components';
@@ -23,10 +23,7 @@ const MyTodoList = ({ userId, date }) => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    if (
-      toDo.content.trim() === '' ||
-      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')
-    ) {
+    if (toDo.content.trim() === '' || !isToday(today, date)) {
       return;
     }
 
@@ -52,11 +49,7 @@ const MyTodoList = ({ userId, date }) => {
   const changeCheck = async index => {
     const selected = toDos[index];
 
-    if (
-      format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd') ||
-      selected.title == ''
-    )
-      return;
+    if (!isToday(today, date) || selected.title == '') return;
     const result = await TodoService.patchTodo(userId, selected.todoId, {
       title: selected.title,
       titleCheck: !selected.titleCheck,
@@ -67,7 +60,7 @@ const MyTodoList = ({ userId, date }) => {
   const removeToDo = async event => {
     let toDoNumber =
       event.target.closest('button').previousSibling.previousSibling.id;
-    if (format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')) return;
+    if (!isToday(today, date)) return;
 
     const result = await TodoService.deleteTodo(
       userId,
@@ -85,12 +78,7 @@ const MyTodoList = ({ userId, date }) => {
     setToDos(result.data.content);
   };
 
-  useEffect(() => {
-    getToDos(userId);
-    setIsEdit();
-  }, [date]);
-
-  useEffect(() => {
+  const showProgress = () => {
     const total = toDos.length;
 
     if (total === 0) {
@@ -104,6 +92,15 @@ const MyTodoList = ({ userId, date }) => {
     }
     setTotal(total);
     setChecked(checked);
+  };
+
+  useEffect(() => {
+    getToDos(userId);
+    setIsEdit();
+  }, [date]);
+
+  useEffect(() => {
+    showProgress();
   }, [toDos]);
 
   return (
@@ -119,7 +116,7 @@ const MyTodoList = ({ userId, date }) => {
             toDo={toDo}
             date={date}
           />
-          <TodoMyList
+          <TodoList
             toDos={toDos}
             date={date}
             changeCheck={changeCheck}

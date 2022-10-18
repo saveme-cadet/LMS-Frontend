@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { TodoService } from 'API';
-
-import OkButton from './OkButton';
-import CancelButton from './CancelButton';
+import Buttons from './Buttons';
 
 import styled from 'styled-components';
 
@@ -19,6 +17,7 @@ const TodoEditForm = ({
   getToDos,
 }) => {
   const [title, setTitle] = useState(item.title);
+  const today = new Date();
 
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
@@ -47,6 +46,19 @@ const TodoEditForm = ({
     }
   };
 
+  const editTitle = async event => {
+    const newTitle = event.target.closest('form')[1].value;
+
+    if (newTitle === '') return;
+
+    const result = await TodoService.patchTodo(userId, toDos[index].todoId, {
+      title: newTitle.trim(),
+      titleCheck: toDos[index].titleCheck,
+    });
+    setIsEdit();
+    getToDos(userId);
+  };
+
   return (
     <InputFormBody onSubmit={onSubmit}>
       <Checkbox checked={item.titleCheck} disabled size="small" />
@@ -60,15 +72,14 @@ const TodoEditForm = ({
         }}
         onKeyDown={pressKey}
       />
-      <OkButton
+      <Buttons type={'Ok'} date={date} callback={editTitle} />
+      <Buttons
+        type={'Cancel'}
         date={date}
-        index={index}
-        setIsEdit={setIsEdit}
-        toDos={toDos}
-        userId={userId}
-        getToDos={getToDos}
+        callback={() => {
+          setIsEdit('');
+        }}
       />
-      <CancelButton date={date} setIsEdit={setIsEdit} />
     </InputFormBody>
   );
 };

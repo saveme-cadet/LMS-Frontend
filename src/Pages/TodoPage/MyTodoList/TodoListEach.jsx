@@ -1,7 +1,6 @@
-import { format } from 'date-fns';
-
-import EditButton from './EditButton';
-import DeleteButton from './DeleteButton';
+import Buttons from './Buttons';
+import isToday from 'Utils/isToday';
+import { todoCss } from 'Utils';
 
 import styled from 'styled-components';
 
@@ -21,7 +20,7 @@ const TodoListEach = ({
       <Checkbox
         onClick={() => changeCheck(index)}
         checked={item.titleCheck}
-        disabled={format(today, 'yyyy-MM-dd') !== format(date, 'yyyy-MM-dd')}
+        disabled={!isToday(today, date)}
         size="small"
       />
       <Item
@@ -33,20 +32,22 @@ const TodoListEach = ({
       >
         {item.title.replace(/ /g, '\u00a0')}
       </Item>
-      <EditButton index={index} date={date} setIsEdit={setIsEdit} />
-      <DeleteButton date={date} removeToDo={removeToDo} />
+      <Buttons
+        type={'Edit'}
+        date={date}
+        callback={() => {
+          setIsEdit(index);
+        }}
+      />
+      <Buttons type={'Delete'} date={date} callback={removeToDo} />
     </TodoListEachBody>
   );
 };
 
 const TodoListEachBody = styled.div``;
 const Item = styled.span`
-  color: ${props =>
-    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
-    props.isCheck
-      ? 'gray'
-      : ''};
-  text-decoration-line: ${props => (props.isCheck ? 'line-through' : '')};
+  color: ${props => todoCss.color(props, props.isCheck)};
+  text-decoration-line: ${props => todoCss.lineThrough(props.isCheck)};
   cursor: default;
   font-size: 15px;
   margin-left: 10px;

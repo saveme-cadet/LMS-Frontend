@@ -6,7 +6,7 @@ import LinearProgress, {
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-const Progress = props => {
+const TodoProgress = ({ total, checked }) => {
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 12,
     borderRadius: 5,
@@ -20,42 +20,37 @@ const Progress = props => {
     },
   }));
   let proportion = 0;
-  if (props.total === 0 && props.checked === 0) {
+  if (total === 0 && checked === 0) {
     proportion = 0;
-  } else proportion = (props.checked / props.total) * 100;
+  } else proportion = (checked / total) * 100;
 
   return (
     <ProgressBody>
-      <ProgressRatio>
-        <Typography
-          variant="caption"
-          component="div"
-          color="text.secondary"
-          style={{
-            fontSize: '20px',
-            width: '97%',
-            textAlign: 'right',
-            marginBottom: '10px',
-          }}
-        >
-          {props.checked} / {props.total}
-        </Typography>
-      </ProgressRatio>
-      <ProgressBar>
-        <BorderLinearProgress
-          variant="determinate"
-          value={proportion.toFixed(0)}
-        />
-      </ProgressBar>
+      <Typography
+        variant="caption"
+        component="div"
+        color="text.secondary"
+        style={{
+          fontSize: '20px',
+          width: '97%',
+          textAlign: 'right',
+          marginBottom: '10px',
+        }}
+      >
+        {checked} / {total}
+      </Typography>
+      <BorderLinearProgress
+        variant="determinate"
+        value={proportion.toFixed(0)}
+      />
     </ProgressBody>
   );
 };
 
 const ProgressBody = Styled.div`
-`;
-const ProgressRatio = Styled.div`
-`;
-const ProgressBar = Styled.div`
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 5%;
 `;
 
-export default Progress;
+export default TodoProgress;

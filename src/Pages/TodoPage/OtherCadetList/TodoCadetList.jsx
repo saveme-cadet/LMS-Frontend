@@ -1,6 +1,5 @@
-import { format } from 'date-fns';
-
-import CadetListCheckbox from './CadetListCheckbox';
+import { todoCss } from 'Utils';
+import Checkbox from '@mui/material/Checkbox';
 
 import styled from 'styled-components';
 
@@ -14,7 +13,15 @@ const TodoCadetList = ({ item, date }) => {
         <TodoCadetListContainer>
           {item.todoDtoList.map((list, index) => (
             <TodoCadetListEntity key={index}>
-              <CadetListCheckbox list={list} />
+              <Checkbox
+                checked={list.titleCheck}
+                className="checkbox"
+                size="small"
+                sx={{
+                  '& .MuiSvgIcon-root': { fontSize: 15 },
+                }}
+                disabled
+              />
               <CadetListItem list={list} today={today} date={date}>
                 {list.title.replace(/ /g, '\u00a0')}
               </CadetListItem>
@@ -42,15 +49,14 @@ const WarningNoList = styled.div`
 const TodoCadetListContainer = styled.div``;
 const TodoCadetListEntity = styled.div`
   display: table;
+  .checkbox {
+    margin-left: -10px;
+    margin-bottom: -5px;
+  }
 `;
 const CadetListItem = styled.span`
-  color: ${props =>
-    format(props.today, 'yyyy-MM-dd') !== format(props.date, 'yyyy-MM-dd') ||
-    props.list.titleCheck
-      ? 'gray'
-      : ''};
-  text-decoration-line: ${props =>
-    props.list.titleCheck ? 'line-through' : ''};
+  color: ${props => todoCss.color(props, props.list.titleCheck)};
+  text-decoration-line: ${props => todoCss.lineThrough(props.list.titleCheck)};
 `;
 
 export default TodoCadetList;

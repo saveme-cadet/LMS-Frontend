@@ -5,6 +5,8 @@ import getDayName from './getDayName';
 import isWrongAccess from './isWrongAccess';
 import getMessage from './getMessage';
 import checkDateTodo from './checkDateTodo';
+import isToday from './isToday';
+import todoCss from './todoCss';
 import isRegexPassword from './isRegexPassword';
 
 export {
@@ -15,5 +17,7 @@ export {
   isWrongAccess,
   getMessage,
   checkDateTodo,
+  isToday,
+  todoCss,
   isRegexPassword,
 };
