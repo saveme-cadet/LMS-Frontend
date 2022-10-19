@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { AuthContext } from 'App';
+import { isWrongAccess } from 'Utils';
 
-import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES } from 'Utils/constants';
+import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
-import WrongDay from './WrongDay';
-
 import { format } from 'date-fns';
 
 import ShowDate from './ShowDate';
+import WrongDay from './WrongDay';
 // import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
@@ -16,12 +17,15 @@ import styled from 'styled-components';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
-
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
   const [customData, setCustomData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [requestEnd, setRequestEnd] = useState(true);
+
+  const auth = useContext(AuthContext);
+  const role = auth.status.role;
 
   const updateSelectData = curTab => {
     // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
@@ -77,7 +81,7 @@ const MainPage = () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat, true);
-    console.log(result);
+    // console.log(result);
 
     // 백엔드 장애 데이터 임시 조치
     if (!result || !result.data[0].attendanceId) {
@@ -113,9 +117,51 @@ const MainPage = () => {
     }
   };
 
+  const handleChangeAllCheck = async (select, value) => {
+    let result;
+    let userId;
+    let attendanceId;
+
+    if (isWrongAccess(role)) {
+      alert('수정 권한이 없습니다.');
+      return;
+    }
+    setRequestEnd(prev => !prev);
+    result = await selectRowData.map(async user => {
+      userId = user.userId;
+      attendanceId = user.attendanceId;
+      if (value === 'VACATION' && user.vacation === 0) {
+        alert('사용할 수 있는 휴가가 없습니다!');
+        return;
+      }
+      if (select === CHECK_IN) {
+        result = await AllTableService.putAllTableCheckIn(
+          userId,
+          attendanceId,
+          {
+            status: value,
+          },
+        );
+      } else {
+        result = await AllTableService.putAllTableCheckOut(
+          userId,
+          attendanceId,
+          {
+            status: value,
+          },
+        );
+      }
+    });
+    //  getUsers가 변경 도중인 DB를 참고함.
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      setRequestEnd(prev => !prev);
+    }, 4000);
+  };
+
   useEffect(() => {
     getUsers();
-  }, [date]);
+  }, [date, requestEnd]);
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('customData'));
@@ -135,6 +181,7 @@ const MainPage = () => {
             tab={tab}
             handleChangeTab={handleChangeTab}
             setIsOpen={setIsOpen}
+            handleChangeAllCheck={handleChangeAllCheck}
           />
           <MainPageTable
             date={date}
