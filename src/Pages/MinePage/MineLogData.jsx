@@ -42,7 +42,7 @@ const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
     const convertDate = new Date(
       convertToday.setDate(convertToday.getDate() - 2),
     ).toISOString();
-    console.log(convertDate);
+    // TODO: 2일보다 이전 접근시 수정불가 로직 추가
     return true;
   };
 
