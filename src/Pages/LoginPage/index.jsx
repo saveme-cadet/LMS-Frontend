@@ -104,7 +104,7 @@ const LoginBackground = styled.div`
 `;
 
 const LoginMain = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
 `;
 const LoginMainTitle = styled.span`
   font-size: 70px;
