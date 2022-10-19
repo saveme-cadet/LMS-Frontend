@@ -1,9 +1,10 @@
-import { VACATION } from 'Utils/constants';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
+import { ROLE_NAME, PARTICIPATE_NAME, VACATION } from 'Utils/constants';
+import { handleBreakpoints } from '@mui/system';
 
 const SelectedUser = ({
   userInfo,
@@ -12,6 +13,12 @@ const SelectedUser = ({
   onClickChangeRole,
   onClickChangeVacation,
 }) => {
+  const [vacation, setVacation] = useState(userInfo.vacation);
+
+  const onClickCustomVacation = () => {
+    onClickChangeVacation(vacation);
+    setVacation(0);
+  };
   return (
     <div className="box">
       <span className="title">현재 선택 : {userInfo.username}</span>
@@ -73,6 +80,15 @@ const SelectedUser = ({
               onClick={() => onClickChangeVacation(VACATION.MINUS_HALF)}
             >
               휴가 - 0.5
+            </Button>
+
+            <input
+              type="number"
+              value={vacation}
+              onChange={e => setVacation(e.target.value)}
+            />
+            <Button variant="contained" onClick={onClickCustomVacation}>
+              휴가 임의 증감
             </Button>
           </>
         )}
