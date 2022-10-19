@@ -8,32 +8,47 @@ import { MODAL_TYPE } from 'Utils/constants';
 
 const UpdatePasswordModal = () => {
   const { modalType, setModalType } = useContext(AuthContext);
-  const [notiMessage, setNotiMessage] = useState('');
+  const [notiMessage, setNotiMessage] = useState({ msg: '', state: false });
+  const [counter, setCounter] = useState(5);
+  const [isCountDown, setIsCountDown] = useState(false);
   const oldPassword = useRef();
   const newPassword = useRef();
   const checkPassword = useRef();
 
   const handleClose = () => {
     setModalType(null);
-    setNotiMessage('');
+    setNotiMessage({ msg: '', state: false });
+    setCounter(5);
+    setIsCountDown(false);
+    oldPassword.current = '';
+    newPassword.current = '';
+    checkPassword.current = '';
   };
   const saveOldPassword = e => {
     oldPassword.current = e.target.value;
   };
   const saveNewPassword = e => {
+    if (!e.target.value) {
+      setNotiMessage({ msg: '', state: false });
+      return;
+    }
     newPassword.current = e.target.value;
+    const regexResult = isRegexPassword(newPassword.current);
+    setNotiMessage({
+      msg: regexResult,
+      state: regexResult.length ? false : true,
+    });
   };
   const checkNewPassword = e => {
     checkPassword.current = e.target.value;
   };
+
   const updatePassword = async () => {
     if (newPassword.current !== checkPassword.current) {
-      setNotiMessage('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
-      return;
-    }
-    const errorMessage = isRegexPassword(newPassword.current);
-    if (errorMessage) {
-      setNotiMessage(errorMessage);
+      setNotiMessage({
+        msg: '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.',
+        state: false,
+      });
       return;
     }
     const res = await CRUDUserService.updatePassword(
@@ -41,37 +56,62 @@ const UpdatePasswordModal = () => {
       newPassword.current,
       checkPassword.current,
     );
-    if (res) setNotiMessage('정상처리 됐습니다'); // setState is not function(api, async 적용전)
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      handleClose();
-    }, 2000);
-    // API 부분에 따른 결과값 보여주기
-    // TODO: 정규식 붙이고 api요청 보내기
+    if (res) {
+      setIsCountDown(true);
+    } else {
+      setNotiMessage({ msg: '기존 비밀번호가 잘못 됐습니다.', state: false }); // TODO:
+    }
   };
+
+  const isSubmit = e => {
+    if (e.key === 'Enter') updatePassword();
+  };
+
+  useEffect(() => {
+    if (isCountDown && counter >= 0) {
+      const countDown = setInterval(() => {
+        setCounter(value => value - 1);
+        setNotiMessage({
+          msg: `변경 완료! ${counter}초 뒤 자동으로 닫힙니다`,
+          state: true,
+        });
+      }, 1000);
+      return () => {
+        clearInterval(countDown);
+      };
+    } else {
+      handleClose();
+    }
+  }, [isCountDown, counter]);
 
   return (
     <>
       <Modal open={modalType === MODAL_TYPE.UPDATE_PW} onClose={handleClose}>
         <UpdateModalWrapper>
-          <div>비밀번호 변경입니다</div>
-          {/* maxLength 30 minLength 8 */}
-          <PasswordFormWrapper>
-            <PasswordInputForm
-              placeholder="기존 비밀번호"
-              onChange={saveOldPassword}
-            />
-            <PasswordInputForm
-              placeholder="새 비밀번호"
-              onChange={saveNewPassword}
-            />
-            <PasswordInputForm
-              placeholder="새 비밀번호 확인"
-              onChange={checkNewPassword}
-            />
-          </PasswordFormWrapper>
-          <NotiMessage>{notiMessage}</NotiMessage>
-          <button onClick={updatePassword}>변경</button>
+          <UpdatePasswordModalTitle>
+            비밀번호 변경입니다
+          </UpdatePasswordModalTitle>
+          {/* TODO: 비밀번호 숨기기 / 보이기 버튼 추가 */}
+          <PasswordInputForm
+            placeholder="기존 비밀번호"
+            type="password"
+            onChange={saveOldPassword}
+          />
+          <PasswordInputForm
+            placeholder="새 비밀번호"
+            type="password"
+            onChange={saveNewPassword}
+          />
+          <PasswordInputForm
+            placeholder="새 비밀번호 확인"
+            type="password"
+            onKeyDown={isSubmit}
+            onChange={checkNewPassword}
+          />
+          <NotiMessage isPossible={notiMessage.state}>
+            {notiMessage.msg}
+          </NotiMessage>
+          <UpdateButton onClick={updatePassword}>변경</UpdateButton>
         </UpdateModalWrapper>
       </Modal>
     </>
@@ -90,9 +130,13 @@ const UpdateModalWrapper = styled.div`
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   text-align: center;
+  font-family: 'BMJUA';
 `;
 
-const PasswordFormWrapper = styled.div``;
+const UpdatePasswordModalTitle = styled.div`
+  font-size: 25px;
+  margin: 10px 0;
+`;
 
 const PasswordInputForm = styled.input`
   border: 2px solid #868a8c;
@@ -105,6 +149,24 @@ const PasswordInputForm = styled.input`
   font-family: 'BMJUA';
 `;
 
-const NotiMessage = styled.div``;
+const NotiMessage = styled.div`
+  margin-top: 10px;
+  color: ${props => (props.isPossible ? 'blue' : 'red')};
+  font-size: 15px;
+  height: 25px;
+  font-family: 'BMJUA';
+`;
+
+const UpdateButton = styled.button`
+  width: 60px;
+  height: 35px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 0;
+  color: white;
+  background-color: #4870fd;
+  font-size: 15px;
+  font-weight: bold;
+`;
 
 export default UpdatePasswordModal;

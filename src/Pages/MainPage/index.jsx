@@ -77,7 +77,6 @@ const MainPage = () => {
     const dateFormat = format(date, 'yyyy-MM-dd');
 
     const result = await AllTableService.getTable(dateFormat, true);
-    console.log(result);
 
     // 백엔드 장애 데이터 임시 조치
     if (!result || !result.data[0].attendanceId) {

@@ -93,18 +93,10 @@ const LoginBackground = styled.div`
   // size
   width: 100%;
   height: 100%;
-
-  @font-face {
-    font-family: 'BMJUA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff')
-      format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
 `;
 
 const LoginMain = styled.div`
-  margin-top: 2%;
+  margin-top: 5%;
 `;
 const LoginMainTitle = styled.span`
   font-size: 70px;
