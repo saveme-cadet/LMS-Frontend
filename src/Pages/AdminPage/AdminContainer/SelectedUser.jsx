@@ -11,10 +11,7 @@ const SelectedUser = ({
   onClickChangeTeam,
   onClickChangeRole,
   onClickChangeVacation,
-  onClickDeleteUser,
 }) => {
-  // console.log(userInfo);
-
   return (
     <div className="box">
       <span className="title">현재 선택 : {userInfo.username}</span>
@@ -77,16 +74,6 @@ const SelectedUser = ({
             >
               휴가 - 0.5
             </Button>
-            {/* <Button
-            onClick={() =>
-              onClickDeleteUser({
-                username: userInfo.username,
-                userId: userInfo.id,
-              })
-            }
-          >
-            유저 삭제
-          </Button> */}
           </>
         )}
       </div>
