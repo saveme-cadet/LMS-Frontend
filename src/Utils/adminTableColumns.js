@@ -1,4 +1,5 @@
 const attendStatus = value => {
+  console.log(value);
   if (value >= 3) return '🔴';
   else if (value >= 2) return '🟡';
   else return '';
