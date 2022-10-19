@@ -29,7 +29,7 @@ const AdminPage = () => {
 const AdminBackground = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 10px 50px 0px 50px;
 `;
 const AdminHeader = styled.div`
   display: flex;
