@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from 'App';
 import { isWrongAccess } from 'Utils';
+import { CusDatePicker, ShowToday } from 'Components';
 
 import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
@@ -174,7 +175,9 @@ const MainPage = () => {
       {selectRowData ? (
         <>
           {/* <UserGuide rowData={rowData} userId={userId} /> */}
-          <ShowDate date={date} setDate={setDate} />
+          <MainHeader>
+            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+          </MainHeader>
 
           <MainPageTableTabs
             date={date}
@@ -192,7 +195,9 @@ const MainPage = () => {
         </>
       ) : (
         <>
-          <ShowDate date={date} setDate={setDate} />
+          <MainHeader>
+            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+          </MainHeader>
           <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
         </>
       )}
@@ -211,9 +216,19 @@ export default MainPage;
 
 const MainPageContainer = styled.div`
   box-sizing: border-box;
-  padding: 50px;
+  padding: 10px 50px 0px 50px;
 
   display: flex;
   flex-direction: column;
   margin: auto;
+`;
+
+const MainHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  margin: 10px;
 `;

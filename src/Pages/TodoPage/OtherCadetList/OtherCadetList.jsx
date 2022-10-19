@@ -37,12 +37,12 @@ const OtherTitle = styled.h3`
   font-size: 25px;
   margin-bottom: 10px;
 `;
+
 const WarningNotVaildDate = styled.div`
   justify-content: center;
   align-item: center;
   text-align: center;
-  margin-top: 43%;
-  margin-bottom: 40%;
+  margin-top: 35%;
   color: grey;
 `;
 const TodoOtherBody = styled.div`
