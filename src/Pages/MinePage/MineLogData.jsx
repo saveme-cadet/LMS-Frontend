@@ -38,12 +38,15 @@ const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
   const isModifiableLog = data => {
     if (data.finalStudyTime === '00:00:00') return false;
     /// 오늘 날짜와 비교했을 때 현재 날짜가 수정 가능 일을 오버했을 경우
-    const convertToday = new Date(today - TIMEZONE_OFFSET);
+    const convertToday = new Date(today);
     const convertDate = new Date(
-      convertToday.setDate(convertToday.getDate() - 2),
-    ).toISOString();
-    // TODO: 2일보다 이전 접근시 수정불가 로직 추가
-    return true;
+      convertToday.setDate(convertToday.getDate() - 1),
+    );
+    const convertTargetTime = format(new Date(data.beginTime), 'yyyy-MM-dd');
+    return (
+      convertTargetTime === format(convertDate, 'yyyy-MM-dd') ||
+      convertTargetTime === format(today, 'yyyy-MM-dd')
+    );
   };
 
   return (
@@ -55,6 +58,7 @@ const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
       </div>
       <div>{!isNaN(earnedPoint) ? <>{earnedPoint}점</> : <>공부 중!</>}</div>
       <div>
+        {/* TODO: isModificableLog 두번 호출 */}
         {isModifiableLog(data) ? (
           <EditButton onClick={handleEditLog}>수정</EditButton>
         ) : (
