@@ -74,6 +74,18 @@ const UserInfoService = {
     }
     return response;
   },
+
+  // getReportAbsant: async () => {
+  //   const url = '/report-user';
+  //   let response;
+
+  //   try {
+  //     response = await instance.get(url);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  //   return response;
+  // },
 };
 
 export default UserInfoService;
