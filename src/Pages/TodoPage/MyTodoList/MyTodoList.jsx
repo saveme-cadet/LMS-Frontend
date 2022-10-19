@@ -27,6 +27,11 @@ const MyTodoList = ({ userId, date }) => {
       return;
     }
 
+    if (toDo.content.trim().length > 99) {
+      alert('100자 이내로 입력해 주세요.');
+      return;
+    }
+
     const result = await TodoService.postTodo(userId, {
       title: toDo.content.trim(),
       todoDay: format(today, 'yyyy-MM-dd'),
