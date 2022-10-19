@@ -14,7 +14,6 @@ const TodoPage = () => {
   return (
     <TodoMainBackground>
       <TodoHeader>
-        <ShowToday date={date} />
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
       </TodoHeader>
       <TodoBody>
@@ -28,7 +27,7 @@ const TodoPage = () => {
 const TodoMainBackground = styled.div`
   position: relative;
   box-sizing: border-box;
-  padding: 50px;
+  padding: 10px 50px 0px 50px;
   display: flex;
   flex-direction: column;
   width: 100%;

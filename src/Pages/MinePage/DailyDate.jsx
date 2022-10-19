@@ -1,4 +1,4 @@
-import { ShowDay } from 'Components';
+import { ShowToday } from 'Components';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import LeftArrow from '@mui/icons-material/KeyboardArrowLeft';
@@ -40,7 +40,7 @@ function DailyDate({ date, setDate }) {
   return (
     <DailyDateContainer>
       <LeftArrow type="button" onClick={() => handleDay(-1)} />
-      <ShowDay date={date} />
+      <ShowToday date={date} />
       <CalendarTodayIcon onClick={handleClick} />
       <RightArrow type="button" onClick={() => handleDay(1)} />
       <Popover
@@ -73,9 +73,9 @@ const DailyDateContainer = styled.div`
   margin: 10px;
 
   & svg {
-    width: 40px;
-    height: 40px;
-    margin: 0 10px;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
     cursor: pointer;
   }
 `;

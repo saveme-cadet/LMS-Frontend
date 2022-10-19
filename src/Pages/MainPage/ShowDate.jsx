@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const ShowDate = ({ date, setDate }) => {
   return (
     <ShowDateContainer>
-      <ShowToday date={date} />
+      {/* <ShowToday date={date} /> */}
       <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
     </ShowDateContainer>
   );
