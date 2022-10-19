@@ -19,6 +19,10 @@ function IssueTempPassword() {
   };
 
   const onSubmit = async () => {
+    if (!userId) {
+      setNotiMessage('아이디를 입력하지 않았습니다.');
+      return;
+    }
     const res = await CRUDUserService.issueTempPassword(userId);
     if (res) {
       setNotiMessage('42 이메일로 링크를 발송했습니다.');

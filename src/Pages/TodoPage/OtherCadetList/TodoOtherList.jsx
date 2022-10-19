@@ -21,13 +21,14 @@ const TodoOtherListBody = styled.div`
   gap: 10px;
   padding: 10px;
   margin-bottom: 10px;
+  max-width: 100%;
 `;
 const TodoOtherListContainer = styled.div`
   border: 0px;
   padding: 1em;
   border-radius: 1em;
   background-color: white;
-  width: 100%;
+  min-width: 100%;
   box-sizing: border-box;
   height: 300px;
 `;

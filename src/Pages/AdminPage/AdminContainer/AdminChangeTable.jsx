@@ -45,7 +45,7 @@ const AdminChangeTable = ({
       attendStatus: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeTeam = async event => {
@@ -53,7 +53,7 @@ const AdminChangeTable = ({
       team: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeRole = async event => {
@@ -64,28 +64,33 @@ const AdminChangeTable = ({
       role: event.target.value,
     });
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   const handleChangeVacation = async value => {
     let result;
     for (let i = 0; i < rowData.length; i++) {
       if (rowData[i].id === selectUserId) {
-        if (rowData[i].vacation === 0 && value === VACATION.MINUS_HALF) {
-          alert('휴가가 없습니다.');
+        if (rowData[i].vacation === 0 && value < 0) {
+          alert('감소시킬 휴가가 없습니다.');
 
-          setSelectUserId(null);
+          // setSelectUserId(null);
           return;
         }
       }
     }
-    if (value === VACATION.PLUS_HALF) {
+
+    if (value % 0.5 !== 0) {
+      alert('0.5 단위로 입력해주세요.');
+      return;
+    }
+    if (0 < value) {
       const body = {
         addedDays: value,
         reason: '단일 휴가 증가',
       };
       result = await VacationService.addVacation(selectUserId, body);
-    } else if (value === VACATION.MINUS_HALF) {
+    } else if (0 > value) {
       const body = {
         usedDays: -value,
         reason: '단일 휴가 감소',
@@ -93,7 +98,7 @@ const AdminChangeTable = ({
       result = await VacationService.useVacation(selectUserId, body);
     }
     getUser();
-    setSelectUserId(null);
+    // setSelectUserId(null);
   };
 
   return (

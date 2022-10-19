@@ -78,7 +78,6 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             </>
           )}
         </LoginAlert>
-
         <LoginButton variant="contained" onClick={handleClick}>
           함께하기!
         </LoginButton>
@@ -95,17 +94,25 @@ export default RegisterForm;
 const RegisterMain = styledComp.div`
   margin-top: 3%;
   width: 600px;
-  height: 70%;
+  height: 600px;
   background-color: #ffffff;
   border-radius: 1em;
 
 `;
 
 const RegisterWelcome = styledComp.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 5%;
   color: black;
   font-family: 'BMJUA';
-  font-size: 25px;
+  h2 {
+    font-size: 30px;
+    margin-top : 5%;
+  }
+  h3 {
+    font-size: 25px;
+  }
 `;
 
 const RegisterInputForm = styledComp.div`
@@ -124,7 +131,9 @@ const RegisterInput = styledComp.input`
 `;
 
 const LoginAlert = styledComp.div`
-  height: 100px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  height: 30px;
 
 `;
 
@@ -135,12 +144,11 @@ const LoginButton = styled(Button)({
   color: 'white',
   width: '510px',
   height: '2.5em',
-  margin: '1em',
   backgroundColor: '#00aaff',
 });
 
 const BackButton = styled(Button)({
-  marginTop: '15%',
+  marginTop: '10%',
   fontFamily: 'BMJUA',
   fontSize: '20px',
   textDecoration: 'underline',

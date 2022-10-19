@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import ShowToday from './ShowToday';
 import DatePicker from 'react-datepicker';
 import { add } from 'date-fns';
+import styled from 'styled-components';
 
 import Popover from '@mui/material/Popover';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -49,7 +51,7 @@ const CusDatePicker = ({ date, setDate, isWeekend }) => {
   };
 
   return (
-    <div className="change-today header">
+    <DatePickerBody>
       <KeyboardDoubleArrowLeftIcon
         onClick={() => {
           handleChangeDate({ months: -1 });
@@ -60,6 +62,7 @@ const CusDatePicker = ({ date, setDate, isWeekend }) => {
           handleChangeDate({ days: -1 });
         }}
       />
+      <ShowToday date={date} />
       <CalendarTodayIcon onClick={handleClick} />
 
       <KeyboardArrowRightIcon
@@ -90,8 +93,22 @@ const CusDatePicker = ({ date, setDate, isWeekend }) => {
           maxDate={new Date()}
         />
       </Popover>
-    </div>
+    </DatePickerBody>
   );
 };
+
+const DatePickerBody = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  & svg {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+`;
 
 export default CusDatePicker;

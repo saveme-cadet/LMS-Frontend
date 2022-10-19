@@ -57,9 +57,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
 
   useEffect(() => {
     if (rowData === null) return;
-    console.log('selecteUserId', selectUserId);
     rowData.filter(data => {
-      console.log(data);
       if (data.id === selectUserId && data.role === 'ROLE_ADMIN') {
         alert('admin의 정보는 변경할 수 없습니다!');
         setSelectUserId(null);

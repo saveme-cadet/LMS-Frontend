@@ -67,11 +67,11 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
 
     if (select === CHECK_IN) {
       result = await AllTableService.putAllTableCheckIn(userId, attendanceId, {
-        status: '' + value,
+        status: value,
       });
     } else {
       result = await AllTableService.putAllTableCheckOut(userId, attendanceId, {
-        status: '' + value,
+        status: value,
       });
     }
     setAnchorEl(null);

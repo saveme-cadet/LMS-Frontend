@@ -66,8 +66,6 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
   };
 
   useEffect(() => {
-    console.log(data);
-    console.log(startAt);
     return () => {
       getMyMine();
     };
