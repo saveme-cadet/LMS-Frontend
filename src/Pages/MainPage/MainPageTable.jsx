@@ -27,7 +27,7 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
     if (getMonth(today) !== getMonth(date)) {
-      alert('지난 날짜는 수정할 수 없습니다.');
+      alert('지난 달의 기록은 수정할 수 없습니다.');
       return;
     }
 
