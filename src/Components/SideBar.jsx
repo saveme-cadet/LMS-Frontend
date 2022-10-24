@@ -8,6 +8,10 @@ import Tab from '@mui/material/Tab';
 
 import styled from 'styled-components';
 import { MODAL_TYPE } from 'Utils/constants';
+import BugReportButton from './BugReportButton';
+import { IconButton } from '@mui/material';
+import { Groups, LockReset } from '@mui/icons-material';
+import SubTabLabel from './SubTabLabel';
 
 const gatherTownLink = 'https://app.gather.town/app/Zq3peLuvz5isVQ0f/42seoul';
 
@@ -51,24 +55,44 @@ const SideBar = () => {
           onChange={handleChangePage}
           className="tabs"
         >
-          <Tab className="button" label="출결표" value="" />
-          <Tab className="button" label="오늘 할 일" value="todo" />
-          <Tab className="button" label="아오지 탄광" value="mine" />
-          <Tab className="button" label="머슴" value="admin" />
-          <div
-            className="button setup-pw"
-            onClick={() => {
-              auth.setModalType(MODAL_TYPE.UPDATE_PW);
-            }}
-          >
-            비밀번호 변경
-          </div>
-          <div
-            className="button link"
-            onClick={() => window.open(gatherTownLink, '_blank')}
-          >
-            게더타운 바로가기
-          </div>
+          <Tab
+            className="button"
+            label={<SubTabLabel title="출결표" />}
+            value=""
+          />
+          <Tab
+            className="button"
+            label={<SubTabLabel title="오늘 할 일" />}
+            value="todo"
+          />
+          <Tab
+            className="button"
+            label={<SubTabLabel title="아오지 탄광" />}
+            value="mine"
+          />
+          <Tab
+            className="button"
+            label={<SubTabLabel title="머슴" />}
+            value="admin"
+          />
+          <FootWrap>
+            <IconButton aria-label="redirect-gatherTown" color="info">
+              <Groups
+                fontSize="medium"
+                onClick={() => window.open(gatherTownLink, '_blank')}
+              ></Groups>
+            </IconButton>
+            <IconButton aria-label="reset-password" color="secondary">
+              <LockReset
+                fontSize="medium"
+                onClick={() => {
+                  auth.setModalType(MODAL_TYPE.UPDATE_PW);
+                }}
+              ></LockReset>
+            </IconButton>
+            <BugReportButton fontSize="medium" />
+          </FootWrap>
+
           <Tab
             className="button logout"
             label="로그아웃"
@@ -91,6 +115,7 @@ const SideBarContainer = styled.div`
   background-color: #220646;
   height: 100%;
   width: 150px;
+  font-family: 'BMJUA';
 
   .tabs {
     height: 100%;
@@ -105,22 +130,6 @@ const SideBarContainer = styled.div`
   .button {
     color: #ffffff;
     max-width: 13em;
-  }
-  .setup-pw {
-    position: absolute;
-    bottom: 10rem;
-    width: 100%;
-    text-align: center;
-
-    cursor: pointer;
-  }
-  .link {
-    position: absolute;
-    bottom: 7rem;
-    width: 100%;
-    text-align: center;
-
-    cursor: pointer;
   }
   .logout {
     text-align: center;
@@ -150,5 +159,13 @@ const HomeButton = styled.div`
   }
   span {
     white-space: nowrap;
+    font-size: large;
   }
+`;
+
+const FootWrap = styled.footer`
+  position: absolute;
+  bottom: 6rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
 `;

@@ -1,5 +1,6 @@
 const API_URL = 'https://www.savvemecadet.click/api';
-
+const BUG_REPORT_URL =
+  'https://github.com/saveme-cadet/LMS-Frontend/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBug%5D';
 const CHECK_IN = 'checkIn';
 const CHECK_OUT = 'checkOut';
 const TIMEZONE_OFFSET = new Date().getTimezoneOffset() * 60000;
@@ -68,4 +69,5 @@ export {
   ERROR_MESSAGES,
   MODAL_TYPE,
   CUSTOM_ERR_CODE,
+  BUG_REPORT_URL,
 };
