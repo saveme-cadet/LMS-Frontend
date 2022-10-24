@@ -95,7 +95,7 @@ const SideBar = () => {
 
           <Tab
             className="button logout"
-            label="로그아웃"
+            label={<SubTabLabel title="로그아웃" fontSize="large" />}
             onClick={handleClickLogout}
           />
         </Tabs>

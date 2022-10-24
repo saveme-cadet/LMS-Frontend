@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SubTabLabel = ({ title }) => {
+const SubTabLabel = ({ title, fontSize = 'medium' }) => {
   return (
     <>
-      <SubTabTitle>{title}</SubTabTitle>
+      <SubTabTitle fontSize={fontSize}>{title}</SubTabTitle>
     </>
   );
 };
 const SubTabTitle = styled.div`
   font-family: 'BMJUA';
-  font-size: medium;
+  font-size: ${props => (props.fontSize === 'large' ? '20px' : props.fontSize)};
   color: white;
 `;
 
