@@ -41,7 +41,7 @@ const TodoProgress = ({ total, checked }) => {
       </Typography>
       <BorderLinearProgress
         variant="determinate"
-        value={proportion.toFixed(0)}
+        value={parseInt(proportion.toFixed(0))}
       />
     </ProgressBody>
   );
