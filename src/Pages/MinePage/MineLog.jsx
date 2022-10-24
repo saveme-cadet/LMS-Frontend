@@ -74,10 +74,4 @@ const MineLogRow = styled.div`
   }
 `;
 
-const MineScore = styled.span`
-  font-size: 25px;
-  font-weight: bold;
-  margin: 10px;
-`;
-
 export default MineLog;
