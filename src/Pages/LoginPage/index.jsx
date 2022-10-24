@@ -8,8 +8,8 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
 import styled from 'styled-components';
-import { MODAL_TYPE } from 'Utils/constants';
 import IssueTempPassword from './IssuePasswordModal';
+import BugReportButton from 'Components/BugReportButton';
 
 const LoginPage = () => {
   const navi = useNavigate();
@@ -72,6 +72,9 @@ const LoginPage = () => {
           </>
         )}
         <IssueTempPassword />
+        <FooterWrap>
+          <BugReportButton />
+        </FooterWrap>
       </LoginBackground>
     </>
   );
@@ -103,4 +106,14 @@ const LoginMainTitle = styled.span`
   margin: 20px;
   font-family: 'BMJUA';
   color: white;
+`;
+
+const FooterWrap = styled.footer`
+  justify-items: center;
+  justify-content: center;
+
+  margin-bottom: 2rem;
+  text-align: center;
+  display: flex;
+  margin-top: 1rem;
 `;
