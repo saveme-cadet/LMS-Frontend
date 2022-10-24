@@ -38,15 +38,16 @@ const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
   const isModifiableLog = data => {
     if (data.finalStudyTime === '00:00:00') return false;
     /// 오늘 날짜와 비교했을 때 현재 날짜가 수정 가능 일을 오버했을 경우
-    const convertToday = new Date(today);
-    const convertDate = new Date(
-      convertToday.setDate(convertToday.getDate() - 1),
-    );
+    // const convertToday = new Date(today);
+    // const convertDate = new Date(
+    //   convertToday.setDate(convertToday.getDate() - 1),
+    // );
     const convertTargetTime = format(new Date(data.beginTime), 'yyyy-MM-dd');
-    return (
-      convertTargetTime === format(convertDate, 'yyyy-MM-dd') ||
-      convertTargetTime === format(today, 'yyyy-MM-dd')
-    );
+    // return (
+    //   convertTargetTime === format(convertDate, 'yyyy-MM-dd') ||
+    //   convertTargetTime === format(today, 'yyyy-MM-dd')
+    // );
+    return convertTargetTime === format(today, 'yyyy-MM-dd');
   };
 
   return (
