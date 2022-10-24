@@ -6,13 +6,14 @@ import { BUG_REPORT_URL } from 'Utils/constants';
 const BugReportButton = ({ fontSize }) => {
   return (
     <>
-      <IconButton aria-label="bug-report" color="error">
-        <BugReport
-          fontSize={fontSize}
-          onClick={() => {
-            window.open(BUG_REPORT_URL), '_blank';
-          }}
-        ></BugReport>
+      <IconButton
+        aria-label="bug-report"
+        color="error"
+        onClick={() => {
+          window.open(BUG_REPORT_URL), '_blank';
+        }}
+      >
+        <BugReport fontSize={fontSize}></BugReport>
       </IconButton>
     </>
   );

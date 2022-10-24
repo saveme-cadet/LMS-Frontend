@@ -76,19 +76,21 @@ const SideBar = () => {
             value="admin"
           />
           <FootWrap>
-            <IconButton aria-label="redirect-gatherTown" color="info">
-              <Groups
-                fontSize="medium"
-                onClick={() => window.open(gatherTownLink, '_blank')}
-              ></Groups>
+            <IconButton
+              aria-label="redirect-gatherTown"
+              color="info"
+              onClick={() => window.open(gatherTownLink, '_blank')}
+            >
+              <Groups fontSize="medium"></Groups>
             </IconButton>
-            <IconButton aria-label="reset-password" color="secondary">
-              <LockReset
-                fontSize="medium"
-                onClick={() => {
-                  auth.setModalType(MODAL_TYPE.UPDATE_PW);
-                }}
-              ></LockReset>
+            <IconButton
+              aria-label="reset-password"
+              color="secondary"
+              onClick={() => {
+                auth.setModalType(MODAL_TYPE.UPDATE_PW);
+              }}
+            >
+              <LockReset fontSize="medium"></LockReset>
             </IconButton>
             <BugReportButton fontSize="medium" />
           </FootWrap>
