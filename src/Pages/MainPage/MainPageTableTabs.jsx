@@ -18,6 +18,26 @@ const MainPageTableTabs = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [select, setSelect] = useState(null);
+
+  const tabValue = {
+    0: '모든 유저',
+    1: 'RED 팀 유저',
+    2: 'BULE 팀 유저',
+  };
+  const checkValue = {
+    NONE: 'null',
+    PRESENT: '출석',
+    TARDY: '지각',
+    ABSENT: '결석',
+    OFFICIAL_ABSENT: '공결',
+    ILLNESS: '병결',
+    VACATION: '휴가',
+  };
+  const selectValue = {
+    checkIn: '체크인',
+    checkOut: '체크아웃',
+  };
+
   const toggleModal = () => {
     setIsOpen(isOpen => !isOpen);
   };
@@ -27,10 +47,14 @@ const MainPageTableTabs = ({
     setSelect(select);
   };
 
-  const handleAllCheck = async value => {
-    handleChangeAllCheck(select, value);
+  const handleAllCheck = value => {
+    const message = `${tabValue[tab]}의 ${selectValue[select]}를 ${checkValue[value]}로 수정하려는 게 맞습니까?`;
+    if (window.confirm(message)) {
+      handleChangeAllCheck(select, value);
+    }
     setAnchorEl(null);
   };
+
   return (
     <>
       <Tabs value={tab} onChange={handleChangeTab}>
