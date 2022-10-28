@@ -19,6 +19,7 @@ const PARTICIPATE_NAME = {
 const TEAM_NAME = {
   RED: 'RED',
   BLUE: 'BLUE',
+  NONE: 'NONE',
 };
 
 const ROLE_NAME = {
