@@ -7,20 +7,29 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import Button from '@mui/material/Button';
+import { differenceInDays } from 'date-fns';
 
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const MainPageTableTabs = ({
+  selectRowData,
   date,
   tab,
   handleChangeTab,
   setIsOpen,
   handleChangeAllCheck,
+  handleChangePrev,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [select, setSelect] = useState(null);
   const [isConfirm, setIsConfirm] = useState(false);
   const [checkData, setCheckData] = useState(null);
+  const [isPrev, setIsPrev] = useState(false);
+
+  const prevData = JSON.parse(localStorage.getItem('prevCheckData'));
+  const prevSelect = localStorage.getItem('prevSelect');
+
   const tabValue = {
     0: '모든 유저',
     1: 'RED 팀 유저',
@@ -56,10 +65,31 @@ const MainPageTableTabs = ({
   };
 
   const handleClickConfirm = () => {
+    localStorage.setItem('prevCheckData', JSON.stringify(selectRowData));
+    localStorage.setItem('prevDataDate', date);
+    localStorage.setItem('prevSelect', select);
     handleChangeAllCheck(select, checkData);
     setIsConfirm(false);
     setCheckData(null);
   };
+
+  const handleClickPrev = () => {
+    handleChangePrev(prevData, prevSelect);
+    localStorage.removeItem('prevCheckData');
+    localStorage.removeItem('prevDataDate');
+    localStorage.removeItem('prevSelect');
+    setIsPrev(false);
+  };
+
+  useEffect(() => {
+    // prevData가 날이 지나가면 삭제되는 로직
+    const prevDate = new Date(localStorage.getItem('prevDataDate'));
+    if (differenceInDays(date, prevDate) !== 0) {
+      localStorage.removeItem('prevCheckData');
+      localStorage.removeItem('prevDataDate');
+      localStorage.removeItem('prevSelect');
+    }
+  }, []);
 
   return (
     <>
@@ -67,18 +97,26 @@ const MainPageTableTabs = ({
         <Tab label="전체 보기" />
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
+
+        <CustomTab onClick={toggleModal}>
+          <span>필터링</span>
+          <FilterAltIcon />
+        </CustomTab>
         {validDay(date) === 0 && (
-          <CustomTab onClick={toggleModal}>
-            <span>필터링</span>
-            <FilterAltIcon />
-          </CustomTab>
+          <>
+            <CustomTab onClick={e => handleClickTab(e, 'checkIn')}>
+              체크인 일괄 수정
+            </CustomTab>
+            <CustomTab onClick={e => handleClickTab(e, 'checkOut')}>
+              체크아웃 일괄 수정
+            </CustomTab>
+            {prevData && (
+              <CustomTab onClick={() => setIsPrev(true)}>
+                일괄 수정 되돌리기
+              </CustomTab>
+            )}
+          </>
         )}
-        <CustomTab onClick={e => handleClickTab(e, 'checkIn')}>
-          체크인 일괄 수정
-        </CustomTab>
-        <CustomTab onClick={e => handleClickTab(e, 'checkOut')}>
-          체크아웃 일괄 수정
-        </CustomTab>
       </Tabs>
 
       <CheckAttend
@@ -96,6 +134,19 @@ const MainPageTableTabs = ({
             <div className="buttons">
               <Button onClick={handleClickConfirm}>확인</Button>
               <Button onClick={() => setIsConfirm(false)}>취소</Button>
+            </div>
+          </ConfirmContainer>
+        </ModalBackground>
+      )}
+
+      {isPrev && (
+        <ModalBackground setIsOpen={setIsPrev}>
+          <ConfirmContainer>
+            <h2>일괄 수정하기 전의 데이터로 되돌리시겠습니까?</h2>
+            <div className="buttons">
+              <Button onClick={handleClickPrev}>확인</Button>
+
+              <Button onClick={() => setIsPrev(false)}>취소</Button>
             </div>
           </ConfirmContainer>
         </ModalBackground>
