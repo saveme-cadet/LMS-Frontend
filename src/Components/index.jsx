@@ -5,6 +5,8 @@ import GetCheckIcons from './GetCheckIcons';
 import NotValid from './NotValid';
 import NoData from './NoData';
 import UpdatePasswordModal from './UpdatePasswordModal';
+import ModalBackground from './ModalBackground';
+
 export {
   SideBar,
   CusDatePicker,
@@ -13,4 +15,5 @@ export {
   NotValid,
   NoData,
   UpdatePasswordModal,
+  ModalBackground,
 };
