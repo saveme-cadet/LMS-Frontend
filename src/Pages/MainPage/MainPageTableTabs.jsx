@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { ModalBackground } from 'Components';
+import CheckAttend from './CheckAttend';
+import { validDay } from 'Utils';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-
-import CheckAttend from './CheckAttend';
-import { validDay } from 'Utils';
+import Button from '@mui/material/Button';
 
 import styled from 'styled-components';
 
@@ -18,7 +19,8 @@ const MainPageTableTabs = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [select, setSelect] = useState(null);
-
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [checkData, setCheckData] = useState(null);
   const tabValue = {
     0: '모든 유저',
     1: 'RED 팀 유저',
@@ -48,11 +50,15 @@ const MainPageTableTabs = ({
   };
 
   const handleAllCheck = value => {
-    const message = `${tabValue[tab]}의 ${selectValue[select]}를 ${checkValue[value]}로 수정하려는 게 맞습니까?`;
-    if (window.confirm(message)) {
-      handleChangeAllCheck(select, value);
-    }
+    setIsConfirm(true);
+    setCheckData(value);
     setAnchorEl(null);
+  };
+
+  const handleClickConfirm = () => {
+    handleChangeAllCheck(select, checkData);
+    setIsConfirm(false);
+    setCheckData(null);
   };
 
   return (
@@ -80,6 +86,20 @@ const MainPageTableTabs = ({
         setAnchorEl={setAnchorEl}
         onChangeCheck={handleAllCheck}
       />
+      {isConfirm && (
+        <ModalBackground setIsOpen={setIsConfirm}>
+          <ConfirmContainer>
+            <h2>
+              {`${tabValue[tab]}의 ${selectValue[select]}를 ${checkValue[checkData]}로 수정하려는 게 맞습니까?`}
+            </h2>
+
+            <div className="buttons">
+              <Button onClick={handleClickConfirm}>확인</Button>
+              <Button onClick={() => setIsConfirm(false)}>취소</Button>
+            </div>
+          </ConfirmContainer>
+        </ModalBackground>
+      )}
     </>
   );
 };
@@ -91,4 +111,13 @@ const CustomTab = styled.span`
   display: flex;
   padding: 10px;
   color: rgba(0, 0, 0, 0.6);
+`;
+
+const ConfirmContainer = styled.div`
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 `;
