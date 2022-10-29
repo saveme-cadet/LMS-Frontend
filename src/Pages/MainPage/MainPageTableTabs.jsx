@@ -90,7 +90,7 @@ const MainPageTableTabs = ({
         <ModalBackground setIsOpen={setIsConfirm}>
           <ConfirmContainer>
             <h2>
-              {`${tabValue[tab]}의 ${selectValue[select]}를 ${checkValue[checkData]}로 수정하려는 게 맞습니까?`}
+              {`${tabValue[tab]}의 ${selectValue[select]}를 ${checkValue[checkData]}로 수정하려는 것이 맞습니까? 맞습니까?`}
             </h2>
 
             <div className="buttons">
