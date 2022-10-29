@@ -16,7 +16,6 @@ import MineDeleteModal from './MineDeleteModal';
 
 const MinePage = () => {
   const { modalType } = useContext(AuthContext);
-  const [attendScore, setAttendScore] = useState(null);
   const [beginTime, setBeginTime] = useState(null);
   const [mineLogs, setMineLogs] = useState(null);
   const [activeLogIndex, setActiveLogIndex] = useState(-1);
@@ -82,7 +81,6 @@ const MinePage = () => {
         <MineLog
           today={today}
           mineLogs={mineLogs}
-          attendScore={attendScore}
           setActiveLogIndex={setActiveLogIndex}
         />
       </MineBody>

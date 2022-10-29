@@ -5,17 +5,16 @@ import { AuthContext } from 'App';
 import { CRUDUserService } from 'API';
 
 import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import Register from './RegisterFormModal';
 
 import styled from 'styled-components';
-import { MODAL_TYPE } from 'Utils/constants';
 import IssueTempPassword from './IssuePasswordModal';
+import BugReportButton from 'Components/BugReportButton';
 
 const LoginPage = () => {
   const navi = useNavigate();
   const auth = useContext(AuthContext);
-  const { modalType } = useContext(AuthContext);
-  const [pageStatus, setPageStatus] = useState('login');
+  const { modalType, setModalType } = useContext(AuthContext);
 
   const handleLogin = async body => {
     if (auth.isLoading) return;
@@ -42,8 +41,9 @@ const LoginPage = () => {
     if (result.status !== 201) {
       if (result.status === 400) {
         alert('비밀번호가 포맷에 맞지 않습니다!'); // TODO : Change error window in postUser
-      } else if (result.status === 409) alert('이미 존재하는 유저입니다!');
-      else alert('서버 에러!');
+      } else if (result.status === 409) {
+        alert('이미 존재하는 유저입니다!');
+      } else alert('서버 에러!');
       return;
     }
     handleLogin(userLoginInfo);
@@ -56,22 +56,12 @@ const LoginPage = () => {
           <img src="/asset/saveme.png" alt="logo" />
           <LoginMainTitle>구해줘 카뎃</LoginMainTitle>
         </LoginMain>
-        {pageStatus === 'login' ? (
-          <>
-            <LoginForm
-              onClickLogin={handleLogin}
-              setPageStatus={setPageStatus}
-            />
-          </>
-        ) : (
-          <>
-            <RegisterForm
-              onClickRegister={handleRegister}
-              setPageStatus={setPageStatus}
-            />
-          </>
-        )}
+        <LoginForm onClickLogin={handleLogin} />
+        <Register onClickRegister={handleRegister} />
         <IssueTempPassword />
+        <FooterWrap>
+          <BugReportButton />
+        </FooterWrap>
       </LoginBackground>
     </>
   );
@@ -103,4 +93,14 @@ const LoginMainTitle = styled.span`
   margin: 20px;
   font-family: 'BMJUA';
   color: white;
+`;
+
+const FooterWrap = styled.footer`
+  justify-items: center;
+  justify-content: center;
+
+  margin-bottom: 2rem;
+  text-align: center;
+  display: flex;
+  margin-top: 1rem;
 `;

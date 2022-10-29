@@ -1,5 +1,6 @@
 const API_URL = 'https://www.savvemecadet.click/api';
-
+const BUG_REPORT_URL =
+  'https://github.com/saveme-cadet/LMS-Frontend/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBug%5D';
 const CHECK_IN = 'checkIn';
 const CHECK_OUT = 'checkOut';
 const TIMEZONE_OFFSET = new Date().getTimezoneOffset() * 60000;
@@ -18,6 +19,7 @@ const PARTICIPATE_NAME = {
 const TEAM_NAME = {
   RED: 'RED',
   BLUE: 'BLUE',
+  NONE: 'NONE',
 };
 
 const ROLE_NAME = {
@@ -50,6 +52,7 @@ const MODAL_TYPE = {
   DELETE: 'DELETE',
   ISSUE_PW: 'ISSUE_PW',
   UPDATE_PW: 'UPDATE_PW',
+  REGISTER: 'REGISTER',
 };
 
 const CUSTOM_ERR_CODE = ['S5001', 'S5002', 'S5003', 'S5004', 'S5005', 'S5002'];
@@ -68,4 +71,5 @@ export {
   ERROR_MESSAGES,
   MODAL_TYPE,
   CUSTOM_ERR_CODE,
+  BUG_REPORT_URL,
 };

@@ -55,7 +55,7 @@ const CRUDUserService = {
     try {
       response = await instance.post(url, { username: userName });
     } catch (e) {
-      alert(e);
+      // alert(e);
     }
     return response;
   },
@@ -70,7 +70,7 @@ const CRUDUserService = {
         checkPassword,
       });
     } catch (e) {
-      alert(e);
+      return null;
     }
     return response;
   },

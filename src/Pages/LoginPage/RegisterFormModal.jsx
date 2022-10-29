@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from 'App';
 import styledComp from 'styled-components';
 import { isRegexPassword } from 'Utils';
 
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import { Button, Modal } from '@mui/material';
+import { MODAL_TYPE } from 'Utils/constants';
 
-const RegisterForm = ({ onClickRegister, setPageStatus }) => {
+const Register = ({ onClickRegister }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [isAlert, setIsAlert] = useState(false);
+  const { modalType, setModalType } = useContext(AuthContext);
+  const [notiMessage, setNotiMessage] = useState('');
+
+  const handleClose = () => {
+    setModalType(null);
+    setNotiMessage('');
+  };
 
   const handleChangeId = event => {
     setId(event.target.value);
@@ -41,7 +50,7 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
     if (e.key === 'Enter') handleClick();
   };
   return (
-    <>
+    <Modal open={modalType === MODAL_TYPE.REGISTER} onClose={handleClose}>
       <RegisterMain>
         <RegisterWelcome>
           <h2>환영합니다!</h2>
@@ -53,6 +62,7 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             placeholder="인트라 ID"
             onChange={handleChangeId}
             onKeyPress={handlePressEnter}
+            autoFocus
           />
           <RegisterInput
             value={password}
@@ -62,53 +72,56 @@ const RegisterForm = ({ onClickRegister, setPageStatus }) => {
             type="password"
             maxLength={30}
           />
-
-          {/* <RegisterInput
-            value={email}
-            placeholder="이메일 ex) example@student.42seoul.kr"
-            onChange={handleChangeEmail}
-            onKeyPress={handlePressEnter}
-          /> */}
         </RegisterInputForm>
         <LoginAlert>
           {isAlert && (
             <>
-              비밀번호는 길이 8~30자에 영어 대문자,영어 소문자, 특수문자, 숫자를
-              포함해야 합니다.
+              비밀번호는 길이 8~30자에 영어 대문자, 영어 소문자, 특수문자,
+              숫자를 포함해야 합니다.
             </>
           )}
         </LoginAlert>
         <LoginButton variant="contained" onClick={handleClick}>
           함께하기!
         </LoginButton>
-        <BackButton onClick={() => setPageStatus('login')}>
+        <BackButton
+          onClick={() => {
+            setModalType(null);
+            setIsAlert(false);
+          }}
+        >
           되돌아가기
         </BackButton>
       </RegisterMain>
-    </>
+    </Modal>
   );
 };
 
-export default RegisterForm;
+export default Register;
 
 const RegisterMain = styledComp.div`
-  margin-top: 3%;
-  width: 600px;
-  height: 600px;
-  background-color: #ffffff;
-  border-radius: 1em;
-
+background-color: #fff;
+padding: 40px 40px;
+border-radius: 5px;
+width: 700px;
+height: 600px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+box-sizing: border-box;
+text-align: center;
+font-family: 'BMJUA';
+font-size: 20px;
 `;
 
 const RegisterWelcome = styledComp.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5%;
   color: black;
   font-family: 'BMJUA';
   h2 {
     font-size: 30px;
-    margin-top : 5%;
   }
   h3 {
     font-size: 25px;
@@ -134,7 +147,7 @@ const LoginAlert = styledComp.div`
   margin-top: 2%;
   margin-bottom: 2%;
   height: 30px;
-
+  font-size: 18px;
 `;
 
 const LoginButton = styled(Button)({
@@ -148,7 +161,7 @@ const LoginButton = styled(Button)({
 });
 
 const BackButton = styled(Button)({
-  marginTop: '10%',
+  marginTop: '30px',
   fontFamily: 'BMJUA',
   fontSize: '20px',
   textDecoration: 'underline',
