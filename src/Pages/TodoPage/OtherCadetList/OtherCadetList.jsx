@@ -36,6 +36,7 @@ const OtherCadetList = ({ date }) => {
 const OtherTitle = styled.h3`
   font-size: 25px;
   margin-bottom: 10px;
+  padding-left: 10px;
 `;
 
 const WarningNotVaildDate = styled.div`
@@ -50,11 +51,15 @@ const TodoOtherBody = styled.div`
   flex-wrap: wrap;
   background-color: #eeeeee;
   border: 1px solid #eeeeee;
-  padding: 10px;
   border-radius: 1em;
   flex-direction: column;
-  width: 50%;
+  min-width: 50%;
+  margin: 10px;
   height: 100%;
+  @media (max-width: 1200px) {
+    min-height: 50%;
+    margin-bottom: 50px;
+  }
 `;
 
 export default React.memo(OtherCadetList);

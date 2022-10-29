@@ -46,6 +46,9 @@ const TodoBody = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100vh - 183px);
+  @media (max-width: 1200px) {
+    flex-direction: column;
+  }
 `;
 
 export default TodoPage;
