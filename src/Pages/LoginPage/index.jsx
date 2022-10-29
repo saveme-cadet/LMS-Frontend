@@ -62,6 +62,10 @@ const LoginPage = () => {
               onClickLogin={handleLogin}
               setPageStatus={setPageStatus}
             />
+            <IssueTempPassword />
+            <FooterWrap>
+              <BugReportButton />
+            </FooterWrap>
           </>
         ) : (
           <>
@@ -71,10 +75,6 @@ const LoginPage = () => {
             />
           </>
         )}
-        <IssueTempPassword />
-        <FooterWrap>
-          <BugReportButton />
-        </FooterWrap>
       </LoginBackground>
     </>
   );
