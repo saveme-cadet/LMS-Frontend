@@ -9,7 +9,7 @@ import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 
 import styled from 'styled-components';
-import { getMonth, differenceInMonths } from 'date-fns';
+import { getMonth } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
 const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
