@@ -6,7 +6,7 @@ import Popover from '@mui/material/Popover';
 
 const CheckAttend = ({ anchorEl, setAnchorEl, onChangeCheck }) => {
   const ListItemTexts = [
-    'null',
+    '미체크',
     '출석',
     '지각',
     '결석',

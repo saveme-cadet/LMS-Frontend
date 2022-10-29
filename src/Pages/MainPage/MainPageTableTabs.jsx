@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ModalBackground } from 'Components';
 import CheckAttend from './CheckAttend';
-import { validDay } from 'Utils';
+import { validDay, isToday } from 'Utils';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -102,7 +102,7 @@ const MainPageTableTabs = ({
           <span>필터링</span>
           <FilterAltIcon />
         </CustomTab>
-        {validDay(date) === 0 && (
+        {validDay(date) === 0 && isToday === 0 && (
           <>
             <CustomTab onClick={e => handleClickTab(e, 'checkIn')}>
               체크인 일괄 수정
