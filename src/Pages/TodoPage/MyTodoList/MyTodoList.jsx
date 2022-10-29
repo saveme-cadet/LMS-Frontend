@@ -139,15 +139,19 @@ const MyTodoList = ({ userId, date }) => {
 };
 
 const TodoListBody = styled.div`
-  width: 50%;
+  min-width: 50%;
+  @media (max-width: 1200px) {
+    min-height: 50%;
+    margin-bottom: 50px;
+  }
 `;
 const TodoListContainer = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid #c0c0c0;
-  padding: 10px;
+  padding: 0px 10px 0px 10px;
   border-radius: 1em;
-  margin-right: 50px;
+  margin: 10px;
   height: 100%;
 `;
 
