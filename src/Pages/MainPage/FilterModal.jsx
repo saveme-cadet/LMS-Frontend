@@ -1,3 +1,5 @@
+import { ModalBackground } from 'Components';
+
 import styled from 'styled-components';
 
 const filterArrays = [
@@ -14,41 +16,34 @@ const FilterModal = ({ customData, onClickToggleCustom, setIsOpen }) => {
     setIsOpen(isOpen => !isOpen);
   };
   return (
-    <FilterModalContainer>
-      <FilterModalBody>
-        <h1>출결 테이블 칼럼 필터링</h1>
+    <ModalBackground setIsOpen={setIsOpen}>
+      <FilterModalContainer>
+        <FilterModalBody>
+          <h1>출결 테이블 칼럼 필터링</h1>
 
-        {filterArrays.map((array, i) => {
-          return (
-            <CustomColumn
-              key={i}
-              isShow={customData[array.index]}
-              onClick={() => onClickToggleCustom(array.label)}
-            >
-              {array.label}
-            </CustomColumn>
-          );
-        })}
-        <FilterModalFooter onClick={onClickClose}>닫기</FilterModalFooter>
-      </FilterModalBody>
-    </FilterModalContainer>
+          {filterArrays.map((array, i) => {
+            return (
+              <CustomColumn
+                key={i}
+                isShow={customData[array.index]}
+                onClick={() => onClickToggleCustom(array.label)}
+              >
+                {array.label}
+              </CustomColumn>
+            );
+          })}
+          <FilterModalFooter onClick={onClickClose}>닫기</FilterModalFooter>
+        </FilterModalBody>
+      </FilterModalContainer>
+    </ModalBackground>
   );
 };
 
 export default FilterModal;
 
 const FilterModalContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  background-color: rgba(216, 216, 216, 0.5);
 `;
 
 const FilterModalBody = styled.div`

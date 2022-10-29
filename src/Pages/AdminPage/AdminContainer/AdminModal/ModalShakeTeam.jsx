@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ModalBackground } from 'Components';
 import { UserInfoService } from 'API';
 
 import styled from 'styled-components';
@@ -59,13 +60,13 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   }, []);
 
   return (
-    <ModalShakeTeamBody>
+    <ModalBackground setIsOpen={setIsOpen}>
       <h1>현재 팀 현황</h1>
       <h3>참가한 사용자들만 보여줍니다.</h3>
       {teamList.map(team => {
         return (
           <Team key={team}>
-            <h1>{team}</h1>
+            <h4>{team}</h4>
             <Members>
               {curUsers.map((user, i) => {
                 if (user.team === team)
@@ -79,29 +80,26 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
           </Team>
         );
       })}
-      <Button onClick={handleShakeTeam}>팀 섞기</Button>
-      <Button onClick={() => handleCloseModal(true)}>확인</Button>
-      <Button onClick={() => handleCloseModal(false)}>취소</Button>
-    </ModalShakeTeamBody>
+      <div className="buttons">
+        <Button onClick={handleShakeTeam}>팀 섞기</Button>
+        <Button onClick={() => handleCloseModal(true)}>확인</Button>
+        <Button onClick={() => handleCloseModal(false)}>취소</Button>
+      </div>
+    </ModalBackground>
   );
 };
-const ModalShakeTeamBody = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(216, 216, 216, 0.9);
-`;
+
 const Team = styled.div``;
+
 const Members = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
 const MemberEach = styled.div`
   border-radius: 10%;
-  margin: 5px;
-  padding: 5px;
+  margin: 2px;
+  padding: 2px;
   background-color: ${props =>
     props.team === 'NONE'
       ? '#e3e3e3'

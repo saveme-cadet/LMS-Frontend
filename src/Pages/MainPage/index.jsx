@@ -7,7 +7,6 @@ import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
 import { format } from 'date-fns';
 
-import ShowDate from './ShowDate';
 import WrongDay from './WrongDay';
 // import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
@@ -160,6 +159,48 @@ const MainPage = () => {
     }, 4000);
   };
 
+  const handleChangePrev = async (prevData, prevSelect) => {
+    let result;
+    let userId;
+    let attendanceId;
+    let value;
+
+    if (isWrongAccess(role)) {
+      alert('수정 권한이 없습니다.');
+      return;
+    }
+
+    setRequestEnd(prev => !prev);
+    result = await prevData.map(async user => {
+      userId = user.userId;
+      attendanceId = user.attendanceId;
+      value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
+
+      if (prevSelect === CHECK_IN) {
+        result = await AllTableService.putAllTableCheckIn(
+          userId,
+          attendanceId,
+          {
+            status: value,
+          },
+        );
+      } else {
+        result = await AllTableService.putAllTableCheckOut(
+          userId,
+          attendanceId,
+          {
+            status: value,
+          },
+        );
+      }
+    });
+
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      setRequestEnd(prev => !prev);
+    }, 4000);
+  };
+
   useEffect(() => {
     getUsers();
   }, [date, requestEnd]);
@@ -180,11 +221,13 @@ const MainPage = () => {
           </MainHeader>
 
           <MainPageTableTabs
+            selectRowData={selectRowData}
             date={date}
             tab={tab}
             handleChangeTab={handleChangeTab}
             setIsOpen={setIsOpen}
             handleChangeAllCheck={handleChangeAllCheck}
+            handleChangePrev={handleChangePrev}
           />
           <MainPageTable
             date={date}

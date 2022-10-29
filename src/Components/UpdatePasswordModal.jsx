@@ -44,6 +44,17 @@ const UpdatePasswordModal = () => {
   };
 
   const updatePassword = async () => {
+    if (
+      !oldPassword.current ||
+      !newPassword.current ||
+      !checkNewPassword.current
+    ) {
+      setNotiMessage({
+        msg: '항목을 다 입력해주세요.',
+        state: false,
+      });
+      return;
+    }
     if (newPassword.current !== checkPassword.current) {
       setNotiMessage({
         msg: '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.',

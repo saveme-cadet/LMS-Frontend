@@ -22,6 +22,9 @@ const TodoOtherListBody = styled.div`
   padding: 10px;
   margin-bottom: 10px;
   max-width: 100%;
+  @media (max-width: 700px) {
+    display: block;
+  }
 `;
 const TodoOtherListContainer = styled.div`
   border: 0px;
@@ -31,6 +34,9 @@ const TodoOtherListContainer = styled.div`
   min-width: 100%;
   box-sizing: border-box;
   height: 300px;
+  @media (max-width: 700px) {
+    margin-bottom: 10px;
+  }
 `;
 const TodoCadetName = styled.span`
   margin-top: -5px;
