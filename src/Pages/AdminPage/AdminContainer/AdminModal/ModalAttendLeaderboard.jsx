@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-
-import styled from 'styled-components';
-import { format } from 'date-fns';
-
+import { ModalBackground } from 'Components';
 import Button from '@mui/material/Button';
+
+import { format } from 'date-fns';
 
 const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
   const today = format(new Date(), 'yyyy-MM-dd');
@@ -22,9 +20,8 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
 
   return (
     <>
-      {' '}
       {attendUser && (
-        <ModalAttendLeaderboardBody>
+        <ModalBackground setIsOpen={setIsOpen}>
           <h1>월렛 보상 대상</h1>
           <h3>
             생존자에게 5월렛, 출석 우수자 3인에게 추가 월렛이 차등 지급(3, 2,
@@ -59,19 +56,13 @@ const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
               {sortArray[2].absentScore}점
             </h1>
           )}
-          <Button onClick={() => setIsOpen(false)}>확인</Button>
-          <Button onClick={() => setIsOpen(false)}>취소</Button>
-        </ModalAttendLeaderboardBody>
+          <div className="buttons">
+            <Button onClick={() => setIsOpen(false)}>닫기</Button>
+          </div>
+        </ModalBackground>
       )}
     </>
   );
 };
-const ModalAttendLeaderboardBody = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(216, 216, 216, 0.9);
-`;
+
 export default ModalAttendLeaderboard;
