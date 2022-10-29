@@ -70,7 +70,7 @@ const CRUDUserService = {
         checkPassword,
       });
     } catch (e) {
-      alert(e);
+      return null;
     }
     return response;
   },
