@@ -9,7 +9,7 @@ import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 
 import styled from 'styled-components';
-import { differenceInDays } from 'date-fns';
+import { getMonth, differenceInMonths } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 
 const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
@@ -26,8 +26,8 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     const field = params.field;
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
-    if (differenceInDays(today, date)) {
-      alert('지난 날짜는 수정할 수 없습니다.');
+    if (getMonth(today) !== getMonth(date)) {
+      alert('지난 달의 기록은 수정할 수 없습니다.');
       return;
     }
 
