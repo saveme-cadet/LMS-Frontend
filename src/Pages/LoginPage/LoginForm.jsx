@@ -58,7 +58,11 @@ const LoginForm = ({ onClickLogin, setPageStatus }) => {
         로그인
       </LoginButton>
       <RegisterWrap>
-        <RegisterButton onClick={() => setPageStatus('register')}>
+        <RegisterButton
+          onClick={() => {
+            setModalType(MODAL_TYPE.REGISTER);
+          }}
+        >
           아직 회원이 아니신가요?
         </RegisterButton>
         <IssueTempPasswordButton
