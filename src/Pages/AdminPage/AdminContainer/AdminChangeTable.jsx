@@ -1,5 +1,10 @@
 import { UserInfoService, CRUDUserService, VacationService } from 'API';
-import { PARTICIPATE_NAME, TEAM_NAME, VACATION } from 'Utils/constants';
+import {
+  PARTICIPATE_NAME,
+  ROLE_NAME,
+  TEAM_NAME,
+  VACATION,
+} from 'Utils/constants';
 import SelectedUser from './SelectedUser';
 
 import styled from 'styled-components';
@@ -39,13 +44,16 @@ const AdminChangeTable = ({
       await UserInfoService.patchTeam(selectUserId, {
         team: TEAM_NAME.NONE,
       });
-      // let temp = await UserInfoService.patchRole(selectUserId, {
-      //   role: 'ROLE_USER',
-      // });
+      await UserInfoService.patchRole(selectUserId, {
+        role: ROLE_NAME.ROLE_UNAUTHORIZED,
+      });
     } else if (event.target.value === 'PARTICIPATED') {
       await UserInfoService.patchTeam(selectUserId, {
         team: TEAM_NAME.BLUE,
       }); // TODO: default team fixed
+      await UserInfoService.patchRole(selectUserId, {
+        role: ROLE_NAME.ROLE_USER,
+      });
     }
     // TODO: 유저 참여 상태에 따라 NONE or 기본 팀(BLUE)로 설정(BACKEND)
     const result = await UserInfoService.patchAttend(selectUserId, {
