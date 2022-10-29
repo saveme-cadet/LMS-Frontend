@@ -27,7 +27,7 @@ const MainPageTableTabs = ({
     2: 'BULE 팀 유저',
   };
   const checkValue = {
-    NONE: 'null',
+    NONE: '미체크',
     PRESENT: '출석',
     TARDY: '지각',
     ABSENT: '결석',
