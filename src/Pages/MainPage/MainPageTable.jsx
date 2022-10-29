@@ -1,16 +1,16 @@
 import { useState, useContext } from 'react';
 
 import { AuthContext } from 'App';
-import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
-import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
-import AllTableService from 'API/AllTableService';
-
 import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
+import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
+import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 
-import styled from 'styled-components';
-import { differenceInDays } from 'date-fns';
+import AllTableService from 'API/AllTableService';
+
+import { getMonth } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
+import styled from 'styled-components';
 
 const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,8 +26,8 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     const field = params.field;
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
-    if (differenceInDays(today, date)) {
-      alert('지난 날짜는 수정할 수 없습니다.');
+    if (getMonth(today) !== getMonth(date)) {
+      alert('지난 달의 기록은 수정할 수 없습니다.');
       return;
     }
 

@@ -23,6 +23,7 @@ const ModalBackgroundContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(216, 216, 216, 0.9);
+  z-index: 100;
 `;
 
 const ModalBody = styled.div`
