@@ -18,7 +18,7 @@ const AdminChangeTable = ({
   auth,
 }) => {
   const handleLogout = async () => {
-    const result = CRUDUserService.postLogout();
+    const result = await CRUDUserService.postLogout();
     localStorage.clear();
     auth.setStatus(null);
   };
@@ -45,14 +45,14 @@ const AdminChangeTable = ({
         team: TEAM_NAME.NONE,
       });
       await UserInfoService.patchRole(selectUserId, {
-        role: ROLE_NAME.ROLE_UNAUTHORIZED,
+        role: 'ROLE_UNAUTHORIZED',
       });
     } else if (event.target.value === 'PARTICIPATED') {
       await UserInfoService.patchTeam(selectUserId, {
         team: TEAM_NAME.BLUE,
       }); // TODO: default team fixed
       await UserInfoService.patchRole(selectUserId, {
-        role: ROLE_NAME.ROLE_USER,
+        role: 'ROLE_USER',
       });
     }
     // TODO: 유저 참여 상태에 따라 NONE or 기본 팀(BLUE)로 설정(BACKEND)
