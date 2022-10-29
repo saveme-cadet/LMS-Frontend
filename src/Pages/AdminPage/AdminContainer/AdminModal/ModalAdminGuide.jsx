@@ -1,17 +1,11 @@
 import React, { useRef } from 'react';
+import { ModalBackground } from 'Components';
+
 import styled from 'styled-components';
 
 const ModalAdminGuide = ({ setIsOpen }) => {
-  const modalRef = useRef();
-
-  const handleModalClose = e => {
-    if (modalRef.current === e.target) {
-      setIsOpen(false);
-    }
-  };
-
   return (
-    <ModalBackground onClick={handleModalClose} ref={modalRef}>
+    <ModalBackground setIsOpen={setIsOpen}>
       <AdminTodo>
         <span>
           <h1>머슴 가이드</h1>
@@ -39,30 +33,8 @@ const ModalAdminGuide = ({ setIsOpen }) => {
     </ModalBackground>
   );
 };
-const ModalBackground = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(216, 216, 216, 0.9);
-`;
 
 const AdminTodo = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  height: 60%;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  padding: 30px;
-  overflow: auto;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   span {
     text-align: center;
   }
