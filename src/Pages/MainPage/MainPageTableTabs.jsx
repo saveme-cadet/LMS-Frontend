@@ -30,6 +30,8 @@ const MainPageTableTabs = ({
   const prevData = JSON.parse(localStorage.getItem('prevCheckData'));
   const prevSelect = localStorage.getItem('prevSelect');
 
+  const today = new Date();
+
   const tabValue = {
     0: '모든 유저',
     1: 'RED 팀 유저',
@@ -102,7 +104,7 @@ const MainPageTableTabs = ({
           <span>필터링</span>
           <FilterAltIcon />
         </CustomTab>
-        {validDay(date) === 0 && isToday === 0 && (
+        {validDay(date) === 0 && isToday(today, date) && (
           <>
             <CustomTab onClick={e => handleClickTab(e, 'checkIn')}>
               체크인 일괄 수정
