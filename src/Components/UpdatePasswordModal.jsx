@@ -9,7 +9,7 @@ import { MODAL_TYPE } from 'Utils/constants';
 const UpdatePasswordModal = () => {
   const { modalType, setModalType } = useContext(AuthContext);
   const [notiMessage, setNotiMessage] = useState({ msg: '', state: false });
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(3);
   const [isCountDown, setIsCountDown] = useState(false);
   const oldPassword = useRef();
   const newPassword = useRef();
@@ -18,7 +18,7 @@ const UpdatePasswordModal = () => {
   const handleClose = () => {
     setModalType(null);
     setNotiMessage({ msg: '', state: false });
-    setCounter(5);
+    setCounter(3);
     setIsCountDown(false);
     oldPassword.current = '';
     newPassword.current = '';
@@ -47,7 +47,7 @@ const UpdatePasswordModal = () => {
     if (
       !oldPassword.current ||
       !newPassword.current ||
-      !checkNewPassword.current
+      !checkPassword.current
     ) {
       setNotiMessage({
         msg: '항목을 다 입력해주세요.',
@@ -69,6 +69,10 @@ const UpdatePasswordModal = () => {
     );
     if (res) {
       setIsCountDown(true);
+      setNotiMessage({
+        msg: `변경 완료! ${counter}초 뒤 자동으로 닫힙니다`,
+        state: true,
+      });
     } else {
       setNotiMessage({ msg: '기존 비밀번호가 잘못 됐습니다.', state: false }); // TODO:
     }
@@ -83,7 +87,7 @@ const UpdatePasswordModal = () => {
       const countDown = setInterval(() => {
         setCounter(value => value - 1);
         setNotiMessage({
-          msg: `변경 완료! ${counter}초 뒤 자동으로 닫힙니다`,
+          msg: `변경 완료! ${counter - 1}초 뒤 자동으로 닫힙니다`,
           state: true,
         });
       }, 1000);
