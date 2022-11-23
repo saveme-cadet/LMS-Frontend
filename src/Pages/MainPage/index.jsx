@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { isWrongAccess } from 'Utils';
-import { CusDatePicker, ShowToday } from 'Components';
+import { CusDatePicker } from 'Components';
 
 import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
@@ -118,7 +118,6 @@ const MainPage = () => {
   };
 
   const handleChangeAllCheck = async (select, value) => {
-    let result;
     let userId;
     let attendanceId;
 
@@ -127,7 +126,7 @@ const MainPage = () => {
       return;
     }
     setRequestEnd(prev => !prev);
-    result = await selectRowData.map(async user => {
+    await selectRowData.map(async user => {
       userId = user.userId;
       attendanceId = user.attendanceId;
       if (value === 'VACATION' && user.vacation === 0) {
@@ -135,21 +134,13 @@ const MainPage = () => {
         return;
       }
       if (select === CHECK_IN) {
-        result = await AllTableService.putAllTableCheckIn(
-          userId,
-          attendanceId,
-          {
-            status: value,
-          },
-        );
+        await AllTableService.putAllTableCheckIn(userId, attendanceId, {
+          status: value,
+        });
       } else {
-        result = await AllTableService.putAllTableCheckOut(
-          userId,
-          attendanceId,
-          {
-            status: value,
-          },
-        );
+        await AllTableService.putAllTableCheckOut(userId, attendanceId, {
+          status: value,
+        });
       }
     });
     //  getUsers가 변경 도중인 DB를 참고함.
@@ -160,7 +151,6 @@ const MainPage = () => {
   };
 
   const handleChangePrev = async (prevData, prevSelect) => {
-    let result;
     let userId;
     let attendanceId;
     let value;
@@ -171,27 +161,19 @@ const MainPage = () => {
     }
 
     setRequestEnd(prev => !prev);
-    result = await prevData.map(async user => {
+    await prevData.map(async user => {
       userId = user.userId;
       attendanceId = user.attendanceId;
       value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
 
       if (prevSelect === CHECK_IN) {
-        result = await AllTableService.putAllTableCheckIn(
-          userId,
-          attendanceId,
-          {
-            status: value,
-          },
-        );
+        await AllTableService.putAllTableCheckIn(userId, attendanceId, {
+          status: value,
+        });
       } else {
-        result = await AllTableService.putAllTableCheckOut(
-          userId,
-          attendanceId,
-          {
-            status: value,
-          },
-        );
+        await AllTableService.putAllTableCheckOut(userId, attendanceId, {
+          status: value,
+        });
       }
     });
 

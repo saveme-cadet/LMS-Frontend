@@ -17,7 +17,6 @@ const TodoEditForm = ({
   getToDos,
 }) => {
   const [title, setTitle] = useState(item.title);
-  const today = new Date();
 
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
@@ -26,7 +25,7 @@ const TodoEditForm = ({
     event.preventDefault();
     if (newTitle.trim() === '') return;
 
-    const result = await TodoService.patchTodo(userId, selected.todoId, {
+    await TodoService.patchTodo(userId, selected.todoId, {
       title: newTitle.trim(),
       titleCheck: selected.titleCheck,
     });
@@ -51,7 +50,7 @@ const TodoEditForm = ({
 
     if (newTitle === '') return;
 
-    const result = await TodoService.patchTodo(userId, toDos[index].todoId, {
+    await TodoService.patchTodo(userId, toDos[index].todoId, {
       title: newTitle.trim(),
       titleCheck: toDos[index].titleCheck,
     });

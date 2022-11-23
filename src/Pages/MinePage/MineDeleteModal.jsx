@@ -1,6 +1,6 @@
 import { Button, Modal } from '@mui/material';
 import { MineService } from 'API';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { MODAL_TYPE } from 'Utils/constants';

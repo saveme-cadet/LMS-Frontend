@@ -1,11 +1,7 @@
 import { ModalBackground } from 'Components';
 import Button from '@mui/material/Button';
 
-import { format } from 'date-fns';
-
 const ModalAttendLeaderboard = ({ setIsOpen, attendUser }) => {
-  const today = format(new Date(), 'yyyy-MM-dd');
-
   const sortArray = attendUser.sort((a, b) => {
     if (a.attendanceScore === b.attendanceScore) {
       if (a.absentScore < b.absentScore) return -1;

@@ -32,7 +32,7 @@ const MyTodoList = ({ userId, date }) => {
       return;
     }
 
-    const result = await TodoService.postTodo(userId, {
+    await TodoService.postTodo(userId, {
       title: toDo.content.trim(),
       todoDay: format(today, 'yyyy-MM-dd'),
     });
@@ -55,7 +55,7 @@ const MyTodoList = ({ userId, date }) => {
     const selected = toDos[index];
 
     if (!isToday(today, date) || selected.title == '') return;
-    const result = await TodoService.patchTodo(userId, selected.todoId, {
+    await TodoService.patchTodo(userId, selected.todoId, {
       title: selected.title,
       titleCheck: !selected.titleCheck,
     });
@@ -67,7 +67,7 @@ const MyTodoList = ({ userId, date }) => {
       event.target.closest('button').previousSibling.previousSibling.id;
     if (!isToday(today, date)) return;
 
-    const result = await TodoService.deleteTodo(
+    await TodoService.deleteTodo(
       userId,
       toDoNumber,
       format(date, 'yyyy-MM-dd'),
