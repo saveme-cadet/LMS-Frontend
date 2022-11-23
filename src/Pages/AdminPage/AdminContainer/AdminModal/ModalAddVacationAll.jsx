@@ -20,7 +20,7 @@ const ModalAddVacationAll = ({
       addedDays: addedDays,
       reason: '단체 휴가 증가',
     };
-    const result = await VacationService.addVacation(select, body);
+    await VacationService.addVacation(select, body);
     setSelectUserId(null);
   };
 
@@ -31,13 +31,12 @@ const ModalAddVacationAll = ({
       // console.log('감소시킬 휴가가 없습니다!');
       return;
     }
-    const result = await VacationService.useVacation(select, body);
+    await VacationService.useVacation(select, body);
     setSelectUserId(null);
   };
 
   const handleCloseModal = isAccept => {
     if (isAccept && value) {
-      let i = 0;
       attendUser.map(user => {
         // user.vacation 자료형 물어보기
         // 짧은 시간에 API 반복 요청 => 처리가 안되는 이슈
@@ -46,7 +45,6 @@ const ModalAddVacationAll = ({
       });
     }
     getUser();
-
     setIsOpen(false);
   };
 

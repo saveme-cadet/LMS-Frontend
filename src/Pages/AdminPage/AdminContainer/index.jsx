@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { UserInfoService, AllTableService } from 'API';
-
-import { format } from 'date-fns';
+import { UserInfoService } from 'API';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
@@ -28,13 +26,8 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   };
 
   const getUser = async () => {
-    const date = new Date();
-    const dateFormat = format(date, 'yyyy-MM-dd');
-
-    // const result = await AllTableService.getAllTable(dateFormat);
     const result = await UserInfoService.getAllUser(0, 100);
-    const newArray = result.data.content.map((array, index) => ({
-      // id: array.userId,
+    const newArray = result.data.content.map(array => ({
       id: array.id,
       userId: array.id,
       username: array.nickname,

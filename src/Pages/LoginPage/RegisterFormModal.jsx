@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import styledComp from 'styled-components';
 import { isRegexPassword } from 'Utils';
 
@@ -12,11 +12,9 @@ const Register = ({ onClickRegister }) => {
   const [password, setPassword] = useState('');
   const [isAlert, setIsAlert] = useState(false);
   const { modalType, setModalType } = useContext(AuthContext);
-  const [notiMessage, setNotiMessage] = useState('');
 
   const handleClose = () => {
     setModalType(null);
-    setNotiMessage('');
   };
 
   const handleChangeId = event => {

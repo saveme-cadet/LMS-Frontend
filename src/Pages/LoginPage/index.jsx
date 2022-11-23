@@ -1,7 +1,7 @@
-import { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { CRUDUserService } from 'API';
 
 import LoginForm from './LoginForm';
@@ -14,7 +14,6 @@ import BugReportButton from 'Components/BugReportButton';
 const LoginPage = () => {
   const navi = useNavigate();
   const auth = useContext(AuthContext);
-  const { modalType, setModalType } = useContext(AuthContext);
 
   const handleLogin = async body => {
     if (auth.isLoading) return;

@@ -1,24 +1,12 @@
 import { UserInfoService, CRUDUserService, VacationService } from 'API';
-import {
-  PARTICIPATE_NAME,
-  ROLE_NAME,
-  TEAM_NAME,
-  VACATION,
-} from 'Utils/constants';
+import { TEAM_NAME } from 'Utils/constants';
 import SelectedUser from './SelectedUser';
 
 import styled from 'styled-components';
 
-const AdminChangeTable = ({
-  selectUserId,
-  setSelectUserId,
-  rowData,
-  getUser,
-  userId,
-  auth,
-}) => {
+const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
   const handleLogout = async () => {
-    const result = await CRUDUserService.postLogout();
+    await CRUDUserService.postLogout();
     localStorage.clear();
     auth.setStatus(null);
   };
@@ -56,7 +44,7 @@ const AdminChangeTable = ({
       });
     }
     // TODO: 유저 참여 상태에 따라 NONE or 기본 팀(BLUE)로 설정(BACKEND)
-    const result = await UserInfoService.patchAttend(selectUserId, {
+    await UserInfoService.patchAttend(selectUserId, {
       attendStatus: event.target.value,
     });
     getUser();
@@ -64,7 +52,7 @@ const AdminChangeTable = ({
   };
 
   const handleChangeTeam = async event => {
-    const result = await UserInfoService.patchTeam(selectUserId, {
+    await UserInfoService.patchTeam(selectUserId, {
       team: event.target.value,
     });
     getUser();
@@ -75,7 +63,7 @@ const AdminChangeTable = ({
     // console.log(selectUserId, userId);
     if (validChangeRole()) return;
 
-    const result = await UserInfoService.patchRole(selectUserId, {
+    await UserInfoService.patchRole(selectUserId, {
       role: event.target.value,
     });
     getUser();
@@ -83,13 +71,10 @@ const AdminChangeTable = ({
   };
 
   const handleChangeVacation = async value => {
-    let result;
     for (let i = 0; i < rowData.length; i++) {
       if (rowData[i].id === selectUserId) {
         if (rowData[i].vacation === 0 && value < 0) {
           alert('감소시킬 휴가가 없습니다.');
-
-          // setSelectUserId(null);
           return;
         }
       }
@@ -104,13 +89,13 @@ const AdminChangeTable = ({
         addedDays: value,
         reason: '단일 휴가 증가',
       };
-      result = await VacationService.addVacation(selectUserId, body);
+      await VacationService.addVacation(selectUserId, body);
     } else if (0 > value) {
       const body = {
         usedDays: -value,
         reason: '단일 휴가 감소',
       };
-      result = await VacationService.useVacation(selectUserId, body);
+      await VacationService.useVacation(selectUserId, body);
     }
     getUser();
     // setSelectUserId(null);

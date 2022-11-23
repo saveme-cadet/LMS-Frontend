@@ -1,7 +1,7 @@
 import { Button, Modal } from '@mui/material';
 import { CRUDUserService } from 'API';
-import { AuthContext } from 'App';
-import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from 'Store';
+import React, { useContext, useState } from 'react';
 import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import { MODAL_TYPE } from 'Utils/constants';

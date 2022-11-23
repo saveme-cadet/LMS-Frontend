@@ -1,13 +1,11 @@
-import { useState, useContext } from 'react';
-import { CusDatePicker, ShowToday } from 'Components';
-import { AuthContext } from 'App';
+import { useState } from 'react';
+import { CusDatePicker } from 'Components';
 
 import MyTodoList from './MyTodoList/MyTodoList';
 import OtherCadetList from './OtherCadetList/OtherCadetList';
 import styled from 'styled-components';
 
 const TodoPage = () => {
-  const auth = useContext(AuthContext);
   const userId = localStorage.getItem('userId');
   const [date, setDate] = useState(new Date());
 

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
@@ -48,8 +48,6 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     const attendanceId = curFocus.attendanceId;
     const userId = curFocus.userId;
     const select = curFocus.select;
-    const today = new Date();
-    let result;
 
     const selectUserInfo = selectRowData.find(
       array => array.attendanceId === attendanceId,
@@ -66,11 +64,11 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
     }
 
     if (select === CHECK_IN) {
-      result = await AllTableService.putAllTableCheckIn(userId, attendanceId, {
+      await AllTableService.putAllTableCheckIn(userId, attendanceId, {
         status: value,
       });
     } else {
-      result = await AllTableService.putAllTableCheckOut(userId, attendanceId, {
+      await AllTableService.putAllTableCheckOut(userId, attendanceId, {
         status: value,
       });
     }

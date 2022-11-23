@@ -4,9 +4,10 @@ import AdminBody from './AdminBody';
 // import NewUserForm from './NewUserForm';
 
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 const AdminPage = () => {
-  const [date, setDate] = useState(new Date());
+  const date = useRef(new Date());
   const [isOpen, setIsOpen] = useState('false');
 
   const pressESC = event => {

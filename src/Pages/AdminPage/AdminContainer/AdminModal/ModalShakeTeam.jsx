@@ -18,14 +18,13 @@ const shuffleArray = array => {
 
 const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const [curUsers, setCurUsers] = useState([]);
-  const [neutral, setNeutral] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
 
   const teamList = ['RED', 'BLUE', 'NONE'];
 
-  // getUser를 받아 내부에서 사용하도록 수정
+  // getUser를 받아 내부에서 사용하도록 수정x
   const onClickChangeShuffleTeam = async (userId, team) => {
-    const result = await UserInfoService.patchTeam(userId, { team: team });
+    await UserInfoService.patchTeam(userId, { team: team });
     getUser();
   };
 
@@ -46,7 +45,6 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
       let teamIndex = Math.floor(i / leastMember);
       shakedUsers[i].team = teamList[teamIndex];
     }
-    setNeutral([]);
     setCurUsers(shakedUsers);
   };
 
@@ -55,7 +53,6 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
     attendUser.map(user => {
       if (!teamList.includes(user.team)) neutralArray.push(user);
     });
-    setNeutral(neutralArray);
     setCurUsers(attendUser);
   }, []);
 

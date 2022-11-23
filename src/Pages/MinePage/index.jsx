@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from 'App';
-import { MineService, AllTableService } from 'API';
+import { AuthContext } from 'Store';
+import { MineService } from 'API';
 import { differenceInSeconds, format } from 'date-fns';
-import { ShowToday } from 'Components';
 import Timer from './Timer';
 import MineButton from './MineButton';
 import MineLog from './MineLog';
@@ -11,7 +10,6 @@ import MineEditModal from './MineEditModal';
 import DailyDate from './DailyDate';
 import MinePeople from './MinePeople';
 import { MODAL_TYPE } from 'Utils/constants';
-import { Modal } from '@mui/material';
 import MineDeleteModal from './MineDeleteModal';
 
 const MinePage = () => {
@@ -20,7 +18,7 @@ const MinePage = () => {
   const [mineLogs, setMineLogs] = useState(null);
   const [activeLogIndex, setActiveLogIndex] = useState(-1);
   const [date, setDate] = useState(new Date());
-  const [today, setToday] = useState(new Date());
+  const today = useRef(new Date());
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;

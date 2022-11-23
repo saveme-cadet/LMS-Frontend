@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { CRUDUserService } from 'API';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -26,7 +26,7 @@ const SideBar = () => {
     navi(`/${value}`);
   };
   const handleClickLogout = async () => {
-    const result = await CRUDUserService.postLogout();
+    await CRUDUserService.postLogout();
     localStorage.clear();
     auth.setStatus(null);
   };
