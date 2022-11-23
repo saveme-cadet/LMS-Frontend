@@ -17,12 +17,11 @@
 </div>
 
 # 소개
+<div align="center">
 
-<p align='center'>
-  <a herf="https://www.save9cadet.com/">
-    <img src=".\public\asset\saveme.png" alt="구해줘 카뎃 사이트">
-  </a>
-</p>
+  [![구해줘 카뎃 사이트](https://github.com/saveme-cadet/LMS-Frontend/blob/dev/public/asset/saveme.png?raw=true)](https://www.save9cadet.com/)
+</div>
+   
 
 구해줘 카뎃은 체크인과 체크아웃을 진행하며 각자의 학습 시간을 확보하고자 2021년 중순에 만든 동아리입니다.
 기존에는 Numbers로 출결을 관리하였지만
