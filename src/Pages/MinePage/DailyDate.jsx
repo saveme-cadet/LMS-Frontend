@@ -19,7 +19,7 @@ function DailyDate({ date, setDate }) {
       date.getDate() + n,
     );
     // TODO: LMS 시작일 이전으로 이동 못하게 막아야하나
-    if (nextDate <= today) setDate(nextDate);
+    if (nextDate <= today.current) setDate(nextDate);
   };
   const handleClick = e => {
     setAnchorEl(e.currentTarget);

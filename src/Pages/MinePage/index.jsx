@@ -77,7 +77,7 @@ const MinePage = () => {
           </MineTimerWrap>
         </MineTimer>
         <MineLog
-          today={today}
+          today={today.current}
           mineLogs={mineLogs}
           setActiveLogIndex={setActiveLogIndex}
         />

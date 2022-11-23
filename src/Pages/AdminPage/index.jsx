@@ -19,7 +19,7 @@ const AdminPage = () => {
   return (
     <AdminBackground onKeyDown={pressESC} tabIndex={0}>
       <AdminHeader>
-        <ShowToday date={date} />
+        <ShowToday date={date.current} />
       </AdminHeader>
 
       <AdminBody isOpen={isOpen} setIsOpen={setIsOpen} />
