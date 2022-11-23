@@ -67,11 +67,7 @@ const MyTodoList = ({ userId, date }) => {
       event.target.closest('button').previousSibling.previousSibling.id;
     if (!isToday(today, date)) return;
 
-    const result = await TodoService.deleteTodo(
-      userId,
-      toDoNumber,
-      format(date, 'yyyy-MM-dd'),
-    );
+    const result = await TodoService.deleteTodo(userId, toDoNumber);
     getToDos(userId);
   };
 
