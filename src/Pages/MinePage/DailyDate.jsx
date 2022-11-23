@@ -1,5 +1,5 @@
 import { ShowToday } from 'Components';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import LeftArrow from '@mui/icons-material/KeyboardArrowLeft';
 import RightArrow from '@mui/icons-material/KeyboardArrowRight';
@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactDatePicker from 'react-datepicker';
 
 function DailyDate({ date, setDate }) {
-  const [today, setToday] = useState(new Date());
+  const today = useRef(new Date());
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleDay = n => {
@@ -19,7 +19,7 @@ function DailyDate({ date, setDate }) {
       date.getDate() + n,
     );
     // TODO: LMS 시작일 이전으로 이동 못하게 막아야하나
-    if (nextDate <= today) setDate(nextDate);
+    if (nextDate <= today.current) setDate(nextDate);
   };
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -33,7 +33,7 @@ function DailyDate({ date, setDate }) {
     setDate(select);
     setAnchorEl(null);
   };
-  const isWeekday = date => {
+  const isWeekday = () => {
     return true;
   };
 

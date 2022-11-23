@@ -1,6 +1,6 @@
 import { Modal } from '@mui/material';
 import { isRegexPassword } from 'Utils';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { CRUDUserService } from 'API';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';

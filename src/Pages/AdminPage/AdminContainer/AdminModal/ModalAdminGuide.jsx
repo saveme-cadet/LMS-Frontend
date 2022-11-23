@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { ModalBackground } from 'Components';
 
 import styled from 'styled-components';

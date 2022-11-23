@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Modal, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { MineService } from 'API';
-import { format } from 'date-fns';
 import { MODAL_TYPE, TIMEZONE_OFFSET } from 'Utils/constants';
 
 function MineEditModal({ data, setActiveLogIndex, getMyMine }) {

@@ -1,4 +1,4 @@
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { MineService } from '../../API';

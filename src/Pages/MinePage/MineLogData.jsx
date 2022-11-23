@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { differenceInSeconds, parseISO, format } from 'date-fns';
-import { AuthContext } from 'App';
-import { MODAL_TYPE, TIMEZONE_OFFSET } from 'Utils/constants';
+import { format } from 'date-fns';
+import { AuthContext } from 'Store';
+import { MODAL_TYPE } from 'Utils/constants';
 
 const formatDate = (date, finalStudyTime) => {
   date = format(new Date(date), 'HH:mm:ss');
@@ -16,7 +16,7 @@ const secondsConverter = timeStamp => {
 };
 
 const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
-  const { modalType, setModalType } = useContext(AuthContext);
+  const { setModalType } = useContext(AuthContext);
 
   const earnedPoint = (
     secondsConverter(data.finalStudyTime) /
@@ -30,7 +30,7 @@ const MineLogData = ({ data, index, today, setActiveLogIndex }) => {
     setActiveLogIndex(index);
   };
 
-  const handleDelete = e => {
+  const handleDelete = () => {
     setModalType(MODAL_TYPE.DELETE);
     setActiveLogIndex(index);
   };

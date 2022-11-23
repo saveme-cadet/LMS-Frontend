@@ -2,10 +2,10 @@ import { useContext, useState } from 'react';
 import styledComp from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { MODAL_TYPE } from 'Utils/constants';
 
-const LoginForm = ({ onClickLogin, setPageStatus }) => {
+const LoginForm = ({ onClickLogin }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const { setModalType } = useContext(AuthContext);

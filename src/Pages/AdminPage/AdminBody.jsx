@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from 'App';
+import { AuthContext } from 'Store';
 import { NotValid } from 'Components';
 import { ERROR_MESSAGES } from 'Utils/constants';
 

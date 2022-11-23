@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const MineButton = ({ onClickMine, date, state }) => {
-  const [today, setToday] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   return (
     <>

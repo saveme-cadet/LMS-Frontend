@@ -1,53 +1,14 @@
-import { useState, createContext, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+import { AuthContext, AuthProvider } from 'Store';
 import { LoginPage } from 'Pages';
 import MainRoute from './Route';
-import { UserInfoService } from 'API';
+
 import styled from 'styled-components';
 
-export const AuthContext = createContext();
-
-const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [status, setStatus] = useState(null);
-  const [modalType, setModalType] = useState(null); // default : null, 'EDIT', 'DELETE'
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    const role = localStorage.getItem('role');
-
-    setStatus({ userId: userId, role: role });
-    setIsLoading(false);
-  }, [isLoading]);
-
-  useEffect(async () => {
-    // 로그인 확인용
-    const result = await UserInfoService.getAllUser(0, 100);
-    if (!result) {
-      // alert('세션 만료!');
-      localStorage.clear();
-      setStatus(null);
-    }
-  }, []);
-
-  return (
-    <AuthContext.Provider
-      value={{
-        isLoading,
-        setIsLoading,
-        status,
-        setStatus,
-        modalType,
-        setModalType,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
 const Loading = () => {
-  return <div>로딩중!!!</div>;
+  return <div>로딩중</div>;
 };
 
 const OAuthCheckRoute = ({ children }) => {
