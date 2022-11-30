@@ -9,6 +9,7 @@ const TEAM_ID = {
   ALL: 0,
   RED: 1,
   BLUE: 2,
+  NONE: 3,
 };
 
 const PARTICIPATE_NAME = {

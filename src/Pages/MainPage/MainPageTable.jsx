@@ -134,6 +134,9 @@ const MainPageBody = styled.div`
   .BLUE {
     background-color: #0079f0;
   }
+  .NONE {
+    background-color: #00dd00;
+  }
   .ROLE_ADMIN {
     background-color: #ff8c00;
   }

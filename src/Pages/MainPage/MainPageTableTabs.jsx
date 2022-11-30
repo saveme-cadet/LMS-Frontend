@@ -36,6 +36,7 @@ const MainPageTableTabs = ({
     0: '모든 유저',
     1: 'RED 팀 유저',
     2: 'BULE 팀 유저',
+    3: 'GREEN 팀 유저',
   };
   const checkValue = {
     NONE: '미체크',
@@ -99,6 +100,7 @@ const MainPageTableTabs = ({
         <Tab label="전체 보기" />
         <Tab label="레드 팀" />
         <Tab label="블루 팀" />
+        <Tab label="그린 팀" />
 
         <CustomTab onClick={toggleModal}>
           <span>필터링</span>

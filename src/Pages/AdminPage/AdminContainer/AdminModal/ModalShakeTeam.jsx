@@ -18,7 +18,7 @@ const shuffleArray = array => {
 
 const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const [curUsers, setCurUsers] = useState([]);
-  const [isChanged, setIsChanged] = useState(false);
+  const [isChanged, setIsChanged] = useState(0);
 
   const teamList = ['RED', 'BLUE', 'NONE'];
 
@@ -35,12 +35,13 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
       });
     }
     setIsOpen(false);
+    setIsChanged(0);
   };
 
   const handleShakeTeam = () => {
-    setIsChanged(true);
+    setIsChanged(isChanged + 1);
     const shakedUsers = shuffleArray(curUsers);
-    const leastMember = shakedUsers.length / (teamList.length - 1);
+    const leastMember = shakedUsers.length / (teamList.length);
     for (let i = 0; i < shakedUsers.length; i++) {
       let teamIndex = Math.floor(i / leastMember);
       shakedUsers[i].team = teamList[teamIndex];
@@ -99,7 +100,7 @@ const MemberEach = styled.div`
   padding: 2px;
   background-color: ${props =>
     props.team === 'NONE'
-      ? '#e3e3e3'
+      ? '#00dd00'
       : props.team === 'BLUE'
       ? '#0079f0'
       : '#dc143c'};

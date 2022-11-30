@@ -34,7 +34,7 @@ const MainPage = () => {
     // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
     if (curTab === TEAM_ID.ALL) setSelectRowData(rowData);
     else {
-      const team = curTab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
+      const team = curTab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : (curTab === TEAM_ID.RED ? TEAM_NAME.RED : TEAM_NAME.NONE);
 
       setSelectRowData(
         rowData.filter(data => {

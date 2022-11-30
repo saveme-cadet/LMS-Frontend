@@ -18,6 +18,14 @@ const SelectedUser = ({
     onClickChangeVacation(vacation);
     setVacation(0);
   };
+
+  const noneToGreenTeam = (team) => {
+
+      if (team === 'NONE')
+        return ('GREEN')
+      return (team)
+  }
+
   return (
     <div className="box">
       <span className="title">현재 선택 : {userInfo.username}</span>
@@ -29,7 +37,7 @@ const SelectedUser = ({
         />
         {userInfo.attendStatus === 'PARTICIPATED' && (
           <>
-            <Chip label={userInfo.team} className={userInfo.team} />
+            <Chip label={noneToGreenTeam(userInfo.team)} className={userInfo.team} />
             <Chip label={ROLE_NAME[userInfo.role]} className={userInfo.role} />
           </>
         )}
@@ -56,6 +64,7 @@ const SelectedUser = ({
             >
               <MenuItem value={'RED'}>RED</MenuItem>
               <MenuItem value={'BLUE'}>BLUE</MenuItem>
+              <MenuItem value={'NONE'}>GREEN</MenuItem>
             </Select>
             <Select
               value={userInfo.role}

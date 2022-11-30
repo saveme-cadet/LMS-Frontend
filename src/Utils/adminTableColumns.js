@@ -25,7 +25,10 @@ const adminTableColumns = [
     type: 'string',
     width: 120,
     renderCell: params => {
-      return <div className={`${params.value} info`}>{params.value}</div>;
+      if (params.value === 'NONE')
+        return <div className={`${params.value} info`}>GREEN</div>;
+      else
+        return <div className={`${params.value} info`}>{params.value}</div>;
     },
   },
   {
