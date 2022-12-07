@@ -14,10 +14,12 @@ const TodoPage = () => {
       <TodoHeader>
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
       </TodoHeader>
+
       <TodoBody>
         <MyTodoList userId={userId} date={date} />
         <OtherCadetList date={date} />
       </TodoBody>
+      <img src="https://ghchart.rshah.org/gulsam00" />
     </TodoMainBackground>
   );
 };
@@ -30,6 +32,10 @@ const TodoMainBackground = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  > * {
+    margin: 10px;
+  }
 `;
 const TodoHeader = styled.div`
   display: flex;
@@ -38,7 +44,6 @@ const TodoHeader = styled.div`
   justify-content: center;
   font-size: 40px;
   font-weight: bold;
-  margin: 10px;
 `;
 const TodoBody = styled.div`
   display: flex;
