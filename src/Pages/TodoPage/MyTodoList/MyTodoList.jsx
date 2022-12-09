@@ -161,6 +161,7 @@ const MyTodoList = ({ userId, date }) => {
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
                 userId={userId}
+                patchTodo={patchTodo}
               />
               <TodoProgress total={total} checked={checked} />
             </TodoListContainer>

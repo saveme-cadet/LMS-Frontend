@@ -13,6 +13,7 @@ const TodoList = ({
   isEdit,
   setIsEdit,
   userId,
+  patchTodo,
 }) => {
   const today = new Date();
   return (
@@ -29,6 +30,7 @@ const TodoList = ({
                 setIsEdit={setIsEdit}
                 toDos={toDos}
                 userId={userId}
+                patchTodo={patchTodo}
               />
             </TodoListContainer>
           ) : (

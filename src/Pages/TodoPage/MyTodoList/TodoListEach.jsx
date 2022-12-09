@@ -31,6 +31,7 @@ const TodoListEach = ({
         onClick={() => changeCheck(index)}
       >
         {item.title.replace(/ /g, '\u00a0')}
+        {/* {item.title.replace(/ /gi, '')} */}
       </Item>
       <Buttons
         type={'Edit'}

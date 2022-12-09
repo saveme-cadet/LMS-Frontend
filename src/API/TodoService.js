@@ -19,7 +19,7 @@ const TodoService = {
     } catch (e) {
       alert(e);
     }
-    return response.data.content;
+    return response?.data.content;
   },
   /**
    * 자신의 할일 추가
@@ -86,7 +86,7 @@ const TodoService = {
     } catch (e) {
       alert(e);
     }
-    return response;
+    return response?.data.content;
   },
 };
 

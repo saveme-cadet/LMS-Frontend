@@ -16,6 +16,19 @@ export const getTodo = (userId, date) => {
   return { status, data };
 };
 
+export const getOthersTodo = date => {
+  const { status, data, error } = useQuery(
+    ['otherTodos', date],
+    () => TodoService.getOthers(date),
+    {
+      refetchOnWindowFocus: false,
+      cacheTime: 1000 * 10,
+      retry: 0,
+    },
+  );
+
+  return { status, data };
+};
 // export const patchTodo = useMutation((userId, todoId, body) =>
 //   TodoService.patchTodo(userId, todoId, body),
 // );

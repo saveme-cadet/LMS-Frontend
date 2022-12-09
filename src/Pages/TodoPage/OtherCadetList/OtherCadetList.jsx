@@ -4,30 +4,34 @@ import { format } from 'date-fns';
 import { checkDateTodo } from 'Utils';
 
 import TodoOtherList from './TodoOtherList';
+import { getOthersTodo } from 'Hooks/todo';
+import { useQueryClient } from 'react-query';
 
 import styled from 'styled-components';
 
 const OtherCadetList = ({ date }) => {
-  const [othersToDo, setOthersToDo] = useState([]);
-
-  const getOthers = async () => {
-    const result = await TodoService.getOthers(format(date, 'yyyy-MM-dd'));
-    setOthersToDo(result.data.content);
-  };
+  const { status: stat, data: othersToDo } = getOthersTodo(
+    format(date, 'yyyy-MM-dd'),
+  );
+  const client = useQueryClient();
 
   useEffect(() => {
-    getOthers();
+    client.invalidateQueries(['otherTodos', format(date, 'yyyy-MM-dd')]);
   }, [date]);
 
   return (
     <TodoOtherBody>
-      <OtherTitle>👀 다른 카뎃은 무엇을?</OtherTitle>
-      {checkDateTodo(date) ? (
-        <WarningNotVaildDate>
-          아직 진행하지 않은 날짜입니다!
-        </WarningNotVaildDate>
-      ) : (
-        <TodoOtherList othersToDo={othersToDo} date={date} />
+      {othersToDo && (
+        <>
+          <OtherTitle>👀 다른 카뎃은 무엇을?</OtherTitle>
+          {checkDateTodo(date) ? (
+            <WarningNotVaildDate>
+              아직 진행하지 않은 날짜입니다!
+            </WarningNotVaildDate>
+          ) : (
+            <TodoOtherList othersToDo={othersToDo} date={date} />
+          )}
+        </>
       )}
     </TodoOtherBody>
   );

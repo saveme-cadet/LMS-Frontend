@@ -16,6 +16,7 @@ const TodoEditForm = ({
   setIsEdit,
   toDos,
   userId,
+  patchTodo,
 }) => {
   const [title, setTitle] = useState(item.title);
 
@@ -28,10 +29,14 @@ const TodoEditForm = ({
     event.preventDefault();
     if (newTitle.trim() === '') return;
 
-    await TodoService.patchTodo(userId, selected.todoId, {
-      title: newTitle.trim(),
-      titleCheck: selected.titleCheck,
-    });
+    patchTodo.mutate([
+      userId,
+      selected.todoId,
+      {
+        title: newTitle.trim(),
+        titleCheck: selected.titleCheck,
+      },
+    ]);
     setIsEdit('');
   };
 
@@ -52,10 +57,14 @@ const TodoEditForm = ({
 
     if (newTitle === '') return;
 
-    await TodoService.patchTodo(userId, toDos[index].todoId, {
-      title: newTitle.trim(),
-      titleCheck: toDos[index].titleCheck,
-    });
+    patchTodo.mutate([
+      userId,
+      toDos[index].todoId,
+      {
+        title: newTitle.trim(),
+        titleCheck: toDos[index].titleCheck,
+      },
+    ]);
     setIsEdit();
     client.invalidateQueries(['todos', date]);
   };
