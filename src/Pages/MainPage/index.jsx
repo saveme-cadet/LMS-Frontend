@@ -17,8 +17,6 @@ import FilterModal from './FilterModal';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 
-// import { format } from 'date-fns';
-
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [tab, setTab] = useState(0);

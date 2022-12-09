@@ -12,39 +12,38 @@ const TodoList = ({
   removeToDo,
   isEdit,
   setIsEdit,
-  getToDos,
   userId,
 }) => {
   const today = new Date();
   return (
     <TodoListBody>
-      {toDos.map((item, index) =>
-        index === isEdit && isToday(today, date) ? (
-          <TodoListContainer key={index}>
-            <TodoEditForm
-              item={item}
-              date={date}
-              index={index}
-              isEdit={isEdit}
-              setIsEdit={setIsEdit}
-              toDos={toDos}
-              userId={userId}
-              getToDos={getToDos}
-            />
-          </TodoListContainer>
-        ) : (
-          <TodoListContainer key={index}>
-            <TodoListEach
-              item={item}
-              index={index}
-              changeCheck={changeCheck}
-              date={date}
-              setIsEdit={setIsEdit}
-              removeToDo={removeToDo}
-            />
-          </TodoListContainer>
-        ),
-      )}
+      {toDos &&
+        toDos.map((item, index) =>
+          index === isEdit && isToday(today, date) ? (
+            <TodoListContainer key={index}>
+              <TodoEditForm
+                item={item}
+                date={date}
+                index={index}
+                isEdit={isEdit}
+                setIsEdit={setIsEdit}
+                toDos={toDos}
+                userId={userId}
+              />
+            </TodoListContainer>
+          ) : (
+            <TodoListContainer key={index}>
+              <TodoListEach
+                item={item}
+                index={index}
+                changeCheck={changeCheck}
+                date={date}
+                setIsEdit={setIsEdit}
+                removeToDo={removeToDo}
+              />
+            </TodoListContainer>
+          ),
+        )}
     </TodoListBody>
   );
 };

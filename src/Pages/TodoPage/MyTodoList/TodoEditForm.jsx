@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useQueryClient } from 'react-query';
+
 import { TodoService } from 'API';
 import Buttons from './Buttons';
 
@@ -17,6 +19,8 @@ const TodoEditForm = ({
   getToDos,
 }) => {
   const [title, setTitle] = useState(item.title);
+
+  const client = useQueryClient();
 
   const onSubmit = async event => {
     const newTitle = event.target[1].value;
@@ -56,6 +60,7 @@ const TodoEditForm = ({
     });
     setIsEdit();
     getToDos(userId);
+    client.invalidateQueries(['todos', date]);
   };
 
   return (
