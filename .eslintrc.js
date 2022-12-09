@@ -28,5 +28,7 @@ module.exports = {
     'prettier/prettier': 'off',
     'no-var': 'off',
     'react/prop-types': 'off',
+    'no-constant-condition': 'off',
+    'no-unused-vars': 'off',
   },
 };

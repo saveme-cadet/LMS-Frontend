@@ -6,13 +6,13 @@ import WrongDay from './WrongDay';
 import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
 import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
 
-import AllTableService from 'API/AllTableService';
+import { AllTableService } from 'API';
 
 import { getMonth } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 import styled from 'styled-components';
 
-const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
+const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ attendanceId: '', select: '' });
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
@@ -72,8 +72,9 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
         status: value,
       });
     }
+
     setAnchorEl(null);
-    getUsers();
+    refresh();
   };
 
   return (

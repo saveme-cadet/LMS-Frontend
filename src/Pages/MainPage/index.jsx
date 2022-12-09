@@ -1,31 +1,40 @@
 import { useState, useContext, useEffect } from 'react';
+import { getTable, refreshTable } from 'Hooks/dayTable';
+import { format } from 'date-fns';
+
 import { AuthContext } from 'Store';
 import { isWrongAccess } from 'Utils';
 import { CusDatePicker } from 'Components';
 
 import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
-import { format } from 'date-fns';
 
 import WrongDay from './WrongDay';
-// import UserGuide from './UserGuide';
 import MainPageTable from './MainPageTable';
 import MainPageTableTabs from './MainPageTableTabs';
 import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
 
+import { useQueryClient } from 'react-query';
+
+// import { format } from 'date-fns';
+
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [tab, setTab] = useState(0);
-  const [rowData, setRowData] = useState(null);
+  // const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
   const [customData, setCustomData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [requestEnd, setRequestEnd] = useState(true);
-
   const auth = useContext(AuthContext);
   const role = auth.status.role;
+
+  const { status: stat, data: rowData } = getTable(date);
+  const client = useQueryClient();
+
+  console.log('cli : ', client);
 
   const updateSelectData = curTab => {
     // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
@@ -77,20 +86,20 @@ const MainPage = () => {
     localStorage.setItem('customData', JSON.stringify(newArray));
   };
 
-  const getUsers = async () => {
-    const dateFormat = format(date, 'yyyy-MM-dd');
+  const getUsers = () => {
+    // const dateFormat = format(date, 'yyyy-MM-dd');
 
-    const result = await AllTableService.getTable(dateFormat, true);
+    // const result = await AllTableService.getTable(dateFormat, true);
     // console.log(result);
-
-    // 백엔드 장애 데이터 임시 조치
-    if (!result || !result.data[0].attendanceId) {
-      setRowData(null);
+    if (stat === 'loading') {
       setSelectRowData(null);
       return;
     }
 
-    const newArray = result.data.map((array, i) => ({
+    console.log('target : ', rowData.data[0]);
+
+    // const newArray = result.data.map((array, i) => ({
+    const newArray = rowData.data.map((array, i) => ({
       id: i,
       attendanceId: array.attendanceId,
       userId: array.userId,
@@ -105,7 +114,6 @@ const MainPage = () => {
       checkIn: array.checkIn,
       checkOut: array.checkOut,
     }));
-    setRowData(newArray);
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
       const team = tab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
@@ -126,7 +134,7 @@ const MainPage = () => {
       return;
     }
     setRequestEnd(prev => !prev);
-    await selectRowData.map(async user => {
+    selectRowData.map(async user => {
       userId = user.userId;
       attendanceId = user.attendanceId;
       if (value === 'VACATION' && user.vacation === 0) {
@@ -134,11 +142,11 @@ const MainPage = () => {
         return;
       }
       if (select === CHECK_IN) {
-        await AllTableService.putAllTableCheckIn(userId, attendanceId, {
+        AllTableService.putAllTableCheckIn(userId, attendanceId, {
           status: value,
         });
       } else {
-        await AllTableService.putAllTableCheckOut(userId, attendanceId, {
+        AllTableService.putAllTableCheckOut(userId, attendanceId, {
           status: value,
         });
       }
@@ -167,11 +175,11 @@ const MainPage = () => {
       value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
 
       if (prevSelect === CHECK_IN) {
-        await AllTableService.putAllTableCheckIn(userId, attendanceId, {
+        AllTableService.putAllTableCheckIn(userId, attendanceId, {
           status: value,
         });
       } else {
-        await AllTableService.putAllTableCheckOut(userId, attendanceId, {
+        AllTableService.putAllTableCheckOut(userId, attendanceId, {
           status: value,
         });
       }
@@ -185,13 +193,21 @@ const MainPage = () => {
 
   useEffect(() => {
     getUsers();
-  }, [date, requestEnd]);
+  }, [stat, date, requestEnd]);
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('customData'));
     setCustomData(localData ? localData : new Array(9).fill(true));
     // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
   }, []);
+
+  const refresh = () => {
+    console.log('refresh');
+    const dateFormat = format(date, 'yyyy-MM-dd');
+    client.invalidateQueries(['dayTable', dateFormat]);
+    setSelectRowData(null);
+    getUsers();
+  };
 
   return (
     <MainPageContainer>
@@ -214,8 +230,8 @@ const MainPage = () => {
           <MainPageTable
             date={date}
             selectRowData={selectRowData}
-            getUsers={getUsers}
             customData={customData}
+            refresh={refresh}
           />
         </>
       ) : (
