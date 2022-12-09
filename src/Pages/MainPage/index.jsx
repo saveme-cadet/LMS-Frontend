@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
-import { getTable, refreshTable } from 'Hooks/dayTable';
-import { format } from 'date-fns';
+import { useQueryClient } from 'react-query';
 
 import { AuthContext } from 'Store';
 import { isWrongAccess } from 'Utils';
 import { CusDatePicker } from 'Components';
+import { getTable } from 'Hooks/dayTable';
 
 import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
@@ -15,15 +15,13 @@ import MainPageTableTabs from './MainPageTableTabs';
 import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
-
-import { useQueryClient } from 'react-query';
+import { format } from 'date-fns';
 
 // import { format } from 'date-fns';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [tab, setTab] = useState(0);
-  // const [rowData, setRowData] = useState(null);
   const [selectRowData, setSelectRowData] = useState(null);
   const [customData, setCustomData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +32,7 @@ const MainPage = () => {
   const { status: stat, data: rowData } = getTable(date);
   const client = useQueryClient();
 
-  console.log('cli : ', client);
+  // console.log('cli : ', client.getQueriesData()[0][1].data[0]);
 
   const updateSelectData = curTab => {
     // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
@@ -87,18 +85,13 @@ const MainPage = () => {
   };
 
   const getUsers = () => {
-    // const dateFormat = format(date, 'yyyy-MM-dd');
-
-    // const result = await AllTableService.getTable(dateFormat, true);
-    // console.log(result);
     if (stat === 'loading') {
       setSelectRowData(null);
       return;
     }
 
-    console.log('target : ', rowData.data[0]);
+    // console.log('target : ', rowData.data[0]);
 
-    // const newArray = result.data.map((array, i) => ({
     const newArray = rowData.data.map((array, i) => ({
       id: i,
       attendanceId: array.attendanceId,
@@ -193,7 +186,7 @@ const MainPage = () => {
 
   useEffect(() => {
     getUsers();
-  }, [stat, date, requestEnd]);
+  }, [rowData, date, requestEnd]);
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('customData'));
@@ -205,8 +198,7 @@ const MainPage = () => {
     console.log('refresh');
     const dateFormat = format(date, 'yyyy-MM-dd');
     client.invalidateQueries(['dayTable', dateFormat]);
-    setSelectRowData(null);
-    getUsers();
+    // getUsers(); // 키가 사라지면 자동으로 dayTable에 매핑된 useQuery가 실행. 굳이 실행할 필요 없음.
   };
 
   return (
