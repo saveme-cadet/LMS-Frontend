@@ -16,7 +16,6 @@ const TodoEditForm = ({
   setIsEdit,
   toDos,
   userId,
-  getToDos,
 }) => {
   const [title, setTitle] = useState(item.title);
 
@@ -34,7 +33,6 @@ const TodoEditForm = ({
       titleCheck: selected.titleCheck,
     });
     setIsEdit('');
-    getToDos(userId);
   };
 
   const pressKey = event => {
@@ -59,7 +57,6 @@ const TodoEditForm = ({
       titleCheck: toDos[index].titleCheck,
     });
     setIsEdit();
-    getToDos(userId);
     client.invalidateQueries(['todos', date]);
   };
 

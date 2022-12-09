@@ -62,6 +62,7 @@ const TodoService = {
    * @returns
    */
   patchTodo: async (userId, todoId, body) => {
+    console.log(userId, todoId, body);
     const url = TodoUrl(`${userId}/todos/${todoId}`);
     let response;
     try {

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { TodoService } from 'API';
 
 export const getTodo = (userId, date) => {
@@ -16,13 +16,8 @@ export const getTodo = (userId, date) => {
   return { status, data };
 };
 
-// export const refreshTable = (queryClient, date) => {
-//   const dateFormat = format(date, 'yyyy-MM-dd');
-
-//   queryClient.invalidateQueries(['dayTable', dateFormat]);
-// };
-// export const putTableCheckIn = useMutation((userId, attendanceId, body) =>
-//   AllTableService.putAllTableCheckIn(userId, attendanceId, body),
+// export const patchTodo = useMutation((userId, todoId, body) =>
+//   TodoService.patchTodo(userId, todoId, body),
 // );
 
 // export const putTableCheckOut = useMutation((userId, attendanceId, body) =>
