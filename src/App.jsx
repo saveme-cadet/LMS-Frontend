@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthContext, AuthProvider } from 'Store';
@@ -6,6 +6,15 @@ import { LoginPage } from 'Pages';
 import MainRoute from './Route';
 
 import styled from 'styled-components';
+
+import {
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  setDoc,
+} from 'firebase/firestore/lite';
+import db from './firebase';
 
 const Loading = () => {
   return <div>로딩중</div>;
@@ -34,6 +43,16 @@ const LoginCheckRoute = ({ children }) => {
 };
 
 const App = () => {
+  const test = async () => {
+    const userDB = doc(db, 'user', 'sham');
+    const data = await getDoc(userDB);
+    console.log(data.data());
+  };
+
+  useEffect(() => {
+    test();
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>

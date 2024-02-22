@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { AllTableService } from 'API';
 import { format } from 'date-fns';
 
@@ -25,16 +25,3 @@ export const getTable = date => {
   //   console.log('get Table 쿼리 : ', data?.data[0]);
   return { status, data };
 };
-
-// export const refreshTable = (queryClient, date) => {
-//   const dateFormat = format(date, 'yyyy-MM-dd');
-
-//   queryClient.invalidateQueries(['dayTable', dateFormat]);
-// };
-// export const putTableCheckIn = useMutation((userId, attendanceId, body) =>
-//   AllTableService.putAllTableCheckIn(userId, attendanceId, body),
-// );
-
-// export const putTableCheckOut = useMutation((userId, attendanceId, body) =>
-//   AllTableService.putAllTableCheckOut(userId, attendanceId, body),
-// );

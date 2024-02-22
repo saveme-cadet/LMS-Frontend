@@ -20,10 +20,11 @@ const LoginPage = () => {
 
     auth.setIsLoading(true);
     const result = await CRUDUserService.postLogin(body);
-    if (result.status !== 200) {
+    if (result) {
       alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
+
     alert(`환영합니다, ${body.username}!`);
     localStorage.setItem('userId', result.data.id);
     localStorage.setItem('role', result.data.role);
@@ -36,14 +37,8 @@ const LoginPage = () => {
     if (auth.isLoading) return;
     auth.setIsLoading(true);
     const result = await CRUDUserService.postUser(userLoginInfo);
-    // console.log('result : ', result);
-    if (result.status !== 201) {
-      if (result.status === 400) {
-        alert('비밀번호가 포맷에 맞지 않습니다!'); // TODO : Change error window in postUser
-      } else if (result.status === 409) {
-        alert('이미 존재하는 유저입니다!');
-      } else alert('서버 에러!');
-      return;
+    if (result) {
+      alert('회원가입 실패');
     }
     handleLogin(userLoginInfo);
     auth.setIsLoading(false);

@@ -12,6 +12,9 @@ import MinePeople from './MinePeople';
 import { MODAL_TYPE } from 'Utils/constants';
 import MineDeleteModal from './MineDeleteModal';
 
+import { useQueryClient } from 'react-query';
+import { getMine } from 'Hooks/mine';
+
 const MinePage = () => {
   const { modalType } = useContext(AuthContext);
   const [beginTime, setBeginTime] = useState(null);
@@ -22,6 +25,8 @@ const MinePage = () => {
 
   const auth = useContext(AuthContext);
   const userId = auth.status.userId;
+
+  const { status, data } = getMine(userId, format(date, 'yyyy-MM-dd'));
 
   const getMyMine = async () => {
     const result = await MineService.getFindMine(

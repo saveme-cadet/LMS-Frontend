@@ -4,6 +4,9 @@ const CRUDUserAPI = path => {
   return `/${path}`;
 };
 
+import { doc, setDoc, getDoc, collection } from 'firebase/firestore/lite';
+import db from '../firebase';
+
 const CRUDUserService = {
   /**
    * 회원가입
@@ -11,35 +14,30 @@ const CRUDUserService = {
    * @returns
    */
   postUser: async body => {
-    const url = CRUDUserAPI(`users`);
     let response;
-
     try {
-      response = await instance.post(url, body);
+      const userRef = doc(db, 'user', body.username);
+      response = await setDoc(userRef, { password: body.password });
     } catch (e) {
-      return e.response;
+      return -1;
     }
-    return response;
+    return 0;
   },
   /**
    * 로그인
-   * @param {FormData} body
+   * @param {{username: string, password: string}} body - username은 42 intra id
    * @returns
    */
   postLogin: async body => {
-    const url = CRUDUserAPI('auth/login');
-    const formData = new FormData();
-    for (let k in body) {
-      formData.append(k, body[k]);
-    }
     let response;
-
     try {
-      response = await instance.post(url, formData);
+      const userRef = doc(db, 'user', body.username);
+      response = await getDoc(userRef);
+      if (response.data().password === body.password) return 0;
     } catch (e) {
-      return e.response;
+      return -1;
     }
-    return response;
+    return -1;
   },
   /**
    * 로그아웃
