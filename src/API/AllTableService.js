@@ -18,6 +18,7 @@ const AllTableService = {
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
+
   putTableCheckIn: async (username, date, value) => {
     const dayTableRef = doc(db, 'day_table', date);
     const data = { [`${username}.checkIn`]: value };

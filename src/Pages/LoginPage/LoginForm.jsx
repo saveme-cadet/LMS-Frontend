@@ -65,13 +65,13 @@ const LoginForm = ({ onClickLogin }) => {
         >
           아직 회원이 아니신가요?
         </RegisterButton>
-        <IssueTempPasswordButton
+        {/* <IssueTempPasswordButton
           onClick={() => {
             setModalType(MODAL_TYPE.ISSUE_PW);
           }}
         >
           임시 비밀번호 발급
-        </IssueTempPasswordButton>
+        </IssueTempPasswordButton> */}
       </RegisterWrap>
     </>
   );
