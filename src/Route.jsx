@@ -15,10 +15,9 @@ const MainRoute = () => {
 
           <Route path="/todo" element={<TodoPage />} />
 
-          <Route path="/mine" element={<MinePage />} />
+          {/* <Route path="/mine" element={<MinePage />} /> */}
 
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
       </BodyContainer>
       <UpdatePasswordModal />

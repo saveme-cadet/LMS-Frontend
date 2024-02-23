@@ -10,12 +10,11 @@ import {
 } from 'firebase/firestore/lite';
 import db from '../firebase';
 
-const AllTableUrl = '';
 const AllTableService = {
   /**
    * 출석 체크인
    * @param {string} username - 로그인한 유저ID
-   * @param {number} attendanceId - 출석ID
+   * @param {number} date - 날짜
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
@@ -28,6 +27,7 @@ const AllTableService = {
     } catch (e) {
       alert(e);
     }
+    console.log('change');
     return response;
   },
   /**

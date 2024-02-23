@@ -18,7 +18,6 @@ const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
   const auth = useContext(AuthContext);
   const role = auth.status?.role;
-  console.log('RRR : ', role);
 
   const handleClickCell = (params, event) => {
     const today = new Date();

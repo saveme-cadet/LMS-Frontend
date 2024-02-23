@@ -7,15 +7,6 @@ import MainRoute from './Route';
 
 import styled from 'styled-components';
 
-import {
-  doc,
-  getDoc,
-  getDocs,
-  collection,
-  setDoc,
-} from 'firebase/firestore/lite';
-import db from './firebase';
-
 const Loading = () => {
   return <div>로딩중</div>;
 };

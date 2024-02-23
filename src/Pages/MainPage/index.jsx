@@ -4,7 +4,7 @@ import { useQueryClient } from 'react-query';
 import { AuthContext } from 'Store';
 import { isWrongAccess } from 'Utils';
 import { CusDatePicker } from 'Components';
-import { getTable } from 'Hooks/dayTable';
+import { useTable } from 'Hooks/dayTable';
 
 import { TEAM_NAME, TEAM_ID, ERROR_MESSAGES, CHECK_IN } from 'Utils/constants';
 import { AllTableService } from 'API';
@@ -16,6 +16,7 @@ import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
 import { format } from 'date-fns';
+import { getUser } from 'Hooks/user';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
@@ -26,7 +27,7 @@ const MainPage = () => {
   const auth = useContext(AuthContext);
   const role = auth.status?.role;
 
-  const { status: stat, data: rowData } = getTable(date);
+  const { status: stat, data: rowData } = useTable(date);
 
   const client = useQueryClient();
 
@@ -86,6 +87,7 @@ const MainPage = () => {
       setSelectRowData(null);
       return;
     }
+
     const newArray = rowData.map((item, i) => {
       item.id = i + 1;
       return item;
@@ -103,40 +105,38 @@ const MainPage = () => {
   };
 
   const handleChangeAllCheck = async (select, value) => {
-    let username;
-    let attendanceId;
-
     if (isWrongAccess(role)) {
       alert('수정 권한이 없습니다.');
       return;
     }
-    selectRowData.map(async user => {
-      username = user.username;
-      attendanceId = user.attendanceId;
-      if (value === 'VACATION' && user.vacation === 0) {
-        alert('사용할 수 있는 휴가가 없습니다!');
-        return;
-      }
-      if (select === CHECK_IN) {
-        AllTableService.putAllTableCheckIn(username, attendanceId, {
-          status: value,
-        });
-      } else {
-        AllTableService.putAllTableCheckOut(username, attendanceId, {
-          status: value,
-        });
-      }
-    });
-    //  getUsers가 변경 도중인 DB를 참고함.
-    // const timer = setTimeout(() => {
-    //   clearTimeout(timer);
-    //   setRequestEnd(prev => !prev);
-    // }, 4000);
+
+    // selectRowData.map의 모든 객체 요소들이 API 요청을 보내기 때문에,
+    await Promise.all(
+      selectRowData.map(async user => {
+        if (value === 'VACATION' && user.vacation === 0) {
+          alert('사용할 수 있는 휴가가 없습니다!');
+          return;
+        }
+
+        if (select === CHECK_IN) {
+          return AllTableService.putTableCheckIn(
+            user.username,
+            format(date, 'yyyyMMdd'),
+            value,
+          );
+        } else {
+          return AllTableService.putTableCheckOut(
+            user.username,
+            format(date, 'yyyyMMdd'),
+            value,
+          );
+        }
+      }),
+    );
+    refresh();
   };
 
   const handleChangePrev = async (prevData, prevSelect) => {
-    let username;
-    let attendanceId;
     let value;
 
     if (isWrongAccess(role)) {
@@ -144,26 +144,26 @@ const MainPage = () => {
       return;
     }
 
-    await prevData.map(async user => {
-      username = user.username;
-      attendanceId = user.attendanceId;
-      value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
+    await Promise.all(
+      prevData.map(async user => {
+        value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
 
-      if (prevSelect === CHECK_IN) {
-        AllTableService.putAllTableCheckIn(username, attendanceId, {
-          status: value,
-        });
-      } else {
-        AllTableService.putAllTableCheckOut(username, attendanceId, {
-          status: value,
-        });
-      }
-    });
-
-    // const timer = setTimeout(() => {
-    //   clearTimeout(timer);
-    //   setRequestEnd(prev => !prev);
-    // }, 4000);
+        if (prevSelect === CHECK_IN) {
+          return AllTableService.putTableCheckIn(
+            user.username,
+            format(date, 'yyyyMMdd'),
+            value,
+          );
+        } else {
+          return AllTableService.putTableCheckOut(
+            user.username,
+            format(date, 'yyyyMMdd'),
+            value,
+          );
+        }
+      }),
+    );
+    refresh();
   };
 
   useEffect(() => {
