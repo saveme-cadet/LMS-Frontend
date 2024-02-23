@@ -19,16 +19,6 @@ const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, [isLoading]);
 
-  useEffect(async () => {
-    // 로그인 확인용
-
-    const result = await UserInfoService.getAllUser(0, 100);
-    if (!result) {
-      localStorage.clear();
-      setStatus(null);
-    }
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{

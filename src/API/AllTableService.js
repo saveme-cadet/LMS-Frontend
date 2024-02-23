@@ -4,6 +4,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  updateDoc,
   collection,
   getDocs,
 } from 'firebase/firestore/lite';
@@ -18,12 +19,12 @@ const AllTableService = {
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
-  putTableCheckIn: async (username, date, body) => {
-    const url = AllTableUrl(``);
-
+  putTableCheckIn: async (username, date, value) => {
+    const dayTableRef = doc(db, 'day_table', date);
+    const data = { [`${username}.checkIn`]: value };
     let response;
     try {
-      response = await instance.patch(url, body);
+      response = await updateDoc(dayTableRef, data);
     } catch (e) {
       alert(e);
     }
@@ -36,11 +37,12 @@ const AllTableService = {
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
-  putTableCheckOut: async (username, date, body) => {
-    const url = AllTableUrl(``);
+  putTableCheckOut: async (username, date, value) => {
+    const dayTableRef = doc(db, 'day_table', date);
+    const data = { [`${username}.checkOut`]: value };
     let response;
     try {
-      response = await instance.patch(url, body);
+      response = await updateDoc(dayTableRef, data);
     } catch (e) {
       alert(e);
     }

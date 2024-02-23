@@ -18,6 +18,7 @@ const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
   const auth = useContext(AuthContext);
   const role = auth.status?.role;
+  console.log('RRR : ', role);
 
   const handleClickCell = (params, event) => {
     const today = new Date();
@@ -59,15 +60,11 @@ const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
       return;
     }
 
-    const date = format(new Date(), 'yyyy/MM/dd');
+    const date = format(new Date(), 'yyyyMMdd');
     if (select === CHECK_IN) {
-      await AllTableService.putTableCheckIn(username, date, {
-        status: value,
-      });
+      await AllTableService.putTableCheckIn(username, date, value);
     } else {
-      await AllTableService.putTableCheckOut(username, date, {
-        status: value,
-      });
+      await AllTableService.putTableCheckOut(username, date, value);
     }
 
     setAnchorEl(null);

@@ -28,7 +28,7 @@ const CRUDUserService = {
         username: body.username,
         password: body.password,
         attendance: PARTICIPATE_NAME.PARTICIPATED,
-        role: ROLE_NAME.ROLE_USER,
+        role: ROLE_NAME.ROLE_MANAGER,
         team_id: TEAM_ID.ALL,
         team: TEAM_NAME.NONE,
         vacation: 0,
