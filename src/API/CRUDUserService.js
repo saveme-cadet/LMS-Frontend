@@ -1,4 +1,10 @@
 import { instance } from './api';
+import {
+  TEAM_ID,
+  PARTICIPATE_NAME,
+  TEAM_NAME,
+  ROLE_NAME,
+} from 'Utils/constants';
 
 const CRUDUserAPI = path => {
   return `/${path}`;
@@ -15,9 +21,19 @@ const CRUDUserService = {
    */
   postUser: async body => {
     let response;
+
     try {
       const userRef = doc(db, 'user', body.username);
-      response = await setDoc(userRef, { password: body.password });
+      const data = {
+        name: body.username,
+        password: body.password,
+        attendance: PARTICIPATE_NAME.PARTICIPATED,
+        role: ROLE_NAME.ROLE_USER,
+        team_id: TEAM_ID.ALL,
+        team_name: TEAM_NAME.NONE,
+        vacation: 0,
+      };
+      response = await setDoc(userRef, data, { merge: true });
     } catch (e) {
       return -1;
     }
@@ -30,14 +46,18 @@ const CRUDUserService = {
    */
   postLogin: async body => {
     let response;
+    let data;
     try {
-      const userRef = doc(db, 'user', body.username);
+      let userRef;
+      userRef = doc(db, 'user', body.username);
+
       response = await getDoc(userRef);
-      if (response.data().password === body.password) return 0;
+
+      data = response.data();
+      if (data.password === body.password) return data;
     } catch (e) {
-      return -1;
+      return null;
     }
-    return -1;
   },
   /**
    * 로그아웃

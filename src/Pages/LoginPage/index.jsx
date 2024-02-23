@@ -2,10 +2,12 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from 'Store';
-import { CRUDUserService } from 'API';
+import { CRUDUserService, AllTableService } from 'API';
 
 import LoginForm from './LoginForm';
 import Register from './RegisterFormModal';
+
+import { format } from 'date-fns';
 
 import styled from 'styled-components';
 import IssueTempPassword from './IssuePasswordModal';
@@ -20,22 +22,29 @@ const LoginPage = () => {
 
     auth.setIsLoading(true);
     const result = await CRUDUserService.postLogin(body);
-    if (result) {
+    console.log('result : ', result);
+    if (!result) {
       alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
 
     alert(`환영합니다, ${body.username}!`);
-    localStorage.setItem('userId', result.data.id);
-    localStorage.setItem('role', result.data.role);
-    auth.setStatus({ userId: result.data.id, role: result.data.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
+    localStorage.setItem('userId', result.name);
+    localStorage.setItem('role', result.role);
+    auth.setStatus({ userId: result.name, role: result.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
+
+    const date = new Date();
+    const dateFormat = format(date, 'yyyyMMdd');
+
+    await AllTableService.updateTable(dateFormat, result.name);
     navi('/');
   };
 
   const handleRegister = async userLoginInfo => {
     if (auth.isLoading) return;
     auth.setIsLoading(true);
+
     const result = await CRUDUserService.postUser(userLoginInfo);
     if (result) {
       alert('회원가입 실패');
@@ -52,7 +61,7 @@ const LoginPage = () => {
         </LoginMain>
         <LoginForm onClickLogin={handleLogin} />
         <Register onClickRegister={handleRegister} />
-        <IssueTempPassword />
+        {/* <IssueTempPassword /> */}
         <FooterWrap>
           <BugReportButton />
         </FooterWrap>

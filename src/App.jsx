@@ -23,35 +23,39 @@ const Loading = () => {
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
 
-  if (auth.isLoading) {
-    return <Loading />;
-  } else {
-    if (auth.status?.userId) return children;
-    else return <Navigate to="/login" />;
-  }
+  return children;
+
+  // if (auth.isLoading) {
+  //   return <Loading />;
+  // } else {
+  //   if (auth.status?.userId) return children;
+  //   else return <Navigate to="/login" />;
+  // }
 };
 
 const LoginCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
 
-  if (auth.isLoading) {
-    return <Loading />;
-  } else {
-    if (!auth.status?.userId) return children;
-    else return <Navigate to="/" />;
-  }
+  return children;
+
+  // if (auth.isLoading) {
+  //   return <Loading />;
+  // } else {
+  //   if (!auth.status?.userId) return children;
+  //   else return <Navigate to="/" />;
+  // }
 };
 
 const App = () => {
-  const test = async () => {
-    const userDB = doc(db, 'user', 'sham');
-    const data = await getDoc(userDB);
-    console.log(data.data());
-  };
+  // const test = async () => {
+  //   const userDB = doc(db, 'user', 'sham');
+  //   const data = await getDoc(userDB);
+  //   console.log(data.data());
+  // };
 
-  useEffect(() => {
-    test();
-  }, []);
+  // useEffect(() => {
+  //   test();
+  // }, []);
 
   return (
     <AuthProvider>

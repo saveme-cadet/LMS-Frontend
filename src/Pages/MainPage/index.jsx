@@ -27,16 +27,19 @@ const MainPage = () => {
   const auth = useContext(AuthContext);
   const role = auth.status.role;
 
-  const { status: stat, data: rowData } = getTable(date);
-  const client = useQueryClient();
+  console.log('auth : ', auth);
 
-  // console.log('cli : ', client.getQueriesData()[0][1].data[0]);
+  const { status: stat, data: rowData } = getTable(date);
+  console.log(stat, rowData);
+
+  const client = useQueryClient();
 
   const updateSelectData = curTab => {
     // 마운트 되었을 때 updateSelectData 함수를 호출한 시점에서
     // useState의 비동기 호출 때문에 rowData에는 null이 들어가 있다.
     // 부득이 하게 중복된 코드를 useEffect로 호출되는 getUsers에 넣어서
     // 마운트 되는 시점에 한해서만 API로 받아온 데이터를 집어넣게 했다.
+
     if (curTab === TEAM_ID.ALL) setSelectRowData(rowData);
     else {
       const team = curTab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
@@ -182,64 +185,65 @@ const MainPage = () => {
     }, 4000);
   };
 
-  useEffect(() => {
-    getUsers();
-  }, [rowData, date, requestEnd]);
+  // useEffect(() => {
+  //   getUsers();
+  // }, [rowData, date, requestEnd]);
 
-  useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem('customData'));
-    setCustomData(localData ? localData : new Array(9).fill(true));
-    // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
-  }, []);
+  // useEffect(() => {
+  //   const localData = JSON.parse(localStorage.getItem('customData'));
+  //   setCustomData(localData ? localData : new Array(9).fill(true));
+  //   // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
+  // }, []);
 
   const refresh = () => {
     console.log('refresh');
-    const dateFormat = format(date, 'yyyy-MM-dd');
+    const dateFormat = format(date, 'yyyyMMdd');
     client.invalidateQueries(['dayTable', dateFormat]);
     // getUsers(); // 키가 사라지면 자동으로 dayTable에 매핑된 useQuery가 실행. 굳이 실행할 필요 없음.
   };
 
   return (
-    <MainPageContainer>
-      {selectRowData ? (
-        <>
-          {/* <UserGuide rowData={rowData} userId={userId} /> */}
-          <MainHeader>
-            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-          </MainHeader>
+    <div>test</div>
+    // <MainPageContainer>
+    //   {selectRowData ? (
+    //     <>
+    //       {/* <UserGuide rowData={rowData} userId={userId} /> */}
+    //       <MainHeader>
+    //         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+    //       </MainHeader>
 
-          <MainPageTableTabs
-            selectRowData={selectRowData}
-            date={date}
-            tab={tab}
-            handleChangeTab={handleChangeTab}
-            setIsOpen={setIsOpen}
-            handleChangeAllCheck={handleChangeAllCheck}
-            handleChangePrev={handleChangePrev}
-          />
-          <MainPageTable
-            date={date}
-            selectRowData={selectRowData}
-            customData={customData}
-            refresh={refresh}
-          />
-        </>
-      ) : (
-        <>
-          <MainHeader>
-            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-          </MainHeader>
-          <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
-        </>
-      )}
-      {isOpen && (
-        <FilterModal
-          customData={customData}
-          onClickToggleCustom={handleClickToggleCustom}
-          setIsOpen={setIsOpen}
-        />
-      )}
-    </MainPageContainer>
+    //       <MainPageTableTabs
+    //         selectRowData={selectRowData}
+    //         date={date}
+    //         tab={tab}
+    //         handleChangeTab={handleChangeTab}
+    //         setIsOpen={setIsOpen}
+    //         handleChangeAllCheck={handleChangeAllCheck}
+    //         handleChangePrev={handleChangePrev}
+    //       />
+    //       <MainPageTable
+    //         date={date}
+    //         selectRowData={selectRowData}
+    //         customData={customData}
+    //         refresh={refresh}
+    //       />
+    //     </>
+    //   ) : (
+    //     <>
+    //       <MainHeader>
+    //         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+    //       </MainHeader>
+    //       <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
+    //     </>
+    //   )}
+    //   {isOpen && (
+    //     <FilterModal
+    //       customData={customData}
+    //       onClickToggleCustom={handleClickToggleCustom}
+    //       setIsOpen={setIsOpen}
+    //     />
+    //   )}
+    // </MainPageContainer>
   );
 };
 
