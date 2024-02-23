@@ -8,7 +8,7 @@ const AdminModal = ({
   isOpen,
   rowData,
   getUser,
-  setSelectUserId,
+  setSelectusername,
 }) => {
   const attendUser = rowData?.filter(
     user => user.attendStatus === 'PARTICIPATED',
@@ -20,7 +20,7 @@ const AdminModal = ({
           setIsOpen={setIsOpen}
           attendUser={attendUser}
           getUser={getUser}
-          setSelectUserId={setSelectUserId}
+          setSelectusername={setSelectusername}
           rowData={rowData}
         />
       )}

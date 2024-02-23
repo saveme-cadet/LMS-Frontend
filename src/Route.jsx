@@ -4,6 +4,7 @@ import { SideBar, UpdatePasswordModal } from 'Components';
 
 import styled from 'styled-components';
 
+import Test from './Test';
 const MainRoute = () => {
   return (
     <>
@@ -17,6 +18,7 @@ const MainRoute = () => {
           <Route path="/mine" element={<MinePage />} />
 
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BodyContainer>
       <UpdatePasswordModal />

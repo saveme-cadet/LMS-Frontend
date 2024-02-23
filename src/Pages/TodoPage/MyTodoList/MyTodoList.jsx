@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 import { useMutation, useQueryClient } from 'react-query';
 
-const MyTodoList = ({ userId, date }) => {
+const MyTodoList = ({ username, date }) => {
   const [toDo, setToDo] = useState({
     content: '',
     checked: false,
@@ -24,7 +24,7 @@ const MyTodoList = ({ userId, date }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const { status: stat, data: toDos } = getTodo(
-    userId,
+    username,
     format(date, 'yyyy-MM-dd'),
   );
   const client = useQueryClient();
@@ -67,7 +67,7 @@ const MyTodoList = ({ userId, date }) => {
     }
 
     postTodo.mutate([
-      userId,
+      username,
       {
         title: toDo.content.trim(),
         todoDay: format(today, 'yyyy-MM-dd'),
@@ -92,7 +92,7 @@ const MyTodoList = ({ userId, date }) => {
     if (!isToday(today, date) || selected.title == '') return;
 
     patchTodo.mutate([
-      userId,
+      username,
       selected.todoId,
       {
         title: selected.title,
@@ -105,7 +105,7 @@ const MyTodoList = ({ userId, date }) => {
     let toDoNumber =
       event.target.closest('button').previousSibling.previousSibling.id;
     if (!isToday(today, date)) return;
-    deleteTodo.mutate([userId, toDoNumber]);
+    deleteTodo.mutate([username, toDoNumber]);
   };
 
   const showProgress = () => {
@@ -160,7 +160,7 @@ const MyTodoList = ({ userId, date }) => {
                 removeToDo={removeToDo}
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
-                userId={userId}
+                username={username}
                 patchTodo={patchTodo}
               />
               <TodoProgress total={total} checked={checked} />

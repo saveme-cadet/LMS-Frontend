@@ -25,13 +25,14 @@ const CRUDUserService = {
     try {
       const userRef = doc(db, 'user', body.username);
       const data = {
-        name: body.username,
+        username: body.username,
         password: body.password,
         attendance: PARTICIPATE_NAME.PARTICIPATED,
         role: ROLE_NAME.ROLE_USER,
         team_id: TEAM_ID.ALL,
-        team_name: TEAM_NAME.NONE,
+        team: TEAM_NAME.NONE,
         vacation: 0,
+        absentScore: 0,
       };
       response = await setDoc(userRef, data, { merge: true });
     } catch (e) {

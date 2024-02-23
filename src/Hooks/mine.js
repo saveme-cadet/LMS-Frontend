@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
 import { MineService } from 'API';
 
-export const getMine = (userId, date) => {
+export const getMine = (username, date) => {
   const { status, data, error } = useQuery(
     ['mine', date],
-    () => MineService.getFindMine(userId, date),
+    () => MineService.getFindMine(username, date),
     {
       refetchOnWindowFocus: false,
       // staleTime: 1000 * 1,

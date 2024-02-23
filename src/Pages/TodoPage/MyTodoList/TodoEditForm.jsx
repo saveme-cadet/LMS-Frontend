@@ -15,7 +15,7 @@ const TodoEditForm = ({
   isEdit,
   setIsEdit,
   toDos,
-  userId,
+  username,
   patchTodo,
 }) => {
   const [title, setTitle] = useState(item.title);
@@ -30,7 +30,7 @@ const TodoEditForm = ({
     if (newTitle.trim() === '') return;
 
     patchTodo.mutate([
-      userId,
+      username,
       selected.todoId,
       {
         title: newTitle.trim(),
@@ -58,7 +58,7 @@ const TodoEditForm = ({
     if (newTitle === '') return;
 
     patchTodo.mutate([
-      userId,
+      username,
       toDos[index].todoId,
       {
         title: newTitle.trim(),

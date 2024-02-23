@@ -56,7 +56,7 @@ function MineEditModal({ data, setActiveLogIndex, getMyMine }) {
     const convertEndAt = new Date(
       new Date(endAt) - TIMEZONE_OFFSET,
     ).toISOString(); // UTC -> KST
-    await MineService.patchEditMine(status.userId, data.studyTimeId, {
+    await MineService.patchEditMine(status.username, data.studyTimeId, {
       beginTime: convertStartAt,
       endTime: convertEndAt,
     });

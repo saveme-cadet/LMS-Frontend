@@ -24,13 +24,13 @@ const MinePage = () => {
   const today = useRef(new Date());
 
   const auth = useContext(AuthContext);
-  const userId = auth.status.userId;
+  const username = auth.status.username;
 
-  const { status, data } = getMine(userId, format(date, 'yyyy-MM-dd'));
+  const { status, data } = getMine(username, format(date, 'yyyy-MM-dd'));
 
   const getMyMine = async () => {
     const result = await MineService.getFindMine(
-      userId,
+      username,
       format(date, 'yyyy-MM-dd'),
     );
     const logs = result.data;
@@ -46,20 +46,20 @@ const MinePage = () => {
       return;
     }
     if (beginTime) {
-      await MineService.putEndMine(userId);
+      await MineService.putEndMine(username);
       setBeginTime(null);
     } else {
       // setBeginTime(new Date()); // TODO: twice init beginTime
-      await MineService.postStartMine(userId);
+      await MineService.postStartMine(username);
     }
     getMyMine();
   };
 
   useEffect(() => {
-    if (userId) {
+    if (username) {
       getMyMine();
     }
-  }, [userId, date]);
+  }, [username, date]);
 
   return (
     <MineBackground>

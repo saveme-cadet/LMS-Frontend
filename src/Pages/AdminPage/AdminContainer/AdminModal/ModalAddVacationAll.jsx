@@ -10,7 +10,7 @@ const ModalAddVacationAll = ({
   setIsOpen,
   attendUser,
   getUser,
-  setSelectUserId,
+  setSelectusername,
   rowData,
 }) => {
   const [value, setValue] = useState(0);
@@ -21,7 +21,7 @@ const ModalAddVacationAll = ({
       reason: '단체 휴가 증가',
     };
     await VacationService.addVacation(select, body);
-    setSelectUserId(null);
+    setSelectusername(null);
   };
 
   const minusVacation = async (select, usedDays) => {
@@ -32,7 +32,7 @@ const ModalAddVacationAll = ({
       return;
     }
     await VacationService.useVacation(select, body);
-    setSelectUserId(null);
+    setSelectusername(null);
   };
 
   const handleCloseModal = isAccept => {

@@ -14,7 +14,7 @@ function MineDeleteModal({ data, setActiveLogIndex, getMyMine }) {
     setActiveLogIndex(-1);
   };
   const handleDelete = async () => {
-    await MineService.putDeleteMine(status.userId, data.studyTimeId);
+    await MineService.putDeleteMine(status.username, data.studyTimeId);
     handleClose();
   };
 

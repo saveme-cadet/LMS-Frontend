@@ -29,15 +29,26 @@ const LoginPage = () => {
     }
 
     alert(`환영합니다, ${body.username}!`);
-    localStorage.setItem('userId', result.name);
+    localStorage.setItem('username', result.username);
     localStorage.setItem('role', result.role);
-    auth.setStatus({ userId: result.name, role: result.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
+    auth.setStatus({ username: result.username, role: result.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
 
     const date = new Date();
     const dateFormat = format(date, 'yyyyMMdd');
-
-    await AllTableService.updateTable(dateFormat, result.name);
+    const data = {
+      [`${result.username}`]: {
+        username: result.username,
+        attendStatus: result.attendance,
+        role: result.role,
+        team: result.team,
+        vacation: result.vacation,
+        absentScore: result.absentScore,
+        checkIn: null,
+        checkOut: null,
+      },
+    };
+    await AllTableService.updateTable(dateFormat, data);
     navi('/');
   };
 

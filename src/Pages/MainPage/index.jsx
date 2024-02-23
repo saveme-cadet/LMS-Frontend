@@ -23,14 +23,10 @@ const MainPage = () => {
   const [selectRowData, setSelectRowData] = useState(null);
   const [customData, setCustomData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [requestEnd, setRequestEnd] = useState(true);
   const auth = useContext(AuthContext);
-  const role = auth.status.role;
-
-  console.log('auth : ', auth);
+  const role = auth.status?.role;
 
   const { status: stat, data: rowData } = getTable(date);
-  console.log(stat, rowData);
 
   const client = useQueryClient();
 
@@ -90,24 +86,11 @@ const MainPage = () => {
       setSelectRowData(null);
       return;
     }
+    const newArray = rowData.map((item, i) => {
+      item.id = i + 1;
+      return item;
+    });
 
-    // console.log('target : ', rowData.data[0]);
-
-    const newArray = rowData.data.map((array, i) => ({
-      id: i,
-      attendanceId: array.attendanceId,
-      userId: array.userId,
-      username: array.username,
-      attendStatus: array.attendStatus,
-      role: array.role,
-      team: array.team,
-      vacation: array.vacation,
-      absentScore: array.totalAbsentScore,
-      attendanceScore: array.attendanceScore,
-      todoSuccessRate: array.todoSuccessRate * 100,
-      checkIn: array.checkIn,
-      checkOut: array.checkOut,
-    }));
     if (tab === TEAM_ID.ALL) setSelectRowData(newArray);
     else {
       const team = tab === TEAM_ID.BLUE ? TEAM_NAME.BLUE : TEAM_NAME.RED;
@@ -120,40 +103,39 @@ const MainPage = () => {
   };
 
   const handleChangeAllCheck = async (select, value) => {
-    let userId;
+    let username;
     let attendanceId;
 
     if (isWrongAccess(role)) {
       alert('수정 권한이 없습니다.');
       return;
     }
-    setRequestEnd(prev => !prev);
     selectRowData.map(async user => {
-      userId = user.userId;
+      username = user.username;
       attendanceId = user.attendanceId;
       if (value === 'VACATION' && user.vacation === 0) {
         alert('사용할 수 있는 휴가가 없습니다!');
         return;
       }
       if (select === CHECK_IN) {
-        AllTableService.putAllTableCheckIn(userId, attendanceId, {
+        AllTableService.putAllTableCheckIn(username, attendanceId, {
           status: value,
         });
       } else {
-        AllTableService.putAllTableCheckOut(userId, attendanceId, {
+        AllTableService.putAllTableCheckOut(username, attendanceId, {
           status: value,
         });
       }
     });
     //  getUsers가 변경 도중인 DB를 참고함.
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      setRequestEnd(prev => !prev);
-    }, 4000);
+    // const timer = setTimeout(() => {
+    //   clearTimeout(timer);
+    //   setRequestEnd(prev => !prev);
+    // }, 4000);
   };
 
   const handleChangePrev = async (prevData, prevSelect) => {
-    let userId;
+    let username;
     let attendanceId;
     let value;
 
@@ -162,88 +144,84 @@ const MainPage = () => {
       return;
     }
 
-    setRequestEnd(prev => !prev);
     await prevData.map(async user => {
-      userId = user.userId;
+      username = user.username;
       attendanceId = user.attendanceId;
       value = prevSelect === 'checkIn' ? user.checkIn : user.checkOut;
 
       if (prevSelect === CHECK_IN) {
-        AllTableService.putAllTableCheckIn(userId, attendanceId, {
+        AllTableService.putAllTableCheckIn(username, attendanceId, {
           status: value,
         });
       } else {
-        AllTableService.putAllTableCheckOut(userId, attendanceId, {
+        AllTableService.putAllTableCheckOut(username, attendanceId, {
           status: value,
         });
       }
     });
 
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      setRequestEnd(prev => !prev);
-    }, 4000);
+    // const timer = setTimeout(() => {
+    //   clearTimeout(timer);
+    //   setRequestEnd(prev => !prev);
+    // }, 4000);
   };
 
-  // useEffect(() => {
-  //   getUsers();
-  // }, [rowData, date, requestEnd]);
+  useEffect(() => {
+    getUsers();
+  }, [rowData, date]);
 
-  // useEffect(() => {
-  //   const localData = JSON.parse(localStorage.getItem('customData'));
-  //   setCustomData(localData ? localData : new Array(9).fill(true));
-  //   // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
-  // }, []);
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('customData'));
+    setCustomData(localData ? localData : new Array(9).fill(true));
+    // 전체 칼럼의 true, false 만을 저장하고 필터링은 MainPageTable에서 진행한다.
+  }, []);
 
   const refresh = () => {
     console.log('refresh');
     const dateFormat = format(date, 'yyyyMMdd');
     client.invalidateQueries(['dayTable', dateFormat]);
-    // getUsers(); // 키가 사라지면 자동으로 dayTable에 매핑된 useQuery가 실행. 굳이 실행할 필요 없음.
   };
 
   return (
-    <div>test</div>
-    // <MainPageContainer>
-    //   {selectRowData ? (
-    //     <>
-    //       {/* <UserGuide rowData={rowData} userId={userId} /> */}
-    //       <MainHeader>
-    //         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-    //       </MainHeader>
+    <MainPageContainer>
+      {selectRowData ? (
+        <>
+          <MainHeader>
+            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+          </MainHeader>
 
-    //       <MainPageTableTabs
-    //         selectRowData={selectRowData}
-    //         date={date}
-    //         tab={tab}
-    //         handleChangeTab={handleChangeTab}
-    //         setIsOpen={setIsOpen}
-    //         handleChangeAllCheck={handleChangeAllCheck}
-    //         handleChangePrev={handleChangePrev}
-    //       />
-    //       <MainPageTable
-    //         date={date}
-    //         selectRowData={selectRowData}
-    //         customData={customData}
-    //         refresh={refresh}
-    //       />
-    //     </>
-    //   ) : (
-    //     <>
-    //       <MainHeader>
-    //         <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
-    //       </MainHeader>
-    //       <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
-    //     </>
-    //   )}
-    //   {isOpen && (
-    //     <FilterModal
-    //       customData={customData}
-    //       onClickToggleCustom={handleClickToggleCustom}
-    //       setIsOpen={setIsOpen}
-    //     />
-    //   )}
-    // </MainPageContainer>
+          <MainPageTableTabs
+            selectRowData={selectRowData}
+            date={date}
+            tab={tab}
+            handleChangeTab={handleChangeTab}
+            setIsOpen={setIsOpen}
+            handleChangeAllCheck={handleChangeAllCheck}
+            handleChangePrev={handleChangePrev}
+          />
+          <MainPageTable
+            date={date}
+            selectRowData={selectRowData}
+            customData={customData}
+            refresh={refresh}
+          />
+        </>
+      ) : (
+        <>
+          <MainHeader>
+            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+          </MainHeader>
+          <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
+        </>
+      )}
+      {isOpen && (
+        <FilterModal
+          customData={customData}
+          onClickToggleCustom={handleClickToggleCustom}
+          setIsOpen={setIsOpen}
+        />
+      )}
+    </MainPageContainer>
   );
 };
 

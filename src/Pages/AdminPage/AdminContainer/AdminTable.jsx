@@ -12,7 +12,7 @@ const AdminTable = ({
   rowData,
   updateSelectRowData,
   selectRowData,
-  setSelectUserId,
+  setSelectusername,
 }) => {
   const handleChangeTab = (event, dstTab) => {
     setTab(dstTab);
@@ -21,7 +21,7 @@ const AdminTable = ({
 
   const handleCellClick = e => {
     // alert(e.id);
-    setSelectUserId(e.id);
+    setSelectusername(e.id);
   };
 
   return (

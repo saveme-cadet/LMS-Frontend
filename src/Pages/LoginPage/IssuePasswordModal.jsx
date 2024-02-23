@@ -8,22 +8,22 @@ import { MODAL_TYPE } from 'Utils/constants';
 
 function IssueTempPassword() {
   const { modalType, setModalType } = useContext(AuthContext);
-  const [userId, setUserId] = useState(null);
+  const [username, setusername] = useState(null);
   const [notiMessage, setNotiMessage] = useState('');
   const handleClose = () => {
     setModalType(null);
     setNotiMessage('');
   };
-  const onUpdateUserId = e => {
-    setUserId(e.target.value);
+  const onUpdateusername = e => {
+    setusername(e.target.value);
   };
 
   const onSubmit = async () => {
-    if (!userId) {
+    if (!username) {
       setNotiMessage('아이디를 입력하지 않았습니다.');
       return;
     }
-    const res = await CRUDUserService.issueTempPassword(userId);
+    const res = await CRUDUserService.issueTempPassword(username);
     if (res) {
       setNotiMessage('42 이메일로 링크를 발송했습니다.');
       const timer = setTimeout(() => {
@@ -46,7 +46,7 @@ function IssueTempPassword() {
             <IdInputForm
               placeholder="아이디"
               type="text"
-              onChange={onUpdateUserId}
+              onChange={onUpdateusername}
               onKeyDown={handlePressEnter}
               spellCheck={false}
               required

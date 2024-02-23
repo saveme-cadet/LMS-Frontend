@@ -1,7 +1,6 @@
 import { useState, createContext, useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 import { UserInfoService } from 'API';
-import { getUser } from 'Hooks/user';
 
 const AuthContext = createContext();
 
@@ -12,15 +11,11 @@ const AuthProvider = ({ children }) => {
 
   const queryClient = useQueryClient();
 
-  // const { status: stat, data: toDos } = getUser();
-  // console.log('stat : ', stat, 'data : ', toDos);
-  // const client = useQueryClient();
-
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
     const role = localStorage.getItem('role');
-    queryClient.setQueryData('myData', { userId, role });
-    setStatus({ userId: userId, role: role });
+    queryClient.setQueryData('myData', { username, role });
+    setStatus({ username: username, role: role });
     setIsLoading(false);
   }, [isLoading]);
 

@@ -4,7 +4,13 @@ import SelectedUser from './SelectedUser';
 
 import styled from 'styled-components';
 
-const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
+const AdminChangeTable = ({
+  selectusername,
+  rowData,
+  getUser,
+  username,
+  auth,
+}) => {
   const handleLogout = async () => {
     await CRUDUserService.postLogout();
     localStorage.clear();
@@ -12,7 +18,7 @@ const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
   };
 
   const validChangeRole = () => {
-    if (selectUserId === userId) {
+    if (selectusername === username) {
       if (rowData.filter(data => data.role === 'ROLE_MANAGER').length === 1) {
         alert('머슴이 한 명 뿐입니다!');
         return -1;
@@ -29,50 +35,50 @@ const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
   const handleChangeAttend = async event => {
     if (event.target.value === 'NOT_PARTICIPATED') {
       if (validChangeRole()) return; // 불참일 경우 NONE으로 바꾸기
-      await UserInfoService.patchTeam(selectUserId, {
+      await UserInfoService.patchTeam(selectusername, {
         team: TEAM_NAME.NONE,
       });
-      await UserInfoService.patchRole(selectUserId, {
+      await UserInfoService.patchRole(selectusername, {
         role: 'ROLE_UNAUTHORIZED',
       });
     } else if (event.target.value === 'PARTICIPATED') {
-      await UserInfoService.patchTeam(selectUserId, {
+      await UserInfoService.patchTeam(selectusername, {
         team: TEAM_NAME.BLUE,
       }); // TODO: default team fixed
-      await UserInfoService.patchRole(selectUserId, {
+      await UserInfoService.patchRole(selectusername, {
         role: 'ROLE_USER',
       });
     }
     // TODO: 유저 참여 상태에 따라 NONE or 기본 팀(BLUE)로 설정(BACKEND)
-    await UserInfoService.patchAttend(selectUserId, {
+    await UserInfoService.patchAttend(selectusername, {
       attendStatus: event.target.value,
     });
     getUser();
-    // setSelectUserId(null);
+    // setSelectusername(null);
   };
 
   const handleChangeTeam = async event => {
-    await UserInfoService.patchTeam(selectUserId, {
+    await UserInfoService.patchTeam(selectusername, {
       team: event.target.value,
     });
     getUser();
-    // setSelectUserId(null);
+    // setSelectusername(null);
   };
 
   const handleChangeRole = async event => {
-    // console.log(selectUserId, userId);
+    // console.log(selectusername, username);
     if (validChangeRole()) return;
 
-    await UserInfoService.patchRole(selectUserId, {
+    await UserInfoService.patchRole(selectusername, {
       role: event.target.value,
     });
     getUser();
-    // setSelectUserId(null);
+    // setSelectusername(null);
   };
 
   const handleChangeVacation = async value => {
     for (let i = 0; i < rowData.length; i++) {
-      if (rowData[i].id === selectUserId) {
+      if (rowData[i].id === selectusername) {
         if (rowData[i].vacation === 0 && value < 0) {
           alert('감소시킬 휴가가 없습니다.');
           return;
@@ -89,16 +95,16 @@ const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
         addedDays: value,
         reason: '단일 휴가 증가',
       };
-      await VacationService.addVacation(selectUserId, body);
+      await VacationService.addVacation(selectusername, body);
     } else if (0 > value) {
       const body = {
         usedDays: -value,
         reason: '단일 휴가 감소',
       };
-      await VacationService.useVacation(selectUserId, body);
+      await VacationService.useVacation(selectusername, body);
     }
     getUser();
-    // setSelectUserId(null);
+    // setSelectusername(null);
   };
 
   return (
@@ -106,9 +112,9 @@ const AdminChangeTable = ({ selectUserId, rowData, getUser, userId, auth }) => {
       <AdminChangeTableContainer>
         <AdminChangeTableTitle>멤버 정보 수정</AdminChangeTableTitle>
         자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다
-        {selectUserId !== null && (
+        {selectusername !== null && (
           <SelectedUser
-            userInfo={rowData.find(array => array.id === selectUserId)}
+            userInfo={rowData.find(array => array.id === selectusername)}
             onClickChangeAttend={handleChangeAttend}
             onClickChangeTeam={handleChangeTeam}
             onClickChangeRole={handleChangeRole}

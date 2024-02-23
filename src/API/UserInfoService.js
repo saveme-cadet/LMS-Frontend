@@ -24,12 +24,12 @@ const UserInfoService = {
   },
   /**
    * 팀 변경
-   * @param {string} userId - 변경할 대상 유저ID
+   * @param {string} username - 변경할 대상 유저ID
    * @param {{team : string }} body - RED, BLUE, NONE
    * @returns
    */
-  patchTeam: async (userId, body) => {
-    const url = UserInfoUrl(`/${userId}/team`);
+  patchTeam: async (username, body) => {
+    const url = UserInfoUrl(`/${username}/team`);
     let response;
 
     try {
@@ -41,12 +41,12 @@ const UserInfoService = {
   },
   /**
    * 역할 변경
-   * @param {string} userId - 변경할 대상 유저ID
+   * @param {string} username - 변경할 대상 유저ID
    * @param {{role : string}} body - ROLE_UNAUTHORIZED, ROLE_USER, ROLE_MANAGER, ROLE_ADMIN
    * @returns
    */
-  patchRole: async (userId, body) => {
-    const url = UserInfoUrl(`/${userId}/role`);
+  patchRole: async (username, body) => {
+    const url = UserInfoUrl(`/${username}/role`);
     let response;
 
     try {
@@ -58,12 +58,12 @@ const UserInfoService = {
   },
   /**
    * 참여 유무 변경
-   * @param {string} userId - 변경할 대상 유저ID
+   * @param {string} username - 변경할 대상 유저ID
    * @param {{attendStatus : string}} body - PARTICIPATED, NOT_PARTICIPATED
    * @returns
    */
-  patchAttend: async (userId, body) => {
-    const url = UserInfoUrl(`/${userId}/attendStatus`);
+  patchAttend: async (username, body) => {
+    const url = UserInfoUrl(`/${username}/attendStatus`);
     let response;
 
     try {

@@ -6,11 +6,11 @@ import { MineService } from '../../API';
 function MinePeople({ beginTime }) {
   const [users, setUsers] = useState([]);
   const auth = useContext(AuthContext);
-  const userId = auth.status.userId;
+  const username = auth.status.username;
 
   useEffect(() => {
     const getUsers = async () => {
-      const res = await MineService.getOtherMine(userId);
+      const res = await MineService.getOtherMine(username);
       if (res) setUsers(res.data.map(el => el.name).join(', '));
     };
     getUsers();

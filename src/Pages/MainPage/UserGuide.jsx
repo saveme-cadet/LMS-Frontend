@@ -2,8 +2,8 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import styled from 'styled-components';
 
-const UserGuide = ({ rowData, userId }) => {
-  const myInfo = rowData.find(array => array.id === +userId);
+const UserGuide = ({ rowData, username }) => {
+  const myInfo = rowData.find(array => array.id === +username);
 
   return (
     <>

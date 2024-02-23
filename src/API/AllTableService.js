@@ -13,15 +13,13 @@ const AllTableUrl = '';
 const AllTableService = {
   /**
    * 출석 체크인
-   * @param {string} userId - 로그인한 유저ID
+   * @param {string} username - 로그인한 유저ID
    * @param {number} attendanceId - 출석ID
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
-  putAllTableCheckIn: async (userId, attendanceId, body) => {
-    const url = AllTableUrl(
-      `attendance/users/${userId}/${attendanceId}/checkout`,
-    );
+  putTableCheckIn: async (username, date, body) => {
+    const url = AllTableUrl(``);
 
     let response;
     try {
@@ -33,15 +31,13 @@ const AllTableService = {
   },
   /**
    * 출석 체크아웃
-   * @param {string} userId - 로그인한 유저ID
+   * @param {string} username - 로그인한 유저ID
    * @param {number} attendanceId - 출석ID
    * @param {{value: string}} body - 출석 상태
    * @returns
    */
-  putAllTableCheckOut: async (userId, attendanceId, body) => {
-    const url = AllTableUrl(
-      `attendance/users/${userId}/${attendanceId}/checkout`,
-    );
+  putTableCheckOut: async (username, date, body) => {
+    const url = AllTableUrl(``);
     let response;
     try {
       response = await instance.patch(url, body);
@@ -61,14 +57,27 @@ const AllTableService = {
     const dayTableRef = doc(db, 'day_table', date);
     response = await getDoc(dayTableRef);
     data = response.data();
-    console.log('DTAA :', data);
-    return data;
+    const newArray = [];
+    for (const key in data) {
+      newArray.push({
+        username: data[key].username,
+        attendStatus: data[key].attendStatus,
+        role: data[key].role,
+        team: data[key].team,
+        vacation: data[key].vacation,
+        absentScore: data[key].absentScore,
+        checkIn: data[key].checkIn,
+        checkOut: data[key].checkOut,
+      });
+    }
+
+    return newArray;
   },
 
-  updateTable: async (date, user) => {
+  updateTable: async (date, data) => {
     let response;
     const dayTableRef = doc(db, 'day_table', date);
-    const data = { [`${user}`]: true };
+
     try {
       response = await setDoc(dayTableRef, data, { merge: true });
     } catch (e) {

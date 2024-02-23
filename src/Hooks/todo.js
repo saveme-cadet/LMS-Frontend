@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
 import { TodoService } from 'API';
 
-export const getTodo = (userId, date) => {
+export const getTodo = (username, date) => {
   const { status, data, error } = useQuery(
     ['todos', date],
-    () => TodoService.getTodo(userId, date),
+    () => TodoService.getTodo(username, date),
     {
       refetchOnWindowFocus: false,
       // staleTime: 1000 * 1,

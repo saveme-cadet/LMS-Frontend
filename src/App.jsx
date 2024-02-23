@@ -28,7 +28,7 @@ const OAuthCheckRoute = ({ children }) => {
   // if (auth.isLoading) {
   //   return <Loading />;
   // } else {
-  //   if (auth.status?.userId) return children;
+  //   if (auth.status?.username) return children;
   //   else return <Navigate to="/login" />;
   // }
 };
@@ -41,22 +41,12 @@ const LoginCheckRoute = ({ children }) => {
   // if (auth.isLoading) {
   //   return <Loading />;
   // } else {
-  //   if (!auth.status?.userId) return children;
+  //   if (!auth.status?.username) return children;
   //   else return <Navigate to="/" />;
   // }
 };
 
 const App = () => {
-  // const test = async () => {
-  //   const userDB = doc(db, 'user', 'sham');
-  //   const data = await getDoc(userDB);
-  //   console.log(data.data());
-  // };
-
-  // useEffect(() => {
-  //   test();
-  // }, []);
-
   return (
     <AuthProvider>
       <BrowserRouter>

@@ -6,8 +6,8 @@ import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
 
-const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
-  const [selectUserId, setSelectUserId] = useState(null);
+const AdminContainer = ({ auth, username, isOpen, setIsOpen }) => {
+  const [selectusername, setSelectusername] = useState(null);
 
   const [tab, setTab] = useState(0);
   const [rowData, setRowData] = useState(null);
@@ -29,8 +29,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
     const result = await UserInfoService.getAllUser(0, 100);
     const newArray = result.data.content.map(array => ({
       id: array.id,
-      userId: array.id,
-      username: array.nickname,
+      username: array.username,
       attendStatus: array.attendStatus,
       role: array.role,
       team: array.team,
@@ -51,12 +50,12 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
   useEffect(() => {
     if (rowData === null) return;
     rowData.filter(data => {
-      if (data.id === selectUserId && data.role === 'ROLE_ADMIN') {
+      if (data.id === selectusername && data.role === 'ROLE_ADMIN') {
         alert('admin의 정보는 변경할 수 없습니다!');
-        setSelectUserId(null);
+        setSelectusername(null);
       }
     });
-  }, [selectUserId]);
+  }, [selectusername]);
 
   return (
     <>
@@ -67,15 +66,15 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         rowData={rowData}
         updateSelectRowData={updateSelectRowData}
         selectRowData={selectRowData}
-        setSelectUserId={setSelectUserId}
+        setSelectusername={setSelectusername}
       />
 
       <AdminChangeTable
         rowData={rowData}
-        selectUserId={selectUserId}
-        setSelectUserId={setSelectUserId}
+        selectusername={selectusername}
+        setSelectusername={setSelectusername}
         getUser={getUser}
-        userId={userId}
+        username={username}
         auth={auth}
       />
       <AdminModal
@@ -83,7 +82,7 @@ const AdminContainer = ({ auth, userId, isOpen, setIsOpen }) => {
         setIsOpen={setIsOpen}
         rowData={rowData}
         getUser={getUser}
-        setSelectUserId={setSelectUserId}
+        setSelectusername={setSelectusername}
       />
     </>
   );

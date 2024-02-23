@@ -23,8 +23,8 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const teamList = ['RED', 'BLUE', 'NONE'];
 
   // getUser를 받아 내부에서 사용하도록 수정x
-  const onClickChangeShuffleTeam = async (userId, team) => {
-    await UserInfoService.patchTeam(userId, { team: team });
+  const onClickChangeShuffleTeam = async (username, team) => {
+    await UserInfoService.patchTeam(username, { team: team });
     getUser();
   };
 

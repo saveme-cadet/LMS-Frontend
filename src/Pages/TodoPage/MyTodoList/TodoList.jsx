@@ -12,7 +12,7 @@ const TodoList = ({
   removeToDo,
   isEdit,
   setIsEdit,
-  userId,
+  username,
   patchTodo,
 }) => {
   const today = new Date();
@@ -29,7 +29,7 @@ const TodoList = ({
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
                 toDos={toDos}
-                userId={userId}
+                username={username}
                 patchTodo={patchTodo}
               />
             </TodoListContainer>

@@ -6,7 +6,7 @@ import OtherCadetList from './OtherCadetList/OtherCadetList';
 import styled from 'styled-components';
 
 const TodoPage = () => {
-  const userId = localStorage.getItem('userId');
+  const username = localStorage.getItem('username');
   const [date, setDate] = useState(new Date());
 
   return (
@@ -15,7 +15,7 @@ const TodoPage = () => {
         <CusDatePicker date={date} setDate={setDate} isWeekend={true} />
       </TodoHeader>
       <TodoBody>
-        <MyTodoList userId={userId} date={date} />
+        <MyTodoList username={username} date={date} />
         <OtherCadetList date={date} />
       </TodoBody>
     </TodoMainBackground>
