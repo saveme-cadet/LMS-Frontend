@@ -10,8 +10,7 @@ const GetCheckIcons = ({ type }) => {
       return <div className="vacancy type">공결</div>;
     case 'ILLNESS':
       return <div className="illness type">병결</div>;
-    case 'VACATION':
-      return <div className="vacation type">휴가</div>;
+
     default:
       return <></>;
   }

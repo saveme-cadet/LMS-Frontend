@@ -14,27 +14,23 @@ const Loading = () => {
 const OAuthCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
 
-  return children;
-
-  // if (auth.isLoading) {
-  //   return <Loading />;
-  // } else {
-  //   if (auth.status?.username) return children;
-  //   else return <Navigate to="/login" />;
-  // }
+  if (auth.isLoading) {
+    return <Loading />;
+  } else {
+    if (auth.status?.username) return children;
+    else return <Navigate to="/login" />;
+  }
 };
 
 const LoginCheckRoute = ({ children }) => {
   const auth = useContext(AuthContext);
 
-  return children;
-
-  // if (auth.isLoading) {
-  //   return <Loading />;
-  // } else {
-  //   if (!auth.status?.username) return children;
-  //   else return <Navigate to="/" />;
-  // }
+  if (auth.isLoading) {
+    return <Loading />;
+  } else {
+    if (!auth.status?.username) return children;
+    else return <Navigate to="/" />;
+  }
 };
 
 const App = () => {

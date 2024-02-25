@@ -10,10 +10,47 @@ const CRUDUserAPI = path => {
   return `/${path}`;
 };
 
-import { doc, setDoc, getDoc, collection } from 'firebase/firestore/lite';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  collection,
+  updateDoc,
+} from 'firebase/firestore/lite';
 import db from '../firebase';
 
 const CRUDUserService = {
+  /**
+   * 유저 정보 읽기
+   * @param {username : string} id
+   * @returns
+   */
+  getUser: async username => {
+    try {
+      const userRef = doc(db, 'user', username);
+      const userDocs = await getDoc(userRef);
+      return userDocs.data();
+    } catch (e) {
+      return null;
+    }
+  },
+
+  getAllUser: async () => {
+    let response = [];
+    try {
+      const userCollectionRef = collection(db, 'user');
+      const userDocs = await getDocs(userCollectionRef);
+
+      userDocs.forEach((doc, i) => {
+        response.push({ id: i + 1, ...doc.data() });
+      });
+    } catch (e) {
+      return null;
+    }
+    return response;
+  },
+
   /**
    * 회원가입
    * @param {{username: string, password: string}} body - username은 42 intra id
@@ -31,8 +68,8 @@ const CRUDUserService = {
         role: ROLE_NAME.ROLE_MANAGER,
         team_id: TEAM_ID.ALL,
         team: TEAM_NAME.NONE,
-        vacation: 0,
         absentScore: 0,
+        attendanceScore: 0,
       };
       response = await setDoc(userRef, data, { merge: true });
     } catch (e) {
@@ -74,21 +111,7 @@ const CRUDUserService = {
     }
     return response;
   },
-  /**
-   * 임시 비밀번호 발급
-   * @param {string} userName - 로그인한 유저 ID
-   * @returns
-   */
-  issueTempPassword: async userName => {
-    const url = CRUDUserAPI('auth/password-inquery');
-    let response;
-    try {
-      response = await instance.post(url, { username: userName });
-    } catch (e) {
-      // alert(e);
-    }
-    return response;
-  },
+
   /**
    * 비밀번호 변경
    * @param {string} oldPassword
@@ -96,6 +119,17 @@ const CRUDUserService = {
    * @param {string} checkPassword
    * @returns
    */
+  updateUser: async (username, body) => {
+    const userRef = doc(db, 'user', username);
+    let response;
+    try {
+      response = await updateDoc(userRef, body);
+    } catch (e) {
+      alert(e);
+    }
+    return response;
+  },
+
   updatePassword: async (oldPassword, newPassword, checkPassword) => {
     const url = CRUDUserAPI('auth/password');
     let response;

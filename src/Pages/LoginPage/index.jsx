@@ -10,7 +10,6 @@ import Register from './RegisterFormModal';
 import { format } from 'date-fns';
 
 import styled from 'styled-components';
-import IssueTempPassword from './IssuePasswordModal';
 import BugReportButton from 'Components/BugReportButton';
 
 const LoginPage = () => {
@@ -39,10 +38,9 @@ const LoginPage = () => {
     const data = {
       [`${result.username}`]: {
         username: result.username,
-        attendStatus: result.attendance,
+        attendance: result.attendance,
         role: result.role,
         team: result.team,
-        vacation: result.vacation,
         absentScore: result.absentScore,
       },
     };
@@ -70,7 +68,6 @@ const LoginPage = () => {
         </LoginMain>
         <LoginForm onClickLogin={handleLogin} />
         <Register onClickRegister={handleRegister} />
-        {/* <IssueTempPassword /> */}
         <FooterWrap>
           <BugReportButton />
         </FooterWrap>

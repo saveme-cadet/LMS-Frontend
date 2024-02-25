@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { UserInfoService } from 'API';
+import { CRUDUserService } from 'API';
 
 import AdminModalButton from './AdminModalButton';
 import AdminTable from './AdminTable';
 import AdminChangeTable from './AdminChangeTable';
 import AdminModal from './AdminModal';
+
+import { PARTICIPATE_NAME } from 'Utils/constants';
 
 const AdminContainer = ({ auth, username, isOpen, setIsOpen }) => {
   const [selectusername, setSelectusername] = useState(null);
@@ -16,31 +18,19 @@ const AdminContainer = ({ auth, username, isOpen, setIsOpen }) => {
   const updateSelectRowData = (curArrays, curTab) => {
     const filterArray = [];
     let filter = '';
-    if (curTab === 1) filter = 'NOT_PARTICIPATED';
-    else if (curTab === 2) filter = 'PARTICIPATED';
+    if (curTab === 1) filter = PARTICIPATE_NAME.NOT_PARTICIPATED;
+    else if (curTab === 2) filter = PARTICIPATE_NAME.PARTICIPATED;
     curArrays.map(array => {
-      if (array.attendStatus !== filter) filterArray.push(array);
+      if (array.attendance !== filter) filterArray.push(array);
     });
 
     setSelectRowData(filterArray);
   };
 
   const getUser = async () => {
-    const result = await UserInfoService.getAllUser(0, 100);
-    const newArray = result.data.content.map(array => ({
-      id: array.id,
-      username: array.username,
-      attendStatus: array.attendStatus,
-      role: array.role,
-      team: array.team,
-      vacation: array.vacation,
-      attendanceScore: array.attendanceScore,
-      absentScore: array.totalScore,
-      weekAbsentScore: array.weekAbsentScore,
-    }));
-
-    setRowData(newArray);
-    updateSelectRowData(newArray, tab);
+    const result = await CRUDUserService.getAllUser();
+    setRowData(result);
+    updateSelectRowData(result, tab);
   };
 
   useEffect(() => {
@@ -50,7 +40,7 @@ const AdminContainer = ({ auth, username, isOpen, setIsOpen }) => {
   useEffect(() => {
     if (rowData === null) return;
     rowData.filter(data => {
-      if (data.id === selectusername && data.role === 'ROLE_ADMIN') {
+      if (data.username === selectusername && data?.role === 'ROLE_ADMIN') {
         alert('admin의 정보는 변경할 수 없습니다!');
         setSelectusername(null);
       }

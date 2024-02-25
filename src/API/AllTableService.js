@@ -28,7 +28,6 @@ const AllTableService = {
     } catch (e) {
       alert(e);
     }
-    console.log('change');
     return response;
   },
   /**
@@ -64,10 +63,9 @@ const AllTableService = {
     for (const key in data) {
       newArray.push({
         username: data[key].username,
-        attendStatus: data[key].attendStatus,
+        attendance: data[key].attendance,
         role: data[key].role,
         team: data[key].team,
-        vacation: data[key].vacation,
         absentScore: data[key].absentScore,
         checkIn: data[key].checkIn,
         checkOut: data[key].checkOut,

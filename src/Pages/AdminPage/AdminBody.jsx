@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from 'Store';
 import { NotValid } from 'Components';
-import { ERROR_MESSAGES } from 'Utils/constants';
+import { ROLE_NAME, ERROR_MESSAGES } from 'Utils/constants';
 
 import AdminContainer from './AdminContainer';
 
@@ -11,8 +11,8 @@ const AdminBody = ({ isOpen, setIsOpen }) => {
   const username = auth.status.username;
 
   const isAuth = () => {
-    if (userRole === 'ROLE_MANAGER') return true;
-    if (userRole === 'ROLE_ADMIN') return true;
+    if (userRole === ROLE_NAME.ROLE_MANAGER) return true;
+    if (userRole === ROLE_NAME.ROLE_ADMIN) return true;
     return false;
   };
   return (

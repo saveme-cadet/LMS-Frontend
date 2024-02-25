@@ -16,7 +16,6 @@ import FilterModal from './FilterModal';
 
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { getUser } from 'Hooks/user';
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
@@ -113,11 +112,6 @@ const MainPage = () => {
     // selectRowData.map의 모든 객체 요소들이 API 요청을 보내기 때문에,
     await Promise.all(
       selectRowData.map(async user => {
-        if (value === 'VACATION' && user.vacation === 0) {
-          alert('사용할 수 있는 휴가가 없습니다!');
-          return;
-        }
-
         if (select === CHECK_IN) {
           return AllTableService.putTableCheckIn(
             user.username,

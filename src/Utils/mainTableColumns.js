@@ -31,15 +31,16 @@ const mainTableColumns = [
     width: 120,
   },
   {
+    field: 'attendanceScore',
+    headerName: '출석 점수',
+    width: 120,
+  },
+  {
     field: 'absentScore',
     headerName: '결석 점수',
     width: 120,
   },
-  {
-    field: 'vacation',
-    headerName: '휴가',
-    width: 120,
-  },
+
   {
     field: 'checkIn',
     headerName: '체크인',

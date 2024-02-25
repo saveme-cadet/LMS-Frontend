@@ -1,4 +1,4 @@
-import { UserInfoService, CRUDUserService, VacationService } from 'API';
+import { CRUDUserService } from 'API';
 import { TEAM_NAME } from 'Utils/constants';
 import SelectedUser from './SelectedUser';
 
@@ -12,7 +12,6 @@ const AdminChangeTable = ({
   auth,
 }) => {
   const handleLogout = async () => {
-    await CRUDUserService.postLogout();
     localStorage.clear();
     auth.setStatus(null);
   };
@@ -33,32 +32,28 @@ const AdminChangeTable = ({
   };
 
   const handleChangeAttend = async event => {
-    if (event.target.value === 'NOT_PARTICIPATED') {
+    if (event.target.value === '불참') {
       if (validChangeRole()) return; // 불참일 경우 NONE으로 바꾸기
-      await UserInfoService.patchTeam(selectusername, {
-        team: TEAM_NAME.NONE,
+      await CRUDUserService.updateUser(selectusername, {
+        team: 'NONE',
       });
-      await UserInfoService.patchRole(selectusername, {
-        role: 'ROLE_UNAUTHORIZED',
+      await CRUDUserService.updateUser(selectusername, {
+        role: '게스트',
       });
-    } else if (event.target.value === 'PARTICIPATED') {
-      await UserInfoService.patchTeam(selectusername, {
-        team: TEAM_NAME.BLUE,
-      }); // TODO: default team fixed
-      await UserInfoService.patchRole(selectusername, {
-        role: 'ROLE_USER',
+    } else if (event.target.value === '참가') {
+      await CRUDUserService.updateUser(selectusername, {
+        role: '일반',
       });
     }
     // TODO: 유저 참여 상태에 따라 NONE or 기본 팀(BLUE)로 설정(BACKEND)
-    await UserInfoService.patchAttend(selectusername, {
-      attendStatus: event.target.value,
+    await CRUDUserService.updateUser(selectusername, {
+      attendance: event.target.value,
     });
     getUser();
-    // setSelectusername(null);
   };
 
   const handleChangeTeam = async event => {
-    await UserInfoService.patchTeam(selectusername, {
+    await CRUDUserService.updateUser(selectusername, {
       team: event.target.value,
     });
     getUser();
@@ -66,45 +61,12 @@ const AdminChangeTable = ({
   };
 
   const handleChangeRole = async event => {
-    // console.log(selectusername, username);
     if (validChangeRole()) return;
 
-    await UserInfoService.patchRole(selectusername, {
+    await CRUDUserService.updateUser(selectusername, {
       role: event.target.value,
     });
     getUser();
-    // setSelectusername(null);
-  };
-
-  const handleChangeVacation = async value => {
-    for (let i = 0; i < rowData.length; i++) {
-      if (rowData[i].id === selectusername) {
-        if (rowData[i].vacation === 0 && value < 0) {
-          alert('감소시킬 휴가가 없습니다.');
-          return;
-        }
-      }
-    }
-
-    if (value % 0.5 !== 0) {
-      alert('0.5 단위로 입력해주세요.');
-      return;
-    }
-    if (0 < value) {
-      const body = {
-        addedDays: value,
-        reason: '단일 휴가 증가',
-      };
-      await VacationService.addVacation(selectusername, body);
-    } else if (0 > value) {
-      const body = {
-        usedDays: -value,
-        reason: '단일 휴가 감소',
-      };
-      await VacationService.useVacation(selectusername, body);
-    }
-    getUser();
-    // setSelectusername(null);
   };
 
   return (
@@ -114,11 +76,10 @@ const AdminChangeTable = ({
         자정(00:00)을 기준으로 수정사항이 출결표에 갱신됩니다
         {selectusername !== null && (
           <SelectedUser
-            userInfo={rowData.find(array => array.id === selectusername)}
+            userInfo={rowData.find(array => array.username === selectusername)}
             onClickChangeAttend={handleChangeAttend}
             onClickChangeTeam={handleChangeTeam}
             onClickChangeRole={handleChangeRole}
-            onClickChangeVacation={handleChangeVacation}
           />
         )}
       </AdminChangeTableContainer>
