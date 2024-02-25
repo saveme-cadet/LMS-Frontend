@@ -44,8 +44,6 @@ const LoginPage = () => {
         team: result.team,
         vacation: result.vacation,
         absentScore: result.absentScore,
-        checkIn: null,
-        checkOut: null,
       },
     };
     await AllTableService.updateTable(dateFormat, data);

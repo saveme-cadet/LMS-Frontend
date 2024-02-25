@@ -104,8 +104,10 @@ const MainPageTableTabs = ({
           <span>필터링</span>
           <FilterAltIcon />
         </CustomTab>
-        {validDay(date) === 0 &&
-          isToday(today, date) && [
+        {
+          // validDay(date) === 0 &&
+          //   isToday(today, date) &&
+          selectRowData.length && [
             <CustomTab key={0} onClick={e => handleClickTab(e, 'checkIn')}>
               체크인 일괄 수정
             </CustomTab>,
@@ -117,7 +119,8 @@ const MainPageTableTabs = ({
                 일괄 수정 되돌리기
               </CustomTab>
             ),
-          ]}
+          ]
+        }
       </Tabs>
 
       <CheckAttend

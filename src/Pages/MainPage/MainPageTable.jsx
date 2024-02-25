@@ -4,7 +4,7 @@ import { AuthContext } from 'Store';
 import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
-import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
+import { CHECK_IN, CHECK_OUT, ERROR_MESSAGES } from 'Utils/constants';
 
 import { AllTableService } from 'API';
 
@@ -73,22 +73,18 @@ const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
   return (
     <MainPageTableContainer>
       <MainPageBody>
-        {validDay(date) ? (
-          <WrongDay wrongType={validDay(date)} />
-        ) : (
+        {selectRowData.length ? (
           <>
-            {selectRowData && (
-              <DataGrid
-                rows={selectRowData}
-                columns={tableColumns}
-                onCellClick={handleClickCell}
-                hideFooterPagination={true} // 페이지 네이션 비활성화
-                hideFooterSelectedRowCount={true} // row count 숨기기
-                getRowClassName={() => {
-                  return 'cell';
-                }}
-              />
-            )}
+            <DataGrid
+              rows={selectRowData}
+              columns={tableColumns}
+              onCellClick={handleClickCell}
+              hideFooterPagination={true} // 페이지 네이션 비활성화
+              hideFooterSelectedRowCount={true} // row count 숨기기
+              getRowClassName={() => {
+                return 'cell';
+              }}
+            />
 
             <CheckAttend
               anchorEl={anchorEl}
@@ -96,6 +92,8 @@ const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
               onChangeCheck={handleChangeCheck}
             />
           </>
+        ) : (
+          <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
         )}
       </MainPageBody>
     </MainPageTableContainer>

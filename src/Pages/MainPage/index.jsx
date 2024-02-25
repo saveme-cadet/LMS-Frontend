@@ -209,7 +209,7 @@ const MainPage = () => {
       ) : (
         <>
           <MainHeader>
-            <CusDatePicker date={date} setDate={setDate} filterWeekend={true} />
+            <CusDatePicker date={date} setDate={setDate} />
           </MainHeader>
           <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
         </>
