@@ -14,6 +14,5 @@ export const useTable = date => {
       retry: 2, // 실패시 재호출 몇번 할지
     },
   );
-  console.log('ROW DATA : ', data);
   return { status, data };
 };

@@ -60,16 +60,12 @@ const SideBar = () => {
             label={<SubTabLabel title="출결표" />}
             value=""
           />
-          <Tab
+          {/* <Tab
             className="button"
             label={<SubTabLabel title="오늘 할 일" />}
             value="todo"
-          />
-          {/* <Tab
-            className="button"
-            label={<SubTabLabel title="아오지 탄광" />}
-            value="mine"
           /> */}
+
           <Tab
             className="button"
             label={<SubTabLabel title="머슴" />}

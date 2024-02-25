@@ -1,6 +1,5 @@
 import { useState, createContext, useEffect } from 'react';
 import { useQueryClient } from 'react-query';
-import { UserInfoService } from 'API';
 
 const AuthContext = createContext();
 
