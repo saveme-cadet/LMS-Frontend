@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthContext, AuthProvider } from 'Store';
@@ -17,7 +17,7 @@ const OAuthCheckRoute = ({ children }) => {
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (auth.status?.userId) return children;
+    if (auth.status?.username) return children;
     else return <Navigate to="/login" />;
   }
 };
@@ -28,7 +28,7 @@ const LoginCheckRoute = ({ children }) => {
   if (auth.isLoading) {
     return <Loading />;
   } else {
-    if (!auth.status?.userId) return children;
+    if (!auth.status?.username) return children;
     else return <Navigate to="/" />;
   }
 };

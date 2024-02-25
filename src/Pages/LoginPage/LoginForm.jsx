@@ -65,13 +65,6 @@ const LoginForm = ({ onClickLogin }) => {
         >
           아직 회원이 아니신가요?
         </RegisterButton>
-        <IssueTempPasswordButton
-          onClick={() => {
-            setModalType(MODAL_TYPE.ISSUE_PW);
-          }}
-        >
-          임시 비밀번호 발급
-        </IssueTempPasswordButton>
       </RegisterWrap>
     </>
   );
@@ -117,15 +110,6 @@ const LoginButton = styled(Button)({
 });
 
 const RegisterButton = styled(Button)({
-  marginRop: '5%',
-  fontFamily: 'BMJUA',
-  fontSize: '20px',
-  textDecoration: 'underline',
-  color: 'white',
-  width: '250px',
-});
-
-const IssueTempPasswordButton = styled(Button)({
   marginRop: '5%',
   fontFamily: 'BMJUA',
   fontSize: '20px',

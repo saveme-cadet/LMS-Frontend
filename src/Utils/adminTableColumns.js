@@ -1,23 +1,9 @@
-const attendStatus = value => {
-  if (value >= 3) return '🔴';
-  else if (value >= 2) return '🟡';
-  else return '';
-};
-import { ROLE_NAME, PARTICIPATE_NAME } from 'Utils/constants';
-
 const adminTableColumns = [
   {
-    field: 'attendStatus',
+    field: 'attendance',
     headerName: '참여 상태',
     type: 'string',
     width: 120,
-    renderCell: params => {
-      return (
-        <div className={`${params.value} info`}>
-          {PARTICIPATE_NAME[params.value]}
-        </div>
-      );
-    },
   },
   {
     field: 'team',
@@ -33,21 +19,8 @@ const adminTableColumns = [
     headerName: '역할',
     type: 'string',
     width: 120,
-    renderCell: params => {
-      return (
-        <div className={`${params.value} info`}>{ROLE_NAME[params.value]}</div>
-      );
-    },
   },
-  {
-    field: 'weekAbsentScore',
-    headerName: '상태',
-    type: 'number',
-    width: 60,
-    renderCell: params => {
-      return <div>{attendStatus(params.value)}</div>;
-    },
-  },
+
   {
     field: 'username',
     headerName: '이름',
@@ -65,13 +38,6 @@ const adminTableColumns = [
   {
     field: 'absentScore',
     headerName: '결석 점수',
-    type: 'number',
-    width: 120,
-  },
-
-  {
-    field: 'vacation',
-    headerName: '휴가',
     type: 'number',
     width: 120,
   },

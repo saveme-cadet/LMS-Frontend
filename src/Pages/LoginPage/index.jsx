@@ -2,13 +2,14 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from 'Store';
-import { CRUDUserService } from 'API';
+import { CRUDUserService, AllTableService } from 'API';
 
 import LoginForm from './LoginForm';
 import Register from './RegisterFormModal';
 
+import { format } from 'date-fns';
+
 import styled from 'styled-components';
-import IssueTempPassword from './IssuePasswordModal';
 import BugReportButton from 'Components/BugReportButton';
 
 const LoginPage = () => {
@@ -20,30 +21,40 @@ const LoginPage = () => {
 
     auth.setIsLoading(true);
     const result = await CRUDUserService.postLogin(body);
-    if (result.status !== 200) {
+    console.log('result : ', result);
+    if (!result) {
       alert('잘못된 아이디나 비밀번호 입니다!');
       return;
     }
+
     alert(`환영합니다, ${body.username}!`);
-    localStorage.setItem('userId', result.data.id);
-    localStorage.setItem('role', result.data.role);
-    auth.setStatus({ userId: result.data.id, role: result.data.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
+    localStorage.setItem('username', result.username);
+    localStorage.setItem('role', result.role);
+    auth.setStatus({ username: result.username, role: result.role }); // TODO: postLogin res에 role 담겨서 오는지 확인
     auth.setIsLoading(false);
+
+    const date = new Date();
+    const dateFormat = format(date, 'yyyyMMdd');
+    const data = {
+      [`${result.username}`]: {
+        username: result.username,
+        attendance: result.attendance,
+        role: result.role,
+        team: result.team,
+        absentScore: result.absentScore,
+      },
+    };
+    await AllTableService.updateTable(dateFormat, data);
     navi('/');
   };
 
   const handleRegister = async userLoginInfo => {
     if (auth.isLoading) return;
     auth.setIsLoading(true);
+
     const result = await CRUDUserService.postUser(userLoginInfo);
-    // console.log('result : ', result);
-    if (result.status !== 201) {
-      if (result.status === 400) {
-        alert('비밀번호가 포맷에 맞지 않습니다!'); // TODO : Change error window in postUser
-      } else if (result.status === 409) {
-        alert('이미 존재하는 유저입니다!');
-      } else alert('서버 에러!');
-      return;
+    if (result) {
+      alert('회원가입 실패');
     }
     handleLogin(userLoginInfo);
     auth.setIsLoading(false);
@@ -57,7 +68,6 @@ const LoginPage = () => {
         </LoginMain>
         <LoginForm onClickLogin={handleLogin} />
         <Register onClickRegister={handleRegister} />
-        <IssueTempPassword />
         <FooterWrap>
           <BugReportButton />
         </FooterWrap>

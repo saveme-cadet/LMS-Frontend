@@ -61,7 +61,7 @@ const FilterModalFooter = styled.div`
   width: 100px;
   height: 60px;
 
-  margin: 40px;
+  margin: 20px;
   border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 10px;
 

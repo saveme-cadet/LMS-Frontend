@@ -12,41 +12,33 @@ const SelectedUser = ({
   onClickChangeRole,
   onClickChangeVacation,
 }) => {
-  const [vacation, setVacation] = useState(userInfo.vacation);
-
-  const onClickCustomVacation = () => {
-    onClickChangeVacation(vacation);
-    setVacation(0);
-  };
+  console.log('SEelecd : ', userInfo);
   return (
     <div className="box">
       <span className="title">현재 선택 : {userInfo.username}</span>
 
       <span className="user-status">
-        <Chip
-          label={PARTICIPATE_NAME[userInfo.attendStatus]}
-          className={userInfo.attendStatus}
-        />
-        {userInfo.attendStatus === 'PARTICIPATED' && (
+        <Chip label={userInfo.attendance} className={userInfo.attendance} />
+        {userInfo.attendance === '참가' && (
           <>
             <Chip label={userInfo.team} className={userInfo.team} />
-            <Chip label={ROLE_NAME[userInfo.role]} className={userInfo.role} />
+            <Chip label={userInfo.role} className={userInfo.role} />
           </>
         )}
       </span>
 
       <div className="action">
         <Select
-          value={userInfo.attendStatus}
+          value={userInfo.attendance}
           onChange={onClickChangeAttend}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value={'PARTICIPATED'}>참가</MenuItem>
-          <MenuItem value={'NOT_PARTICIPATED'}>불참</MenuItem>
+          <MenuItem value={'참가'}>참가</MenuItem>
+          <MenuItem value={'불참'}>불참</MenuItem>
         </Select>
 
-        {userInfo.attendStatus === 'PARTICIPATED' && (
+        {userInfo.attendance === PARTICIPATE_NAME.PARTICIPATED && (
           <>
             <Select
               value={userInfo.team}
@@ -56,6 +48,7 @@ const SelectedUser = ({
             >
               <MenuItem value={'RED'}>RED</MenuItem>
               <MenuItem value={'BLUE'}>BLUE</MenuItem>
+              <MenuItem value={'NONE'}>NONE</MenuItem>
             </Select>
             <Select
               value={userInfo.role}
@@ -63,32 +56,9 @@ const SelectedUser = ({
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem value={'ROLE_MANAGER'}>머슴</MenuItem>
-              <MenuItem value={'ROLE_USER'}>일반</MenuItem>
-              <MenuItem value={'ROLE_UNAUTHORIZED'}>게스트</MenuItem>
+              <MenuItem value={'머슴'}>머슴</MenuItem>
+              <MenuItem value={'일반'}>일반</MenuItem>
             </Select>
-
-            <Button
-              variant="contained"
-              onClick={() => onClickChangeVacation(VACATION.PLUS_HALF)}
-            >
-              휴가 + 0.5
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => onClickChangeVacation(VACATION.MINUS_HALF)}
-            >
-              휴가 - 0.5
-            </Button>
-
-            <input
-              type="number"
-              value={vacation}
-              onChange={e => setVacation(e.target.value)}
-            />
-            <Button variant="contained" onClick={onClickCustomVacation}>
-              휴가 임의 증감
-            </Button>
           </>
         )}
       </div>

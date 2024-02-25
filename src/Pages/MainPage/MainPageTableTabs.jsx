@@ -104,21 +104,23 @@ const MainPageTableTabs = ({
           <span>필터링</span>
           <FilterAltIcon />
         </CustomTab>
-        {validDay(date) === 0 && isToday(today, date) && (
-          <>
-            <CustomTab onClick={e => handleClickTab(e, 'checkIn')}>
+        {
+          // validDay(date) === 0 &&
+          //   isToday(today, date) &&
+          selectRowData.length && [
+            <CustomTab key={0} onClick={e => handleClickTab(e, 'checkIn')}>
               체크인 일괄 수정
-            </CustomTab>
-            <CustomTab onClick={e => handleClickTab(e, 'checkOut')}>
+            </CustomTab>,
+            <CustomTab key={1} onClick={e => handleClickTab(e, 'checkOut')}>
               체크아웃 일괄 수정
-            </CustomTab>
-            {prevData && (
-              <CustomTab onClick={() => setIsPrev(true)}>
+            </CustomTab>,
+            prevData && (
+              <CustomTab key={2} onClick={() => setIsPrev(true)}>
                 일괄 수정 되돌리기
               </CustomTab>
-            )}
-          </>
-        )}
+            ),
+          ]
+        }
       </Tabs>
 
       <CheckAttend

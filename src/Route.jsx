@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { AdminPage, MainPage, MinePage, TodoPage } from 'Pages';
+import { AdminPage, MainPage } from 'Pages';
 import { SideBar, UpdatePasswordModal } from 'Components';
 
 import styled from 'styled-components';
@@ -11,10 +11,6 @@ const MainRoute = () => {
       <BodyContainer>
         <Routes>
           <Route path="/" element={<MainPage />} />
-
-          <Route path="/todo" element={<TodoPage />} />
-
-          <Route path="/mine" element={<MinePage />} />
 
           <Route path="/admin" element={<AdminPage />} />
         </Routes>

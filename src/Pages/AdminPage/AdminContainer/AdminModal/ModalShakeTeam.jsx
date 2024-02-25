@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ModalBackground } from 'Components';
-import { UserInfoService } from 'API';
+import { CRUDUserService } from 'API';
 
 import styled from 'styled-components';
 
@@ -23,15 +23,15 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   const teamList = ['RED', 'BLUE', 'NONE'];
 
   // getUser를 받아 내부에서 사용하도록 수정x
-  const onClickChangeShuffleTeam = async (userId, team) => {
-    await UserInfoService.patchTeam(userId, { team: team });
+  const onClickChangeShuffleTeam = async (username, team) => {
+    await CRUDUserService.updateUser(username, { team: team });
     getUser();
   };
 
   const handleCloseModal = isAccept => {
     if (isAccept && isChanged) {
       curUsers.map(user => {
-        onClickChangeShuffleTeam(user.id, user.team);
+        onClickChangeShuffleTeam(user.username, user.team);
       });
     }
     setIsOpen(false);
@@ -49,10 +49,7 @@ const ModalShakeTeam = ({ setIsOpen, attendUser, getUser }) => {
   };
 
   useEffect(() => {
-    const neutralArray = [];
-    attendUser.map(user => {
-      if (!teamList.includes(user.team)) neutralArray.push(user);
-    });
+    console.log('att', attendUser);
     setCurUsers(attendUser);
   }, []);
 

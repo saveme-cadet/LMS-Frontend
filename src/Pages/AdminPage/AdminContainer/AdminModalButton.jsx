@@ -8,14 +8,6 @@ const AdminModalButton = ({ setIsOpen }) => {
       <FeatureModalButton>
         <Button
           onClick={() => {
-            setIsOpen('add');
-          }}
-        >
-          일괄 휴가 변경
-        </Button>
-
-        <Button
-          onClick={() => {
             setIsOpen('find');
           }}
         >
@@ -29,8 +21,6 @@ const AdminModalButton = ({ setIsOpen }) => {
         >
           팀 섞기
         </Button>
-      </FeatureModalButton>
-      <ManualModalButton>
         <Button
           onClick={() => {
             setIsOpen('todo');
@@ -38,7 +28,7 @@ const AdminModalButton = ({ setIsOpen }) => {
         >
           머슴이 할 일
         </Button>
-      </ManualModalButton>
+      </FeatureModalButton>
     </ModalButton>
   );
 };
@@ -55,5 +45,4 @@ const ModalButton = styled.div`
   }
 `;
 const FeatureModalButton = styled.div``;
-const ManualModalButton = styled.div``;
 export default AdminModalButton;

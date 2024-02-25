@@ -25,8 +25,8 @@ const SideBar = () => {
     setCurPage(value);
     navi(`/${value}`);
   };
-  const handleClickLogout = async () => {
-    await CRUDUserService.postLogout();
+
+  const handleClickLogout = () => {
     localStorage.clear();
     auth.setStatus(null);
   };
@@ -60,16 +60,12 @@ const SideBar = () => {
             label={<SubTabLabel title="출결표" />}
             value=""
           />
-          <Tab
+          {/* <Tab
             className="button"
             label={<SubTabLabel title="오늘 할 일" />}
             value="todo"
-          />
-          <Tab
-            className="button"
-            label={<SubTabLabel title="아오지 탄광" />}
-            value="mine"
-          />
+          /> */}
+
           <Tab
             className="button"
             label={<SubTabLabel title="머슴" />}
@@ -99,6 +95,7 @@ const SideBar = () => {
             className="button logout"
             label={<SubTabLabel title="로그아웃" fontSize="large" />}
             onClick={handleClickLogout}
+            value="login"
           />
         </Tabs>
       )}

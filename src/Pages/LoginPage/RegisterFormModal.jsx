@@ -30,16 +30,9 @@ const Register = ({ onClickRegister }) => {
       return;
     }
 
-    const errorMessage = isRegexPassword(password);
-    if (errorMessage) {
-      setIsAlert(true);
-      return;
-    }
-
     onClickRegister({
       username: id,
       password: password,
-      // email: `${id}@student.42seoul.kr`,
     });
     setId('');
     setPassword('');

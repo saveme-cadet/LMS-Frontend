@@ -12,7 +12,7 @@ const AdminTable = ({
   rowData,
   updateSelectRowData,
   selectRowData,
-  setSelectUserId,
+  setSelectusername,
 }) => {
   const handleChangeTab = (event, dstTab) => {
     setTab(dstTab);
@@ -20,8 +20,8 @@ const AdminTable = ({
   };
 
   const handleCellClick = e => {
-    // alert(e.id);
-    setSelectUserId(e.id);
+    console.log(e.row.username);
+    setSelectusername(e.row.username);
   };
 
   return (
@@ -37,9 +37,6 @@ const AdminTable = ({
             rows={selectRowData}
             columns={adminTableColumns}
             onCellClick={handleCellClick}
-            getRowClassName={params => {
-              return params.row.attendStatus === 'NOT_PARTICIPATED' && 'out';
-            }}
             hideFooterPagination={true} // 페이지 네이션 비활성화, 전체, 빨간팀, 파란팀?
             hideFooterSelectedRowCount={true} // row count 숨기기
           />

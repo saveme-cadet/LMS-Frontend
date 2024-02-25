@@ -4,33 +4,31 @@ import { AuthContext } from 'Store';
 import CheckAttend from './CheckAttend';
 import WrongDay from './WrongDay';
 import { validDay, isWrongAccess, mainTableColumns } from 'Utils';
-import { CHECK_IN, CHECK_OUT } from 'Utils/constants';
+import { CHECK_IN, CHECK_OUT, ERROR_MESSAGES } from 'Utils/constants';
 
-import AllTableService from 'API/AllTableService';
+import { AllTableService } from 'API';
 
-import { getMonth } from 'date-fns';
+import { getMonth, format } from 'date-fns';
 import { DataGrid } from '@mui/x-data-grid';
 import styled from 'styled-components';
 
-const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
+const MainPageTable = ({ date, selectRowData, refresh, customData }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [curFocus, setCurFocus] = useState({ attendanceId: '', select: '' });
   const tableColumns = mainTableColumns.filter((item, i) => customData[i]);
-
   const auth = useContext(AuthContext);
-  const role = auth.status.role;
+  const role = auth.status?.role;
 
   const handleClickCell = (params, event) => {
     const today = new Date();
-
     const field = params.field;
+
     if (field !== CHECK_IN && field !== CHECK_OUT) return;
 
     if (getMonth(today) !== getMonth(date)) {
       alert('지난 달의 기록은 수정할 수 없습니다.');
       return;
     }
-
     if (isWrongAccess(role)) {
       alert('수정 권한이 없습니다.');
       return;
@@ -38,69 +36,59 @@ const MainPageTable = ({ date, selectRowData, getUsers, customData }) => {
 
     setAnchorEl(event.currentTarget);
     setCurFocus({
-      attendanceId: params.row.attendanceId,
-      userId: params.row.userId,
+      username: params.row.username,
       select: field,
     });
   };
 
   const handleChangeCheck = async value => {
-    const attendanceId = curFocus.attendanceId;
-    const userId = curFocus.userId;
+    const username = curFocus.username;
     const select = curFocus.select;
 
     const selectUserInfo = selectRowData.find(
-      array => array.attendanceId === attendanceId,
+      array => array.username === username,
     );
     const originValue =
       select === CHECK_IN ? selectUserInfo.checkIn : selectUserInfo.checkOut;
 
     if (originValue === value) return;
     // 이전 선택과 동일할 경우 return
-    if (value === 'VACATION' && selectUserInfo.vacation === 0) {
-      alert('사용할 수 있는 휴가가 없습니다!');
-      setAnchorEl(null);
-      return;
+
+    const date = format(new Date(), 'yyyyMMdd');
+    if (select === CHECK_IN) {
+      await AllTableService.putTableCheckIn(username, date, value);
+    } else {
+      await AllTableService.putTableCheckOut(username, date, value);
     }
 
-    if (select === CHECK_IN) {
-      await AllTableService.putAllTableCheckIn(userId, attendanceId, {
-        status: value,
-      });
-    } else {
-      await AllTableService.putAllTableCheckOut(userId, attendanceId, {
-        status: value,
-      });
-    }
     setAnchorEl(null);
-    getUsers();
+    refresh();
   };
 
   return (
     <MainPageTableContainer>
       <MainPageBody>
-        {validDay(date) ? (
-          <WrongDay wrongType={validDay(date)} />
-        ) : (
+        {selectRowData.length ? (
           <>
-            {selectRowData && (
-              <DataGrid
-                rows={selectRowData}
-                columns={tableColumns}
-                onCellClick={handleClickCell}
-                hideFooterPagination={true} // 페이지 네이션 비활성화
-                hideFooterSelectedRowCount={true} // row count 숨기기
-                getRowClassName={() => {
-                  return 'cell';
-                }}
-              />
-            )}
+            <DataGrid
+              rows={selectRowData}
+              columns={tableColumns}
+              onCellClick={handleClickCell}
+              hideFooterPagination={true} // 페이지 네이션 비활성화
+              hideFooterSelectedRowCount={true} // row count 숨기기
+              getRowClassName={() => {
+                return 'cell';
+              }}
+            />
+
             <CheckAttend
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
               onChangeCheck={handleChangeCheck}
             />
           </>
+        ) : (
+          <WrongDay wrongType={ERROR_MESSAGES.NO_DATA} />
         )}
       </MainPageBody>
     </MainPageTableContainer>
@@ -170,8 +158,5 @@ const MainPageBody = styled.div`
   }
   .illness {
     background-color: #a477ee;
-  }
-  .vacation {
-    background-color: #2891f1;
   }
 `;
